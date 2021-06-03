@@ -1,0 +1,37 @@
+// Fonts
+// @import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+// @import 'variables';
+
+// Bootstrap
+// @import '~bootstrap/dist/css/bootstrap.css';
+// @import '~bootstrap/scss/bootstrap';
+
+// @import '~admin-lte/dist/css/adminlte.css';
+
+
+// @import '~@fortawesome/fontawesome-free/scss/brands';
+// @import '~@fortawesome/fontawesome-free/scss/regular';
+// @import '~@fortawesome/fontawesome-free/scss/solid';
+// @import '~@fortawesome/fontawesome-free/scss/fontawesome';
+
+
+.sorting_both {
+    background-image: url("/images/sort_both.png");
+    background-repeat: no-repeat;
+    background-position: 100%;
+}
+
+.sorting_up {
+    background-image: url("/images/sort_asc.png");
+    background-repeat: no-repeat;
+    background-position: 100%;
+}
+
+.sorting_down {
+    background-image: url("/images/sort_desc.png");
+    background-repeat: no-repeat;
+    background-position: 100%;
+}
+
