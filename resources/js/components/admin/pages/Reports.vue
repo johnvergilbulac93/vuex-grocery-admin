@@ -7,7 +7,7 @@
                 >
             </div>
             <div class="flex justify-center item ">
-                <div class="w-1/4 p-5 space-y-5 border">
+                <div class="sm:w-full md:w-1/2 lg:w-1/4 p-5 space-y-5 border">
                     <div class="w-full">
                         <select
                             class="form-input  w-full font-semibold"

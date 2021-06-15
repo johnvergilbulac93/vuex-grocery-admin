@@ -102,7 +102,7 @@
                     </button>
                 </div>
             </div>
-            <div class="bg-gray-50 h-72 w-full  px-10 py-5 border ">
+            <div class="bg-gray-50 h-72 w-full  px-10 py-5 border">
                 <div class="flex flex-col space-y-2">
                     <label
                         for="ordertime"
