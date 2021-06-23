@@ -33,6 +33,8 @@ import liquidition_store from './components/admin/pages/Liquidition-Report-Store
 import accountability_store from './components/admin/pages/Accountability-Report-Store'
 import menu from './components/admin/pages/Menu'
 import viewcharge from './components/admin/pages/View-Charge'
+import price_group from './components/admin/pages/Price-Group'
+
 
 
 const routes = [
@@ -59,37 +61,37 @@ const routes = [
         path: '/item',
         name: 'item',
         component: item,       
-         beforeEnter: (to, from, next) => {
-            if (to.params.id === 15 || to.params.id === 6) {
-                next();
-            }else{
-                next('/');
-            }
-        }
+        //  beforeEnter: (to, from, next) => {
+        //     if (to.params.id === 15 || to.params.id === 6) {
+        //         next();
+        //     }else{
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/uploading',
         name: 'uploading',
         component: uploading,
-        beforeEnter: (to, from, next) => {
-            if (to.params.id === 6 || from.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (to.params.id === 6 || from.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/business_rules',
         name: 'business_rule',
         component: business_rule,
-        beforeEnter: (to, from, next) => {
-            if (from.params.id === 12) {
-                next()
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (from.params.id === 12) {
+        //         next()
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/picker_time',
@@ -107,13 +109,13 @@ const routes = [
         path: '/users',
         name: 'users',
         component: users,
-        beforeEnter: (to, from, next) => {
-            if (from.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (from.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/central_item',
@@ -253,37 +255,37 @@ const routes = [
         path: '/bu_time',
         name: 'bu_time',
         component: bu_time,
-        beforeEnter: (to, from, next) => {
-            if (from.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (from.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/tenant',
         name: 'tenant',
         component: tenant,
-        beforeEnter: (to, from, next) => {
-            if (from.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (from.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/count',
         name: 'count',
         component: count,
-        beforeEnter: (to, from, next) => {
-            if (from.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (from.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/disable_uom',
@@ -313,13 +315,13 @@ const routes = [
         path: '/minimum_delivery',
         name: 'minimum_delivery',
         component: minimum_delivery,
-        beforeEnter: (to, from, next) => {
-            if (from.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (from.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/delivery_charges',
@@ -373,13 +375,25 @@ const routes = [
         path: '/menu',
         name: 'menu',
         component: menu,
-        beforeEnter: (to, from, next) => {
-            if (to.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (to.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
+    },
+    {
+        path: '/price_group',
+        name: 'price_group',
+        component: price_group,
+        // beforeEnter: (to, from, next) => {
+        //     if (to.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/charge/:chrg_id',

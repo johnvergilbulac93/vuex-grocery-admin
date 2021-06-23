@@ -7,27 +7,50 @@
                 >
             </div>
             <div
-                class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
+                class="flex sm:flex-wrap sm:space-y-2 lg:justify-between sm:justify-start items-center pb-2"
             >
-                <div class=" text-gray-600 md:w-1/2 sm:w-full flex">
-                    <div
-                        class="relative w-1/2 border overflow-hidden flex rounded-l-lg"
-                    >
-                        <input
-                            type="text"
-                            class="relative py-2 px-4 pr-10 w-full outline-none text-gray-600 placeholder-gray-400 focus:outline-none focus:shadow-outline"
-                            placeholder="Search...."
-                            v-model="tableData.search"
-                            @keyup.enter="search"
-                        />
+                <div
+                    class="w-3/4 flex sm:flex-col lg:flex-row justify-between items-center sm:space-y-2 md:space-y-2 lg:space-y-0 "
+                >
+                    <div class=" text-gray-600 w-72 flex">
+                        <div
+                            class="relative w-full border overflow-hidden flex rounded-l-lg "
+                        >
+                            <input
+                                type="text"
+                                class="relative py-2 px-4 pr-10 w-full outline-none text-gray-600 placeholder-gray-400 focus:outline-none focus:shadow-outline"
+                                placeholder="Search...."
+                                v-model="tableData.search"
+                                @keyup.enter="search"
+                            />
+                            <button
+                                @click="clear"
+                                v-if="tableData.search.length"
+                                class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded text-base font-normal text-gray-400 text-center flex items-center justify-center focus:outline-none "
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-gray-500 hover:text-red-500"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
                         <button
-                            @click="clear"
-                            v-if="tableData.search.length"
-                            class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded text-base font-normal text-gray-400 text-center flex items-center justify-center focus:outline-none "
+                            @click="search"
+                            class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5 text-gray-500 hover:text-red-500"
+                                class="h-5 w-5 "
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -36,51 +59,44 @@
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                                 />
                             </svg>
                         </button>
                     </div>
-                    <button
-                        @click="search"
-                        class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 "
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
+                    <div class="text-gray-600 w-72">
+                        <select
+                            class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
+                            v-model="tableData.category"
+                            @change="fetch()"
                         >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            />
-                        </svg>
-                    </button>
-                </div>
-                <div class="text-gray-600 w-72">
-                    <select
-                        class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
-                        v-model="tableData.category"
-                        @change="fetch()"
-                    >
-                        <option value="">Filter by Category</option>
-                        <option
-                            v-for="(category, index) in ItemCategory"
-                            :key="index"
-                            :value="category.category_name"
+                            <option value="">Filter by Category</option>
+                            <option
+                                v-for="(category, index) in ItemCategory"
+                                :key="index"
+                                :value="category.category_name"
+                            >
+                                {{ category.category_name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="text-gray-600 w-72">
+                        <select
+                            class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
+                            v-model="tableData.price_group"
+                            @change="fetch()"
                         >
-                            {{ category.category_name }}
-                        </option>
-                    </select>
+                            <option value="">Choose Price Group</option>
+                            <option value="TAGBI">TAGBILARAN</option>
+                            <option value="TALBN">TALIBON</option>
+                        </select>
+                    </div>
                 </div>
+
                 <div class="text-gray-600">
                     <span class="text-sm text-gray-600">Show</span>
                     <select
-                        class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
+                        class="mb-2 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
                         v-model="tableData.length"
                         @change="fetch()"
                     >
@@ -117,6 +133,7 @@
                         <td class="td">{{ item.category_name }}</td>
                         <td>
                             <select
+                                v-if="item.item_price.length"
                                 class="cursor-pointer w-20 py-1 px-2 focus:outline-none my-1 border rounded focus:border-yellow-500 text-sm font-semibold "
                                 @change="getPrice($event, i)"
                             >
@@ -128,13 +145,19 @@
                                     {{ data.UOM }}
                                 </option>
                             </select>
+                            
+                            <span v-else class="text-xs text-red-500"> NO PRICE AVAILABLE</span>
                         </td>
                         <td class="td">
                             <span
                                 :id="`price-${i}`"
                                 class="text-blue-500 font-semibold"
                             >
-                                {{ item.item_price[0].price_with_vat }}</span
+                                {{
+                                    !item.item_price.length
+                                        ? "0.00"
+                                        : item.item_price[0].price_with_vat
+                                }}</span
                             >
                         </td>
                         <td class="td" v-if="item.status == 'active'">
@@ -448,7 +471,8 @@ export default {
                 search: "",
                 column: 1,
                 dir: "desc",
-                category: ""
+                category: "",
+                price_group: "TAGBI"
             },
             form: {
                 product_id: "",
@@ -562,7 +586,8 @@ export default {
                 search: this.tableData.search,
                 dir: this.tableData.dir,
                 column: this.tableData.column,
-                category: this.tableData.category
+                category: this.tableData.category,
+                price_group: this.tableData.price_group
             };
             this.getItems({
                 currentPage: this.currentPage,

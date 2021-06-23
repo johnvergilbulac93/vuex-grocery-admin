@@ -14,6 +14,7 @@ use App\gc_allowed_maximum_time_picker;
 use App\gc_delivery_charge;
 use App\gc_department;
 use App\gc_minimum_order_delivery;
+use App\gc_price_group;
 use App\gc_tenant;
 
 class SetUpController extends Controller
@@ -179,7 +180,15 @@ class SetUpController extends Controller
 
         $query = DB::table('bu_time_setups')
             ->join('locate_business_units', 'bu_time_setups.bunit_code', '=', 'locate_business_units.bunit_code')
-            ->select('bu_time_setups.id', 'locate_business_units.bunit_code', 'locate_business_units.business_unit', 'locate_business_units.acroname', 'bu_time_setups.time_in', 'bu_time_setups.time_out')
+            ->select(
+                'bu_time_setups.id', 
+                'locate_business_units.bunit_code', 
+                'locate_business_units.business_unit', 
+                'locate_business_units.acroname', 
+                'bu_time_setups.time_in', 
+                'bu_time_setups.time_out',
+                'bu_time_setups.status',
+            )
             ->orderBy('bu_time_setups.id', $dir);
 
         if ($searchValue) {
@@ -197,12 +206,12 @@ class SetUpController extends Controller
         if ($request->id === null) {
             $this->validate($request, [
                 'store'        => 'required|unique:bu_time_setups,bunit_code',
-                'opening_time'    => 'required|date_format:h:i',
+                'opening_time'    => 'required|date_format:h:i:s',
                 'closing_time'      => 'required|after:opening_time',
             ]);
         } else {
             $this->validate($request, [
-                'opening_time'    => 'required|date_format:h:i:s',
+                'opening_time'    => 'required|date_format:h:i',
                 'closing_time'      => 'required|after:opening_time',
             ]);
         }
@@ -433,7 +442,8 @@ class SetUpController extends Controller
             'brgy_id'           => $request->barangay,
             'transpo_id'        => $request->transportation,
             'charge_amt'        => floatval($request->charge_amount),
-            'rider_shared'      => floatval($request->rider_share)
+            'rider_shared'      => floatval($request->rider_share),
+            'status'            => $request->status
         ]);
     }
     public function show_charge(Request $request)
@@ -453,7 +463,6 @@ class SetUpController extends Controller
                 'gc_delivery_charges.chrg_id',
                 'gc_delivery_charges.prov_id',
                 'gc_delivery_charges.town_id',
-                'gc_delivery_charges.chrg_id',
                 'gc_delivery_charges.brgy_id',
                 'gc_delivery_charges.transpo_id',
                 'gc_delivery_charges.charge_amt',
@@ -521,5 +530,71 @@ class SetUpController extends Controller
     public function delete_charges($id)
     {
         gc_delivery_charge::where('chrg_id', $id)->delete();
+    }
+    public function price_group()
+    {
+        return gc_price_group::all();
+    }
+    public function show_price_group(Request $request)
+    {
+        $length = $request->length;
+        $dir = $request->dir;
+        $searchValue = $request->search;
+
+        $query = DB::table('locate_business_units')
+                ->join('gc_price_groups', 'locate_business_units.price_group_code','gc_price_groups.price_group_code')
+                ->select(
+                    'locate_business_units.bunit_code',
+                    'locate_business_units.business_unit',
+                    'locate_business_units.price_group_code',
+                    'gc_price_groups.price_group_name',
+                    'gc_price_groups.id'
+                )
+                ->where('locate_business_units.active',1)
+                ->orderBy('locate_business_units.bunit_code', $dir);
+
+        if ($searchValue) {
+            $query->where(function ($query) use ($searchValue) {
+                $query->where('locate_business_units.business_unit', 'like', '%' . $searchValue . '%')
+                    ->orWhere('gc_price_groups.price_group_name', 'like', '%' . $searchValue . '%');
+            });
+        }
+
+        $finalResults = $query->paginate($length);
+
+        return $finalResults;
+
+        return $query;
+    }
+    public function save_store_price_group(Request $request)
+    {
+
+        if ($request->id === null) {
+            $this->validate($request, [
+                'store'        => 'required|unique:locate_business_units,bunit_code',
+                'price_group'    => 'required',
+            ]);
+        } else {
+            $this->validate($request, [
+                'store'        => 'required',
+                'price_group'    => 'required',
+            ]);
+        }
+        DB::table('locate_business_units')->where('locate_business_units.bunit_code',$request->id)->update([
+            'price_group_code' => $request->price_group
+        ]);
+    }
+    public function business_time_active(Request $request)
+    {
+        Bu_time_setup::whereId($request->id)->update([
+            'status' => 0
+        ]);
+
+    }
+    public function business_time_inactive(Request $request)
+    {
+        Bu_time_setup::whereId($request->id)->update([
+            'status' => 1
+        ]);
     }
 }

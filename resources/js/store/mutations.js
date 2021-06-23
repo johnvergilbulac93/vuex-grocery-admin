@@ -114,3 +114,12 @@ export const UPLOAD_FLAG = (state, flag) => {
 export const TOTAL_NOT_AVAILABLE = (state, payload) => {
      state.TotalItemNotAvailable = payload
 }
+export const SET_PRICE_GROUP = (state, payload) => {
+     state.PriceGroup = payload
+}
+export const SET_STORE_PRICE_GROUP = (state, payload) => {
+     state.StorePriceGroup = payload
+}
+export const SUCCESS = (state, payload) => {
+     state.isSuccess = payload
+}

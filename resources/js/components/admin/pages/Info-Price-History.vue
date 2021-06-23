@@ -1,98 +1,126 @@
 <template>
-    <div class="container p-5">
-        <div
-            class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
-        >
-            <div class=" text-gray-600 md:w-1/2 sm:w-full flex">
-                <div class="relative w-1/2 border overflow-hidden flex rounded-l-lg">
-                    <input
-                        type="text"
-                        class="relative py-2 px-4 pr-10 w-full outline-none text-gray-600 placeholder-gray-400 focus:outline-none focus:shadow-outline"
-                        placeholder="Search...."
-                        v-model="tableData.search"
-                        @keyup.enter="search"
-                    />
-                    <button
-                        @click="clear"
-                        v-if="tableData.search.length"
-                        class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded text-base font-normal text-gray-400 text-center flex items-center justify-center focus:outline-none "
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 text-gray-500 hover:text-red-500"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
+    <div class="p-2 ">
+        <div class="h-96 overflow-y-scroll">
+            <div
+                class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
+            >
+                <div class="w-1/2 flex sm:flex-col md:flex-row space-x-4">
+                    <div class="w-1/2 text-gray-600 flex">
+                        <div
+                            class="relative sm:w-full border overflow-hidden flex rounded-l-lg"
                         >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"
+                            <input
+                                type="text"
+                                class="relative py-2 px-4 pr-10 w-full outline-none text-gray-600 placeholder-gray-400 focus:outline-none focus:shadow-outline"
+                                placeholder="Search...."
+                                v-model="tableData.search"
+                                @keyup.enter="search"
                             />
-                        </svg>
-                    </button>
+                            <button
+                                @click="clear"
+                                v-if="tableData.search.length"
+                                class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded text-base font-normal text-gray-400 text-center flex items-center justify-center focus:outline-none "
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-gray-500 hover:text-red-500"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                        <button
+                            @click="search"
+                            class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 "
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="text-gray-600 w-48">
+                        <select
+                            class="py-2 px-4 w-full focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
+                            v-model="tableData.price_group"
+                            @change="fetch()"
+                        >
+                            <option value="">Choose Price Group</option>
+                            <option value="TAGBI">TAGBILARAN</option>
+                            <option value="TALBN">TALIBON</option>
+                        </select>
+                    </div>
                 </div>
-                <button
-                    @click="search"
-                    class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5 "
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+                <div class="text-gray-600">
+                    <span class="text-sm text-gray-600">Show</span>
+                    <select
+                        class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
+                        v-model="tableData.length"
+                        @change="fetch()"
                     >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        />
-                    </svg>
-                </button>
+                        <option
+                            v-for="(records, index) in perPage"
+                            :key="index"
+                            :value="records"
+                        >
+                            {{ records }}
+                        </option>
+                    </select>
+                    <span class="text-sm text-gray-600">Entries</span>
+                </div>
             </div>
-            <div class="text-gray-600">
-                <span class="text-sm text-gray-600">Show</span>
-                <select
-                    class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
-                    v-model="tableData.length"
-                    @change="fetch()"
-                >
-                    <option
-                        v-for="(records, index) in perPage"
-                        :key="index"
-                        :value="records"
+            <Datatable
+                :columns="columns"
+                :sortKey="sortKey"
+                :sortOrders="sortOrders"
+                @sort="sortBy"
+            >
+                <tbody class="tbody text-center">
+                    <tr class="tr" v-if="!PriceChangeInfo.length">
+                        <td colspan="7" class="td font-semibold tracking-wider">
+                            NO DATA AVAILABLE
+                        </td>
+                    </tr>
+                    <tr
+                        class="tr"
+                        v-for="(data, i) in PriceChangeInfo"
+                        :key="i"
                     >
-                        {{ records }}
-                    </option>
-                </select>
-                <span class="text-sm text-gray-600">Entries</span>
-            </div>
+                        <td class="td">{{ data.itemcode }}</td>
+                        <td class="td">{{ data.product_name }}</td>
+                        <td class="td">{{ data.UOM }}</td>
+                        <td
+                            class=" p-2 whitespace-nowrap text-sm text-red-600 text-center"
+                        >
+                            {{ data.prev_price }}
+                        </td>
+                        <td
+                            class=" p-2 whitespace-nowrap text-sm text-blue-600 text-center"
+                        >
+                            {{ data.new_price }}
+                        </td>
+                    </tr>
+                </tbody>
+            </Datatable>
         </div>
-        <Datatable
-            :columns="columns"
-            :sortKey="sortKey"
-            :sortOrders="sortOrders"
-            @sort="sortBy"
-        >
-            <tbody class="tbody text-center">
-                <tr class="tr" v-if="!PriceChangeInfo.length">
-                    <td colspan="7" class="td font-semibold tracking-wider">
-                        NO DATA AVAILABLE
-                    </td>
-                </tr>
-                <tr class="tr" v-for="(data, i) in PriceChangeInfo" :key="i">
-                    <td class="td">{{ data.itemcode }}</td>
-                    <td class="td">{{ data.product_name }}</td>
-                    <td class="td">{{ data.UOM }}</td>
-                    <td class="td">{{ data.prev_price }}</td>
-                    <td class="td">{{ data.new_price }}</td>
-                </tr>
-            </tbody>
-        </Datatable>
-
         <div class="border-t ">
             <div class="flex justify-between items-center mt-2">
                 <span class="text-sm  text-gray-600"
@@ -148,7 +176,8 @@ export default {
                 length: 10,
                 search: "",
                 column: 1,
-                dir: "asc"
+                dir: "asc",
+                price_group: "TAGBI"
             },
             currentPage: 1
         };
@@ -178,7 +207,8 @@ export default {
                 length: this.tableData.length,
                 search: this.tableData.search,
                 dir: this.tableData.dir,
-                column: this.tableData.column
+                column: this.tableData.column,
+                price_group: this.tableData.price_group
             };
             this.getPriceChangedInfo({
                 currentPage: this.currentPage,

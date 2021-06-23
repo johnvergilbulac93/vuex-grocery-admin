@@ -114,9 +114,28 @@
                             </button>
                         </td>
                         <td class="td uppercase">{{ user.name }}</td>
-                        <td class="td">{{ user.username }}</td>
-                        <td class="td">{{ user.usertype }}</td>
                         <td class="td">{{ user.business_unit }}</td>
+                        <td class="td">
+                            {{ user.created_at | formatDateNoTime }}
+                        </td>
+                        <td class="td" v-if="user.status == 1">
+                            <a @click="statusActive(user)">
+                                <span
+                                    class="bg-green-400 px-2 py-1 rounded-full text-gray-50 font-semibold text-xs hover:bg-green-500 hover:text-white transition duration-500"
+                                >
+                                    Active</span
+                                >
+                            </a>
+                        </td>
+                        <td class="text-center" v-else>
+                            <a @click="statusInActive(user)">
+                                <span
+                                    class="bg-red-500 px-2 py-1 rounded-full text-gray-50 font-semibold text-xs hover:bg-red-600 hover:text-white transition duration-500"
+                                >
+                                    Inactive</span
+                                >
+                            </a>
+                        </td>
                         <td class="td">
                             <button
                                 class="focus:outline-none"
@@ -252,6 +271,9 @@
                                         <input
                                             type="text"
                                             list="employee"
+                                            v-bind:class="{
+                                                'border-red-600': errors.name
+                                            }"
                                             v-model="form.name"
                                             @keyup="autoComplete"
                                             class="w-full form-input font-semibold "
@@ -289,6 +311,9 @@
                                     >
                                     <input
                                         type="text"
+                                        v-bind:class="{
+                                            'border-red-600': errors.username
+                                        }"
                                         v-model="form.username"
                                         class="w-full form-input font-semibold"
                                     />
@@ -299,6 +324,9 @@
                                     >
                                     <select
                                         name=""
+                                        v-bind:class="{
+                                            'border-red-600': errors.usertype
+                                        }"
                                         class="w-full form-input font-semibold"
                                         v-model="form.usertype"
                                     >
@@ -317,6 +345,9 @@
                                     >
                                     <select
                                         name=""
+                                        v-bind:class="{
+                                            'border-red-600': errors.store
+                                        }"
                                         class="w-full form-input font-semibold"
                                         v-model="form.store"
                                     >
@@ -405,10 +436,10 @@ export default {
         let sortOrders = {};
         let columns = [
             { width: "5%", label: "", name: "id" },
-            { width: "25%", label: "Name", name: "name" },
-            { width: "15%", label: "User Name", name: "username" },
-            { width: "15%", label: "User Type", name: "usertype_id" },
-            { width: "20%", label: "Location", name: "bunit_code" },
+            { width: "25%", label: "Full Name", name: "name" },
+            { width: "15%", label: "Location", name: "username" },
+            { width: "15%", label: "Registered Date", name: "usertype_id" },
+            { width: "20%", label: "Status", name: "bunit_code" },
             { width: "15%", label: "", name: "idss" }
         ];
         columns.forEach(column => {
@@ -451,7 +482,8 @@ export default {
             "UserTypes",
             "Users",
             "Employees",
-            "Stores"
+            "Stores",
+            "isSuccess"
         ])
     },
     methods: {
@@ -463,15 +495,34 @@ export default {
             "getEmployee",
             "saveUser",
             "deleteUser",
-            "updateUser"
+            "updateUser",
+            "activeUser",
+            "inactiveUser"
         ]),
         ...mapMutations(["CLEAR_EMPLOYEE"]),
+        statusActive(data) {
+            let user = {
+                id: data.id
+            };
+            this.activeUser({ user });
+        },
+        statusInActive(data) {
+            let user = {
+                id: data.id
+            };
+            this.inactiveUser({ user });
+        },
         reset() {
             this.form.name = "";
             this.form.emp_id = "";
             this.form.store = "";
             this.form.username = "";
             this.form.usertype = "";
+            this.errors.name = ""
+            this.errors.store = ""
+            this.errors.usertype = ""
+            this.errors.username = ""
+
         },
         update() {
             let user = {
@@ -484,7 +535,6 @@ export default {
                 password: this.form.password
             };
             this.updateUser({ user });
-            this.fetch();
         },
         create() {
             let user = {
@@ -496,7 +546,6 @@ export default {
                 password: this.form.password
             };
             this.saveUser({ user });
-            this.fetch();
         },
         clearSearchEmployee() {
             this.CLEAR_EMPLOYEE();
@@ -560,6 +609,7 @@ export default {
         selectEmp(employee) {
             this.form.name = employee.name;
             this.form.emp_id = employee.emp_id;
+            this.form.username = employee.emp_id;
             this.CLEAR_EMPLOYEE();
         },
         autoComplete: _.debounce(function() {
@@ -579,6 +629,9 @@ export default {
         }
     },
     mounted() {
+        Fire.$on("reload_user", () => {
+            this.fetch();
+        });
         this.fetch();
         this.userType();
         this.getStore();

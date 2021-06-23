@@ -1,98 +1,96 @@
 <template>
     <div class="container bg-gray-50 shadow-lg p-5 rounded text-gray-500">
+        <div class="mb-5 bg-gray-100 p-2">
+            <label for="" class="text-gray-500 text-lg font-semibold"
+                >Tenant</label
+            >
+        </div>
         <div
             class="grid lg:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 sm:grid-flow-row sm:grid-cols-1 sm:grid-rows-1 gap-2"
         >
             <div class="p-2">
-                <label
-                    for="title"
-                    class="text-lg tracking-tight font-semibold text-gray-500"
-                    >Setup Tenant</label
-                >
-                <div class="mt-5">
-                    <form @submit.prevent="editMode ? update() : create()">
-                        <div class="flex flex-col space-y-2">
-                            <div class="w-full space-y-1">
-                                <label for="store">Store</label>
-                                <select
-                                    v-model="form.store"
-                                    tabindex="1"
-                                    v-bind:class="{
-                                        'border-red-600': errors.store
-                                    }"
-                                    class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
-                                >
-                                    <option value="">Select Store</option>
-                                    <option
-                                        :value="store.bunit_code"
-                                        v-for="store in Stores"
-                                        :key="store.bunit_code"
-                                        >{{ store.business_unit }}
-                                    </option>
-                                </select>
-                                <p
-                                    class="text-red-500 text-center text-sm"
-                                    v-if="errors.store"
-                                >
-                                    <small>{{ errors.store[0] }}</small>
-                                </p>
-                            </div>
-                            <div class="w-full space-y-1">
-                                <label for="store">Department</label>
-                                <select
-                                    v-model="form.department"
-                                    tabindex="2"
-                                    v-bind:class="{
-                                        'border-red-600': errors.department
-                                    }"
-                                    class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
-                                >
-                                    <option value="">Select Department</option>
-                                    <option
-                                        :value="dept.dept_id"
-                                        v-for="dept in Departments"
-                                        :key="dept.dept_id"
-                                        >{{ dept.name }}
-                                    </option>
-                                </select>
-                                <p
-                                    class="text-red-500 text-center text-sm"
-                                    v-if="errors.department"
-                                >
-                                    <small>{{ errors.department[0] }}</small>
-                                </p>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <input
-                                    v-model="form.status"
-                                    type="checkbox"
-                                    :checked="[form.status == 1]"
-                                    tabindex="3"
-                                    class="w-6 h-6 appearance-none rounded bg-white checked:bg-yellow-600 checked:border-gray-300 border-2 cursor-pointer"
-                                />
-                                <label
-                                    for="store"
-                                    class="font-semibold text-gray-500 text-md tracking-normal"
-                                    >Status</label
-                                >
-                            </div>
+                <form @submit.prevent="editMode ? update() : create()">
+                    <div class="flex flex-col space-y-2">
+                        <div class="w-full space-y-1">
+                            <label for="store">Store</label>
+                            <select
+                                v-model="form.store"
+                                tabindex="1"
+                                v-bind:class="{
+                                    'border-red-600': errors.store
+                                }"
+                                class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                            >
+                                <option value="">Select Store</option>
+                                <option
+                                    :value="store.bunit_code"
+                                    v-for="store in Stores"
+                                    :key="store.bunit_code"
+                                    >{{ store.business_unit }}
+                                </option>
+                            </select>
+                            <p
+                                class="text-red-500 text-center text-sm"
+                                v-if="errors.store"
+                            >
+                                <small>{{ errors.store[0] }}</small>
+                            </p>
                         </div>
+                        <div class="w-full space-y-1">
+                            <label for="store">Department</label>
+                            <select
+                                v-model="form.department"
+                                tabindex="2"
+                                v-bind:class="{
+                                    'border-red-600': errors.department
+                                }"
+                                class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                            >
+                                <option value="">Select Department</option>
+                                <option
+                                    :value="dept.dept_id"
+                                    v-for="dept in Departments"
+                                    :key="dept.dept_id"
+                                    >{{ dept.name }}
+                                </option>
+                            </select>
+                            <p
+                                class="text-red-500 text-center text-sm"
+                                v-if="errors.department"
+                            >
+                                <small>{{ errors.department[0] }}</small>
+                            </p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input
+                                v-model="form.status"
+                                type="checkbox"
+                                :checked="[form.status == 1]"
+                                tabindex="3"
+                                class="w-6 h-6 appearance-none rounded bg-white checked:bg-yellow-600 checked:border-gray-300 border-2 cursor-pointer"
+                            />
+                            <label
+                                for="store"
+                                class="font-semibold text-gray-500 text-md tracking-normal"
+                                >Status</label
+                            >
+                        </div>
+                    </div>
 
-                        <button
-                            tabindex="4"
-                            class="my-3 w-full bg-yellow-500 py-2 px-4 text-white font-semibold hover:bg-yellow-600 transition duration-500 focus:outline-none"
-                        >
-                            {{ !editMode ? "Save" : "Update" }}
-                        </button>
-                    </form>
                     <button
-                        @click="reset"
-                        tabindex="5"
-                        class="w-full bg-gray-500  py-2 px-4 text-white font-semibold hover:bg-gray-600 transition duration-500 focus:outline-none"
+                        tabindex="4"
+                        class="my-3 w-full bg-yellow-500 py-2 px-4 text-white font-semibold hover:bg-yellow-600 transition duration-500 focus:outline-none"
                     >
-                        Clear
+                        {{ !editMode ? "Save" : "Update" }}
                     </button>
-                </div>
+                </form>
+                <button
+                    @click="reset"
+                    tabindex="5"
+                    class="w-full bg-gray-500  py-2 px-4 text-white font-semibold hover:bg-gray-600 transition duration-500 focus:outline-none"
+                >
+                    Clear
+                </button>
             </div>
             <div class="col-span-2">
                 <div
@@ -396,7 +394,6 @@ export default {
                 tenant: tenant
             });
             this.reset();
-            this.fetch();
         },
         create() {
             let tenant = {
@@ -408,7 +405,6 @@ export default {
                 tenant: tenant
             });
             this.reset();
-            this.fetch();
         },
         clear() {
             this.tableData.search = "";
@@ -427,9 +423,12 @@ export default {
         }
     },
     mounted() {
+        Fire.$on("reload_tenant", () => {
+            this.fetch();
+        });
+        this.fetch();
         this.getStore();
         this.getDepartment();
-        this.fetch();
     }
 };
 </script>

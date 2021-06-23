@@ -10,6 +10,7 @@ export default {
           from: "",
           to: ""
      },
+     isSuccess: false,
      TotalItemNotAvailable: 0,
      isModal: false,
      isLoading: false,
@@ -35,4 +36,6 @@ export default {
      Employees: [],
      Items: [],
      ItemCategory: [],
+     PriceGroup:[],
+     StorePriceGroup:[]
 }

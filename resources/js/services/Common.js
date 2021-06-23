@@ -38,7 +38,10 @@ export default {
     ViewEmployee(employee){
         return BaseApi.get(`/employees`, {params: {employee: employee} })
     },
-    ViewItemCategory(category){
+    ViewItemCategory(){
         return BaseApi.get('/count/category')
+    },
+    ViewPriceGroup(){
+        return BaseApi.get('/price_group')
     }
 }

@@ -6,13 +6,12 @@ use App\gc_product_item;
 use App\gc_product_price;
 use App\gc_product_uom;
 use App\gc_item_log_available;
-use App\gc_product_price_history;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 
 class ItemController extends Controller
@@ -36,34 +35,7 @@ class ItemController extends Controller
 
     public function getItem(Request $request)
     {
-                $columns = ['product_id', 'itemcode', 'product_name', 'category_name', 'product_id'];
-        // 
-        //         $length = $request->input('length');
-        //         $column = $request->input('column');
-        //         $dir = $request->input('dir');
-        //         $searchValue = $request->input('search');
-        //         $categoryValue = $request->input('category');
-        // 
-        //         // dd($categoryValue);
-        // 
-        //         $query = gc_product_item::with(['items'])->where('status', 'active')->orderBy($columns[$column], $dir);
-        // 
-        //         if ($searchValue) {
-        // 
-        //             $query->where(function ($query) use ($searchValue) {
-        //                 $query->where('itemcode', 'like', '%' . $searchValue . '%')
-        //                     ->orWhere('product_name', 'like', '%' . $searchValue . '%');
-        //             });
-        //         }
-        // 
-        //         if ($categoryValue) {
-        //             $query->where(function ($query) use ($categoryValue) {
-        //                 $query->where('category_name', 'like', '%' . $categoryValue . '%');
-        //             });
-        //         }
-        // 
-        //         $projects = $query->paginate($length);
-        //         return ['data' => $projects, 'draw' => $request->input('draw')];
+        $columns = ['product_id', 'itemcode', 'product_name', 'category_name', 'product_id'];
 
         $length = $request->input('length');
         $column = $request->input('column');
@@ -134,12 +106,13 @@ class ItemController extends Controller
         }
 
         return $projects;
-
     }
     public function getCentralItem(Request $request)
     {
 
         $columns = ['itemcode', 'product_name', 'category_no', 'product_id', 'product_id', 'status', 'product_id'];
+
+        $price_group = $request->input('price_group');
 
         $length = $request->input('length');
         $column = $request->input('column');
@@ -147,7 +120,9 @@ class ItemController extends Controller
         $searchValue = $request->input('search');
         $categoryValue = $request->input('category');
 
-        $query = gc_product_item::with(['item_price'])->orderBy($columns[$column], $dir);
+        $query = gc_product_item::with(['item_price' => function (HasMany $q) use ($price_group) {
+            $q->where('price_group',$price_group);
+        }])->orderBy($columns[$column], $dir);
 
         if ($searchValue) {
             $query->where(function ($query) use ($searchValue) {
@@ -282,8 +257,8 @@ class ItemController extends Controller
 
     public function tag_item_enable($id)
     {
-        gc_item_log_available::where('store','=', Auth::user()->bunit_code)
-            ->where('itemcode','=', $id)
+        gc_item_log_available::where('store', '=', Auth::user()->bunit_code)
+            ->where('itemcode', '=', $id)
             ->delete();
     }
 
@@ -420,6 +395,7 @@ class ItemController extends Controller
     public function price_count_changed_info(Request $request)
     {
 
+        $price_group = $request->input('price_group');;
         $length = $request->input('length');
         $column = $request->input('column');
         $dir = $request->input('dir');
@@ -428,6 +404,7 @@ class ItemController extends Controller
         $query =  DB::table('gc_product_items')
             ->join('gc_product_price_histories', 'gc_product_items.itemcode', '=', 'gc_product_price_histories.itemcode')
             ->whereDate('gc_product_price_histories.update_at', Carbon::today()->toDateString())
+            ->where('gc_product_price_histories.price_group',  $price_group)
             ->select('*')
             ->whereIn('gc_product_items.itemcode', function ($query) {
                 $query->select('gc_product_price_histories.itemcode')->from('gc_product_price_histories');
@@ -446,22 +423,20 @@ class ItemController extends Controller
         return  $final_result;
     }
 
-    public function store_available_item(Request $request)
+    public function item_count_available()
     {
-        $store = $request->get('store_id');
-        return gc_product_item::with(['item_price'])
-            ->where('status', 'active')
-            ->whereNotIn('gc_product_items.itemcode', function ($query) use ($store) {
-                $query->select('gc_item_log_availables.itemcode')
-                    ->from('gc_item_log_availables')
-                    ->where('gc_item_log_availables.store', '=', $store);
-            })->paginate();
+
+        return DB::table('gc_item_log_availables')
+            ->join('locate_business_units', 'locate_business_units.bunit_code', '=', 'store')
+            ->select('locate_business_units.business_unit', DB::raw('COUNT(store) as store'))
+            ->groupBy('store')
+            ->get();
     }
 
     public function count_per_category()
     {
         return DB::table('gc_product_items')
-            ->select('category_no','category_name', DB::raw('COUNT(category_no) as count'))
+            ->select('category_no', 'category_name', DB::raw('COUNT(category_no) as count'))
             ->orderBy('count', 'desc')
             ->groupBy('category_name')
             ->get();

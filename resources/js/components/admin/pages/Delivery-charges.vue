@@ -6,174 +6,109 @@
                     >Delivery Charges</label
                 >
             </div>
-            <div>
+            <div
+                class="flex sm:flex-wrap md:flex-row  sm:flex-col sm:space-y-2 justify-between items-center pb-2"
+            >
                 <div
-                    class="flex sm:flex-wrap md:flex-row  sm:flex-col sm:space-y-2 justify-between items-center pb-2"
+                    class="w-1/2 flex md:flex-row justify-between sm:flex-col "
                 >
-                    <div
-                        class="w-1/2 flex md:flex-row justify-between sm:flex-col "
-                    >
-                        <div class="w-56">
-                            <span class="mb-10  text-gray-600">Province</span>
-                            <div class="py-1">
-                                <select
-                                    @change="fetch()"
-                                    class="font-semibold py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 w-full"
-                                    v-model="tableData.province"
-                                >
-                                    <option value="">Select Province</option>
-                                    <option
-                                        v-for="(prov, index) in Provinces"
-                                        :key="index"
-                                        :value="prov.prov_id"
-                                    >
-                                        {{ prov.prov_name }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="w-56 md:mr-2 md:ml-2 sm:mr-0 sm:ml-0">
-                            <span class="mb-10 text-gray-600 ">Town</span>
-                            <div class="py-1">
-                                <select
-                                    @change="fetch()"
-                                    class="font-semibold py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 w-full"
-                                    v-model="tableData.town"
-                                >
-                                    <option value="">Select Town</option>
-                                    <option
-                                        v-for="(town, index) in Towns"
-                                        :key="index"
-                                        :value="town.town_id"
-                                    >
-                                        {{ town.town_name }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="w-56">
-                            <span class="mb-10 text-gray-600"
-                                >Transportation</span
+                    <div class="w-56">
+                        <span class="mb-10  text-gray-600">Province</span>
+                        <div class="py-1">
+                            <select
+                                @change="fetch()"
+                                class="font-semibold py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 w-full"
+                                v-model="tableData.province"
                             >
-                            <div class="py-1">
-                                <select
-                                    @change="fetch()"
-                                    class="font-semibold py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 w-full"
-                                    v-model="tableData.transportation"
+                                <option value="">Select Province</option>
+                                <option
+                                    v-for="(prov, index) in Provinces"
+                                    :key="index"
+                                    :value="prov.prov_id"
                                 >
-                                    <option value=""
-                                        >Select Transportation</option
-                                    >
-                                    <option
-                                        v-for="(transpo,
-                                        index) in Transportations"
-                                        :key="index"
-                                        :value="transpo.id"
-                                    >
-                                        {{ transpo.transpo_name }}
-                                    </option>
-                                </select>
-                            </div>
+                                    {{ prov.prov_name }}
+                                </option>
+                            </select>
                         </div>
                     </div>
-                    <div class="text-gray-600">
-                        <span class="text-sm">Show</span>
-                        <select
-                            @change="fetch()"
-                            class="py-2 px-4 mt-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
-                            v-model="tableData.length"
-                        >
-                            <option
-                                v-for="(records, index) in perPage"
-                                :key="index"
-                                :value="records"
+                    <div class="w-56 md:mr-2 md:ml-2 sm:mr-0 sm:ml-0">
+                        <span class="mb-10 text-gray-600 ">Town</span>
+                        <div class="py-1">
+                            <select
+                                @change="fetch()"
+                                class="font-semibold py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 w-full"
+                                v-model="tableData.town"
                             >
-                                {{ records }}
-                            </option>
-                        </select>
-                        <span class="text-sm">Entries</span>
+                                <option value="">Select Town</option>
+                                <option
+                                    v-for="(town, index) in Towns"
+                                    :key="index"
+                                    :value="town.town_id"
+                                >
+                                    {{ town.town_name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="w-56">
+                        <span class="mb-10 text-gray-600">Transportation</span>
+                        <div class="py-1">
+                            <select
+                                @change="fetch()"
+                                class="font-semibold py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 w-full"
+                                v-model="tableData.transportation"
+                            >
+                                <option value="">Select Transportation</option>
+                                <option
+                                    v-for="(transpo, index) in Transportations"
+                                    :key="index"
+                                    :value="transpo.id"
+                                >
+                                    {{ transpo.transpo_name }}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <Datatable
-                    :columns="columns"
-                    :sortKey="sortKey"
-                    :sortOrders="sortOrders"
-                    @sort="sortBy"
-                >
-                    <tbody class="tbody ">
-                        <tr class="tr" v-if="!DCharges.length">
-                            <td colspan="8" class=" font-semibold td">
-                                NO DATA AVAILABLE
-                            </td>
-                        </tr>
-                        <tr v-for="(charge, i) in DCharges" :key="i" class="tr">
-                            <td class="td">
-                                <button
-                                    class="p-1 focus:outline-none"
-                                    @click="remove(charge.chrg_id)"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5 text-gray-500 hover:text-red-600"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                        />
-                                    </svg>
-                                </button>
-                            </td>
-                            <td class="td">{{ charge.prov_name }}</td>
-                            <td class="td">{{ charge.town_name }}</td>
-                            <td class="td">
-                                {{ !charge.brgy ? "" : charge.brgy.brgy_name }}
-                            </td>
-                            <td class="td">{{ charge.transpo_name }}</td>
-                            <td class="td">{{ charge.charge_amt }}</td>
-                            <td class="td">{{ charge.rider_shared }}</td>
-                            <td class="td">
-                                <button class="p-i focus:outline-none" @click="updateModal(charge)">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5 text-gray-500 hover:text-green-500"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                                        />
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </Datatable>
-                <div class="border-t ">
-                    <div class="flex justify-between items-center mt-2">
-                        <span class="text-sm  text-gray-600"
-                            >Showing
-                            {{ !pagination.from ? 0 : pagination.from }} to
-                            {{ !pagination.to ? 0 : pagination.to }} of
-                            {{ pagination.total }} entries</span
+                <div class="text-gray-600">
+                    <span class="text-sm">Show</span>
+                    <select
+                        @change="fetch()"
+                        class="py-2 px-4 mt-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
+                        v-model="tableData.length"
+                    >
+                        <option
+                            v-for="(records, index) in perPage"
+                            :key="index"
+                            :value="records"
                         >
-                        <div class="flex flex-row space-x-1">
+                            {{ records }}
+                        </option>
+                    </select>
+                    <span class="text-sm">Entries</span>
+                </div>
+            </div>
+            <Datatable
+                :columns="columns"
+                :sortKey="sortKey"
+                :sortOrders="sortOrders"
+                @sort="sortBy"
+            >
+                <tbody class="tbody ">
+                    <tr class="tr" v-if="!DCharges.length">
+                        <td colspan="8" class=" font-semibold td">
+                            NO DATA AVAILABLE
+                        </td>
+                    </tr>
+                    <tr v-for="(charge, i) in DCharges" :key="i" class="tr">
+                        <td class="td">
                             <button
-                                :disabled="!pagination.prevPageUrl"
-                                @click="previousPage(pagination.prevPageUrl)"
-                                class="footer-btn flex items-center"
+                                class="p-1 focus:outline-none"
+                                @click="remove(charge.chrg_id)"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5"
+                                    class="h-5 w-5 text-gray-500 hover:text-red-600"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -182,32 +117,106 @@
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                         stroke-width="2"
-                                        d="M15 19l-7-7 7-7"
-                                    /></svg
-                                >Prev
-                            </button>
-                            <button
-                                :disabled="!pagination.nextPageUrl"
-                                @click="nextPage(pagination.nextPageUrl)"
-                                class="footer-btn flex items-center"
-                            >
-                                Next
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M9 5l7 7-7 7"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                                     />
                                 </svg>
                             </button>
-                        </div>
+                        </td>
+                        <td class="td">{{ charge.prov_name }}</td>
+                        <td class="td">{{ charge.town_name }}</td>
+                        <td class="td">
+                            {{ !charge.brgy ? "" : charge.brgy.brgy_name }}
+                        </td>
+                        <td class="td">{{ charge.transpo_name }}</td>
+                        <td class="td">{{ charge.charge_amt }}</td>
+                        <td class="td">{{ charge.rider_shared }}</td>
+                        <td class="td" v-if="charge.status == 1">
+                            <span
+                                class="bg-green-400 px-2 py-1 rounded-full text-gray-50 font-semibold text-xs hover:bg-green-500 hover:text-white transition duration-500"
+                            >
+                                Active</span
+                            >
+                        </td>
+                        <td class="text-center" v-else>
+                            <span
+                                class="bg-red-500 px-2 py-1 rounded-full text-gray-50 font-semibold text-xs hover:bg-red-600 hover:text-white transition duration-500"
+                            >
+                                Inactive</span
+                            >
+                        </td>
+                        <td class="td">
+                            <button
+                                class="p-i focus:outline-none"
+                                @click="updateModal(charge)"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-gray-500 hover:text-green-500"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                    />
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </Datatable>
+            <div class="border-t ">
+                <div class="flex justify-between items-center mt-2">
+                    <span class="text-sm  text-gray-600"
+                        >Showing {{ !pagination.from ? 0 : pagination.from }} to
+                        {{ !pagination.to ? 0 : pagination.to }} of
+                        {{ pagination.total }} entries</span
+                    >
+                    <div class="flex flex-row space-x-1">
+                        <button
+                            :disabled="!pagination.prevPageUrl"
+                            @click="previousPage(pagination.prevPageUrl)"
+                            class="footer-btn flex items-center"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M15 19l-7-7 7-7"
+                                /></svg
+                            >Prev
+                        </button>
+                        <button
+                            :disabled="!pagination.nextPageUrl"
+                            @click="nextPage(pagination.nextPageUrl)"
+                            class="footer-btn flex items-center"
+                        >
+                            Next
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -222,14 +231,23 @@
             >
                 <div
                     v-if="isModal"
-                    class="bg-black bg-opacity-40 fixed top-10 left-0 flex justify-center items-center w-full min-h-screen"
+                    class="bg-black bg-opacity-40 fixed top-16 left-0 flex justify-center items-center w-full min-h-screen"
                 >
                     <div
                         class="sm:w-full lg:w-1/2  bg-white rounded sm:m-5 md:m-5"
                     >
                         <div class="p-2 flex justify-between items-center">
-                            <label for="" class="text-xl font-semibold text-gray-500"
+                            <label
+                                for=""
+                                v-if="!editMode"
+                                class="text-xl font-semibold text-gray-500"
                                 >Setup new delivery charges</label
+                            >
+                            <label
+                                for=""
+                                v-if="editMode"
+                                class="text-xl font-semibold text-gray-500"
+                                >Update delivery charges</label
                             >
                             <a
                                 @click="closeModal"
@@ -278,7 +296,7 @@
                                     <small>{{ errors.province[0] }}</small>
                                 </p>
                             </div>
-                            <div class="flex flex-row space-x-4 my-4 w-full ">
+                            <div class="flex flex-row space-x-4 my-2 w-full ">
                                 <div class="flex flex-col w-1/2">
                                     <label for="town">Town</label>
                                     <select
@@ -401,7 +419,7 @@
                                     }}</small>
                                 </p>
                             </div>
-                            <div class="flex flex-row space-x-4 my-4">
+                            <div class="flex flex-row space-x-4 my-2">
                                 <div class="flex flex-col w-1/2">
                                     <label for="D-Charges"
                                         >Delivery Charge</label
@@ -443,6 +461,20 @@
                                         }}</small>
                                     </p>
                                 </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input
+                                    v-model="form.status"
+                                    type="checkbox"
+                                    :checked="[form.status == 1]"
+                                    tabindex="3"
+                                    class="w-6 h-6 appearance-none rounded bg-white checked:bg-yellow-600 checked:border-gray-300 border-2 cursor-pointer"
+                                />
+                                <label
+                                    for="store"
+                                    class="font-semibold text-gray-500 text-md tracking-normal"
+                                    >Status</label
+                                >
                             </div>
                         </div>
                         <div
@@ -516,6 +548,7 @@ export default {
             { width: "15%", label: "Transportation", name: "transpo_id" },
             { width: "15%", label: "Charge Amount", name: "charge_amt" },
             { width: "15%", label: "Rider Share", name: "rider_shared" },
+            { width: "15%", label: "Status", name: "statuss" },
             { width: "10%", label: "", name: "" }
         ];
         columns.forEach(column => {
@@ -541,7 +574,8 @@ export default {
                 barangay: "",
                 transportation: "",
                 charge_amount: "",
-                rider_share: ""
+                rider_share: "",
+                status: ""
             },
             currentPage: 1
         };
@@ -627,6 +661,7 @@ export default {
             this.form.transportation = charge.transpo_id;
             this.form.charge_amount = charge.charge_amt;
             this.form.rider_share = charge.rider_shared;
+            this.form.status = charge.status;
         },
         addModal() {
             this.reset();
@@ -643,10 +678,10 @@ export default {
                 barangay: this.form.barangay,
                 transportation: this.form.transportation,
                 charge_amount: this.form.charge_amount,
-                rider_share: this.form.rider_share
+                rider_share: this.form.rider_share,
+                status: this.form.status
             };
             this.updateCharge({ charge });
-            this.fetch();
         },
         create() {
             let charge = {
@@ -658,7 +693,6 @@ export default {
                 rider_share: this.form.rider_share
             };
             this.saveCharge({ charge });
-            this.fetch();
         },
         previousPage() {
             this.currentPage--;
@@ -695,6 +729,9 @@ export default {
         }
     },
     mounted() {
+        Fire.$on("reload_charge", () => {
+            this.fetch();
+        });
         this.fetch();
         this.getBarangay();
         this.getTown();

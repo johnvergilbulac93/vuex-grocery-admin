@@ -63,7 +63,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/price_changed/count', 'API\ItemController@price_count_changed')->name('price-count-changed');
     Route::get('/price_changed/info', 'API\ItemController@price_count_changed_info')->name('price-count-changed-info');
 
-    Route::get('show/available/item/store', 'API\ItemController@store_available_item')->name('store-available-item');
+    Route::get('/item_count_available', 'API\ItemController@item_count_available')->name('item-count-available');
     Route::get('/count/category', 'API\ItemController@count_per_category')->name('count-per-category');
 
     Route::post('/store/enable_item', 'API\ItemController@enable_selected_item')->name('enable-selected-item');
@@ -93,6 +93,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/business_time/save', 'API\SetUpController@save_business_time')->name('save-business-time');
     Route::delete('/business_time/delete/{id}', 'API\SetUpController@delete_business_time')->name('delete-business-time');
 
+    Route::post('/business_time/active', 'API\SetUpController@business_time_active')->name('business-time-active');
+    Route::post('/business_time/inactive', 'API\SetUpController@business_time_inactive')->name('business-time-inactive');
+    
     Route::post('/tenant/create', 'API\SetUpController@add_tenant')->name('add-tenant');
     Route::get('/tenants', 'API\SetUpController@tenants')->name('tenants');
     Route::post('/tenant/update', 'API\SetUpController@edit_tenant')->name('edit-tenant');
@@ -120,7 +123,13 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/charge/view/{id}', 'API\SetUpController@view_by_id_charges')->name('view-by-id-charges');
     Route::post('/update/charge', 'API\SetUpController@update_charge')->name('update-charges');
 
+    Route::post('/charge/active', 'API\SetUpController@charge_active')->name('charge-active');
+    Route::post('/charge/inactive', 'API\SetUpController@charge_inactive')->name('charge-inactive');
+    
 
+    Route::get('/price_group', 'API\SetUpController@price_group')->name('price-group');
+    Route::get('/show/price_group', 'API\SetUpController@show_price_group')->name('show-price-group');
+    Route::post('/price_group/save', 'API\SetUpController@save_store_price_group')->name('save-store-price-group');
 });
 
 Route::middleware('auth:api')->group(function () {
@@ -133,6 +142,10 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/user/create', 'API\UserController@create_user')->name('create-user');
     Route::post('/user/update', 'API\UserController@update_user')->name('update-user');
     Route::delete('/user/delete/{id}', 'API\UserController@delete_user')->name('delete-user');
+    
+
+    Route::post('/active', 'API\UserController@active_user')->name('active-user');
+    Route::post('/inactive', 'API\UserController@inactive_user')->name('inactive-user');
 
     Route::post('updateprofile', 'API\UserController@updateprofile')->name('update-profile');
 });

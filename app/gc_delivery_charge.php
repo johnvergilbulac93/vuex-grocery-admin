@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class gc_delivery_charge extends Model
 {
     protected $fillable = [
-        'prov_id', 'town_id','brgy_id','transpo_id','charge_amt','rider_shared'
+       'prov_id', 'town_id','brgy_id','transpo_id','charge_amt','rider_shared','status',
     ];
     public function provinces()
     {

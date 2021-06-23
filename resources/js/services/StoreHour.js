@@ -10,5 +10,11 @@ export default {
      delete(id) {
          return BaseApi.delete(`/business_time/delete/${id}`) 
      },
+     storeActive(status){
+         return BaseApi.post('/business_time/active', status)
+     },
+     storeInactive(status){
+        return BaseApi.post('/business_time/inactive', status)
+    }
  }
  

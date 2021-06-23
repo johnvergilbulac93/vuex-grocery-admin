@@ -18,6 +18,15 @@
                 </a>
             </div>
         </div>
+        <div class="border-t mt-5">
+            <div class="mb-5 bg-gray-100 p-2">
+                <label for="" class="text-gray-500 text-lg font-semibold"
+                    >Item Count Not Available Per Store</label
+                >
+            </div>
+            <ChartData refs="skills_chart" :Data="Data" :Labels="Labels">
+            </ChartData>
+        </div>
 
         <transition
             enter-active-class="ease-out duration-700"
@@ -29,7 +38,7 @@
         >
             <div
                 v-if="isModal"
-                class="bg-black bg-opacity-30 fixed top-0  left-0 flex justify-center items-center shadow-xl p-20 w-full min-h-screen"
+                class="bg-black bg-opacity-30 fixed top-16  left-0 flex justify-center items-center shadow-xl p-20 w-full min-h-screen"
             >
                 <div class="bg-white md:w-full sm:max-w-full rounded">
                     <div
@@ -66,16 +75,26 @@
 <script>
 import InfoPrice from "./Info-Price-History.vue";
 import { mapActions, mapState } from "vuex";
-
+import ChartData from "./ChartData.vue";
 export default {
     components: {
-        InfoPrice
+        InfoPrice,
+        ChartData
+    },
+    data() {
+        return {
+            Data: [],
+            Labels: []
+        };
     },
     computed: {
         ...mapState(["isModal", "priceCount"])
     },
     methods: {
         ...mapActions(["modal", "getPriceChanged"]),
+        // updateChart() {
+        //     this.$refs.skills_chart.update();
+        // },
         showModalPrice() {
             this.modal({
                 flag: true
@@ -85,10 +104,31 @@ export default {
             this.modal({
                 flag: false
             });
+        },
+        async getItems(url = "api/item_count_available") {
+            let self = this;
+            // axios.get(url).then(res => {
+            //     const result = res.data;
+            //     result.forEach(bu => {
+            //         self.Labels.push(bu.business_unit);
+            //         self.Data.push(bu.store);
+            //     });
+            // this.updateChart();
+
+            const { data } = await axios.get(url);
+
+            let result = data;
+            result.forEach(bu => {
+                self.Labels.push(bu.business_unit);
+                self.Data.push(bu.store);
+            });
+
+            // });
         }
     },
     mounted() {
         this.getPriceChanged();
+        this.getItems();
     }
 };
 </script>

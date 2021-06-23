@@ -1,96 +1,94 @@
 <template>
     <div class="container bg-gray-50 shadow-lg p-5 rounded text-gray-500">
+        <div class="mb-5 bg-gray-100 p-2">
+            <label for="" class="text-gray-500 text-lg font-semibold"
+                >Store Time</label
+            >
+        </div>
         <div
             class="grid lg:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 sm:grid-flow-row sm:grid-cols-1 sm:grid-rows-1 gap-2"
         >
             <div class="p-2">
-                <label
-                    for="title"
-                    class="text-lg tracking-tight font-semibold text-gray-500 "
-                    >Setup store hour</label
-                >
-                <div class="mt-5">
-                    <div class="flex flex-col space-y-2">
-                        <div class="w-full space-y-1">
-                            <label for="store">Store</label>
-                            <select
-                                v-model="store"
-                                v-bind:class="{
-                                    'border-red-600': errors.store
-                                }"
-                                tabindex="1"
-                                class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
-                            >
-                                <option value="">Select Store</option>
-                                <option
-                                    :value="store.bunit_code"
-                                    v-for="store in Stores"
-                                    :key="store.bunit_code"
-                                    >{{ store.business_unit }}
-                                </option>
-                            </select>
-                            <p
-                                class="text-red-500 text-center text-sm"
-                                v-if="errors.store"
-                            >
-                                <small>{{ errors.store[0] }}</small>
-                            </p>
-                        </div>
-
-                        <div class="w-full space-y-1">
-                            <label for="start">Start</label>
-                            <input
-                                tabindex="2"
-                                type="time"
-                                v-model="opening_time"
-                                v-bind:class="{
-                                    'border-red-600': errors.opening_time
-                                }"
-                                class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
-                            />
-                            <p
-                                class="text-red-500 text-center text-sm"
-                                v-if="errors.opening_time"
-                            >
-                                <small>{{ errors.opening_time[0] }}</small>
-                            </p>
-                        </div>
-                        <div class="w-full space-y-1">
-                            <label for="end">End</label>
-                            <input
-                                tabindex="3"
-                                type="time"
-                                v-bind:class="{
-                                    'border-red-600': errors.closing_time
-                                }"
-                                v-model="closing_time"
-                                class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
-                            />
-                            <p
-                                class="text-red-500 text-center text-sm"
-                                v-if="errors.closing_time"
-                            >
-                                <small>{{ errors.closing_time[0] }}</small>
-                            </p>
-                        </div>
+                <div class="flex flex-col space-y-2">
+                    <div class="w-full space-y-1">
+                        <label for="store">Store</label>
+                        <select
+                            v-model="store"
+                            v-bind:class="{
+                                'border-red-600': errors.store
+                            }"
+                            tabindex="1"
+                            class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                        >
+                            <option value="">Select Store</option>
+                            <option
+                                :value="store.bunit_code"
+                                v-for="store in Stores"
+                                :key="store.bunit_code"
+                                >{{ store.business_unit }}
+                            </option>
+                        </select>
+                        <p
+                            class="text-red-500 text-center text-sm"
+                            v-if="errors.store"
+                        >
+                            <small>{{ errors.store[0] }}</small>
+                        </p>
                     </div>
 
-                    <div class="w-full mt-8 flex space-x-2">
-                        <button
-                            @click="save"
-                            tabindex="4"
-                            class="w-1/2 bg-yellow-500 py-2 px-4 text-white font-semibold hover:bg-yellow-600 transition duration-500 focus:outline-none"
+                    <div class="w-full space-y-1">
+                        <label for="start">Start</label>
+                        <input
+                            tabindex="2"
+                            type="time"
+                            v-model="opening_time"
+                            v-bind:class="{
+                                'border-red-600': errors.opening_time
+                            }"
+                            class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                        />
+                        <p
+                            class="text-red-500 text-center text-sm"
+                            v-if="errors.opening_time"
                         >
-                            Save
-                        </button>
-                        <button
-                            @click="reset"
-                            tabindex="5"
-                            class="w-1/2 bg-gray-500  py-2 px-4 text-white font-semibold hover:bg-gray-600 transition duration-500 focus:outline-none"
-                        >
-                            Clear
-                        </button>
+                            <small>{{ errors.opening_time[0] }}</small>
+                        </p>
                     </div>
+                    <div class="w-full space-y-1">
+                        <label for="end">End</label>
+                        <input
+                            tabindex="3"
+                            type="time"
+                            v-bind:class="{
+                                'border-red-600': errors.closing_time
+                            }"
+                            v-model="closing_time"
+                            class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                        />
+                        <p
+                            class="text-red-500 text-center text-sm"
+                            v-if="errors.closing_time"
+                        >
+                            <small>{{ errors.closing_time[0] }}</small>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="w-full mt-8 flex space-x-2">
+                    <button
+                        @click="save"
+                        tabindex="4"
+                        class="w-1/2 bg-yellow-500 py-2 px-4 text-white font-semibold hover:bg-yellow-600 transition duration-500 focus:outline-none"
+                    >
+                        Save
+                    </button>
+                    <button
+                        @click="reset"
+                        tabindex="5"
+                        class="w-1/2 bg-gray-500  py-2 px-4 text-white font-semibold hover:bg-gray-600 transition duration-500 focus:outline-none"
+                    >
+                        Clear
+                    </button>
                 </div>
             </div>
             <div class="col-span-2">
@@ -175,7 +173,7 @@
                 >
                     <tbody class="tbody text-center">
                         <tr class="tr" v-if="!StoreHourList.length">
-                            <td colspan="7" class="td font-semibold">
+                            <td colspan="5" class="td font-semibold">
                                 NO DATA AVAILABLE
                             </td>
                         </tr>
@@ -189,6 +187,24 @@
                             >
                             <td class="td">{{ data.time_in }}</td>
                             <td class="td">{{ data.time_out }}</td>
+                            <td class="td" v-if="data.status == 1">
+                                <a @click="statusActive(data)">
+                                    <span
+                                        class="bg-green-400 px-2 py-1 rounded-full text-gray-50 font-semibold text-xs hover:bg-green-500 hover:text-white transition duration-500"
+                                    >
+                                        Active</span
+                                    >
+                                </a>
+                            </td>
+                            <td class="text-center" v-else>
+                                <a @click="statusInActive(data)">
+                                    <span
+                                        class="bg-red-500 px-2 py-1 rounded-full text-gray-50 font-semibold text-xs hover:bg-red-600 hover:text-white transition duration-500"
+                                    >
+                                        Inactive</span
+                                    >
+                                </a>
+                            </td>
                             <td class="td">
                                 <button
                                     class="p-1 focus:outline-none"
@@ -284,8 +300,9 @@ export default {
         let sortOrders = {};
         let columns = [
             { width: "70%", label: "Store", name: "description" },
-            { width: "20%", label: "Opening Time", name: "category" },
-            { width: "20%", label: "Closing Time", name: "status" },
+            { width: "20%", label: "Opening Time", name: "opening_time" },
+            { width: "20%", label: "Closing Time", name: "closing_time" },
+            { width: "20%", label: "Status", name: "statuss" },
             { width: "10%", label: "", name: "idss" }
         ];
         columns.forEach(column => {
@@ -325,8 +342,22 @@ export default {
             "getStore",
             "showStoreHour",
             "saveStoreHour",
-            "deleteStoreHour"
+            "deleteStoreHour",
+            "statusStoreInactive",
+            "statusStoreActive"
         ]),
+        statusActive(data) {
+            let status = {
+                id: data.id
+            };
+            this.statusStoreActive({ status });
+        },
+        statusInActive(data) {
+            let status = {
+                id: data.id
+            };
+            this.statusStoreInactive({ status });
+        },
         previousPage() {
             this.currentPage--;
             this.fetch();
@@ -384,7 +415,7 @@ export default {
             this.saveStoreHour({
                 storehour: storehour
             });
-            this.fetch();
+            this.reset();
         },
         sortBy(key) {
             this.sortKey = key;
@@ -398,6 +429,9 @@ export default {
         }
     },
     mounted() {
+        Fire.$on("reload_time", () => {
+            this.fetch();
+        });
         this.fetch();
         this.getStore();
     }

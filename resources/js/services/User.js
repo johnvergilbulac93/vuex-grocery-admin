@@ -15,4 +15,10 @@ export default {
     delete(id) {
         return BaseApi.delete(`/user/delete/${id}`)
     },
+    activeUser(user) {
+        return BaseApi.post('/active', user)
+    },
+    inactiveUser(user) {
+        return BaseApi.post('/inactive', user)
+    },
 }

@@ -269,6 +269,11 @@ export default {
                 .then(() => {
                     this.filenameNewItem = "";
                     this.loading = false;
+                    swal.fire(
+                        "Success",
+                        "New item uploaded successfully.",
+                        "info"
+                    );
                 })
                 .catch(error => {
                     this.loading = false;
@@ -287,8 +292,13 @@ export default {
             this.loading2 = true;
             Upload.upload_price_update(formData)
                 .then(() => {
-                    this.filenameNewItem = "";
+                    this.filenamePriceUpdate = "";
                     this.loading2 = false;
+                    swal.fire(
+                        "Success",
+                        "Price uploaded successfully.",
+                        "info"
+                    );
                 })
                 .catch(error => {
                     this.loading2 = false;

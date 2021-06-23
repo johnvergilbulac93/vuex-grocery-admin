@@ -269,6 +269,10 @@
             <div class="absolute top-0 bottom-80 left-0 right-0 bg-gray-200"></div>
         </header>
         <div class=" relative p-5 mt-36">
+            {{-- <transition enter-active-class="ease-in-out duration-300" enter-class="opacity-0" enter-to-class="opacity-100"
+                leave-active-class="ease-out duration-300" leave-class="opacity-100" leave-to-class="opacity-0">
+                <router-view></router-view>
+            </transition> --}}
             <router-view></router-view>
         </div>
 

@@ -6,6 +6,8 @@ import Charge from '../services/DCharges'
 import MinOrder from '../services/MinOrder'
 import User from '../services/User'
 import Item from  '../services/Item'
+import StorePriceGroup from  '../services/StorePriceGroup'
+import DCharges from '../services/DCharges'
 
 export const userType = ({commit}) => {
      Common.ViewUserType()
@@ -32,6 +34,12 @@ export const getItemNotAvailable = ({commit},{currentPage, filterData}) => {
           commit('SET_ITEM_NOT_AVAILABLE', res.data.data)
           commit('PAGINATION', res.data)
           commit('TOTAL_NOT_AVAILABLE',res.data.total)
+     })
+}
+export const getPriceGroup = ({commit}) => {
+     Common.ViewPriceGroup()
+     .then( res => {
+          commit('SET_PRICE_GROUP', res.data)
      })
 }
 export const getProvince = ({commit}) => {
@@ -168,6 +176,7 @@ export const showStoreHour = ({commit},{currentPage,filterData}) => {
 export const saveStoreHour = ({commit},{storehour}) => {
      StoreHour.saveInfo(storehour)
      .then( ()=> {
+          Fire.$emit("reload_time");
           toast.fire({
                icon: "success",
                title: "Success",
@@ -224,6 +233,8 @@ export const saveTenant = ({commit}, {tenant}) => {
                    "Please check your data.",
                    "warning"
                );
+           }else{
+               Fire.$emit("reload_tenant");
            }
      })
      .catch( error => {
@@ -235,6 +246,7 @@ export const saveTenant = ({commit}, {tenant}) => {
 export const updateTenant = ({commit}, {tenant}) => {
      Tenant.updateInfo(tenant)
      .then( () => {
+          Fire.$emit("reload_tenant");
           toast.fire({
                icon: "success",
                title: "Success",
@@ -288,6 +300,7 @@ export const saveCharge = ({commit},{charge}) => {
                    "warning"
                );
            }else if(res.data.error === false){
+               Fire.$emit("reload_charge");
                commit('MODAL_FLAG', false)
                toast.fire({
                     icon: "success",
@@ -305,6 +318,7 @@ export const saveCharge = ({commit},{charge}) => {
 export const updateCharge = ({commit}, {charge}) => {
      Charge.updateInfo(charge)
      .then( () => {
+          Fire.$emit("reload_charge");
           commit('MODAL_FLAG', false)
           toast.fire({
                icon: "success",
@@ -351,6 +365,7 @@ export const saveMinOrder = ({commit}, {minorder}) => {
                    "warning"
                );
            }else if(res.data.error === false){
+               Fire.$emit("reload_min_order");
                commit('MODAL_FLAG', false)
                toast.fire({
                     icon: "success",
@@ -375,6 +390,7 @@ export const getMinOrder = ({commit},{currentPage,filterData}) => {
 export const updateMinOrder = ({commit},{minorder}) => {
      MinOrder.updateInfo(minorder)
      .then( () => {
+          Fire.$emit("reload_min_order");
           commit('MODAL_FLAG', false)
           toast.fire({
                icon: "success",
@@ -426,8 +442,9 @@ export const getEmployee = ({commit}, {employee}) => {
      })
 }
 export const saveUser = ({commit}, {user}) => {
-     User.saveInfo(user)
+   User.saveInfo(user)
      .then(()=> {
+          Fire.$emit("reload_user");
           commit('MODAL_FLAG', false)
           toast.fire({
                icon: "success",
@@ -468,6 +485,7 @@ export const deleteUser = ({commit},{id}) => {
 export const updateUser = ({commit},{user}) => {
      User.updateInfo(user)
      .then( ()=> {
+          Fire.$emit("reload_user");
           commit('MODAL_FLAG', false)
           toast.fire({
                icon: "success",
@@ -591,4 +609,123 @@ export const getStoreItem = ({commit},{currentPage,filterData}) => {
           commit('SET_ITEM', res.data.data)
           commit('PAGINATION', res.data)
      })
+}
+export const getStorePriceGroup = ({commit}, {currentPage, filterData}) => {
+     StorePriceGroup.show(currentPage, filterData)
+     .then( res => {
+          commit('SET_STORE_PRICE_GROUP', res.data.data)
+          commit('PAGINATION', res.data)
+     })
+}
+export const saveStorePriceGroup = ({commit}, {storepricegroup}) => {
+     StorePriceGroup.saveInfo(storepricegroup)
+     .then( ()=> {
+          Fire.$emit("reload_price_group");
+          toast.fire({
+               icon: "success",
+               title: "Success",
+               text: "Successfully saved"
+          });
+     })
+     .catch( error => {
+          if(error.response.status === 422) {
+               commit('SET_ERRORS',error.response.data.errors )
+          } 
+     })
+}
+export const activeUser = ({commit},{user}) => {
+     swal.fire({
+          title: "Do you want",
+          text: "to change the status to inactive this user?",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, change it!"
+      }).then(result => {
+          if (result.isConfirmed) {
+               User.activeUser(user)
+               .then( () => {
+                    Fire.$emit("reload_user");
+                    toast.fire({
+                         icon: "success",
+                         title: "Success",
+                         text: "Successfully changed"
+                    });
+               })
+
+          }
+      });
+}
+export const inactiveUser = ({commit},{user}) => {
+     swal.fire({
+          title: "Do you want",
+          text: "to change the status to active this user?",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, change it!"
+      }).then(result => {
+          if (result.isConfirmed) {
+               User.inactiveUser(user)
+               .then( () => {
+                    Fire.$emit("reload_user");
+                    toast.fire({
+                         icon: "success",
+                         title: "Success",
+                         text: "Successfully changed"
+                    });
+               })
+
+          }
+      });
+}
+export const statusStoreActive = ({commit}, {status}) => {
+     swal.fire({
+          title: "Do you want",
+          text: "to change the status to inactive.?",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, change it!"
+      }).then(result => {
+          if (result.isConfirmed) {
+               StoreHour.storeActive(status)
+               .then( () => {
+                    Fire.$emit("reload_time");
+                    toast.fire({
+                         icon: "success",
+                         title: "Success",
+                         text: "Successfully changed"
+                    });
+               })
+
+          }
+      });
+}
+export const statusStoreInactive = ({commit}, {status}) => {
+     swal.fire({
+          title: "Do you want",
+          text: "to change the status to active.?",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, change it!"
+      }).then(result => {
+          if (result.isConfirmed) {
+               StoreHour.storeInactive(status)
+               .then( () => {
+                    Fire.$emit("reload_time");
+                    toast.fire({
+                         icon: "success",
+                         title: "Success",
+                         text: "Successfully changed"
+                    });
+               })
+
+          }
+      });
 }

@@ -20,18 +20,21 @@ class PriceChangedImport implements ToCollection
 
         foreach ($rows as $row) 
         {
-            $check_price_uom_data =  gc_product_price::where('itemcode','=',intval($row[0]))->where('UOM','=',$row[2])->exists();
+            $check_price_uom_data =  gc_product_price::where('itemcode','=',intval($row[0]))
+                                                        ->where('UOM','=',$row[2])
+                                                        ->where('price_group','=',$row[6])
+                                                        ->exists();
         
             if(!$check_price_uom_data)
             {
-                $price_data_create = array(
+                gc_product_price::insert([
                     'itemcode'          =>  intval($row[0]),
                     'UOM'               =>  $row[2], 
                     'price'             =>  floatval(str_replace(',','',$row[5])),
                     'price_with_vat'    =>  floatval(str_replace(',','',$row[5])), 
-                    'status'            =>  1
-                );  
-                gc_product_price::insert($price_data_create);  
+                    'status'            =>  1,
+                    'price_group'       =>  $row[6],
+                ]);  
 
             }
             if($check_price_uom_data)
@@ -42,7 +45,10 @@ class PriceChangedImport implements ToCollection
                     'price_with_vat'    =>  floatval(str_replace(',','',$row[5])),
         
                 );
-                gc_product_price::where('itemcode','=',intval($row[0]))->where('UOM','=',$row[2])->update($price_data_update);  
+                gc_product_price::where('itemcode','=',intval($row[0]))
+                                ->where('UOM','=',$row[2])
+                                ->where('price_group','=',$row[6])
+                                ->update($price_data_update);  
                 
             }
 

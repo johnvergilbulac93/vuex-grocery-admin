@@ -445,7 +445,6 @@ export default {
                 amount: this.form.amount
             };
             this.saveMinOrder({ minorder });
-            this.fetch();
         },
         update() {
             let minorder = {
@@ -455,7 +454,6 @@ export default {
                 amount: this.form.amount
             };
             this.updateMinOrder({ minorder });
-            this.fetch();
         },
         closeModal() {
             this.reset();
@@ -514,9 +512,12 @@ export default {
         }
     },
     mounted() {
+        Fire.$on("reload_min_order", () => {
+            this.fetch();
+        });
+        this.fetch();
         this.getStore();
         this.getDepartment();
-        this.fetch();
     }
 };
 </script>

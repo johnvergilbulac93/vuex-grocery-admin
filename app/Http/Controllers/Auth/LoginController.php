@@ -15,7 +15,7 @@ use App\User;
 
 class LoginController extends Controller
 {
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Login Controller
     |--------------------------------------------------------------------------
@@ -26,72 +26,66 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+  use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
+  /**
+   * Where to redirect users after login.
+   *
+   * @var string
+   */
+  protected $redirectTo = RouteServiceProvider::HOME;
 
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+   */
+  public function __construct()
+  {
+    $this->middleware('guest')->except('logout');
+  }
 
-    public function username()
-    {
-        return 'username';
-    }
-    
-    protected function credentials(Request $request)
-    {
-     
+  public function username()
+  {
+    return 'username';
+  }
 
-    //   if($admin->isAdmin == 0)
-    //   {
+  protected function credentials(Request $request)
+  {
 
-    //     return ['username'=>'You have no admin access. Please contact your system administrator','isAdmin'=>'NO'] ;
+    $admin = User::where('username', $request->username)->first();
+    $checkUser = User::where('username', $request->username)->exists();
 
-    //   } else{         
+    //     if ($checkUser) {
+    //       if ($admin->isAdmin == 0 || $admin->status == 0) {
+    // 
+    //         return ['username' => 'You have no admin access or inactive account. Please contact your system administrator', 'isAdmin' => 'NO'];
+    //       } else {
+    // 
+    //         return ['username' => $request->username, 'password' => $request->password, 'isAdmin' => 1];
+    //       }
+    // 
+    //     } else {
+    // 
+    //       return ['username' => $request->username, 'password' => $request->password];
+    //     }
 
-    //     return ['username'=>$request->username,'password'=>$request->password,'isAdmin'=>1] ;
-
-    //  }
-    $admin = User::where('username',$request->username)->first();
-    $checkUser = User::where('username',$request->username)->exists();
-
-      if($checkUser)
-      {
-        if($admin->isAdmin == 0)
-        {
-
-          return ['username'=>'You have no admin access. Please contact your system administrator','isAdmin'=>'NO'] ;
-
-        } else{         
-
-          return ['username'=>$request->username,'password'=>$request->password,'isAdmin'=>1] ;
-
+    if ($checkUser) {
+      if ($admin->status == 0) {
+        return ['username' => 'You account is inactive. Please contact your system administrator','isAdmin' => 'YES', 'status' => 'inactive'];
+      } else if ($admin->isAdmin == 0) {
+        return ['username' => 'You have no admin access. Please contact your system administrator', 'isAdmin' => 'NO', 'status'=> 'active'];
+      } else {
+        return ['username' => $request->username, 'password' => $request->password, 'status' => 1, 'isAdmin' => 1];
       }
 
-      }else{
+    } else {
 
-        return ['username'=>$request->username,'password'=>$request->password];
-
-      }
-
-    
-      
-
-        
+      return ['username' => $request->username, 'password' => $request->password];
     }
+  }
 
+  protected $maxAttempts = 3;
+  protected $decayMinutes = 1;
 }
-

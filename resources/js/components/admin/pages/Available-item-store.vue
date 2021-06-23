@@ -73,7 +73,7 @@ export default {
       const { data } = await axios.get("api/stores");
       this.stores = data;
     },
-    getItems(url = "api/show/available/item/store") {
+    getItems(url = "api/item_count_available") {
       this.filter.store_id = this.filter.store.id;
       axios.get(url, { params: this.filter }).then((response) => {
         this.countItems = response.data.total;
@@ -81,7 +81,7 @@ export default {
     },
   },
   mounted() {
-    this.getStores();
+    // this.getStores();
   },
 };
 </script>

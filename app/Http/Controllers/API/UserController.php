@@ -27,12 +27,16 @@ class UserController extends Controller
             ->select(
                 'gc_users.id',
                 'gc_users.emp_id',
+                'gc_users.emp_id',
                 'gc_users.bunit_code',
                 'gc_users.usertype_id',
                 'user_types.usertype',
                 'gc_users.name',
                 'gc_users.username',
-                'locate_business_units.business_unit'
+                'locate_business_units.business_unit',
+                'gc_users.created_at',
+                'gc_users.status',
+
             )
             ->orderBy('gc_users.id', $dir);
 
@@ -91,7 +95,9 @@ class UserController extends Controller
                     'usertype_id'       => $request->usertype,
                     'bunit_code'        => $request->store,
                     'emp_id'            => $request->emp_id,
-                    'isAdmin'           => true
+                    'isAdmin'           => true,
+                    'status'           => true,
+
                 );
             } else {
                 $user_add_data = array(
@@ -102,7 +108,8 @@ class UserController extends Controller
                     'usertype_id'       => $request->usertype,
                     'bunit_code'        =>  $request->store,
                     'emp_id'            => $request->emp_id,
-                    'isAdmin'           => false
+                    'isAdmin'           => false,
+                    'status'           => true,
                 );
             }
         } else {
@@ -123,7 +130,9 @@ class UserController extends Controller
                     'usertype_id'       => $request->usertype,
                     'bunit_code'        =>  $request->store,
                     'emp_id'            => $request->emp_id,
-                    'isAdmin'           => true
+                    'isAdmin'           => true,
+                    'status'           => true,
+
                 );
             } else {
                 $user_add_data = array(
@@ -134,11 +143,14 @@ class UserController extends Controller
                     'usertype_id'       => $request->usertype,
                     'bunit_code'        => $request->store,
                     'emp_id'            => $request->emp_id,
-                    'isAdmin'           => false
+                    'isAdmin'           => false,
+                    'status'           => true,
+
                 );
             }
         }
         User::insert($user_add_data);
+
     }
 
     public function update_user(Request $request)
@@ -242,5 +254,15 @@ class UserController extends Controller
             );
         }
         User::where('id', '=', Auth::user()->id)->update($user_profile);
+    }
+    public function active_user(Request $request){
+       User::whereId($request->id)->update([
+           'status' => 0
+       ]);
+    }
+    public function inactive_user(Request $request){
+        User::whereId($request->id)->update([
+            'status' => 1
+        ]);
     }
 }
