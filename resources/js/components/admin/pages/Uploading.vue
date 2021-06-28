@@ -6,30 +6,108 @@
                     >Upload New Item and New Price</label
                 >
             </div>
-            <div class="grid grid-cols-2 gap-4">
-                <div class=" p-2">
-                    <div class="relative rounded">
-                        <div
-                            class="absolute inset-0 bg-white p-5 text-center"
-                            v-if="loading"
-                        >
+
+            <div class="w-full flex flex-wrap">
+                <div class=" w-full lg:w-1/2 ">
+                    <div class=" p-2">
+                        <div class="relative rounded">
                             <div
-                                class="flex flex-col items-center justify-between space-y-4"
+                                class="absolute inset-0 bg-white p-5 text-center"
+                                v-if="loading"
                             >
-                                <label
-                                    for=""
-                                    class="mt-3  text-xs text-gray-500"
-                                    >Please be patient, the file is being
-                                    uploaded. Details about the upload are not
-                                    available.</label
+                                <div
+                                    class="flex flex-col items-center justify-between space-y-4"
                                 >
-                                <LoopingRhombusesSpinner
-                                    :animation-duration="2500"
-                                    :rhombus-size="20"
-                                    color="#ff1d5e"
-                                />
+                                    <label
+                                        for=""
+                                        class="mt-3  text-xs text-gray-500"
+                                        >Please be patient, the file is being
+                                        uploaded. Details about the upload are
+                                        not available.</label
+                                    >
+                                    <LoopingRhombusesSpinner
+                                        :animation-duration="2500"
+                                        :rhombus-size="20"
+                                        color="#ff1d5e"
+                                    />
+                                </div>
                             </div>
+                            <transition
+                                enter-active-class="ease-out duration-500"
+                                enter-class="opacity-0"
+                                enter-to-class="opacity-100"
+                                leave-active-class="ease-in duration-500"
+                                leave-class="opacity-100"
+                                leave-to-class="opacity-0"
+                            >
+                                <div
+                                    class="mb-1 bg-red-500 bg-opacity-75 px-2 py-1 flex justify-between items-center  hover:bg-red-600 transition duration-500"
+                                    v-if="errors.file_item"
+                                >
+                                    <small class="text-white text-sm ">
+                                        {{ errors.file_item[0] }}
+                                    </small>
+                                    <button
+                                        class="focus:outline-none"
+                                        @click="clearErrorMessage"
+                                    >
+                                        <i
+                                            class="fas fa-times text-gray-50 hover:text-white"
+                                        ></i>
+                                    </button>
+                                </div>
+                            </transition>
+                            <button
+                                @click="open = !open"
+                                @blur="exitImage"
+                                class="text-blue-500 focus:outline-none "
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 hover:text-blue-600"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                </svg>
+                            </button>
+                            <label
+                                class="flex flex-col items-center px-4 py-5 border bg-white text-gray-400 uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transistion duration-500"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-10 w-10"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                                    />
+                                </svg>
+                                <span class="mt-2 font-bold tracking-wide"
+                                    >Uploading for new item</span
+                                >
+                                <small>(Click here to select file)</small>
+                                <input
+                                    type="file"
+                                    id="file_new_item"
+                                    ref="file_new_item"
+                                    class="hidden"
+                                    @change="handleFileNewItem"
+                                />
+                            </label>
                         </div>
+
                         <transition
                             enter-active-class="ease-out duration-500"
                             enter-class="opacity-0"
@@ -39,108 +117,130 @@
                             leave-to-class="opacity-0"
                         >
                             <div
-                                class="mb-1 bg-red-500 bg-opacity-75 px-2 py-1 flex justify-between items-center  hover:bg-red-600 transition duration-500"
-                                v-if="errors.file_item"
+                                v-if="filenameNewItem"
+                                class="flex justify-between items-center mt-2 bg-white p-2 border border-gray-400 border-opacity-30 shadow-lg "
                             >
-                                <small class="text-white text-sm ">
-                                    {{ errors.file_item[0] }}
-                                </small>
-                                <button
-                                    class="focus:outline-none"
-                                    @click="clearErrorMessage"
+                                <label
+                                    for=""
+                                    class="text-green-500 font-bold text-xs"
+                                    >{{ filenameNewItem }}</label
                                 >
-                                    <i
-                                        class="fas fa-times text-gray-50 hover:text-white"
-                                    ></i>
-                                </button>
+                                <div class=" text-white font-bold text-sm ">
+                                    <button
+                                        @click="upload_selected_file_new_item"
+                                        class="bg-green-500 px-2 py-1 w-20 focus:outline-none hover:bg-green-600 transition duration-300 "
+                                    >
+                                        Upload
+                                    </button>
+                                    <button
+                                        @click="cancel_selected_file_new_item"
+                                        class="bg-red-500 px-2 py-1 w-20 focus:outline-none hover:bg-red-600 transition duration-300 "
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
                             </div>
                         </transition>
-                        <label
-                            class="flex flex-col items-center px-4 py-5 border bg-white text-gray-400 uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transistion duration-500"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-10 w-10"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                                />
-                            </svg>
-                            <span class="mt-2 font-bold tracking-wide"
-                                >Uploading for new item</span
-                            >
-                            <small>(Click here to select file)</small>
-                            <input
-                                type="file"
-                                id="file_new_item"
-                                ref="file_new_item"
-                                class="hidden"
-                                @change="handleFileNewItem"
-                            />
-                        </label>
                     </div>
-                    <transition
-                        enter-active-class="ease-out duration-500"
-                        enter-class="opacity-0"
-                        enter-to-class="opacity-100"
-                        leave-active-class="ease-in duration-500"
-                        leave-class="opacity-100"
-                        leave-to-class="opacity-0"
-                    >
-                        <div
-                            v-if="filenameNewItem"
-                            class="flex justify-between items-center mt-2 bg-white p-2 border border-gray-400 border-opacity-30 shadow-lg "
-                        >
-                            <label
-                                for=""
-                                class="text-green-500 font-bold text-xs"
-                                >{{ filenameNewItem }}</label
-                            >
-                            <div class=" text-white font-bold text-sm ">
-                                <button
-                                    @click="upload_selected_file_new_item"
-                                    class="bg-green-500 px-2 py-1 w-20 focus:outline-none hover:bg-green-600 transition duration-300 "
-                                >
-                                    Upload
-                                </button>
-                                <button
-                                    @click="cancel_selected_file_new_item"
-                                    class="bg-red-500 px-2 py-1 w-20 focus:outline-none hover:bg-red-600 transition duration-300 "
-                                >
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </transition>
                 </div>
-                <div class="p-2">
-                    <div class="relative  rounded">
-                        <div
-                            class="absolute inset-0 bg-white p-5 text-center"
-                            v-if="loading2"
-                        >
+                <div class=" w-full lg:w-1/2 ">
+                    <div class="p-2">
+                        <div class="relative  rounded">
                             <div
-                                class="flex flex-col items-center justify-between space-y-4"
+                                class="absolute inset-0 bg-white p-5 text-center"
+                                v-if="loading2"
                             >
-                                <label
-                                    for=""
-                                    class="mt-3  text-xs text-gray-500"
-                                    >Please be patient, the file is being
-                                    uploaded. Details about the upload are not
-                                    available.</label
+                                <div
+                                    class="flex flex-col items-center justify-between space-y-4"
                                 >
-                                <LoopingRhombusesSpinner
-                                    :animation-duration="2500"
-                                    :rhombus-size="20"
-                                    color="#ff1d5e"
-                                />
+                                    <label
+                                        for=""
+                                        class="mt-3  text-xs text-gray-500"
+                                        >Please be patient, the file is being
+                                        uploaded. Details about the upload are
+                                        not available.</label
+                                    >
+                                    <LoopingRhombusesSpinner
+                                        :animation-duration="2500"
+                                        :rhombus-size="20"
+                                        color="#ff1d5e"
+                                    />
+                                </div>
                             </div>
+                            <transition
+                                enter-active-class="ease-out duration-500"
+                                enter-class="opacity-0"
+                                enter-to-class="opacity-100"
+                                leave-active-class="ease-in duration-500"
+                                leave-class="opacity-100"
+                                leave-to-class="opacity-0"
+                            >
+                                <div
+                                    class="mb-1 bg-red-500 bg-opacity-75 px-2 py-1 flex justify-between items-center  hover:bg-red-600 transition duration-500"
+                                    v-if="errors.file_price"
+                                >
+                                    <small class="text-white text-sm ">
+                                        {{ errors.file_price[0] }}
+                                    </small>
+                                    <button
+                                        class="focus:outline-none"
+                                        @click="clearErrorMessage"
+                                    >
+                                        <i
+                                            class="fas fa-times text-gray-50 hover:text-white"
+                                        ></i>
+                                    </button>
+                                </div>
+                            </transition>
+                            <button
+                                @click="open2 = !open2"
+                                @blur="exitImage"
+                                class="text-blue-500 focus:outline-none "
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 hover:text-blue-600"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                </svg>
+                            </button>
+                            <label
+                                class="flex flex-col items-center px-4 py-5 border bg-white text-gray-400 uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transistion duration-500"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-10 w-10"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                                    />
+                                </svg>
+                                <span class="mt-2 font-bold tracking-wide"
+                                    >Uploading for price update</span
+                                >
+                                <small>(Click here to select file)</small>
+                                <input
+                                    type="file"
+                                    id="file_price_update"
+                                    ref="file_price_update"
+                                    class="hidden"
+                                    @change="handleFilePriceUpdate"
+                                />
+                            </label>
                         </div>
                         <transition
                             enter-active-class="ease-out duration-500"
@@ -151,87 +251,75 @@
                             leave-to-class="opacity-0"
                         >
                             <div
-                                class="mb-1 bg-red-500 bg-opacity-75 px-2 py-1 flex justify-between items-center  hover:bg-red-600 transition duration-500"
-                                v-if="errors.file_price"
+                                v-if="filenamePriceUpdate"
+                                class="flex justify-between items-center mt-2 bg-white p-2 border border-gray-400 border-opacity-30 shadow-lg "
                             >
-                                <small class="text-white text-sm ">
-                                    {{ errors.file_price[0] }}
-                                </small>
-                                <button
-                                    class="focus:outline-none"
-                                    @click="clearErrorMessage"
+                                <label
+                                    for=""
+                                    class="text-green-500 font-bold text-xs whitespace-pre-wrap"
+                                    >{{ filenamePriceUpdate }}</label
                                 >
-                                    <i
-                                        class="fas fa-times text-gray-50 hover:text-white"
-                                    ></i>
-                                </button>
+                                <div class=" text-white font-bold text-sm ">
+                                    <button
+                                        @click="
+                                            upload_selected_file_price_update
+                                        "
+                                        class="bg-green-500 px-2 py-1 w-20 focus:outline-none hover:bg-green-600 transition duration-300 "
+                                    >
+                                        Upload
+                                    </button>
+                                    <button
+                                        @click="
+                                            cancel_selected_file_price_update
+                                        "
+                                        class="bg-red-500 px-2 py-1 w-20 focus:outline-none hover:bg-red-600 transition duration-300 "
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
                             </div>
                         </transition>
-                        <label
-                            class="flex flex-col items-center px-4 py-5 border bg-white text-gray-400 uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transistion duration-500"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-10 w-10"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                                />
-                            </svg>
-                            <span class="mt-2 font-bold tracking-wide"
-                                >Uploading for price update</span
-                            >
-                            <small>(Click here to select file)</small>
-                            <input
-                                type="file"
-                                id="file_price_update"
-                                ref="file_price_update"
-                                class="hidden"
-                                @change="handleFilePriceUpdate"
-                            />
-                        </label>
                     </div>
-                    <transition
-                        enter-active-class="ease-out duration-500"
-                        enter-class="opacity-0"
-                        enter-to-class="opacity-100"
-                        leave-active-class="ease-in duration-500"
-                        leave-class="opacity-100"
-                        leave-to-class="opacity-0"
-                    >
-                        <div
-                            v-if="filenamePriceUpdate"
-                            class="flex justify-between items-center mt-2 bg-white p-2 border border-gray-400 border-opacity-30 shadow-lg "
-                        >
-                            <label
-                                for=""
-                                class="text-green-500 font-bold text-xs whitespace-pre-wrap"
-                                >{{ filenamePriceUpdate }}</label
-                            >
-                            <div class=" text-white font-bold text-sm ">
-                                <button
-                                    @click="upload_selected_file_price_update"
-                                    class="bg-green-500 px-2 py-1 w-20 focus:outline-none hover:bg-green-600 transition duration-300 "
-                                >
-                                    Upload
-                                </button>
-                                <button
-                                    @click="cancel_selected_file_price_update"
-                                    class="bg-red-500 px-2 py-1 w-20 focus:outline-none hover:bg-red-600 transition duration-300 "
-                                >
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </transition>
                 </div>
             </div>
+            <transition
+                enter-active-class="ease-out duration-500"
+                enter-class="opacity-0"
+                enter-to-class="opacity-100"
+                leave-active-class="ease-in duration-500"
+                leave-class="opacity-100"
+                leave-to-class="opacity-0"
+            >
+                <div
+                    class="bg-black bg-opacity-40 fixed top-16 left-0 flex justify-center items-center w-full min-h-screen p-20"
+                    v-if="open"
+                >
+                    <img
+                        :src="$root.path + 'price_update_format.png'"
+                        alt="new_item_image"
+                        class="w-3/4 h-3/4 object-contain shadow-lg"
+                    />
+                </div>
+            </transition>
+            <transition
+                enter-active-class="ease-out duration-500"
+                enter-class="opacity-0"
+                enter-to-class="opacity-100"
+                leave-active-class="ease-in duration-500"
+                leave-class="opacity-100"
+                leave-to-class="opacity-0"
+            >
+                <div
+                    class="bg-black bg-opacity-40 fixed top-16 left-0 flex justify-center items-center w-full min-h-screen p-20"
+                    v-if="open2"
+                >
+                    <img
+                        :src="$root.path + 'new_item_format.png'"
+                        alt="new_item_image"
+                        class="w-3/4 h-3/4  object-contain shadow-lg"
+                    />
+                </div>
+            </transition>
         </div>
     </div>
 </template>
@@ -249,7 +337,9 @@ export default {
             fileNewItem: "",
             filePriceUpdate: "",
             filenameNewItem: "",
-            filenamePriceUpdate: ""
+            filenamePriceUpdate: "",
+            open: false,
+            open2: false
         };
     },
     computed: {
@@ -257,6 +347,10 @@ export default {
     },
     methods: {
         ...mapMutations(["SET_ERRORS"]),
+        exitImage() {
+            this.open = false;
+            this.open2 = false;
+        },
         clearErrorMessage() {
             this.errors.file_item = "";
             this.errors.file_price = "";

@@ -2,19 +2,20 @@
     <div class="bg-gray-50 shadow-lg p-5 rounded">
         <div class="grid grid-flow-col grid-cols-4 grid-rows-1 gap-4">
             <div
-                class="bg-gray-100 h-40 flex flex-col justify-between items-center w-full rounded border shadow-lg"
+                class="bg-gray-100 h-40 flex flex-col justify-between items-center sm:w-full rounded border shadow-lg"
             >
                 <div class="mt-3">
+                    <span>Item not available</span>
                     <h3
                         class="text-6xl text-gray-500 text-center font-semibold"
                     >
                         {{ TotalItemNotAvailable }}
                     </h3>
-                    <p class="mt-2">Items not available</p>
+                    
                 </div>
                 <a
                     @click="viewItem"
-                    class="bg-yellow-500 text-center py-2 text-white w-full hover:text-white hover:bg-yellow-600 transition duration-500    "
+                    class="bg-blue-500 text-center py-2 text-white w-full hover:text-white hover:bg-blue-600 transition duration-500    "
                 >
                     <span class="">More info</span>
                     <i class="fas fa-arrow-circle-right"></i>
@@ -26,16 +27,16 @@
                 class="bg-gray-100 h-40 flex flex-col justify-between items-center w-full rounded border shadow-lg"
             >
                 <div class="mt-3">
+                    <span>Price Changes</span>
                     <h3
                         class="text-6xl text-gray-500 text-center font-semibold"
                     >
                         {{ priceCount }}
                     </h3>
-                    <p class="mt-2">Price Changes</p>
                 </div>
                 <a
                     @click="toChangePrice"
-                    class="bg-yellow-500 text-center py-2 text-white w-full hover:text-white hover:bg-yellow-600 transition duration-500    "
+                    class="bg-blue-500 text-center py-2 text-white w-full hover:text-white hover:bg-blue-600 transition duration-500    "
                 >
                     <span class="">Click here to view details</span>
                 </a>

@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class=" bg-gray-50 shadow-lg p-5 rounded">
+        <div class=" bg-gray-50 shadow-lg p-5 rounded overflow-x-auto">
             <div class="mb-5 bg-gray-100 p-2">
                 <label for="" class="text-gray-500 text-lg font-semibold"
                     >Item Masterfile</label

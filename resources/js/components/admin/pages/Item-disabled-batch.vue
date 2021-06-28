@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class=" bg-gray-50 shadow-lg p-5 rounded">
+        <div class=" bg-gray-50 shadow-lg p-5 rounded overflow-x-auto">
             <div class="mb-5 bg-gray-100 p-2">
                 <label for="" class="text-gray-500 text-lg font-semibold"
                     >Upload Item code to disable
@@ -138,8 +138,8 @@ export default {
     },
     methods: {
         ...mapMutations(["SET_ERRORS"]),
-        clearErrorMessage(){
-            this.errors.file_item = ''
+        clearErrorMessage() {
+            this.errors.file_item = "";
         },
         handleFile() {
             this.file = this.$refs.file_item.files[0];
@@ -155,6 +155,11 @@ export default {
                 .then(() => {
                     this.filename = "";
                     this.loading = false;
+                    swal.fire(
+                        "Success",
+                        "Uploaded Complete.",
+                        "info"
+                    );
                 })
                 .catch(error => {
                     this.loading = false;

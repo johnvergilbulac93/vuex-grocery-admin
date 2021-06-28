@@ -1,7 +1,7 @@
 <template>
-    <div class="container  bg-gray-50 shadow-lg p-5 rounded">
-        <div class="flex">
-            <div class=" w-2/5 h-96 overflow-y-scroll scrollbar" id="style-4">
+    <div class=" bg-gray-50 shadow-lg p-5 rounded w-1/2">
+        <div class="flex flex-wrap  ">
+            <div class="w-full h-96  overflow-y-scroll scrollbar" id="style-4">
                 <ul>
                     <li>
                         <h5
@@ -180,7 +180,7 @@
                                     >
                                 </router-link>
                             </li>
-                            <li class="li">
+                            <!-- <li class="li">
                                 <router-link
                                     :to="{
                                         name: 'count',
@@ -192,7 +192,7 @@
                                         >Available Item Count per Store</span
                                     >
                                 </router-link>
-                            </li>
+                            </li> -->
                         </ul>
                     </li>
                     <li class="mt-8">

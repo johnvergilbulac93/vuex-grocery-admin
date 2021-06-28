@@ -1,32 +1,43 @@
 <template>
     <div class="bg-gray-50 shadow-lg p-5 rounded ">
-        <div class="grid grid-flow-col grid-cols-4 grid-rows-1 gap-4">
-            <div
-                class="bg-gray-100 h-40 flex flex-col justify-between items-center w-full rounded border shadow-lg"
-            >
-                <div class="mt-5">
-                    <h3 class="text-7xl text-gray-500 text-center">
-                        {{ priceCount }}
-                    </h3>
-                </div>
-                <a
-                    @click="showModalPrice"
-                    class="bg-yellow-500 text-center py-2 text-white w-full hover:text-white hover:bg-yellow-600 transition duration-500    "
+        <div class="w-full flex flex-wrap">
+            <div class=" sm:w-full md:w-3/6 lg:w-1/4 ">
+                <div
+                    class="bg-gray-100 h-40 flex flex-col justify-between items-center w-full rounded border shadow-lg"
                 >
-                    <span class="">More info</span>
-                    <i class="fas fa-arrow-circle-right"></i>
-                </a>
+                    <div class="mt-5">
+                        <span class="text-semibold">Today's Price Changed.</span>
+                        <h3 class="text-7xl text-gray-500 text-center">
+                            {{ priceCount }}
+                        </h3>
+                    </div>
+                    <a
+                        @click="showModalPrice"
+                        class="bg-blue-500 text-center py-2 text-white w-full hover:text-white hover:bg-blue-600 transition duration-500    "
+                    >
+                        <span class="">More info</span>
+                        <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
             </div>
+            <!-- <div class=" w-full lg:w-1/4 ">
+
+            </div> -->
         </div>
-        <div class="border-t mt-5">
+        <!-- <div class="border-t mt-5">
             <div class="mb-5 bg-gray-100 p-2">
                 <label for="" class="text-gray-500 text-lg font-semibold"
                     >Item Count Not Available Per Store</label
                 >
             </div>
-            <ChartData refs="skills_chart" :Data="Data" :Labels="Labels" :Options="options">
+            <ChartData
+                refs="skills_chart"
+                :Data="Data"
+                :Labels="Labels"
+                :Options="options"
+            >
             </ChartData>
-        </div>
+        </div> -->
 
         <transition
             enter-active-class="ease-out duration-700"

@@ -79,7 +79,7 @@
 
                     <button
                         tabindex="4"
-                        class="my-3 w-full bg-yellow-500 py-2 px-4 text-white font-semibold hover:bg-yellow-600 transition duration-500 focus:outline-none"
+                        class="my-3 w-full bg-blue-500 py-2 px-4 text-white font-semibold hover:bg-blue-600 transition duration-500 focus:outline-none rounded tracking-wider"
                     >
                         {{ !editMode ? "Save" : "Update" }}
                     </button>
@@ -87,7 +87,7 @@
                 <button
                     @click="reset"
                     tabindex="5"
-                    class="w-full bg-gray-500  py-2 px-4 text-white font-semibold hover:bg-gray-600 transition duration-500 focus:outline-none"
+                    class="w-full bg-gray-500  py-2 px-4 text-white font-semibold hover:bg-gray-600 transition duration-500 focus:outline-none rounded tracking-wider"
                 >
                     Clear
                 </button>

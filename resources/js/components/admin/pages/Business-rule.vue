@@ -30,7 +30,7 @@
 
                     <button
                         @click="setMinAmount"
-                        class="w-full bg-yellow-500 py-2 rounded text-white tracking-normal font-semibold  hover:bg-yellow-600 duration-500 "
+                        class="tracking-wider w-full bg-blue-500 py-2 rounded text-white  font-semibold  hover:bg-blue-600 transition duration-500 focus:outline-none "
                     >
                         Save
                     </button>
@@ -63,7 +63,7 @@
 
                     <button
                         @click="setPickupChargeAmount"
-                        class="w-full bg-yellow-500 py-2 rounded text-white tracking-normal font-semibold  hover:bg-yellow-600 duration-500 "
+                        class="tracking-wider w-full bg-blue-500 py-2 rounded text-white font-semibold  hover:bg-blue-600 transition duration-500 focus:outline-none "
                     >
                         Save
                     </button>
@@ -96,7 +96,7 @@
 
                     <button
                         @click="setMaxOrder"
-                        class="w-full bg-yellow-500 py-2 rounded text-white tracking-normal font-semibold  hover:bg-yellow-600  duration-500    "
+                        class="tracking-wider w-full bg-blue-500 py-2 rounded text-white font-semibold  hover:bg-blue-600 transition duration-500 focus:outline-none"
                     >
                         Save
                     </button>
@@ -146,7 +146,7 @@
 
                     <button
                         @click="setOrderTimeCutoff"
-                        class="w-full bg-yellow-500 py-2 rounded text-white tracking-normal font-semibold  hover:bg-yellow-600 duration-500 "
+                        class="tracking-wider w-full bg-blue-500 py-2 rounded text-white  font-semibold  hover:bg-blue-600 transition duration-500 focus:outline-none"
                     >
                         Save
                     </button>
@@ -194,7 +194,7 @@
 
                     <button
                         @click="setServingTimeCutoff"
-                        class="w-full bg-yellow-500 py-2 rounded text-white tracking-normal font-semibold  hover:bg-yellow-600 duration-500 "
+                        class="tracking-wider w-full bg-blue-500 py-2 rounded text-white font-semibold  hover:bg-blue-600 transition duration-500 focus:outline-none "
                     >
                         Save
                     </button>

@@ -32,12 +32,22 @@
                 </div>
                 <div class="relative">
                     <button id="showMenu" @click="open = !open" @blur="handleBlur"
-                        class="max-w-xs flex items-center  text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
+                        class="max-w-xs flex items-center  text-sm rounded-full text-white focus:outline-none focus:shadow-solid p-2 md:border hover:bg-gray-200 transition duration-500"
                         id="user-menu" aria-label="User menu" aria-haspopup="true">
                         <div class="sm:hidden md:block">
-                            <span class="text-gray-500  text-center font-semibold px-3  tracking-wide">Hello, <span
+                            {{-- <span class="text-gray-500  text-center font-semibold px-3  tracking-wide">Welcome, <span
                                     class="uppercase">{{ Auth::user()->username }}</span>
-                            </span>
+                            </span> --}}
+                            <div class="flex items-center text-gray-500">
+                                <span class="  text-center font-semibold px-3  tracking-wide">Welcome!
+                                </span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+
                         </div>
                     </button>
 
@@ -45,7 +55,8 @@
                         class=" absolute z-30 right-0 mt-2 w-80 bg-white rounded-lg overflow-hidden tracking-wide ">
                         <div class="grid grid-cols-3 gap-3 p-5 ">
                             <div class=" rounded-full h-20 w-20 relative bg-gray-200">
-                                <img class="w-20 rounded-full" src="{{ asset('USER-PROFILE/'. Auth::user()->image ) }}" alt="">
+                                <img class="w-20 rounded-full"
+                                    src="{{ asset('USER-PROFILE/' . Auth::user()->image) }}" alt="">
                                 <button @click="showUpload"
                                     class="absolute bottom-0 right-0 p-1 bg-white rounded-full focus:outline-none text-gray-500 hover:text-blue-500 transition duration-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5  " fill="none"
@@ -58,13 +69,13 @@
                                 </button>
                             </div>
                             <div class=" col-span-2">
-                                <div class="w-full flex flex-col items-center space-y-2">
+                                <div class="w-full flex flex-col items-center justify-between space-y-2">
                                     <router-link to="/change_username"
-                                        class=" text-center w-full p-2 text-sm font-bold rounded bg-blue-500 bg-opacity-80 text-white  hover:text-white hover:bg-blue-500 transition duration-500">
+                                        class=" text-center w-full p-2 text-xs font-bold rounded bg-blue-500 bg-opacity-80 text-white  hover:text-white hover:bg-blue-500 transition duration-500">
                                         Change Username
                                     </router-link>
                                     <router-link to="/change_password"
-                                        class="text-center w-full p-2 text-sm font-bold rounded bg-blue-500 bg-opacity-80 text-white  hover:text-white hover:bg-blue-500 transition duration-500">
+                                        class="text-center w-full p-2 text-xs font-bold rounded bg-blue-500 bg-opacity-80 text-white  hover:text-white hover:bg-blue-500 transition duration-500">
                                         Change Password
                                     </router-link>
                                 </div>
@@ -306,8 +317,9 @@
             <div class="absolute top-0 bottom-80 left-0 right-0 bg-gray-200"></div>
         </header>
         <div class=" relative p-5 mt-36 ">
-            <transition enter-active-class="ease-in duration-300" enter-class="opacity-0" enter-to-class="opacity-100"
-                leave-active-class="ease-in duration-300" leave-class="opacity-100" leave-to-class="opacity-0">
+            <transition enter-active-class="ease-out transition duration-300" enter-class="opacity-0"
+                enter-to-class="opacity-100" leave-active-class="ease-in transition duration-300"
+                leave-class="opacity-100" leave-to-class="opacity-0">
                 <router-view></router-view>
             </transition>
         </div>
@@ -323,7 +335,7 @@
 
         <transition enter-active-class="ease-in duration-300" enter-class="opacity-0" enter-to-class="opacity-100"
             leave-active-class="ease-in duration-300" leave-class="opacity-100" leave-to-class="opacity-0">
-            <Profile v-if="upload_profile"/>
+            <Profile v-if="upload_profile" />
         </transition>
     </div>
     <script defer src="{{ asset('js/app.js') }}"></script>

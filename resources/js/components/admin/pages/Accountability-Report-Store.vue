@@ -223,7 +223,7 @@ export default {
 
             this.transactions.data.forEach(transaction => {
                 pickupCharge += parseFloat(
-                    transaction.customer_bill[0].delivery_charge
+                    transaction.customer_bill[0].picking_charge
                 );
                 if (
                     transaction.hasOwnProperty("final_orders") &&
@@ -278,7 +278,7 @@ export default {
             );
 
             orders?.customer_bill?.forEach(
-                order => (pickingCharge += parseFloat(order.delivery_charge))
+                order => (pickingCharge += parseFloat(order.picking_charge))
             );
 
             // total = orderedAmount - discountAmount + pickingCharge

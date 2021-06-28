@@ -180,7 +180,7 @@
                                     {{
                                         parseFloat(
                                             trans.customer_bill[0]
-                                                .delivery_charge
+                                                .picking_charge
                                         ) | toCurrency
                                     }}
                                 </td>
@@ -269,7 +269,7 @@ export default {
 
             orders.forEach(order => {
                 pickupCharge += parseFloat(
-                    order.customer_bill[0].delivery_charge
+                    order.customer_bill[0].picking_charge
                 );
                 if (
                     order.hasOwnProperty("final_orders") &&
@@ -320,7 +320,7 @@ export default {
             );
 
             orders?.customer_bill?.forEach(
-                order => (pickingCharge += parseFloat(order.delivery_charge))
+                order => (pickingCharge += parseFloat(order.picking_charge))
             );
 
             total = orderedAmount - discountAmount + pickingCharge;

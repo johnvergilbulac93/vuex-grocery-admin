@@ -78,14 +78,14 @@
                     <button
                         @click="save"
                         tabindex="4"
-                        class="w-1/2 bg-yellow-500 py-2 px-4 text-white font-semibold hover:bg-yellow-600 transition duration-500 focus:outline-none"
+                        class="tracking-wider w-1/2 bg-blue-500 py-2 px-4 text-white font-semibold hover:bg-blue-600 transition duration-500 focus:outline-none rounded"
                     >
                         Save
                     </button>
                     <button
                         @click="reset"
                         tabindex="5"
-                        class="w-1/2 bg-gray-500  py-2 px-4 text-white font-semibold hover:bg-gray-600 transition duration-500 focus:outline-none"
+                        class="tracking-wider w-1/2 bg-gray-500  py-2 px-4 text-white font-semibold hover:bg-gray-600 transition duration-500 focus:outline-none rounded"
                     >
                         Clear
                     </button>

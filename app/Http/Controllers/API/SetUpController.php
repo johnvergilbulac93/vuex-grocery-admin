@@ -245,7 +245,7 @@ class SetUpController extends Controller
             ], [
                 'bunit_code'    => $request->store,
                 'dept_id'    => $request->department,
-                'status'    => $request->status,
+                'status'    => 1
             ]);
 
             return response()->json([

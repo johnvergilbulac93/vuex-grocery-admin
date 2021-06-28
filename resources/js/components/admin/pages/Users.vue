@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class=" bg-gray-50 shadow-lg p-5 rounded">
+        <div class=" bg-gray-50 shadow-lg p-5 rounded overflow-x-auto">
             <div class="mb-5 bg-gray-100 p-2">
                 <label for="" class="text-gray-500 text-lg font-semibold"
                     >Manage User</label
@@ -160,7 +160,7 @@
                     </tr>
                 </tbody>
             </Datatable>
-            <div class="border-t ">
+            <div class="border-t">
                 <div class="flex justify-between items-center mt-2">
                     <span class="text-sm  text-gray-600"
                         >Showing {{ !pagination.from ? 0 : pagination.from }} to

@@ -36,6 +36,7 @@
                             class="w-full px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded "
                             tabindex="1"
                             autofocus
+                            placeholder="Old Username"
                         />
                         <p
                             class="text-red-500  text-sm"
@@ -56,6 +57,8 @@
                             v-model="form.new_username"
                             class="w-full px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
                             tabindex="2"
+                            placeholder="New Username"
+
                         />
                         <p
                             class="text-red-500  text-sm"
@@ -71,6 +74,7 @@
                         Save
                     </button>
                     <button
+                        @click="clear"
                         class="px-4 py-2 bg-gray-500 text-white font-semibold hover:bg-gray-600 rounded transition duration-500 focus:outline-none"
                     >
                         Clear
@@ -110,10 +114,10 @@ export default {
             });
         },
         clear() {
-            this.form.old_username = '',
-            this.form.new_username = '',
-            this.errors.old_username = '',
-            this.errors.new_username = ''
+            (this.form.old_username = ""),
+                (this.form.new_username = ""),
+                (this.errors.old_username = ""),
+                (this.errors.new_username = "");
         }
     }
 };
