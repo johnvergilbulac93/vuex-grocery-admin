@@ -21,4 +21,17 @@ export default {
     inactiveUser(user) {
         return BaseApi.post('/inactive', user)
     },
+    changePassword(user) {
+        return BaseApi.post('/user/change_password', user)
+    },
+    changeUsername(user) {
+        return BaseApi.post('/user/change_username', user)
+    },
+    profilePhoto(formData) {
+        return BaseApi.post('/user/profile_image', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+    },
 }

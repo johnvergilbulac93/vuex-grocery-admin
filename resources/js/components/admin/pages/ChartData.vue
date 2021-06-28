@@ -10,25 +10,9 @@ const options = {
 export default {
     extends: Doughnut,
     // mixins: [mixins.reactiveProp],
-    props: ["Data", "Labels"],
+    props: ["Data", "Labels", "options"],
     data() {
-        return {
-            options,
-            chartData: {
-                labels: this.Labels,
-                datasets: [
-                    {
-                        backgroundColor: [
-                            "#34D399",
-                            "#F59E0B",
-                            "#B45309",
-                            "#DC2626"
-                        ],
-                        data: this.Data
-                    }
-                ]
-            }
-        };
+        return {};
     },
     methods: {
         loadChart: function() {
@@ -55,7 +39,6 @@ export default {
         data: function() {
             this._chart.destroy();
             this.loadChart();
-            
         }
     },
     mounted() {

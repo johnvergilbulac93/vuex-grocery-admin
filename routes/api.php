@@ -147,7 +147,11 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/active', 'API\UserController@active_user')->name('active-user');
     Route::post('/inactive', 'API\UserController@inactive_user')->name('inactive-user');
 
-    Route::post('updateprofile', 'API\UserController@updateprofile')->name('update-profile');
+    Route::post('/user/profile_image', 'API\UserController@profile_image')->name('profile-mage');
+
+    Route::post('/user/change_password', 'API\UserController@change_password')->name('change-password');
+    Route::post('/user/change_username', 'API\UserController@change_username')->name('change-username');
+
 });
 
 Route::middleware('auth:api')->group(function () {

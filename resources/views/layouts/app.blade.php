@@ -22,56 +22,92 @@
 
 <body class="font-poppins antialiased ">
     <div id='app'>
-        <!-- Navigation -->
         <nav class="fixed w-full z-10 top-0 shadow ">
             <div
                 class=" flex items-center justify-between  bg-gray-100 p-4 shadow-lg border-gray-200 dark:bg-gray-900 dark:text-white">
-                <div class="flex items-center flex-shrink-0 text-white mx-10 ">
+                <div class="flex items-center flex-shrink-0 text-white  ">
                     <router-link to="/" class="brand-logo ">
                         <img class="mr-6 w-40" src="{{ asset('img/alturush.png') }}" alt="main">
                     </router-link>
                 </div>
-
                 <div class="relative">
                     <button id="showMenu" @click="open = !open" @blur="handleBlur"
                         class="max-w-xs flex items-center  text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
                         id="user-menu" aria-label="User menu" aria-haspopup="true">
-                        <span
-                            class="text-gray-500 uppercase text-center font-semibold px-3 sm:invisible md:visible">{{ Auth::user()->name }}
-                        </span>
-
-                        <img class="h-8 w-8 rounded-full shadow-lg" src="{{ asset('img/user1.png') }}" alt="">
-
+                        <div class="sm:hidden md:block">
+                            <span class="text-gray-500  text-center font-semibold px-3  tracking-wide">Hello, <span
+                                    class="uppercase">{{ Auth::user()->username }}</span>
+                            </span>
+                        </div>
                     </button>
 
-                    {{-- <div class="fixed inset-0 w-full h-screen z-20 bg-black opacity-0"></div> --}}
-                    <div v-if="open" id='menu' class="absolute z-30 right-0 mt-2 ">
-                        <ul class="bg-white rounded-lg shadow-lg py-2 w-48">
-                            <li>
+                    <figure v-if="open" id='menu'
+                        class=" absolute z-30 right-0 mt-2 w-80 bg-white rounded-lg overflow-hidden tracking-wide ">
+                        <div class="grid grid-cols-3 gap-3 p-5 ">
+                            <div class=" rounded-full h-20 w-20 relative bg-gray-200">
+                                <img class="w-20 rounded-full" src="{{ asset('USER-PROFILE/'. Auth::user()->image ) }}" alt="">
+                                <button @click="showUpload"
+                                    class="absolute bottom-0 right-0 p-1 bg-white rounded-full focus:outline-none text-gray-500 hover:text-blue-500 transition duration-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5  " fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class=" col-span-2">
+                                <div class="w-full flex flex-col items-center space-y-2">
+                                    <router-link to="/change_username"
+                                        class=" text-center w-full p-2 text-sm font-bold rounded bg-blue-500 bg-opacity-80 text-white  hover:text-white hover:bg-blue-500 transition duration-500">
+                                        Change Username
+                                    </router-link>
+                                    <router-link to="/change_password"
+                                        class="text-center w-full p-2 text-sm font-bold rounded bg-blue-500 bg-opacity-80 text-white  hover:text-white hover:bg-blue-500 transition duration-500">
+                                        Change Password
+                                    </router-link>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();"
+                            class=" flex justify-end items-center uppercase tracking-wider focus:outline-none  bg-yellow-500 w-full bg-opacity-80 font-bold px-4 py-2 text-white hover:text-white hover:bg-yellow-500 transition duration-500">
+                            <span class="mx-auto">Logout</span>
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </figure>
+                </div>
+                <button class="focus:outline-none sm:block md:hidden" @click="openMenu = !openMenu" @blur="toggleMenu">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
 
-                                <a href="#"
-                                    class=" block text-gray-500 font-semibold px-4 py-2 | hover:text-gray-500 hover:bg-gray-100">
-                                    Your profile
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#"
-                                    class="block text-gray-500 font-semibold px-4 py-2 | hover:text-gray-500 hover:bg-gray-100">
-                                    Settings
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();"
-                                    class="block text-gray-500 font-semibold px-4 py-2 | hover:text-gray-500 hover:bg-gray-100">
-                                    Sign out
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
+            </div>
+            <div v-if="openMenu" class="bg-gray-100 p-4 flex justify-center items-center transistion duration-500">
+                <div class="w-48 flex flex-col items-center space-y-2 tracking-wider">
+                    <router-link to="/change_username"
+                        class=" text-center w-full p-2 text-sm font-bold rounded bg-blue-500 bg-opacity-80 text-white  hover:text-white hover:bg-blue-500 transition duration-500">
+                        Change Username
+                    </router-link>
+                    <router-link to="/change_password"
+                        class="text-center w-full p-2 text-sm font-bold rounded bg-blue-500 bg-opacity-80 text-white  hover:text-white hover:bg-blue-500 transition duration-500">
+                        Change Password
+                    </router-link>
+
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();"
+                        class="text-center w-full p-2 text-sm font-bold rounded bg-blue-500 bg-opacity-80 text-white  hover:text-white hover:bg-blue-500 transition duration-500">
+                        <span class="mx-auto">Logout</span>
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </div>
             </div>
             <div class="w-full bg-yellow-500 shadow-md">
@@ -265,15 +301,15 @@
                 @endcan
             </div>
         </nav>
+
         <header>
             <div class="absolute top-0 bottom-80 left-0 right-0 bg-gray-200"></div>
         </header>
-        <div class=" relative p-5 mt-36">
-            {{-- <transition enter-active-class="ease-in-out duration-300" enter-class="opacity-0" enter-to-class="opacity-100"
-                leave-active-class="ease-out duration-300" leave-class="opacity-100" leave-to-class="opacity-0">
+        <div class=" relative p-5 mt-36 ">
+            <transition enter-active-class="ease-in duration-300" enter-class="opacity-0" enter-to-class="opacity-100"
+                leave-active-class="ease-in duration-300" leave-class="opacity-100" leave-to-class="opacity-0">
                 <router-view></router-view>
-            </transition> --}}
-            <router-view></router-view>
+            </transition>
         </div>
 
         <button id="backtoTop"
@@ -284,66 +320,11 @@
             </svg>
         </button>
 
-        {{-- <div class="modal fade" id="useraccount" tabindex="-1" role="dialog" aria-labelledby="e"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="myModalLabel"><span class="float-left"></span> Your Account</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <center>
-                                <img src="{{ URL::asset('/img/user1.png') }}" class="img-circle elevation-1"
-                                    alt="User Image" style="height: 3rem;">
-                                <h3> {{ Auth::user()->name }} </h3>
 
-                            </center>
-                            <hr class="py-1 px-1">
-                            <button class="text-left btn btn-outline-primary btn-sm" type="button"
-                                data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
-                                aria-controls="collapseExample">
-                                CHANGE USERNAME & PASSWORD
-                            </button>
-                            <div class="collapse mt-2" id="collapseExample">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="username">USERNAME</label>
-                                            <input v-model="form.username" type="text"
-                                                class="form-control form-control-sm" name="username" id="username"
-                                                :class="{ 'is-invalid': form.errors.has('username') }">
-                                            <has-error :form="form" field="username"></has-error>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="passsword">NEW PASSWORD</label>
-                                            <input v-model="form.password" type="password"
-                                                class="form-control form-control-sm">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <button type="button" class="btn btn-outline-success btn-sm"
-                                            @click.prevent="updateProfile"
-                                            v-bind:disabled="form.username.length == 0 && form.password.length == 0">
-                                            Save changes</button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <center>
-                                <button type="button" class="btn btn-outline-success"
-                                    data-dismiss="modal">Close</button>
-                            </center>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-
-
+        <transition enter-active-class="ease-in duration-300" enter-class="opacity-0" enter-to-class="opacity-100"
+            leave-active-class="ease-in duration-300" leave-class="opacity-100" leave-to-class="opacity-0">
+            <Profile v-if="upload_profile"/>
+        </transition>
     </div>
     <script defer src="{{ asset('js/app.js') }}"></script>
     <script defer src="{{ asset('js/custom.js') }}"></script>

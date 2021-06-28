@@ -24,7 +24,7 @@
                     >Item Count Not Available Per Store</label
                 >
             </div>
-            <ChartData refs="skills_chart" :Data="Data" :Labels="Labels">
+            <ChartData refs="skills_chart" :Data="Data" :Labels="Labels" :Options="options">
             </ChartData>
         </div>
 
@@ -84,7 +84,11 @@ export default {
     data() {
         return {
             Data: [],
-            Labels: []
+            Labels: [],
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
         };
     },
     computed: {

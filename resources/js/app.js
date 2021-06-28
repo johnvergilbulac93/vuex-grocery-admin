@@ -20,6 +20,7 @@ import excel from 'vue-excel-export'
 
 import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';
+import Axios from 'axios';
 
 Vue.use(excel)
 
@@ -84,8 +85,10 @@ window.id = id
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('page404', require('./components/admin/pages/404_page.vue').default);
-Vue.component('Top', require('./components/admin/pages/Top.vue').default);
+// Vue.component('page404', require('./components/admin/pages/404_page.vue').default);
+// Vue.component('Top', require('./components/admin/pages/Top.vue').default);
+Vue.component('Profile', require('./components/admin/pages/Profile-Upload.vue').default);
+
 
 
 
@@ -93,7 +96,7 @@ Vue.component('Top', require('./components/admin/pages/Top.vue').default);
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
-*/
+ */
 
 
 const app = new Vue({
@@ -110,34 +113,26 @@ const app = new Vue({
             userType,
             id,
             logo_path: 'https://apanel.alturush.com/',
-            form: {
-                username: '',
-                password: ''
-            },
-            open: false 
+            open: false,
+            openMenu: false,
+            upload_profile: false,
 
         }
     },
     methods: {
-//         updateProfile() {
-//             this.form.post('api/updateprofile/')
-//                 .then(() => {
-//                     this.form.clear();
-//                     this.form.reset();
-//                     $("#useraccount").modal("hide");
-//                     swal.fire("Your profile successfully", "Updated", "success");
-//                     window.location.reload()
-//                 })
-//                 .catch(() => {
-// 
-//                 })
-//         },
         handleBlur(e) {
             setTimeout(() => {
-              this.open = false
+                this.open = false
             }, 100)
         },
-
+        toggleMenu() {
+            setTimeout(() => {
+                this.openMenu = false
+            }, 100)
+        },
+        showUpload() {
+            this.upload_profile = true
+        },
     },
 
 });

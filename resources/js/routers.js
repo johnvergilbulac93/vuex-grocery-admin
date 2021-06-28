@@ -34,8 +34,8 @@ import accountability_store from './components/admin/pages/Accountability-Report
 import menu from './components/admin/pages/Menu'
 import viewcharge from './components/admin/pages/View-Charge'
 import price_group from './components/admin/pages/Price-Group'
-
-
+import change_password from './components/admin/pages/Change-Password'
+import change_username from './components/admin/pages/Change-Username'
 
 const routes = [
 
@@ -46,16 +46,28 @@ const routes = [
 
     },
     {
+        path: '/change_password',
+        name: 'change_password',
+        component: change_password
+
+    },
+    {
+        path: '/change_username',
+        name: 'change_username',
+        component: change_username
+
+    },
+    {
         path: '/home',
         name: 'home',
         component: home,
-        beforeEnter: (to, from, next) => {
-            if (to.params.id != 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (to.params.id != 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/item',
@@ -97,13 +109,13 @@ const routes = [
         path: '/picker_time',
         name: 'picker_time',
         component: picker_time,
-        beforeEnter: (to, from, next) => {
-            if (to.params.id === 6) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (to.params.id === 6) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/users',
@@ -121,135 +133,135 @@ const routes = [
         path: '/central_item',
         name: 'central_item',
         component: central_item,
-        beforeEnter: (to, from, next) => {
-            if (from.params.id === 15 || from.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (from.params.id === 15 || from.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/pickup',
         name: 'pickup',
         component: pickup,
-        beforeEnter: (to, from, next) => {
-            if (to.params.id === 6) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (to.params.id === 6) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/disabled_item_batch',
         name: 'disabled_item',
         component: disabled_item_batch,
-        beforeEnter: (to, from, next) => {
-            if (to.params.id === 15) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (to.params.id === 15) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/dashboard',
         name: 'dashboard',
         component: dashboard,
-        beforeEnter: (to, from, next) => {
-            if (to.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (to.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/setting',
         name: 'setting',
         component: setting,
-        beforeEnter: (to, from, next) => {
-            if (to.params.id === 6 || from.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (to.params.id === 6 || from.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/reports',
         name: 'report_item',
         component: reports,
-        beforeEnter: (to, from, next) => {
-            if (from.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (from.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
 
     },
     {
         path: '/reports_store',
         name: 'reports_store',
         component: reports_store,
-        beforeEnter: (to, from, next) => {
-            if (to.params.id === 15 || to.params.id === 6) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (to.params.id === 15 || to.params.id === 6) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
 
     },
     {
         path: '/transaction',
         name: 'transaction',
         component: transaction,
-        beforeEnter: (to, from, next) => {
-            if (from.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (from.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/exporting',
         name: 'export',
         component: exporting,
-        beforeEnter: (to, from, next) => {
-            if (to.params.id === 8 || from.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (to.params.id === 8 || from.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/accountability',
         name: 'accountability',
         component: accountability,
-        beforeEnter: (to, from, next) => {
-            if (from.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (from.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/liquidition',
         name: 'liquidition',
         component: liquidition,
-        beforeEnter: (to, from, next) => {
-            if (from.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (from.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/bu_time',
@@ -291,25 +303,25 @@ const routes = [
         path: '/disable_uom',
         name: 'disable_uom',
         component: disable_uom,
-        beforeEnter: (to, from, next) => {
-            if (from.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (from.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/enable_uom',
         name: 'enable_uom',
         component: enable_uom,
-        beforeEnter: (to, from, next) => {
-            if (from.params.id === 12) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (from.params.id === 12) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/minimum_delivery',
@@ -339,25 +351,25 @@ const routes = [
         path: '/multiple',
         name: 'multiple',
         component: multiple,
-        beforeEnter: (to, from, next) => {
-            if (from.params.id === 12 || to.params.id === 6) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (from.params.id === 12 || to.params.id === 6) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/liquidition_store',
         name: 'liquidition_store',
         component: liquidition_store,
-        beforeEnter: (to, from, next) => {
-            if (to.params.id === 7 || to.params.id === 14) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (to.params.id === 7 || to.params.id === 14) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/accountability_store',

@@ -1,0 +1,130 @@
+<template>
+    <div
+        class=" fixed top-0 left-0 flex justify-center items-center w-full min-h-screen"
+    >
+        <div class="bg-white border border-gray-300 w-1/2 shadow-lg ">
+            <div class="p-2 flex justify-between items-center">
+                <label for="" class="text-xl text-gray-700"
+                    >Select profile photo</label
+                >
+                <a @click="closeUpload" class="transition duration-500">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6 text-gray-500 hover:text-red-500"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"
+                        />
+                    </svg>
+                </a>
+            </div>
+            <hr />
+            <div class="p-3 my-2">
+                <div class="text-red-600 text-xs ">
+                    <ul v-for="(error, i) in errors.profile_image" :key="i">
+                        <li>{{ error }}</li>
+                    </ul>
+                </div>
+                <label
+                    class="flex flex-col items-center px-4 py-16 border bg-white text-gray-400 uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transistion duration-500"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-7 w-7"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                    </svg>
+                    <p class="font-bold">Select a photo from your computer</p>
+                    <input
+                        type="file"
+                        id="profile_image"
+                        ref="profile_image"
+                        class="hidden"
+                        @change="handleOnchange()"
+                    />
+                </label>
+                <label for="" class="text-gray-700 font-bold text-xs">{{
+                    filename
+                }}</label>
+            </div>
+            <hr />
+            <div class="p-2">
+                <button
+                    @click="handleUpload"
+                    :disabled="!filename"
+                    class="tracking-wider font-bold text-xs text-center px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 rounded transition duration-500 focus:outline-none disabled:opacity-50"
+                >
+                    Upload
+                </button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+import User from "../../../services/User";
+import { mapState, mapMutations } from "vuex";
+
+export default {
+    name: "Profile",
+    data() {
+        return {
+            file: "",
+            filename: ""
+        };
+    },
+    computed: {
+        ...mapState(["errors"])
+    },
+    methods: {
+        ...mapMutations(["SET_ERRORS"]),
+        closeUpload() {
+            this.$root.upload_profile = false;
+            this.errors.profile_image = "";
+            this.file = "";
+            this.filename = "";
+        },
+        handleOnchange() {
+            this.file = this.$refs.profile_image.files[0];
+            this.filename = this.$refs.profile_image.files[0].name;
+        },
+        handleUpload() {
+            let formData = new FormData();
+            formData.append("profile_image", this.file);
+
+            User.profilePhoto(formData)
+                .then(() => {
+                    toast.fire({
+                        icon: "success",
+                        title: "Success",
+                        text: "Uploaded successfully."
+                    });
+                    this.$root.upload_profile = false;
+                    this.file = "";
+                    this.filename = "";
+                    this.errors.profile_image = "";
+                    location.reload();
+                })
+                .catch(error => {
+                    if (error.response.status === 422) {
+                        this.SET_ERRORS(error.response.data.errors);
+                    }
+                });
+        }
+    }
+};
+</script>

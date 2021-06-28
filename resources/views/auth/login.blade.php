@@ -42,7 +42,7 @@
                             <input type="text" name="username"
                                 class="relative py-3 px-3 pl-10 w-full  border focus:border-yellow-500 rounded-lg bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:shadow-outline transition duration-500"
                                 placeholder="Username"
-                                value="{{ old('username') }}" required autocomplete="email" autofocus />
+                                value="{{ old('username') }}" required autocomplete="username" autofocus />
                         </div>
                         @error('username')
                             <small class="text-red-500 text-xs">{{ $message }}</small>

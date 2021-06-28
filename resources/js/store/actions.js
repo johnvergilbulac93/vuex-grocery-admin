@@ -7,7 +7,7 @@ import MinOrder from '../services/MinOrder'
 import User from '../services/User'
 import Item from  '../services/Item'
 import StorePriceGroup from  '../services/StorePriceGroup'
-import DCharges from '../services/DCharges'
+
 
 export const userType = ({commit}) => {
      Common.ViewUserType()
@@ -698,7 +698,7 @@ export const statusStoreActive = ({commit}, {status}) => {
                     toast.fire({
                          icon: "success",
                          title: "Success",
-                         text: "Successfully changed"
+                         text: "Successfully change."
                     });
                })
 
@@ -722,10 +722,56 @@ export const statusStoreInactive = ({commit}, {status}) => {
                     toast.fire({
                          icon: "success",
                          title: "Success",
-                         text: "Successfully changed"
+                         text: "Successfully change."
                     });
                })
 
           }
       });
+}
+export const userChangePass = ({commit}, {user}) => {
+     swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, change it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+               User.changePassword(user)
+               .then( ()=> {
+                    Fire.$emit("clear_field");
+                    toast.fire({
+                         icon: "success",
+                         title: "Success",
+                         text: "Successfully change."
+                    });
+               })
+               .catch( error => {
+                    if(error.response.status === 422) {
+                         commit('SET_ERRORS',error.response.data.errors )
+                    } 
+               })
+          }
+        })
+
+}
+export const userChangeUsername =({commit}, {user}) => {
+     User.changeUsername(user)
+     .then( ()=> {
+          Fire.$emit("clear_field");
+          toast.fire({
+               icon: "success",
+               title: "Success",
+               text: "Successfully change."
+          });
+          location.reload()
+     })
+     .catch( error => {
+          if(error.response.status === 422) {
+               commit('SET_ERRORS',error.response.data.errors )
+          } 
+     })
 }

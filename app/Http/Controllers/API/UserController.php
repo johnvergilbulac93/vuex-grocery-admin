@@ -70,7 +70,7 @@ class UserController extends Controller
 
         $this->validate($request, [
             'name'          => ['required', 'string', 'max:255'],
-            'username'      => ['required', 'string', 'string', 'max:255', 'unique:users,username'],
+            'username'      => ['required', 'string', 'string', 'max:255', 'unique:gc_users,username'],
             'usertype'      => ['required'],
             'store'         => ['required'],
         ]);
@@ -232,29 +232,6 @@ class UserController extends Controller
         }
     }
 
-    public function updateprofile(Request $request)
-    {
-
-        if ($request->get('username')) {
-            $user_profile = array(
-                'username'  => $request->get('username'),
-            );
-        }
-        if ($request->get('password')) {
-            $user_profile = array(
-                'password'  => Hash::make($request->get('password')),
-                'password2'  => md5($request->get('password')),
-            );
-        }
-        if ($request->get('username') && $request->get('password')) {
-            $user_profile = array(
-                'username'  => $request->get('username'),
-                'password'  => Hash::make($request->get('password')),
-                'password2'  => md5($request->get('password')),
-            );
-        }
-        User::where('id', '=', Auth::user()->id)->update($user_profile);
-    }
     public function active_user(Request $request){
        User::whereId($request->id)->update([
            'status' => 0
@@ -264,5 +241,75 @@ class UserController extends Controller
         User::whereId($request->id)->update([
             'status' => 1
         ]);
+    }
+    public function change_password(Request $request)
+    {
+        $user = User::findOrFail(Auth::user()->id);
+        
+        $this->validate($request, [
+            'old_password' => 'required',
+            'new_password' => 'required|min:8|different:old_password|confirmed',
+        ]);
+        if (Hash::check($request->old_password, $user->password)) { 
+            $user->fill([
+             'password' => Hash::make($request->new_password),
+             'password2' => md5($request->new_password)
+             ])->save();
+         } else {
+
+             $custom_error = array(
+                'old_password' => ['Password does not match']
+             );
+            return response()->json([
+                'errors' => $custom_error,
+            ], 422);
+         }
+    }
+    public function change_username(Request $request)
+    {
+        $user = User::findOrFail(Auth::user()->id);
+
+        $this->validate($request, [
+            'old_username' => 'required',
+            'new_username' => 'required|different:old_username|unique:gc_users,username',
+        ]);
+
+        if ($request->old_username === $user->username) { 
+            $user->fill([
+             'username' => $request->new_username,
+             ])->save();
+         } else {
+
+             $custom_error = array(
+                'old_username' => ['Username does not match']
+             );
+            return response()->json([
+                'errors' => $custom_error,
+            ], 422);
+         }
+        
+    }
+    public function profile_image(Request $request)
+    {
+        $this->validate($request, [
+            'profile_image'      => 'required|image|mimes:jpg,png,jpeg',
+        ]);
+
+        $userImage = $request->file('profile_image');
+        $imageName = Auth::user()->username .'.'. $userImage->getClientOriginalExtension();
+
+        $path = public_path() . '/USER-PROFILE/';
+        
+        // $path = '../admins.alturush.com/USER-PROFILE/';\
+        $userImage->move($path, $imageName);
+
+        if (file_exists($path)) {
+            @unlink($path);
+        }
+        
+        User::whereId(Auth::user()->id)->update([
+            'image' => $imageName
+        ]);
+
     }
 }
