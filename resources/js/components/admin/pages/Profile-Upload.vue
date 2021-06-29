@@ -1,10 +1,10 @@
 <template>
     <div
-        class=" fixed top-0 left-0 flex justify-center items-center w-full min-h-screen"
+        class=" fixed top-0 left-0 flex justify-center items-center w-full min-h-screen text-gray-800"
     >
         <div class="bg-white border border-gray-300 w-1/2 shadow-lg ">
             <div class="p-2 flex justify-between items-center">
-                <label for="" class="text-xl text-gray-700"
+                <label for="" class="text-lg tracking-wide"
                     >Select profile photo</label
                 >
                 <a @click="closeUpload" class="transition duration-500">
@@ -32,7 +32,7 @@
                     </ul>
                 </div>
                 <label
-                    class="flex flex-col items-center px-4 py-16 border bg-white text-gray-400 uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transistion duration-500"
+                    class="flex flex-col items-center px-4 py-16 border bg-white  uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transistion duration-500"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +48,7 @@
                             d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                         />
                     </svg>
-                    <p class="font-bold">Select a photo from your computer</p>
+                    <p >Select a photo from your computer</p>
                     <input
                         type="file"
                         id="profile_image"
@@ -57,7 +57,7 @@
                         @change="handleOnchange()"
                     />
                 </label>
-                <label for="" class="text-gray-700 font-bold text-xs">{{
+                <label for="" class=" text-xs">{{
                     filename
                 }}</label>
             </div>
@@ -66,7 +66,7 @@
                 <button
                     @click="handleUpload"
                     :disabled="!filename"
-                    class="tracking-wider font-bold text-xs text-center px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 rounded transition duration-500 focus:outline-none disabled:opacity-50"
+                    class=" text-center px-4 py-1 bg-blue-500 text-white hover:bg-blue-600 rounded transition duration-500 focus:outline-none disabled:opacity-50"
                 >
                     Upload
                 </button>

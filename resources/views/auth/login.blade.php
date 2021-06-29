@@ -24,7 +24,7 @@
         <div class="bg-white shadow-lg w-96 rounded p-5 ">
             <div class="flex flex-col  justify-center items-center space-y-5">
                 <img src="{{ asset('/img/AlturushDeliveryLogoGradient.png') }}" class="h-20">
-                <span class="font-semibold uppercase tracking-wider text-lg">GROCERY ADMINISTRATOR</span>
+                <span class=" text-lg uppercase tracking-wider">GROCERY ADMINISTRATOR</span>
             </div>
             <div class="flex flex-col  justify-center items-center space-y-5">
                 <form method="POST" action="{{ route('login') }}" id='myForm' class="p-3">
@@ -65,7 +65,7 @@
                         @enderror
                         <div class="w-full">
                             <button type="submit"
-                                class="bg-yellow-500 py-2 px-3 rounded w-full font-semibold text-white transition duration-500 hover:bg-yellow-600"
+                                class="bg-yellow-500 py-2 px-3 rounded w-full text-lg tracking-wider text-white transition duration-500 hover:bg-yellow-600 focus:outline-none"
                                 tabindex="3">
                                 {{ __('Sign in') }}
                             </button>

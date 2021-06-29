@@ -1,13 +1,13 @@
 <template>
-    <div class="bg-gray-50 shadow-lg p-5 rounded ">
+    <div class="bg-gray-50 shadow-lg p-5 rounded text-gray-800 ">
         <div class="w-full flex flex-wrap">
             <div class=" sm:w-full md:w-3/6 lg:w-1/4 ">
                 <div
                     class="bg-gray-100 h-40 flex flex-col justify-between items-center w-full rounded border shadow-lg"
                 >
-                    <div class="mt-5">
-                        <span class="text-semibold">Today's Price Changed.</span>
-                        <h3 class="text-7xl text-gray-500 text-center">
+                    <div class="mt-5 text-gray-800 ">
+                        <span >Today's Price Changed.</span>
+                        <h3 class="text-7xl text-center">
                             {{ priceCount }}
                         </h3>
                     </div>
@@ -51,12 +51,12 @@
                 v-if="isModal"
                 class="bg-black bg-opacity-30 fixed top-16  left-0 flex justify-center items-center shadow-xl p-20 w-full min-h-screen"
             >
-                <div class="bg-white md:w-full sm:max-w-full rounded">
+                <div class="bg-white md:w-full sm:max-w-full rounded text-gray-800">
                     <div
                         class="border-b-2 p-3 flex justify-between items-center"
                     >
                         <span
-                            class="tracking-tight text-gray-500 font-bold text-lg"
+                            class="tracking-wider text-lg"
                             >Today's Price Changed</span
                         >
                         <a @click="closeModal">

@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="container text-black">
         <div class=" bg-gray-50 shadow-lg p-5 rounded">
             <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="text-gray-500 text-lg font-semibold"
+                <label for="" class="tracking-wider text-lg "
                     >Upload New Item and New Price</label
                 >
             </div>
@@ -20,7 +20,7 @@
                                 >
                                     <label
                                         for=""
-                                        class="mt-3  text-xs text-gray-500"
+                                        class="mt-3 "
                                         >Please be patient, the file is being
                                         uploaded. Details about the upload are
                                         not available.</label
@@ -78,7 +78,7 @@
                                 </svg>
                             </button>
                             <label
-                                class="flex flex-col items-center px-4 py-5 border bg-white text-gray-400 uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transistion duration-500"
+                                class="flex flex-col items-center px-4 py-5 border bg-white uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transistion duration-500"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +94,7 @@
                                         d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                                     />
                                 </svg>
-                                <span class="mt-2 font-bold tracking-wide"
+                                <span class="mt-2 "
                                     >Uploading for new item</span
                                 >
                                 <small>(Click here to select file)</small>
@@ -122,19 +122,19 @@
                             >
                                 <label
                                     for=""
-                                    class="text-green-500 font-bold text-xs"
+                                    class="text-green-500 "
                                     >{{ filenameNewItem }}</label
                                 >
                                 <div class=" text-white font-bold text-sm ">
                                     <button
                                         @click="upload_selected_file_new_item"
-                                        class="bg-green-500 px-2 py-1 w-20 focus:outline-none hover:bg-green-600 transition duration-300 "
+                                        class="bg-green-500 px-2 py-1 w-20 focus:outline-none hover:bg-green-600 transition duration-300 rounded "
                                     >
                                         Upload
                                     </button>
                                     <button
                                         @click="cancel_selected_file_new_item"
-                                        class="bg-red-500 px-2 py-1 w-20 focus:outline-none hover:bg-red-600 transition duration-300 "
+                                        class="bg-red-500 px-2 py-1 w-20 focus:outline-none hover:bg-red-600 transition duration-300  rounded"
                                     >
                                         Cancel
                                     </button>
@@ -155,7 +155,7 @@
                                 >
                                     <label
                                         for=""
-                                        class="mt-3  text-xs text-gray-500"
+                                        class="mt-3"
                                         >Please be patient, the file is being
                                         uploaded. Details about the upload are
                                         not available.</label
@@ -213,7 +213,7 @@
                                 </svg>
                             </button>
                             <label
-                                class="flex flex-col items-center px-4 py-5 border bg-white text-gray-400 uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transistion duration-500"
+                                class="flex flex-col items-center px-4 py-5 border bg-white uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transistion duration-500"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -229,7 +229,7 @@
                                         d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                                     />
                                 </svg>
-                                <span class="mt-2 font-bold tracking-wide"
+                                <span class="mt-2 "
                                     >Uploading for price update</span
                                 >
                                 <small>(Click here to select file)</small>
@@ -256,7 +256,7 @@
                             >
                                 <label
                                     for=""
-                                    class="text-green-500 font-bold text-xs whitespace-pre-wrap"
+                                    class="text-green-500 "
                                     >{{ filenamePriceUpdate }}</label
                                 >
                                 <div class=" text-white font-bold text-sm ">
@@ -264,7 +264,7 @@
                                         @click="
                                             upload_selected_file_price_update
                                         "
-                                        class="bg-green-500 px-2 py-1 w-20 focus:outline-none hover:bg-green-600 transition duration-300 "
+                                        class="bg-green-500 px-2 py-1 w-20 focus:outline-none hover:bg-green-600 transition duration-300 rounded "
                                     >
                                         Upload
                                     </button>
@@ -272,7 +272,7 @@
                                         @click="
                                             cancel_selected_file_price_update
                                         "
-                                        class="bg-red-500 px-2 py-1 w-20 focus:outline-none hover:bg-red-600 transition duration-300 "
+                                        class="bg-red-500 px-2 py-1 w-20 focus:outline-none hover:bg-red-600 transition duration-300 rounded "
                                     >
                                         Cancel
                                     </button>

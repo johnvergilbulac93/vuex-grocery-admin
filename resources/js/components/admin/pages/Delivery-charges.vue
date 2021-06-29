@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="container text-gray-800">
         <div class=" bg-gray-50 shadow-lg p-5 rounded ">
             <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="text-gray-500 text-lg font-semibold"
+                <label for="" class="tracking-wider text-lg"
                     >Delivery Charges</label
                 >
             </div>
@@ -10,14 +10,14 @@
                 class="flex sm:flex-wrap md:flex-row  sm:flex-col sm:space-y-2 justify-between items-center pb-2"
             >
                 <div
-                    class="w-1/2 flex md:flex-row justify-between sm:flex-col "
+                    class="w-1/2 flex md:flex-row justify-between sm:flex-col tracking-normal "
                 >
                     <div class="w-56">
-                        <span class="mb-10  text-gray-600">Province</span>
+                        <span class="mb-10 font-semibold" >Province</span>
                         <div class="py-1">
                             <select
                                 @change="fetch()"
-                                class="font-semibold py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 w-full"
+                                class="text-sm py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  w-full"
                                 v-model="tableData.province"
                             >
                                 <option value="">Select Province</option>
@@ -32,11 +32,11 @@
                         </div>
                     </div>
                     <div class="w-56 md:mr-2 md:ml-2 sm:mr-0 sm:ml-0">
-                        <span class="mb-10 text-gray-600 ">Town</span>
+                        <span class="mb-10 font-semibold ">Town</span>
                         <div class="py-1">
                             <select
                                 @change="fetch()"
-                                class="font-semibold py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 w-full"
+                                class="text-sm py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  w-full"
                                 v-model="tableData.town"
                             >
                                 <option value="">Select Town</option>
@@ -51,11 +51,11 @@
                         </div>
                     </div>
                     <div class="w-56">
-                        <span class="mb-10 text-gray-600">Transportation</span>
+                        <span class="mb-10 font-semibold ">Transportation</span>
                         <div class="py-1">
                             <select
                                 @change="fetch()"
-                                class="font-semibold py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 w-full"
+                                class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg w-full"
                                 v-model="tableData.transportation"
                             >
                                 <option value="">Select Transportation</option>
@@ -70,11 +70,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-gray-600">
-                    <span class="text-sm">Show</span>
+                <div class="text-sm">
+                    <span >Show</span>
                     <select
                         @change="fetch()"
-                        class="py-2 px-4 mt-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
+                        class="py-2 px-4 mt-4 focus:outline-none cursor-pointer border rounded-lg "
                         v-model="tableData.length"
                     >
                         <option
@@ -85,7 +85,7 @@
                             {{ records }}
                         </option>
                     </select>
-                    <span class="text-sm">Entries</span>
+                    <span >Entries</span>
                 </div>
             </div>
             <Datatable
@@ -96,7 +96,7 @@
             >
                 <tbody class="tbody ">
                     <tr class="tr" v-if="!DCharges.length">
-                        <td colspan="8" class=" font-semibold td">
+                        <td colspan="8" class=" td">
                             NO DATA AVAILABLE
                         </td>
                     </tr>
@@ -108,7 +108,7 @@
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-gray-500 hover:text-red-600"
+                                    class="h-5 w-5 text-gray-700 hover:text-red-600"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -132,14 +132,14 @@
                         <td class="td">{{ charge.rider_shared }}</td>
                         <td class="td" v-if="charge.status == 1">
                             <span
-                                class="bg-green-400 px-2 py-1 rounded-full text-gray-50 font-semibold text-xs hover:bg-green-500 hover:text-white transition duration-500"
+                                class="bg-green-400 px-2 py-1 rounded-full text-white  text-xs hover:bg-green-500 hover:text-white transition duration-500"
                             >
                                 Active</span
                             >
                         </td>
                         <td class="text-center" v-else>
                             <span
-                                class="bg-red-500 px-2 py-1 rounded-full text-gray-50 font-semibold text-xs hover:bg-red-600 hover:text-white transition duration-500"
+                                class="bg-red-500 px-2 py-1 rounded-full text-white  text-xs hover:bg-red-600 hover:text-white transition duration-500"
                             >
                                 Inactive</span
                             >
@@ -151,7 +151,7 @@
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-gray-500 hover:text-green-500"
+                                    class="h-5 w-5 text-gray-700 hover:text-green-500"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -170,7 +170,7 @@
             </Datatable>
             <div class="border-t ">
                 <div class="flex justify-between items-center mt-2">
-                    <span class="text-sm  text-gray-600"
+                    <span class="text-sm  "
                         >Showing {{ !pagination.from ? 0 : pagination.from }} to
                         {{ !pagination.to ? 0 : pagination.to }} of
                         {{ pagination.total }} entries</span
@@ -236,17 +236,15 @@
                     <div
                         class="sm:w-full lg:w-1/2  bg-white rounded sm:m-5 md:m-5"
                     >
-                        <div class="p-2 flex justify-between items-center">
+                        <div class="p-2 flex justify-between items-center text-lg tracking-wider">
                             <label
                                 for=""
                                 v-if="!editMode"
-                                class="text-xl font-semibold text-gray-500"
                                 >Setup new delivery charges</label
                             >
                             <label
                                 for=""
                                 v-if="editMode"
-                                class="text-xl font-semibold text-gray-500"
                                 >Update delivery charges</label
                             >
                             <a
@@ -255,7 +253,7 @@
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-6 w-6 text-gray-500 hover:text-red-500"
+                                    class="h-6 w-6 text-gray-700 hover:text-red-500"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -269,15 +267,15 @@
                                 </svg>
                             </a>
                         </div>
-                        <div class="w-full p-5 border-b border-t">
+                        <div class="w-full p-5 border-b border-t text-sm">
                             <div class="flex flex-col w-1/2">
-                                <label for="province">Province</label>
+                                <label for="province" class="font-semibold">Province</label>
                                 <select
                                     @change="filteredTown"
                                     v-bind:class="{
                                         'border-red-600': errors.province
                                     }"
-                                    class="font-semibold px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                    class="px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
                                     v-model="form.province"
                                 >
                                     <option value="">Select Province</option>
@@ -298,10 +296,10 @@
                             </div>
                             <div class="flex flex-row space-x-4 my-2 w-full ">
                                 <div class="flex flex-col w-1/2">
-                                    <label for="town">Town</label>
+                                    <label for="town" class="font-semibold">Town</label>
                                     <select
                                         v-if="editMode"
-                                        class="font-semibold px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                        class=" px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
                                         v-model="form.town"
                                     >
                                         <option value="">Select Town</option>
@@ -319,7 +317,7 @@
                                         v-bind:class="{
                                             'border-red-600': errors.town
                                         }"
-                                        class="font-semibold px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                        class=" px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
                                         v-model="form.town"
                                     >
                                         <option value="">Select Town</option>
@@ -339,7 +337,7 @@
                                     </p>
                                 </div>
                                 <div class="flex flex-col w-1/2 ">
-                                    <label for="brgy"
+                                    <label for="brgy" class="font-semibold"
                                         >Barangay
                                         <small class="text-blue-600"
                                             >(Optional)</small
@@ -347,7 +345,7 @@
                                     </label>
                                     <select
                                         v-if="editMode"
-                                        class="font-semibold px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                        class=" px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
                                         v-model="form.barangay"
                                     >
                                         <option value=""
@@ -366,7 +364,7 @@
                                         v-bind:class="{
                                             'border-red-600': errors.barangay
                                         }"
-                                        class="font-semibold px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                        class=" px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
                                         v-model="form.barangay"
                                     >
                                         <option value=""
@@ -390,12 +388,12 @@
                                 </div>
                             </div>
                             <div class="flex flex-col w-1/2">
-                                <label for="transpo">Transportation</label>
+                                <label for="transpo" class="font-semibold">Transportation</label>
                                 <select
                                     v-bind:class="{
                                         'border-red-600': errors.transportation
                                     }"
-                                    class="font-semibold px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                    class=" px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
                                     v-model="form.transportation"
                                 >
                                     <option value=""
@@ -421,7 +419,7 @@
                             </div>
                             <div class="flex flex-row space-x-4 my-2">
                                 <div class="flex flex-col w-1/2">
-                                    <label for="D-Charges"
+                                    <label for="D-Charges" class="font-semibold"
                                         >Delivery Charge</label
                                     >
                                     <input
@@ -431,7 +429,7 @@
                                                 errors.charge_amount
                                         }"
                                         type="number"
-                                        class="text-center font-semibold px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                        class="text-center  px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
                                     />
                                     <p
                                         class="text-red-500 text-center text-sm"
@@ -443,14 +441,14 @@
                                     </p>
                                 </div>
                                 <div class="flex flex-col w-1/2 ">
-                                    <label for="brgy">Rider Share</label>
+                                    <label for="brgy" class="font-semibold">Rider Share</label>
                                     <input
                                         v-model="form.rider_share"
                                         v-bind:class="{
                                             'border-red-600': errors.rider_share
                                         }"
                                         type="number"
-                                        class="text-center font-semibold px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                        class="text-center  px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
                                     />
                                     <p
                                         class="text-red-500 text-center text-sm"
@@ -464,39 +462,40 @@
                             </div>
                             <div class="flex items-center space-x-2">
                                 <input
+                                    id="status"
                                     v-model="form.status"
                                     type="checkbox"
                                     :checked="[form.status == 1]"
                                     tabindex="3"
-                                    class="w-6 h-6 appearance-none rounded bg-white checked:bg-yellow-600 checked:border-gray-300 border-2 cursor-pointer"
+                                    class="w-5 h-5 appearance-none rounded bg-white checked:bg-yellow-600 checked:border-gray-300 border cursor-pointer"
                                 />
                                 <label
-                                    for="store"
-                                    class="font-semibold text-gray-500 text-md tracking-normal"
+                                    for="status"
+                                    class="  cursor-pointer font-semibold"
                                     >Status</label
                                 >
                             </div>
                         </div>
                         <div
-                            class="p-2 flex justify-end items-center space-x-2"
+                            class="p-2 flex justify-end items-center space-x-1 text-sm"
                         >
                             <button
                                 v-if="!editMode"
                                 @click="create"
-                                class="px-4 py-2 bg-blue-500 text-white font-semibold hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
+                                class="px-4 py-2 bg-blue-500 text-white text-sm hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
                             >
                                 Save
                             </button>
                             <button
                                 v-if="editMode"
                                 @click="update"
-                                class="px-4 py-2 bg-blue-500 text-white font-semibold hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
+                                class="px-4 py-2 bg-blue-500 text-white -text-sm hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
                             >
                                 Update
                             </button>
                             <button
                                 @click="closeModal"
-                                class="px-4 py-2 bg-red-500 text-white font-semibold hover:bg-red-600 rounded transition duration-500 focus:outline-none"
+                                class="px-4 py-2 bg-red-500 text-white text-sm hover:bg-red-600 rounded transition duration-500 focus:outline-none"
                             >
                                 Close
                             </button>

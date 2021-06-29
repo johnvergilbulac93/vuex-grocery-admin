@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="container text-gray-800">
         <div class=" bg-gray-50 shadow-lg p-5 rounded ">
             <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="text-gray-500 text-lg font-semibold"
+                <label for="" class="tracking-wider text-lg "
                     >Liquidation Report</label
                 >
             </div>
@@ -16,7 +16,7 @@
                         <label for="" class="font-semibold">Date from</label>
                         <input
                             type="date"
-                            class="w-full form-input font-semibold"
+                            class="w-full form-input "
                             tabindex="2"
                             v-model="filter.dateFrom"
                         />
@@ -25,7 +25,7 @@
                         <label for="" class="font-semibold">Date to</label>
                         <input
                             type="date"
-                            class="w-full form-input font-semibold"
+                            class="w-full form-input "
                             tabindex="3"
                             v-model="filter.dateTo"
                         />
@@ -35,14 +35,14 @@
                     <button
                         tabindex="4"
                         @click="generate()"
-                        class="h-10 px-4 py-2  focus:outline-none text-white font-semibold bg-blue-500 hover:bg-blue-600 rounded"
+                        class="h-10 px-4 py-2  focus:outline-none text-white  bg-blue-500 hover:bg-blue-600 rounded"
                     >
                         Generate
                     </button>
 
                     <button
                         tabindex="4"
-                        class="h-10 px-4 py-2 flex disabled:opacity-50  focus:outline-none text-white font-semibold bg-green-500 hover:bg-green-600 rounded"
+                        class="h-10 px-4 py-2 flex disabled:opacity-50  focus:outline-none text-white bg-green-500 hover:bg-green-600 rounded"
                         @click="printBtn"
                         v-if="transactions.b_unit != null"
                         :disabled="transactions.cashier_details.length"
@@ -68,17 +68,20 @@
             <hr class="mt-2" />
             <div class="mt-2" id="section-to-print">
                 <div class="flex justify-center items-center">
-                    <div v-if="transactions.b_unit != null" class="tracking-wide">
+                    <div
+                        v-if="transactions.b_unit != null"
+                        class="tracking-wide"
+                    >
                         <center>
-                            <h6 class="text-xl font-semibold text-gray-500">
+                            <h6 class="text-lg">
                                 {{
                                     transactions.hasOwnProperty("b_unit") &&
                                         transactions.b_unit.business_unit
                                 }}
                             </h6>
-                            <p class="text-gray-500">ALTURUSH GOODS ORDERING</p>
-                            <p class="text-gray-500">LIQUIDATION REPORT</p>
-                            <p class="text-center font-semibold text-gray-500">
+                            <p>ALTURUSH GOODS ORDERING</p>
+                            <p>LIQUIDATION REPORT</p>
+                            <p class="text-center ">
                                 {{ filter.dateFrom | formatDateNoTime }} To
                                 {{ filter.dateTo | formatDateNoTime }}
                             </p>
@@ -91,13 +94,16 @@
                     v-for="(cashier, index) in transactions.cashier_details"
                     :key="index"
                 >
-                    <span class="text-gray-700 font-semibold">Cashier: <span class="uppercase tracking-wider">{{ cashier[0].name }}</span> </span>
+                    <span class=" font-semibold"
+                        >Cashier:
+                        <span class="uppercase ">{{ cashier[0].name }}</span>
+                    </span>
                     <table
                         id="table-body-content"
                         class="min-w-full divide-y divide-gray-300"
                     >
                         <thead
-                            class="border-t-2 border-gray-300 bg-gray-100 text-gray-500 tracking-wide font-poppins"
+                            class="border-t-2 border-gray-300 bg-gray-100 tracking-normal"
                         >
                             <tr class="tr">
                                 <!-- <th>Cashier</th> -->
@@ -201,10 +207,10 @@
                             </tr>
                         </tbody>
                     </table>
-                    <small class="text-xs flex justify-end mt-2"
-                        >Run Time: {{ dateNow }}</small
-                    >
                 </div>
+                <small class="text-xs flex justify-end mt-2"  v-if="transactions.b_unit != null"
+                    >Run Time: {{ dateNow }}</small
+                >
             </div>
         </div>
     </div>
@@ -346,10 +352,9 @@ export default {
             if (this.filter.dateFrom > this.filter.dateTo) {
                 swal.fire("Invalid Date!", "Please check.", "warning");
             } else {
-                Report.store_liquidation_report(filter)
-                    .then(res => {
-                        this.transactions = res.data;
-                    })
+                Report.store_liquidation_report(filter).then(res => {
+                    this.transactions = res.data;
+                });
             }
         }
     },

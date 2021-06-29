@@ -1,24 +1,24 @@
 <template>
-    <div class="container bg-gray-50 shadow-lg p-5 rounded text-gray-500">
+    <div class="container bg-gray-50 shadow-lg p-5 rounded text-gray-800">
         <div class="mb-5 bg-gray-100 p-2">
-            <label for="" class="text-gray-500 text-lg font-semibold"
+            <label for="" class="tracking-wider text-lg "
                 >Store Time</label
             >
         </div>
         <div
             class="grid lg:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 sm:grid-flow-row sm:grid-cols-1 sm:grid-rows-1 gap-2"
         >
-            <div class="p-2">
+            <div class="p-2 tracking-normal">
                 <div class="flex flex-col space-y-2">
                     <div class="w-full space-y-1">
-                        <label for="store">Store</label>
+                        <label for="store" class="font-semibold">Store</label>
                         <select
                             v-model="store"
                             v-bind:class="{
                                 'border-red-600': errors.store
                             }"
                             tabindex="1"
-                            class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                            class="w-full text-sm px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
                         >
                             <option value="">Select Store</option>
                             <option
@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="w-full space-y-1">
-                        <label for="start">Start</label>
+                        <label for="start" class="font-semibold">Start</label>
                         <input
                             tabindex="2"
                             type="time"
@@ -45,7 +45,7 @@
                             v-bind:class="{
                                 'border-red-600': errors.opening_time
                             }"
-                            class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                            class="w-full text-sm px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
                         />
                         <p
                             class="text-red-500 text-center text-sm"
@@ -55,7 +55,7 @@
                         </p>
                     </div>
                     <div class="w-full space-y-1">
-                        <label for="end">End</label>
+                        <label for="end" class="font-semibold">End</label>
                         <input
                             tabindex="3"
                             type="time"
@@ -63,7 +63,7 @@
                                 'border-red-600': errors.closing_time
                             }"
                             v-model="closing_time"
-                            class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                            class="w-full text-sm px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
                         />
                         <p
                             class="text-red-500 text-center text-sm"
@@ -78,14 +78,14 @@
                     <button
                         @click="save"
                         tabindex="4"
-                        class="tracking-wider w-1/2 bg-blue-500 py-2 px-4 text-white font-semibold hover:bg-blue-600 transition duration-500 focus:outline-none rounded"
+                        class="w-1/2 bg-blue-500 py-2 px-4 text-white text-sm hover:bg-blue-600 transition duration-500 focus:outline-none rounded"
                     >
                         Save
                     </button>
                     <button
                         @click="reset"
                         tabindex="5"
-                        class="tracking-wider w-1/2 bg-gray-500  py-2 px-4 text-white font-semibold hover:bg-gray-600 transition duration-500 focus:outline-none rounded"
+                        class="w-1/2 bg-gray-500  py-2 px-4 text-white text-sm  hover:bg-gray-600 transition duration-500 focus:outline-none rounded"
                     >
                         Clear
                     </button>
@@ -95,13 +95,13 @@
                 <div
                     class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
                 >
-                    <div class=" text-gray-600 md:w-1/2 sm:w-full flex">
+                    <div class="md:w-1/2 sm:w-full flex">
                         <div
                             class="relative w-1/2 border overflow-hidden flex rounded-l-lg"
                         >
                             <input
                                 type="text"
-                                class="relative py-2 px-4 pr-10 w-full outline-none text-gray-600 placeholder-gray-400 focus:outline-none "
+                                class="relative py-2 px-4 pr-10 w-full outline-none  focus:outline-none "
                                 placeholder="Search...."
                                 v-model="tableData.search"
                                 @keyup.enter="search"
@@ -109,11 +109,11 @@
                             <button
                                 @click="clear"
                                 v-if="tableData.search.length"
-                                class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded text-base font-normal text-gray-400 text-center flex items-center justify-center focus:outline-none "
+                                class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded  text-center flex items-center justify-center focus:outline-none "
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-gray-500 hover:text-red-500"
+                                    class="h-5 w-5 hover:text-red-500"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -129,7 +129,7 @@
                         </div>
                         <button
                             @click="search"
-                            class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 text-gray-500 hover:text-white rounded-r-lg"
+                            class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -147,10 +147,10 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="text-gray-600">
-                        <span class="text-sm text-gray-600">Show</span>
+                    <div class="text-sm">
+                        <span>Show</span>
                         <select
-                            class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
+                            class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg"
                             v-model="tableData.length"
                             @change="fetch()"
                         >
@@ -162,7 +162,7 @@
                                 {{ records }}
                             </option>
                         </select>
-                        <span class="text-sm text-gray-600">Entries</span>
+                        <span>Entries</span>
                     </div>
                 </div>
                 <Datatable
@@ -173,7 +173,7 @@
                 >
                     <tbody class="tbody text-center">
                         <tr class="tr" v-if="!StoreHourList.length">
-                            <td colspan="5" class="td font-semibold">
+                            <td colspan="5" class="td">
                                 NO DATA AVAILABLE
                             </td>
                         </tr>
@@ -190,7 +190,7 @@
                             <td class="td" v-if="data.status == 1">
                                 <a @click="statusActive(data)">
                                     <span
-                                        class="bg-green-400 px-2 py-1 rounded-full text-gray-50 font-semibold text-xs hover:bg-green-500 hover:text-white transition duration-500"
+                                        class="bg-green-400 px-2 py-1 rounded-full text-gray-50  text-xs hover:bg-green-500 hover:text-white transition duration-500"
                                     >
                                         Active</span
                                     >
@@ -212,7 +212,7 @@
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5 text-gray-500 hover:text-red-600"
+                                        class="h-5 w-5 text-gray-700 hover:text-red-600"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -231,7 +231,7 @@
                 </Datatable>
                 <div class="border-t ">
                     <div class="flex justify-between items-center mt-2">
-                        <span class="text-sm  text-gray-600"
+                        <span class="text-sm"
                             >Showing
                             {{ !pagination.from ? 0 : pagination.from }} to
                             {{ !pagination.to ? 0 : pagination.to }} of
@@ -245,7 +245,7 @@
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5"
+                                    class="h-6 w-6"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -266,7 +266,7 @@
                                 Next
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5"
+                                    class="h-6 w-6"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"

@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="container text-black">
         <div class=" bg-gray-50 shadow-lg p-5 rounded  ">
             <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="text-gray-500 text-lg font-semibold"
+                <label for="" class="text-lg tracking-wider"
                     >Price Group</label
                 >
             </div>
@@ -18,7 +18,7 @@
                                 'border-red-600': errors.store
                             }"
                             tabindex="1"
-                            class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                            class="w-full  px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
                         >
                             <option value="">Choose Store</option>
                             <option
@@ -43,7 +43,7 @@
                                 'border-red-600': errors.store
                             }"
                             tabindex="1"
-                            class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                            class="w-full  px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
                         >
                             <option value="">Choose Price Group</option>
                             <option
@@ -65,14 +65,14 @@
                         <button
                             @click="save"
                             tabindex="4"
-                            class="w-1/2 bg-yellow-500 py-2 px-4 text-white font-semibold hover:bg-yellow-600 transition duration-500 focus:outline-none"
+                            class="w-1/2 bg-yellow-500 py-2 px-4 text-white  hover:bg-yellow-600 transition duration-500 focus:outline-none rounded"
                         >
                             Save
                         </button>
                         <button
                             @click="reset"
                             tabindex="5"
-                            class="w-1/2 bg-gray-500  py-2 px-4 text-white font-semibold hover:bg-gray-600 transition duration-500 focus:outline-none"
+                            class="w-1/2 bg-gray-500  py-2 px-4 text-white  hover:bg-gray-600 transition duration-500 focus:outline-none rounded"
                         >
                             Clear
                         </button>
@@ -82,13 +82,13 @@
                     <div
                         class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
                     >
-                        <div class=" text-gray-600 md:w-1/2 sm:w-full flex">
+                        <div class=" md:w-1/2 sm:w-full flex">
                             <div
                                 class="relative w-1/2 border overflow-hidden flex rounded-l-lg"
                             >
                                 <input
                                     type="text"
-                                    class="relative py-2 px-4 pr-10 w-full outline-none text-gray-600 placeholder-gray-400 focus:outline-none "
+                                    class="relative py-2 px-4 pr-10 w-full   placeholder-gray-400 focus:outline-none "
                                     placeholder="Search...."
                                     v-model="tableData.search"
                                     @keyup.enter="fetch()"
@@ -96,11 +96,11 @@
                                 <button
                                     @click="clear"
                                     v-if="tableData.search.length"
-                                    class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded text-base font-normal text-gray-400 text-center flex items-center justify-center focus:outline-none "
+                                    class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded  flex items-center justify-center focus:outline-none "
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5 text-gray-500 hover:text-red-500"
+                                        class="h-5 w-5 text-gray-700 hover:text-red-500"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -116,7 +116,7 @@
                             </div>
                             <button
                                 @click="fetch()"
-                                class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 text-gray-500 hover:text-white rounded-r-lg"
+                                class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -134,10 +134,10 @@
                                 </svg>
                             </button>
                         </div>
-                        <div class="text-gray-600">
-                            <span class="text-sm text-gray-600">Show</span>
+                        <div class="text-sm">
+                            <span>Show</span>
                             <select
-                                class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
+                                class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
                                 v-model="tableData.length"
                                 @change="fetch()"
                             >
@@ -149,7 +149,7 @@
                                     {{ records }}
                                 </option>
                             </select>
-                            <span class="text-sm text-gray-600">Entries</span>
+                            <span >Entries</span>
                         </div>
                     </div>
                     <Datatable
@@ -160,7 +160,7 @@
                     >
                         <tbody class="tbody text-center">
                             <tr class="tr" v-if="!StorePriceGroup.length">
-                                <td colspan="4" class="td font-semibold">
+                                <td colspan="4" class="td ">
                                     NO DATA AVAILABLE
                                 </td>
                             </tr>
@@ -180,7 +180,7 @@
                     </Datatable>
                     <div class="border-t ">
                         <div class="flex justify-between items-center mt-2">
-                            <span class="text-sm  text-gray-600"
+                            <span class="text-sm  "
                                 >Showing
                                 {{ !pagination.from ? 0 : pagination.from }} to
                                 {{ !pagination.to ? 0 : pagination.to }} of

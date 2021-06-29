@@ -1,29 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap'); */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 .tbody {
-    @apply divide-y divide-gray-300 tracking-wide;
+    @apply divide-y divide-gray-300 tracking-normal;
 }
 .td {
-    @apply p-2 whitespace-nowrap text-sm text-gray-700 text-center ;
+    @apply p-2 whitespace-nowrap text-sm text-center text-black ;
 }
 .tr {
-    @apply hover:bg-gray-100 ;
+    @apply hover:bg-gray-100 text-black;
 }
 
 .form-input {
-    @apply px-4 py-2 border focus:outline-none rounded text-gray-600  focus:border-yellow-500;
+    @apply px-4 py-2 border focus:outline-none rounded focus:border-yellow-500;
 }
 
 .footer-btn {
-    @apply bg-yellow-500 text-gray-50 text-xs p-2 rounded mt-1 disabled:opacity-50 focus:outline-none w-14 h-8 hover:bg-yellow-600 hover:text-white transition duration-500;
+    @apply bg-yellow-500 text-gray-50 text-sm p-2 rounded mt-1 disabled:opacity-50 focus:outline-none w-14 h-8 hover:bg-yellow-600 hover:text-white transition duration-500;
 }
 .th {
     @apply p-2;
 }
 .li{
-    @apply px-3 py-2 transition-colors duration-200 relative block text-xs  hover:text-gray-900 text-gray-500 font-semibold
+    @apply px-3 py-2 transition duration-200 relative block  hover:bg-gray-100 
 }

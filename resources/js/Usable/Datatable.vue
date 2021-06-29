@@ -1,8 +1,8 @@
 <template>
     <div class="mx-auto">
         <table class="min-w-full divide-y divide-gray-300">
-            <thead class="border-t-2 border-gray-300 bg-gray-100 text-gray-500 tracking-wide font-poppins">
-                <tr>
+            <thead class="border-t-2 border-gray-300 bg-gray-100 tracking-normal">
+                <tr class="tracking-wide">
                     <th
                         v-for="column in columns"
                         :key="column.name"

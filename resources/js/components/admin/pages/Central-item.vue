@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="container text-gray-800">
         <div class=" bg-gray-50 shadow-lg p-5 rounded overflow-x-auto">
             <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="text-gray-500 text-lg font-semibold"
+                <label for="" class="text-lg tracking-wider"
                     >Item Masterfile</label
                 >
             </div>
@@ -12,13 +12,13 @@
                 <div
                     class="w-3/4 flex sm:flex-col lg:flex-row justify-between items-center sm:space-y-2 md:space-y-2 lg:space-y-0 "
                 >
-                    <div class=" text-gray-600 w-72 flex">
+                    <div class="w-72 flex">
                         <div
                             class="relative w-full border overflow-hidden flex rounded-l-lg "
                         >
                             <input
                                 type="text"
-                                class="relative py-2 px-4 pr-10 w-full outline-none text-gray-600 placeholder-gray-400 focus:outline-none focus:shadow-outline"
+                                class="relative py-2 px-4 pr-10 w-full  focus:outline-none "
                                 placeholder="Search...."
                                 v-model="tableData.search"
                                 @keyup.enter="search"
@@ -26,11 +26,11 @@
                             <button
                                 @click="clear"
                                 v-if="tableData.search.length"
-                                class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded text-base font-normal text-gray-400 text-center flex items-center justify-center focus:outline-none "
+                                class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded  flex items-center justify-center focus:outline-none "
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-gray-500 hover:text-red-500"
+                                    class="h-5 w-5  hover:text-red-500"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -64,9 +64,9 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="text-gray-600 w-72">
+                    <div class=" w-72">
                         <select
-                            class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
+                            class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
                             v-model="tableData.category"
                             @change="fetch()"
                         >
@@ -80,9 +80,9 @@
                             </option>
                         </select>
                     </div>
-                    <div class="text-gray-600 w-72">
+                    <div class=" w-72">
                         <select
-                            class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
+                            class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
                             v-model="tableData.price_group"
                             @change="fetch()"
                         >
@@ -93,10 +93,10 @@
                     </div>
                 </div>
 
-                <div class="text-gray-600">
-                    <span class="text-sm text-gray-600">Show</span>
+                <div class="text-sm">
+                    <span >Show</span>
                     <select
-                        class="mb-2 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
+                        class="mb-2 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
                         v-model="tableData.length"
                         @change="fetch()"
                     >
@@ -108,7 +108,7 @@
                             {{ records }}
                         </option>
                     </select>
-                    <span class="text-sm text-gray-600">Entries</span>
+                    <span >Entries</span>
                 </div>
             </div>
             <Datatable
@@ -119,14 +119,14 @@
             >
                 <tbody class="tbody text-center">
                     <tr class="tr" v-if="!Items.length">
-                        <td colspan="6" class="td font-semibold ">
+                        <td colspan="7" class="td ">
                             NO DATA AVAILABLE
                         </td>
                     </tr>
                     <tr v-for="(item, i) in Items" :key="i" class="tr">
                         <td class="td uppercase">{{ item.itemcode }}</td>
                         <a @click="showImage(item)">
-                            <td class="td tracking-wide">
+                            <td class="td ">
                                 {{ item.product_name }}
                             </td>
                         </a>
@@ -134,7 +134,7 @@
                         <td>
                             <select
                                 v-if="item.item_price.length"
-                                class="cursor-pointer w-20 py-1 px-2 focus:outline-none my-1 border rounded focus:border-yellow-500 text-sm font-semibold "
+                                class="cursor-pointer w-20 py-1 px-2 focus:outline-none my-1 border rounded focus:border-yellow-500 text-sm  "
                                 @change="getPrice($event, i)"
                             >
                                 <option
@@ -145,13 +145,15 @@
                                     {{ data.UOM }}
                                 </option>
                             </select>
-                            
-                            <span v-else class="text-xs text-red-500"> NO PRICE AVAILABLE</span>
+
+                            <span v-else class="text-xs text-red-500">
+                                NO PRICE AVAILABLE</span
+                            >
                         </td>
                         <td class="td">
                             <span
                                 :id="`price-${i}`"
-                                class="text-blue-500 font-semibold"
+                                class="text-blue-500 "
                             >
                                 {{
                                     !item.item_price.length
@@ -163,7 +165,7 @@
                         <td class="td" v-if="item.status == 'active'">
                             <a @click="showPerItemStatusActive(item.itemcode)">
                                 <span
-                                    class="bg-green-400 px-2 py-1 rounded-full text-gray-50 font-semibold text-xs hover:bg-green-500 hover:text-white transition duration-500"
+                                    class="bg-green-400 px-2 py-1 rounded-full text-gray-50  text-xs hover:bg-green-500 hover:text-white transition duration-500"
                                 >
                                     {{ item.status | textformat }}</span
                                 >
@@ -176,7 +178,7 @@
                                 "
                             >
                                 <span
-                                    class="bg-red-500 px-2 py-1 rounded-full text-gray-50 font-semibold text-xs hover:bg-red-600 hover:text-white transition duration-500"
+                                    class="bg-red-500 px-2 py-1 rounded-full text-gray-50 text-xs hover:bg-red-600 hover:text-white transition duration-500"
                                 >
                                     {{ item.status | textformat }}</span
                                 >
@@ -189,7 +191,7 @@
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-gray-500 hover:text-blue-500"
+                                    class="h-5 w-5 text-gray-700 hover:text-blue-500"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -198,7 +200,7 @@
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                         stroke-width="2"
-                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                                     />
                                 </svg>
                             </button>
@@ -208,7 +210,7 @@
             </Datatable>
             <div class="border-t ">
                 <div class="flex justify-between items-center mt-2">
-                    <span class="text-sm  text-gray-600"
+                    <span class="text-sm  "
                         >Showing {{ !pagination.from ? 0 : pagination.from }} to
                         {{ !pagination.to ? 0 : pagination.to }} of
                         {{ pagination.total }} entries</span
@@ -306,7 +308,7 @@
                         <div
                             class="border-b flex justify-between items-center p-2"
                         >
-                            <label for="" class="font-semibold"
+                            <label for="" class="text-lg tracking-wider"
                                 >Upload Image</label
                             >
                             <button
@@ -315,7 +317,7 @@
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-6 w-6 text-gray-500 hover:text-red-500"
+                                    class="h-6 w-6 text-gray-700 hover:text-red-500"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -368,11 +370,11 @@
                             </transition>
 
                             <label
-                                class="flex flex-col items-center px-4 py-6 border bg-white text-gray-400 uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transition duration-500"
+                                class="flex flex-col items-center px-4 py-6 border bg-white  uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transition duration-500"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-6 w-6"
+                                    class="h-6 w-6 text-gray-700"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -384,7 +386,7 @@
                                         d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                                     />
                                 </svg>
-                                <span class="mt-2 font-bold tracking-normal"
+                                <span class="mt-2 "
                                     >Click here to select image</span
                                 >
                                 <input
@@ -409,10 +411,10 @@
                                 >
                                     <label
                                         for=""
-                                        class="text-green-500 font-bold text-xs"
+                                        class="text-green-500 "
                                         >{{ filename }}</label
                                     >
-                                    <div class=" text-white font-bold text-sm">
+                                    <div class=" text-white ">
                                         <button
                                             @click="upload"
                                             class="bg-green-500 px-2 py-1 w-20 focus:outline-none hover:bg-green-600 transition duration-300"

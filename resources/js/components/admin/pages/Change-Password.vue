@@ -1,10 +1,10 @@
 <template>
-    <div class=" bg-gray-50 shadow-lg p-5 rounded ">
+    <div class=" bg-gray-50 shadow-lg p-5 rounded text-gray-800">
         <div class="flex flex-col justify-center items-center sm:w-full  ">
             <div class="mb-5 bg-gray-100 p-2 md:w-1/2 sm:w-full  border">
                 <label
                     for=""
-                    class="text-gray-500 font-semibold flex items-center space-x-1"
+                    class=" flex items-center space-x-1"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -16,15 +16,15 @@
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            stroke-width="2"
+                            stroke-width="1"
                             d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
                     </svg>
-                    <span class="tracking-wider text-lg">Change Password</span>
+                    <span class="tracking-wider text-lg ">Change Password</span>
                 </label>
-                <div class=" mt-5 p-2 space-y-4 ">
+                <div class=" mt-5 p-2 space-y-4 text-gray-800">
                     <div>
-                        <label for="" class="block font-semibold"
+                        <label for="" class="block font-semibold subpixel-antialiased"
                             >Old Password
                         </label>
                         <div class="relative w-full  overflow-hidden flex ">
@@ -34,7 +34,7 @@
                                 }"
                                 v-if="showPasswordOld"
                                 type="text"
-                                class="relative py-2 px-4 pr-10 w-full outline-none border  text-gray-600 placeholder-gray-400  focus:border-yellow-500 rounded"
+                                class="relative py-2 px-4 pr-10 w-full outline-none border   focus:border-yellow-500 rounded"
                                 placeholder="Old Password"
                                 v-model="form.old_password"
                                 tabindex="1"
@@ -46,7 +46,7 @@
                                 }"
                                 v-else
                                 type="password"
-                                class="relative py-2 px-4 pr-10 w-full outline-none border  text-gray-600 placeholder-gray-400  focus:border-yellow-500 rounded"
+                                class="relative py-2 px-4 pr-10 w-full outline-none border   placeholder-gray-400  focus:border-yellow-500 rounded"
                                 placeholder="Old Password"
                                 v-model="form.old_password"
                                 tabindex="1"
@@ -252,13 +252,13 @@
                     </div>
                     <button
                         @click="saveChanges"
-                        class="px-4 py-2 bg-blue-500 text-white font-semibold hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
+                        class="px-4 py-2 bg-blue-500 text-white  hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
                     >
                         Save
                     </button>
                     <button
                         @click="clear"
-                        class="px-4 py-2 bg-gray-500 text-white font-semibold hover:bg-gray-600 rounded transition duration-500 focus:outline-none"
+                        class="px-4 py-2 bg-gray-500 text-white  hover:bg-gray-600 rounded transition duration-500 focus:outline-none"
                     >
                         Clear
                     </button>

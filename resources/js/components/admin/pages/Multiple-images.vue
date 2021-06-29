@@ -1,12 +1,12 @@
 <template>
-    <div class="container">
+    <div class="container text-black">
         <div class=" bg-gray-50 shadow-lg p-5 rounded">
             <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="text-gray-500 text-lg font-semibold"
+                <label for="" class="text-lg tracking-wider"
                     >Upload Multiple Images</label
                 >
             </div>
-            <span class="text-blue-500 font-semibold">NOTE:</span> Limit of
+            <span class="text-blue-500 ">NOTE:</span> Limit of
             images is 100.
             <div class="mt-2">
                 <Upload

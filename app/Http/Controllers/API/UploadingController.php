@@ -26,7 +26,7 @@ class UploadingController extends Controller
     public function uploadprice(Request $request)
     {
         $this->validate($request, [
-            'file_price' => 'required|mimes:csv,txt,'
+            'file_price' => 'required|mimes:csv,txt'
         ]);
         (new PriceHistoryImport)->import($request->file('file_price'));
         (new PriceChangedImport)->import($request->file('file_price'));
@@ -64,7 +64,7 @@ class UploadingController extends Controller
     public function uploadcategory(Request $request)
     {
         $this->validate($request, [
-            'file_category' => 'required|mimes:csv,txt,'
+            'file_category' => 'required|mimes:csv,txt'
         ]);
         (new ItemCategoryImport)->import($request->file('file_category'));
     }
@@ -72,13 +72,13 @@ class UploadingController extends Controller
     public function uploaditemfilename(Request $request)
     {
         $this->validate($request, [
-            'image_filename' => 'required|mimes:csv,txt,'
+            'image_filename' => 'required|mimes:csv,txt'
         ]);
         (new FilenameImport)->import($request->file('image_filename'));
     }
     public function multipleImage(Request $request)
     {
-        $this->validate($request, ['file' => 'image|mimes:jpeg,png,jpg,gif,svg',]);
+        $this->validate($request, ['file' => 'image|mimes:jpeg,png,jpg,gif,svg']);
         $imageName = $request->file->getClientOriginalName();
         $path = public_path() . '/ITEM-IMAGES/';
         // $path = '../admins.alturush.com/ITEM-IMAGES/';

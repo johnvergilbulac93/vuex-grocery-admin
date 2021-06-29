@@ -34,7 +34,8 @@ module.exports = {
         blue: '2px solid #0000ff',
       },
       fontFamily: {
-        poppins: ['Poppins','sans-serif']
+        // poppins: ['Poppins','sans-serif']
+        poppins:['Helvetica']
       }
     },
   },

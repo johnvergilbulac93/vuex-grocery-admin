@@ -1,7 +1,7 @@
 <template>
-    <div class="container bg-gray-50 shadow-lg p-5 rounded text-gray-500">
+    <div class="container bg-gray-50 shadow-lg p-5 rounded text-gray-800">
         <div class="mb-5 bg-gray-100 p-2">
-            <label for="" class="text-gray-500 text-lg font-semibold"
+            <label for="" class=" text-lg tracking-wider"
                 >Tenant</label
             >
         </div>
@@ -12,14 +12,14 @@
                 <form @submit.prevent="editMode ? update() : create()">
                     <div class="flex flex-col space-y-2">
                         <div class="w-full space-y-1">
-                            <label for="store">Store</label>
+                            <label for="store" class="font-semibold">Store</label>
                             <select
                                 v-model="form.store"
                                 tabindex="1"
                                 v-bind:class="{
                                     'border-red-600': errors.store
                                 }"
-                                class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                                class="w-full text-sm px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
                             >
                                 <option value="">Select Store</option>
                                 <option
@@ -37,14 +37,14 @@
                             </p>
                         </div>
                         <div class="w-full space-y-1">
-                            <label for="store">Department</label>
+                            <label for="store" class="font-semibold">Department</label>
                             <select
                                 v-model="form.department"
                                 tabindex="2"
                                 v-bind:class="{
                                     'border-red-600': errors.department
                                 }"
-                                class="w-full font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                                class="w-full text-sm px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
                             >
                                 <option value="">Select Department</option>
                                 <option
@@ -61,17 +61,18 @@
                                 <small>{{ errors.department[0] }}</small>
                             </p>
                         </div>
-                        <div class="flex items-center space-x-2">
+                        <div class="flex items-center space-x-1 ">
                             <input
+                                id="status"
                                 v-model="form.status"
                                 type="checkbox"
                                 :checked="[form.status == 1]"
                                 tabindex="3"
-                                class="w-6 h-6 appearance-none rounded bg-white checked:bg-yellow-600 checked:border-gray-300 border-2 cursor-pointer"
+                                class="w-5 h-5 appearance-none rounded bg-white checked:bg-yellow-600 checked:border-gray-300 border cursor-pointer "
                             />
                             <label
-                                for="store"
-                                class="font-semibold text-gray-500 text-md tracking-normal"
+                                for="status"
+                                class=" text-md cursor-pointer font-semibold"
                                 >Status</label
                             >
                         </div>
@@ -79,7 +80,7 @@
 
                     <button
                         tabindex="4"
-                        class="my-3 w-full bg-blue-500 py-2 px-4 text-white font-semibold hover:bg-blue-600 transition duration-500 focus:outline-none rounded tracking-wider"
+                        class="my-3 w-full bg-blue-500 py-2 px-4 text-white text-sm hover:bg-blue-600 transition duration-500 focus:outline-none rounded"
                     >
                         {{ !editMode ? "Save" : "Update" }}
                     </button>
@@ -87,7 +88,7 @@
                 <button
                     @click="reset"
                     tabindex="5"
-                    class="w-full bg-gray-500  py-2 px-4 text-white font-semibold hover:bg-gray-600 transition duration-500 focus:outline-none rounded tracking-wider"
+                    class="w-full bg-gray-500  py-2 px-4 text-white text-sm hover:bg-gray-600 transition duration-500 focus:outline-none rounded "
                 >
                     Clear
                 </button>
@@ -96,13 +97,13 @@
                 <div
                     class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
                 >
-                    <div class=" text-gray-600 md:w-1/2 sm:w-full flex">
+                    <div class="  md:w-1/2 sm:w-full flex">
                         <div
                             class="relative w-1/2 border overflow-hidden flex rounded-l-lg"
                         >
                             <input
                                 type="text"
-                                class="relative py-2 px-4 pr-10 w-full outline-none text-gray-600 placeholder-gray-400 focus:outline-none "
+                                class="relative py-2 px-4 pr-10 w-full focus:outline-none "
                                 placeholder="Search...."
                                 v-model="tableData.search"
                                 @keyup.enter="search"
@@ -110,11 +111,11 @@
                             <button
                                 @click="clear"
                                 v-if="tableData.search.length"
-                                class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded text-base font-normal text-gray-400 text-center flex items-center justify-center focus:outline-none "
+                                class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded  flex items-center justify-center focus:outline-none "
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-gray-500 hover:text-red-500"
+                                    class="h-5 w-5 hover:text-red-500"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -130,7 +131,7 @@
                         </div>
                         <button
                             @click="search"
-                            class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 text-gray-500 hover:text-white rounded-r-lg"
+                            class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500  hover:text-white rounded-r-lg"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -148,10 +149,10 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="text-gray-600">
-                        <span class="text-sm text-gray-600">Show</span>
+                    <div class="text-sm">
+                        <span >Show</span>
                         <select
-                            class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg text-gray-600 "
+                            class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
                             v-model="tableData.length"
                             @change="fetch()"
                         >
@@ -163,7 +164,7 @@
                                 {{ records }}
                             </option>
                         </select>
-                        <span class="text-sm text-gray-600">Entries</span>
+                        <span class="text-sm ">Entries</span>
                     </div>
                 </div>
                 <Datatable
@@ -187,7 +188,7 @@
                             <td class="td">{{ tenant.name }}</td>
                             <td class="td">
                                 <span
-                                    class=" px-2 py-1 text-white font-bold rounded-full"
+                                    class=" px-2 py-1 text-white text-xs rounded-full"
                                     :class="[
                                         tenant.status
                                             ? 'bg-green-500'
@@ -205,7 +206,7 @@
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5 text-gray-500 hover:text-red-500"
+                                        class="h-5 w-5 text-gray-700 hover:text-red-500"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -224,7 +225,7 @@
                 </Datatable>
                 <div class="border-t ">
                     <div class="flex justify-between items-center mt-2">
-                        <span class="text-sm  text-gray-600"
+                        <span class="text-sm "
                             >Showing
                             {{ !pagination.from ? 0 : pagination.from }} to
                             {{ !pagination.to ? 0 : pagination.to }} of

@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="container text-gray-800">
         <div class="h-96 bg-gray-50 shadow-lg p-5 rounded">
             <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="text-gray-500 text-lg font-semibold"
+                <label for="" class="tracking-wider text-lg "
                     >Item Report</label
                 >
             </div>
@@ -10,7 +10,7 @@
                 <div class="sm:w-full md:w-1/2 lg:w-1/4 p-5 space-y-5 border">
                     <div class="w-full">
                         <select
-                            class="form-input  w-full font-semibold"
+                            class="form-input  w-full "
                             tabindex="1"
                             v-model="filter.store"
                             @change="changestore"
@@ -33,7 +33,7 @@
                     </div>
                     <div class="w-full">
                         <select
-                            class="form-input w-full  font-semibold"
+                            class="form-input w-full  "
                             v-model="filter.type"
                             tabindex="2"
                             @change="changestore"
@@ -54,7 +54,7 @@
                     </div>
                     <div class="w-full">
                         <button
-                            class="w-full px-4 py-2 h-10 bg-blue-500 focus:outline-none hover:bg-blue-600 text-white font-semibold transition duration-500 rounded"
+                            class="w-full px-4 py-2 h-10 bg-blue-500 focus:outline-none hover:bg-blue-600 text-white transition duration-500 rounded"
                             @click="generate"
                         >
                             {{ loading ? "Loading..." : "Generate" }}
@@ -62,7 +62,7 @@
                     </div>
                     <div class="w-full">
                         <export-excel
-                            class="w-full  px-4 py-2 h-10 text-center cursor-pointer bg-green-500 focus:outline-none hover:bg-green-600 text-white font-semibold transition duration-500 rounded"
+                            class="w-full  px-4 py-2 h-10 text-center cursor-pointer bg-green-500 focus:outline-none hover:bg-green-600 text-white  transition duration-500 rounded"
                             :data="results"
                             :fields="json_fields"
                             type="xls"

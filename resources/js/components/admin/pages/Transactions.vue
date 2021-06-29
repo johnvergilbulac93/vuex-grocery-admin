@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="container text-gray-800">
         <div class="bg-gray-50 shadow-lg p-5 rounded ">
             <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="text-gray-500 text-lg font-semibold"
+                <label for="" class="tracking-wider text-lg "
                     >Total Order Report - REMITTED</label
                 >
             </div>
@@ -13,9 +13,9 @@
                     class=" w-3/4 flex sm:flex-col lg:flex-row sm:space-x-0 sm:space-y-5 lg:space-x-5 lg:space-y-0 space-x-5"
                 >
                     <div class="block w-1/4 sm:w-full md:w-1/2">
-                        <label for="" class="font-semibold">Report Type</label>
+                        <label for="" class="font-semibold" >Report Type</label>
                         <select
-                            class="form-input w-full font-semibold"
+                            class="form-input w-full "
                             v-model="filter.type"
                             @change="clearData"
                         >
@@ -33,7 +33,7 @@
                     <div class="block w-1/4 sm:w-full md:w-1/2">
                         <label for="" class="font-semibold">Store</label>
                         <select
-                            class="form-input w-full font-semibold"
+                            class="form-input w-full"
                             v-model="filter.store"
                             tabindex="1"
                             @change="clearData"
@@ -59,7 +59,7 @@
                         <label for="" class="font-semibold">Date from</label>
                         <input
                             type="date"
-                            class="w-full form-input font-semibold"
+                            class="w-full form-input "
                             tabindex="2"
                             v-model="filter.dateFrom"
                         />
@@ -74,7 +74,7 @@
                         <label for="" class="font-semibold">Date to</label>
                         <input
                             type="date"
-                            class="w-full form-input font-semibold"
+                            class="w-full form-input "
                             tabindex="3"
                             v-model="filter.dateTo"
                         />
@@ -90,14 +90,14 @@
                     <button
                         tabindex="4"
                         @click="generate()"
-                        class="h-10 px-4 py-2  focus:outline-none text-white font-semibold bg-blue-500 hover:bg-blue-600 rounded"
+                        class="h-10 px-4 py-2  focus:outline-none text-white  bg-blue-500 hover:bg-blue-600 rounded"
                     >
                         Generate
                     </button>
 
                     <button
                         tabindex="4"
-                        class="h-10 px-4 py-2 flex disabled:opacity-50  focus:outline-none text-white font-semibold bg-green-500 hover:bg-green-600 rounded"
+                        class="h-10 px-4 py-2 flex disabled:opacity-50  focus:outline-none text-white  bg-green-500 hover:bg-green-600 rounded"
                         @click="printBtn"
                         v-if="ArrDataStore.b_unit != null"
                         :disabled="orderSummary.gTotalTransaction == 0"
@@ -132,7 +132,7 @@
                             <div class="container" id="transaction_header">
                                 <center>
                                     <h6
-                                        class="text-xl font-semibold text-gray-500"
+                                        class="text-lg"
                                     >
                                         {{
                                             ArrDataStore.hasOwnProperty(
@@ -142,17 +142,17 @@
                                                     .business_unit
                                         }}
                                     </h6>
-                                    <p class="text-gray-500">
+                                    <p >
                                         ALTURUSH GOODS ORDERING
                                     </p>
-                                    <p class="text-gray-500">
+                                    <p >
                                         TOTAL ORDERS REPORT(<span
                                             class="text-red-500"
                                             >{{ filter.type }}</span
                                         >)
                                     </p>
                                     <p
-                                        class="text-center font-semibold text-gray-500"
+                                        class="text-center"
                                     >
                                         {{ filter.dateFrom | formatDateNoTime }}
                                         To
@@ -168,7 +168,7 @@
                                     id="transaction_body"
                                 >
                                     <thead
-                                        class="border-t-2 border-gray-300 bg-gray-100 text-gray-500 tracking-wide font-poppins"
+                                        class="border-t-2 border-gray-300 bg-gray-100  tracking-normal"
                                     >
                                         <tr class="tr">
                                             <th class="p-2">Date</th>
@@ -289,7 +289,7 @@
                                         "
                                     >
                                         <thead
-                                            class="border-t-2 border-gray-300 bg-gray-100 text-gray-500 tracking-wide font-poppins"
+                                            class="border-t-2 border-gray-300 bg-gray-100  tracking-wide font-poppins"
                                         >
                                             <tr class="tr">
                                                 <th
@@ -368,21 +368,21 @@
                             <div class="container" id="transaction_header">
                                 <center>
                                     <h6
-                                        class="text-xl font-semibold text-gray-500"
+                                        class="text-lg"
                                     >
                                         ALL STORES
                                     </h6>
-                                    <p class="text-gray-500">
+                                    <p >
                                         ALTURUSH GOODS ORDERING
                                     </p>
-                                    <p class="text-gray-500">
+                                    <p >
                                         TOTAL ORDERS REPORT(<span
                                             class="text-red-500"
                                             >{{ filter.type }}</span
                                         >)
                                     </p>
                                     <p
-                                        class="text-center font-semibold text-gray-500"
+                                        class="text-center "
                                     >
                                         {{ filter.dateFrom | formatDateNoTime }}
                                         To
@@ -398,7 +398,7 @@
                                     id="transaction_body"
                                 >
                                     <thead
-                                        class="border-t-2 border-gray-300 bg-gray-100 text-gray-500 tracking-wide font-poppins"
+                                        class="border-t-2 border-gray-300 bg-gray-100  tracking-wide font-poppins"
                                     >
                                         <tr class="tr">
                                             <th colspan="6" class="td">
@@ -502,7 +502,7 @@
                                         "
                                     >
                                         <thead
-                                            class="border-t-2 border-gray-300 bg-gray-100 text-gray-500 tracking-wide font-poppins"
+                                            class="border-t-2 border-gray-300 bg-gray-100 tracking-normal"
                                         >
                                             <tr class="tr">
                                                 <th
@@ -574,21 +574,21 @@
                             <div class="container" id="transaction_header">
                                 <center>
                                     <h6
-                                        class="text-xl font-semibold text-gray-500"
+                                        class="text-lg"
                                     >
                                         ALL STORES
                                     </h6>
-                                    <p class="text-gray-500">
+                                    <p >
                                         ALTURUSH GOODS ORDERING
                                     </p>
-                                    <p class="text-gray-500">
+                                    <p >
                                         TOTAL ORDERS REPORT(<span
                                             class="text-red-500"
                                             >{{ filter.type }}</span
                                         >)
                                     </p>
                                     <p
-                                        class="text-center font-semibold text-gray-500"
+                                        class="text-center "
                                     >
                                         {{ filter.dateFrom | formatDateNoTime }}
                                         To
@@ -601,7 +601,7 @@
                                     class="min-w-full divide-y divide-gray-300"
                                 >
                                     <thead
-                                        class="border-t-2 border-gray-300 bg-gray-100 text-gray-500 tracking-wide font-poppins"
+                                        class="border-t-2 border-gray-300 bg-gray-100 tracking-normal"
                                     >
                                         <tr class="tr">
                                             <th class="p-2">STORE NAME</th>
@@ -693,7 +693,7 @@
                             <div class="container" id="transaction_header">
                                 <center>
                                     <h6
-                                        class="text-xl font-semibold text-gray-500"
+                                        class="text-lg"
                                     >
                                         {{
                                             ArrDataStore.hasOwnProperty(
@@ -703,17 +703,17 @@
                                                     .business_unit
                                         }}
                                     </h6>
-                                    <p class="text-gray-500">
+                                    <p >
                                         ALTURUSH GOODS ORDERING
                                     </p>
-                                    <p class="text-gray-500">
+                                    <p >
                                         TOTAL ORDERS REPORT(<span
                                             class="text-red-500"
                                             >{{ filter.type }}</span
                                         >)
                                     </p>
                                     <p
-                                        class="text-center font-semibold text-gray-500"
+                                        class="text-center "
                                     >
                                         {{ filter.dateFrom | formatDateNoTime }}
                                         To
@@ -726,7 +726,7 @@
                                     class="min-w-full divide-y divide-gray-300"
                                 >
                                     <thead
-                                        class="border-t-2 border-gray-300 bg-gray-100 text-gray-500 tracking-wide font-poppins"
+                                        class="border-t-2 border-gray-300 bg-gray-100  tracking-normal"
                                     >
                                         <tr class="tr">
                                             <th class="p-2">Date</th>

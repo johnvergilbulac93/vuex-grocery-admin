@@ -1,10 +1,10 @@
 <template>
-    <div class=" bg-gray-50 shadow-lg p-5 rounded ">
+    <div class=" bg-gray-50 shadow-lg p-5 rounded text-gray-800 ">
         <div class="flex flex-col justify-center items-center ">
             <div class="mb-5 bg-gray-100 p-2 md:w-1/2 sm:w-full  border">
                 <label
                     for=""
-                    class="text-gray-500 font-semibold flex items-center space-x-1"
+                    class=" flex items-center space-x-1"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +16,7 @@
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            stroke-width="2"
+                            stroke-width="1"
                             d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
                     </svg>
@@ -69,13 +69,13 @@
                     </div>
                     <button
                         @click="saveChanges"
-                        class="px-4 py-2 bg-blue-500 text-white font-semibold hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
+                        class="px-4 py-2 bg-blue-500 text-white  hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
                     >
                         Save
                     </button>
                     <button
                         @click="clear"
-                        class="px-4 py-2 bg-gray-500 text-white font-semibold hover:bg-gray-600 rounded transition duration-500 focus:outline-none"
+                        class="px-4 py-2 bg-gray-500 text-white  hover:bg-gray-600 rounded transition duration-500 focus:outline-none"
                     >
                         Clear
                     </button>

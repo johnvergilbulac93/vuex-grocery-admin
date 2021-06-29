@@ -1,5 +1,5 @@
 <template>
-    <div class="container bg-gray-50 shadow-lg p-5 rounded">
+    <div class="container bg-gray-50 shadow-lg p-5 rounded text-gray-800">
         <div
             class="grid lg:grid-flow-row lg:grid-cols-3 lg:grid-rows-2 md:grid-flow-row md:grid-cols-2 md:grid-rows-3 sm:grid-flow-col sm:grid-cols-1 sm:grid-rows-6 gap-4"
         >
@@ -7,18 +7,18 @@
                 <div class="flex flex-col space-y-12">
                     <label
                         for="minAmount"
-                        class="text-lg font-semibold text-gray-500"
+                        class="text-lg tracking-wider"
                         >Minimum Order Amount</label
                     >
-                    <div>
-                        <label for="amount">Amount</label>
+                    <div class="tracking-normal">
+                        <label for="amount" class="font-semibold">Amount</label>
                         <input
                             type="number"
                             v-bind:class="{
                                 'border-red-600': errors.min_amount
                             }"
                             v-model="form.min_amount"
-                            class="w-full px-4 py-2 text-center text-gray-500 font-semibold rounded-lg border focus:outline-none focus:border-yellow-500"
+                            class="w-full px-4 py-2 text-center text-sm rounded-lg border focus:outline-none focus:border-yellow-500"
                         />
                         <p
                             class="text-red-500 text-center text-sm"
@@ -30,28 +30,28 @@
 
                     <button
                         @click="setMinAmount"
-                        class="tracking-wider w-full bg-blue-500 py-2 rounded text-white  font-semibold  hover:bg-blue-600 transition duration-500 focus:outline-none "
+                        class="w-full bg-blue-500 py-2 rounded text-white text-sm hover:bg-blue-600 transition duration-500 focus:outline-none "
                     >
                         Save
                     </button>
                 </div>
             </div>
             <div class="bg-gray-50 h-72 w-full  px-10 py-5 border">
-                <div class="flex flex-col space-y-12">
+                <div class="flex flex-col space-y-12 ">
                     <label
                         for="pcharge"
-                        class="text-lg font-semibold text-gray-500"
+                        class="text-lg tracking-wider"
                         >Pick-Up Charge</label
                     >
-                    <div>
-                        <label for="amount">Amount</label>
+                    <div class="tracking-normal">
+                        <label for="amount" class="font-semibold">Amount</label>
                         <input
                             type="number"
                             v-bind:class="{
                                 'border-red-600': errors.pickup_charge
                             }"
                             v-model="form.pickup_charge"
-                            class="w-full px-4 py-2 text-center font-semibold text-gray-500 rounded-lg border focus:outline-none focus:border-yellow-500 "
+                            class="w-full px-4 py-2 text-center text-sm  rounded-lg border focus:outline-none focus:border-yellow-500 "
                         />
                         <p
                             class="text-red-500 text-center text-sm"
@@ -63,28 +63,28 @@
 
                     <button
                         @click="setPickupChargeAmount"
-                        class="tracking-wider w-full bg-blue-500 py-2 rounded text-white font-semibold  hover:bg-blue-600 transition duration-500 focus:outline-none "
+                        class="w-full bg-blue-500 py-2 rounded text-white text-sm  hover:bg-blue-600 transition duration-500 focus:outline-none "
                     >
                         Save
                     </button>
                 </div>
             </div>
             <div class="bg-gray-50 h-72 w-full  px-10 py-5 border ">
-                <div class="flex flex-col space-y-12">
+                <div class="flex flex-col space-y-12 ">
                     <label
                         for="maxorder"
-                        class="text-lg font-semibold text-gray-500"
+                        class="text-lg tracking-wider"
                         >Maximum no. of order</label
                     >
-                    <div>
-                        <label for="max">Max. no.</label>
+                    <div class="tracking-normal">
+                        <label for="max" class="font-semibold">Max. no.</label>
                         <input
                             type="number"
                             v-bind:class="{
                                 'border-red-600': errors.max_no_order
                             }"
                             v-model="form.max_no_order"
-                            class="w-full px-4 py-2 text-center font-semibold text-gray-500 rounded-lg border focus:outline-none focus:border-yellow-500"
+                            class="w-full px-4 py-2 text-center text-sm  rounded-lg border focus:outline-none focus:border-yellow-500"
                         />
                         <p
                             class="text-red-500 text-center text-sm"
@@ -96,28 +96,28 @@
 
                     <button
                         @click="setMaxOrder"
-                        class="tracking-wider w-full bg-blue-500 py-2 rounded text-white font-semibold  hover:bg-blue-600 transition duration-500 focus:outline-none"
+                        class="w-full bg-blue-500 py-2 rounded text-white text-sm hover:bg-blue-600 transition duration-500 focus:outline-none"
                     >
                         Save
                     </button>
                 </div>
             </div>
             <div class="bg-gray-50 h-72 w-full  px-10 py-5 border">
-                <div class="flex flex-col space-y-2">
+                <div class="flex flex-col space-y-2 text-black">
                     <label
                         for="ordertime"
-                        class="text-lg font-semibold text-gray-500"
+                        class="text-lg tracking-wider"
                         >Ordering Time Cut-off</label
                     >
-                    <div>
-                        <label for="start">Start</label>
+                    <div class="tracking-normal">
+                        <label for="start" class="font-semibold">Start</label>
                         <input
                             type="time"
                             v-bind:class="{
                                 'border-red-600': errors.order_time_cutoff_start
                             }"
                             v-model="form.order_time_cutoff_start"
-                            class="w-full px-4 py-2 text-center font-semibold text-gray-500 rounded-lg border focus:outline-none focus:border-yellow-500"
+                            class="w-full px-4 py-2 text-center text-sm  rounded-lg border focus:outline-none focus:border-yellow-500"
                         />
                         <p
                             class="text-red-500 text-center text-sm"
@@ -127,14 +127,14 @@
                                 errors.order_time_cutoff_start[0]
                             }}</small>
                         </p>
-                        <label for="start">End</label>
+                        <label for="End" class="font-semibold">End</label>
                         <input
                             type="time"
                             v-bind:class="{
                                 'border-red-600': errors.order_time_cutoff_end
                             }"
                             v-model="form.order_time_cutoff_end"
-                            class="w-full px-4 py-2 text-center font-semibold text-gray-500 rounded-lg border focus:outline-none focus:border-yellow-500"
+                            class="w-full px-4 py-2 text-center text-sm  rounded-lg border focus:outline-none focus:border-yellow-500"
                         />
                         <p
                             class="text-red-500 text-center text-sm"
@@ -146,28 +146,28 @@
 
                     <button
                         @click="setOrderTimeCutoff"
-                        class="tracking-wider w-full bg-blue-500 py-2 rounded text-white  font-semibold  hover:bg-blue-600 transition duration-500 focus:outline-none"
+                        class=" w-full bg-blue-500 py-2 rounded text-white  text-sm  hover:bg-blue-600 transition duration-500 focus:outline-none"
                     >
                         Save
                     </button>
                 </div>
             </div>
             <div class="bg-gray-50 h-72 w-full px-10 py-5 border">
-                <div class="flex flex-col space-y-2">
+                <div class="flex flex-col space-y-2 ">
                     <label
                         for="servetime"
-                        class="text-lg font-semibold text-gray-500"
+                        class="text-lg tracking-wider "
                         >Serving Time</label
                     >
-                    <div>
-                        <label for="start">Start</label>
+                    <div class="tracking-normal">
+                        <label for="start" class="font-semibold">Start</label>
                         <input
                             type="time"
                             v-bind:class="{
                                 'border-red-600': errors.time_start_cutoff
                             }"
                             v-model="form.time_start_cutoff"
-                            class="w-full px-4 py-2 text-center font-semibold text-gray-500 rounded-lg border focus:outline-none focus:border-yellow-500"
+                            class="w-full px-4 py-2 text-center text-sm rounded-lg border focus:outline-none focus:border-yellow-500"
                         />
                         <p
                             class="text-red-500 text-center text-sm"
@@ -175,14 +175,14 @@
                         >
                             <small>{{ errors.time_start_cutoff[0] }}</small>
                         </p>
-                        <label for="start">End</label>
+                        <label for="End" class="font-semibold">End</label>
                         <input
                             type="time"
                             v-bind:class="{
                                 'border-red-600': errors.time_end_cutoff
                             }"
                             v-model="form.time_end_cutoff"
-                            class="w-full px-4 py-2 text-center font-semibold text-gray-500 rounded-lg border focus:outline-none focus:border-yellow-500"
+                            class="w-full px-4 py-2 text-center text-sm rounded-lg border focus:outline-none focus:border-yellow-500"
                         />
                         <p
                             class="text-red-500 text-center text-sm"
@@ -194,7 +194,7 @@
 
                     <button
                         @click="setServingTimeCutoff"
-                        class="tracking-wider w-full bg-blue-500 py-2 rounded text-white font-semibold  hover:bg-blue-600 transition duration-500 focus:outline-none "
+                        class=" w-full bg-blue-500 py-2 rounded text-white text-sm  hover:bg-blue-600 transition duration-500 focus:outline-none "
                     >
                         Save
                     </button>

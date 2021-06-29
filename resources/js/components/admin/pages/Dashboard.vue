@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-50 shadow-lg p-5 rounded">
+    <div class="bg-gray-50 shadow-lg p-5 rounded text-gray-800">
         <div class="grid grid-flow-col grid-cols-4 grid-rows-1 gap-4">
             <div
                 class="bg-gray-100 h-40 flex flex-col justify-between items-center sm:w-full rounded border shadow-lg"
@@ -7,7 +7,7 @@
                 <div class="mt-3">
                     <span>Item not available</span>
                     <h3
-                        class="text-6xl text-gray-500 text-center font-semibold"
+                        class="text-6xl  text-center "
                     >
                         {{ TotalItemNotAvailable }}
                     </h3>
@@ -29,7 +29,7 @@
                 <div class="mt-3">
                     <span>Price Changes</span>
                     <h3
-                        class="text-6xl text-gray-500 text-center font-semibold"
+                        class="text-6xl  text-center "
                     >
                         {{ priceCount }}
                     </h3>
@@ -59,7 +59,7 @@
                             class="border-b-2 p-1 flex justify-between items-center"
                         >
                             <span
-                                class="tracking-tight text-gray-500 text-lg font-semibold"
+                                class="tracking-wider text-lg"
                                 >Item's not available</span
                             >
                             <button
@@ -68,7 +68,7 @@
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-6 w-6 text-gray-500 hover:text-red-500"
+                                    class="h-6 w-6  hover:text-red-500"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -87,14 +87,14 @@
                                 class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
                             >
                                 <div
-                                    class="font-sans text-gray-600 md:w-1/2 sm:w-full flex"
+                                    class=" md:w-1/2 sm:w-full flex"
                                 >
                                     <div
                                         class="relative border overflow-hidden flex rounded-l-lg"
                                     >
                                         <input
                                             type="text"
-                                            class="relative py-2 px-4 pr-10 w-full outline-none text-gray-600 placeholder-gray-400 focus:outline-none focus:shadow-outline"
+                                            class="relative py-2 px-4 pr-10 w-full   focus:outline-none focus:shadow-outline"
                                             placeholder="Search...."
                                             v-model="tableData.search"
                                             @keyup.enter="search"
@@ -102,11 +102,11 @@
                                         <button
                                             @click="clear"
                                             v-if="tableData.search.length"
-                                            class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded text-base font-normal text-gray-400 text-center flex items-center justify-center focus:outline-none "
+                                            class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded  flex items-center justify-center focus:outline-none "
                                         >
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
-                                                class="h-5 w-5 text-gray-500 hover:text-red-500"
+                                                class="h-5 w-5  hover:text-red-500"
                                                 fill="none"
                                                 viewBox="0 0 24 24"
                                                 stroke="currentColor"
@@ -154,7 +154,7 @@
                                     >
                                         <td
                                             colspan="7"
-                                            class="td font-semibold"
+                                            class="td f"
                                         >
                                             NO DATA AVAILABLE
                                         </td>
@@ -178,7 +178,7 @@
                                 <div
                                     class="flex justify-between items-center mt-2"
                                 >
-                                    <span class="text-sm  text-gray-600"
+                                    <span class="text-sm  "
                                         >Showing
                                         {{
                                             !pagination.from

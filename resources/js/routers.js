@@ -375,13 +375,13 @@ const routes = [
         path: '/accountability_store',
         name: 'accountability_store',
         component: accountability_store,
-        beforeEnter: (to, from, next) => {
-            if (to.params.id === 7) {
-                next();
-            } else {
-                next('/');
-            }
-        }
+        // beforeEnter: (to, from, next) => {
+        //     if (to.params.id === 7) {
+        //         next();
+        //     } else {
+        //         next('/');
+        //     }
+        // }
     },
     {
         path: '/menu',

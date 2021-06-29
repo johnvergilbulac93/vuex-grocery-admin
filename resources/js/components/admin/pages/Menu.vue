@@ -1,42 +1,34 @@
 <template>
-    <div class=" bg-gray-50 shadow-lg p-5 rounded w-1/2">
+    <div class=" bg-gray-50 shadow-lg p-5 rounded w-1/2 ">
         <div class="flex flex-wrap  ">
             <div class="w-full h-96  overflow-y-scroll scrollbar" id="style-4">
-                <ul>
+                <ul class="text-gray-800">
                     <li>
                         <h5
-                            class="flex items-center uppercase  text-gray-800 font-semibold tracking-wider px-1 py-2"
+                            class="flex items-center space-x-10 uppercase font-semibold tracking-wider px-1 py-2"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
                             >
                                 <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                                />
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                    fill-rule="evenodd"
+                                    d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                                    clip-rule="evenodd"
                                 />
                             </svg>
-                            Setup
+                            SETUP
                         </h5>
                         <ul>
-                            <li class="li">
+                            <li class="li ">
                                 <router-link
                                     :to="{
                                         name: 'business_rule',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900 "
+                                    class="text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Business Rules
@@ -49,7 +41,7 @@
                                         name: 'bu_time',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class="text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Store Time</span
@@ -62,7 +54,7 @@
                                         name: 'tenant',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class="text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider">Tenant</span>
                                 </router-link>
@@ -73,7 +65,7 @@
                                         name: 'delivery_charges',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class="text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Delivery Charges</span
@@ -86,7 +78,7 @@
                                         name: 'minimum_delivery',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class="text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Minimum Order Delivery</span
@@ -99,7 +91,7 @@
                                         name: 'users',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class="text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Manage Users</span
@@ -111,7 +103,7 @@
                                     :to="{
                                         name: 'price_group'
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class="text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Price Group</span
@@ -122,7 +114,7 @@
                     </li>
                     <li class="mt-8">
                         <h5
-                            class="flex items-center uppercase text-gray-800 font-semibold tracking-wider px-1 py-2"
+                            class="flex items-center space-x-10 uppercase   font-semibold tracking-wider px-1 py-2"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +139,7 @@
                                         name: 'central_item',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class="text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Item Masterfile</span
@@ -160,7 +152,7 @@
                                         name: 'disable_uom',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class="text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Disable Item Unit of Measure(UOM)</span
@@ -173,7 +165,7 @@
                                         name: 'enable_uom',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class="text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Enable Item Unit of Measure(UOM)</span
@@ -197,7 +189,7 @@
                     </li>
                     <li class="mt-8">
                         <h5
-                            class="flex items-center space-x-10 uppercase  text-gray-800  font-semibold tracking-wider px-1 py-2"
+                            class="flex items-center space-x-10 uppercase  font-semibold tracking-wider px-1 py-2"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -223,7 +215,7 @@
                                         name: 'uploading',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class="text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Upload New Item and New Price</span
@@ -236,7 +228,7 @@
                                         name: 'setting',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class="text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Upload Image filename and
@@ -250,7 +242,7 @@
                                         name: 'multiple',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class=" text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Upload Multiple Images</span
@@ -287,7 +279,7 @@
                                         name: 'report_item',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class=" text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Item Report</span
@@ -300,7 +292,7 @@
                                         name: 'liquidition',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class=" text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Liquidation Report</span
@@ -313,7 +305,7 @@
                                         name: 'accountability',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class=" text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Accountability Report</span
@@ -326,7 +318,7 @@
                                         name: 'transaction',
                                         params: { id: $root.userType }
                                     }"
-                                    class="text-gray-700 hover:text-gray-900"
+                                    class=" text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
                                         >Total Order Report - REMITTED

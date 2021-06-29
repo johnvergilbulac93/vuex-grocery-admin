@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="container text-gray-800">
         <div class=" bg-gray-50 shadow-lg p-5 rounded">
             <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="text-gray-500 text-lg font-semibold"
+                <label for="" class="tracking-wider text-lg "
                     >Cashier Accountability Report</label
                 >
             </div>
@@ -16,7 +16,7 @@
                         <label for="" class="font-semibold">Date from</label>
                         <input
                             type="date"
-                            class="w-full form-input font-semibold"
+                            class="w-full form-input "
                             tabindex="2"
                             v-model="filter.dateFrom"
                         />
@@ -25,7 +25,7 @@
                         <label for="" class="font-semibold">Date to</label>
                         <input
                             type="date"
-                            class="w-full form-input font-semibold"
+                            class="w-full form-input "
                             tabindex="3"
                             v-model="filter.dateTo"
                         />
@@ -35,14 +35,14 @@
                     <button
                         tabindex="4"
                         @click="generate()"
-                        class="h-10 px-4 py-2  focus:outline-none text-white font-semibold bg-blue-500 hover:bg-blue-600 rounded"
+                        class="h-10 px-4 py-2  focus:outline-none text-white  bg-blue-500 hover:bg-blue-600 rounded"
                     >
                         Generate
                     </button>
 
                     <button
                         tabindex="4"
-                        class="h-10 px-4 py-2 flex disabled:opacity-50  focus:outline-none text-white font-semibold bg-green-500 hover:bg-green-600 rounded"
+                        class="h-10 px-4 py-2 flex disabled:opacity-50  focus:outline-none text-white  bg-green-500 hover:bg-green-600 rounded"
                         @click="printBtn"
                         v-if="transactions.b_unit != null"
                         :disabled="!transactions.data.length"
@@ -70,27 +70,27 @@
                 <div v-if="transactions.b_unit != null">
                     <div class="flex justify-center items-center">
                         <center>
-                            <h6 class="text-xl font-semibold text-gray-500">
+                            <h6 class="text-lg">
                                 {{
                                     transactions.hasOwnProperty("b_unit") &&
                                         transactions.b_unit.business_unit
                                 }}
                             </h6>
-                            <p class="text-gray-500">ALTURUSH GOODS ORDERING</p>
-                            <p class="text-gray-500">ACCOUNTABILITY REPORT</p>
-                            <p class="text-center font-semibold text-gray-500">
+                            <p>ALTURUSH GOODS ORDERING</p>
+                            <p>ACCOUNTABILITY REPORT</p>
+                            <p class="text-center ">
                                 {{ filter.dateFrom | formatDateNoTime }} To
                                 {{ filter.dateTo | formatDateNoTime }}
                             </p>
                         </center>
                     </div>
                     <table class="min-w-full divide-y divide-gray-300 mt-2">
-                        <thead class="tracking-wide">
+                        <thead class="tracking-normal">
                             <tr class="tr">
-                                <th class="p-2">CASHIER</th>
-                                <th class="p-2">TICKET #</th>
-                                <th class="p-2">TRANSACTION #</th>
-                                <th class="p-2">NET AMOUNT</th>
+                                <th class="p-2">Cashier</th>
+                                <th class="p-2">Ticker #</th>
+                                <th class="p-2">Transaction #</th>
+                                <th class="p-2">Net Amount</th>
                             </tr>
                         </thead>
                         <tbody class="tbody">
@@ -104,7 +104,9 @@
                                 :key="i"
                                 class="tr"
                             >
-                                <td class="td">{{ trans.cashier_monitoring[0].name }}</td>
+                                <td class="td">
+                                    {{ trans.cashier_monitoring[0].name }}
+                                </td>
                                 <td class="td">{{ trans.ticket }}</td>
                                 <td class="td">{{ trans.receipt }}</td>
                                 <td class="td">
@@ -121,10 +123,7 @@
                                 "
                                 class="tr font-semibold"
                             >
-                                <td
-                                    colspan="5"
-                                    class="td"
-                                >
+                                <td colspan="5" class="td">
                                     SUMMARY
                                 </td>
                             </tr>
@@ -136,15 +135,10 @@
                                 class="tr font-semibold"
                             >
                                 <td colspan="2" class="td"></td>
-                                <td
-                                    class="td"
-                                >
+                                <td class="td">
                                     SUB TOTAL :
                                 </td>
-                                <td
-                                    colspan="2"
-                                    class="td"
-                                >
+                                <td colspan="2" class="td">
                                     {{ orderSummary.lessDiscount | toCurrency }}
                                 </td>
                             </tr>
@@ -156,15 +150,10 @@
                                 class="tr font-semibold"
                             >
                                 <td colspan="2" class="td"></td>
-                                <td
-                                    class="td"
-                                >
+                                <td class="td">
                                     TOTAL PICKING CHARGE :
                                 </td>
-                                <td
-                                    colspan="2"
-                                    class="td"
-                                >
+                                <td colspan="2" class="td">
                                     {{ orderSummary.pickupCharge | toCurrency }}
                                 </td>
                             </tr>
@@ -176,24 +165,22 @@
                                 class="tr font-semibold"
                             >
                                 <td colspan="2" class="tr"></td>
-                                <td
-                                    class="td"
-                                >
+                                <td class="td">
                                     GRAND TOTAL :
                                 </td>
-                                <td
-                                    colspan="2"
-                                    class="td"
-                                >
+                                <td colspan="2" class="td">
                                     {{ orderSummary.grandTotal | toCurrency }}
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    <small
+                        class="text-xs flex justify-end mt-2"
+                        >Run Time: {{ dateNow }}</small
+                    >
                 </div>
             </div>
         </div>
-     
     </div>
 </template>
 
