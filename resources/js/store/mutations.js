@@ -123,3 +123,9 @@ export const SET_STORE_PRICE_GROUP = (state, payload) => {
 export const SUCCESS = (state, payload) => {
      state.isSuccess = payload
 }
+export const START_LOADING = (state) => {
+     state.waiting = true
+}
+export const FINISH_LOADING = (state) => {
+     state.waiting = false
+}

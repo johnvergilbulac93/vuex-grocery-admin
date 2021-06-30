@@ -18,8 +18,7 @@ class ItemsImport implements ToCollection,WithHeadingRow
     
     public function collection(Collection $rows)
     {
-        foreach ($rows as $row) 
-        {
+
             $check_price =  gc_product_price::where('itemcode','=',intval($row['no']))->where('UOM','=',$row['uom'])->exists();
 
             gc_product_item::updateOrCreate([
@@ -45,6 +44,8 @@ class ItemsImport implements ToCollection,WithHeadingRow
 
             
         }
+
+        
 
     }
 }

@@ -48,7 +48,7 @@
                             d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                         />
                     </svg>
-                    <p >Select a photo from your computer</p>
+                    <p>Select a photo from your computer</p>
                     <input
                         type="file"
                         id="profile_image"
@@ -57,9 +57,10 @@
                         @change="handleOnchange()"
                     />
                 </label>
-                <label for="" class=" text-xs">{{
-                    filename
-                }}</label>
+                <label for="" v-if="filename" class=" text-xs"
+                    >{{ filename }}
+                    <span><a @click="remove" class="underline">remove</a></span>
+                </label>
             </div>
             <hr />
             <div class="p-2">
@@ -70,6 +71,13 @@
                 >
                     Upload
                 </button>
+                <button
+                    @click="cancelRequest"
+                    :disabled="!filename"
+                    class=" text-center px-4 py-1 bg-red-500 text-white hover:bg-red-600 rounded transition duration-500 focus:outline-none disabled:opacity-50"
+                >
+                    Cancel
+                </button>
             </div>
         </div>
     </div>
@@ -78,13 +86,16 @@
 <script>
 import User from "../../../services/User";
 import { mapState, mapMutations } from "vuex";
+import axios from "axios";
+import NProgress from "nprogress";
 
 export default {
     name: "Profile",
     data() {
         return {
             file: "",
-            filename: ""
+            filename: "",
+            request: null
         };
     },
     computed: {
@@ -102,11 +113,22 @@ export default {
             this.file = this.$refs.profile_image.files[0];
             this.filename = this.$refs.profile_image.files[0].name;
         },
+        cancelRequest() {
+            if (this.request) {
+                this.request.cancel("File upload has been cancelled.");
+            }
+        },
+        remove() {
+            this.file = "";
+            this.filename = "";
+            this.errors.profile_image = "";
+        },
         handleUpload() {
             let formData = new FormData();
             formData.append("profile_image", this.file);
-
-            User.profilePhoto(formData)
+            let axiosSource = axios.CancelToken.source();
+            this.request = { cancel: axiosSource.cancel };
+            User.profilePhoto(formData, axiosSource)
                 .then(() => {
                     toast.fire({
                         icon: "success",
@@ -120,6 +142,7 @@ export default {
                     location.reload();
                 })
                 .catch(error => {
+                    NProgress.done()
                     if (error.response.status === 422) {
                         this.SET_ERRORS(error.response.data.errors);
                     }

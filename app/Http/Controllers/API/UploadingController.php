@@ -21,7 +21,9 @@ class UploadingController extends Controller
         $this->validate($request, [
             'file_item' => 'required|mimes:csv,txt'
         ]);
-        (new ItemsImport)->import($request->file('file_item'));
+            (new ItemsImport)->import($request->file('file_item'));
+
+       
     }
     public function uploadprice(Request $request)
     {

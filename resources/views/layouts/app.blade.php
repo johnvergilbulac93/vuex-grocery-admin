@@ -317,11 +317,10 @@
             <div class="absolute top-0 bottom-80 left-0 right-0 bg-gray-200"></div>
         </header>
         <div class=" relative p-5 mt-36 ">
-            <transition enter-active-class="ease-out transition duration-300" enter-class="opacity-0"
-                enter-to-class="opacity-100" leave-active-class="ease-in transition duration-300"
-                leave-class="opacity-100" leave-to-class="opacity-0">
-                <router-view></router-view>
-            </transition>
+            <!-- for  router view -->
+            <router-view></router-view>
+            <!-- set progressbar -->
+            {{-- <vue-progress-bar></vue-progress-bar> --}}
         </div>
 
         <button id="backtoTop"
@@ -332,11 +331,7 @@
             </svg>
         </button>
 
-
-        <transition enter-active-class="ease-in duration-300" enter-class="opacity-0" enter-to-class="opacity-100"
-            leave-active-class="ease-in duration-300" leave-class="opacity-100" leave-to-class="opacity-0">
-            <Profile v-if="upload_profile" />
-        </transition>
+        <Profile v-if="upload_profile" />
     </div>
     <script defer src="{{ asset('js/app.js') }}"></script>
     <script defer src="{{ asset('js/custom.js') }}"></script>

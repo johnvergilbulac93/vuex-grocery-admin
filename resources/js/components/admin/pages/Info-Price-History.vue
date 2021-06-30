@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="text-sm">
-                    <span >Show</span>
+                    <span>Show</span>
                     <select
                         class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
                         v-model="tableData.length"
@@ -84,7 +84,7 @@
                             {{ records }}
                         </option>
                     </select>
-                    <span >Entries</span>
+                    <span>Entries</span>
                 </div>
             </div>
             <Datatable
@@ -128,20 +128,47 @@
                     {{ !pagination.to ? 0 : pagination.to }} of
                     {{ pagination.total }} entries</span
                 >
-                <div>
+                <div class="flex flex-row space-x-1">
                     <button
                         :disabled="!pagination.prevPageUrl"
                         @click="previousPage(pagination.prevPageUrl)"
-                        class="footer-btn"
+                        class="footer-btn flex items-center"
                     >
-                        <i class="fas fa-angle-double-left"></i> Prev
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 19l-7-7 7-7"
+                            /></svg
+                        >Prev
                     </button>
                     <button
                         :disabled="!pagination.nextPageUrl"
                         @click="nextPage(pagination.nextPageUrl)"
-                        class="footer-btn"
+                        class="footer-btn flex items-center"
                     >
-                        Next <i class="fas fa-angle-double-right"></i>
+                        Next
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 5l7 7-7 7"
+                            />
+                        </svg>
                     </button>
                 </div>
             </div>

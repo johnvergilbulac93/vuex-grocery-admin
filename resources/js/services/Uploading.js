@@ -1,18 +1,20 @@
 import BaseApi from './BaseApi';
 
 export default {
-    upload_new_item(formData) {
+    upload_new_item(formData,axiosSource) {
         return BaseApi.post('/upload/item', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
-            }
+            },
+            cancelToken: axiosSource.token
         })
     },
-    upload_price_update(formData) {
+    upload_price_update(formData, axiosSource) {
         return BaseApi.post('/upload/price', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
-            }
+            },
+            cancelToken: axiosSource.token
         })
     },
     upload_category(formData) {

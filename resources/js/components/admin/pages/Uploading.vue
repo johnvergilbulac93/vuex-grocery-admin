@@ -18,9 +18,7 @@
                                 <div
                                     class="flex flex-col items-center justify-between space-y-4"
                                 >
-                                    <label
-                                        for=""
-                                        class="mt-3 "
+                                    <label for="" class="mt-3 "
                                         >Please be patient, the file is being
                                         uploaded. Details about the upload are
                                         not available.</label
@@ -57,7 +55,8 @@
                                     </button>
                                 </div>
                             </transition>
-                            <button
+
+                            <!-- <button
                                 @click="open = !open"
                                 @blur="exitImage"
                                 class="text-blue-500 focus:outline-none "
@@ -76,7 +75,7 @@
                                         d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                                     />
                                 </svg>
-                            </button>
+                            </button> -->
                             <label
                                 class="flex flex-col items-center px-4 py-5 border bg-white uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transistion duration-500"
                             >
@@ -120,11 +119,19 @@
                                 v-if="filenameNewItem"
                                 class="flex justify-between items-center mt-2 bg-white p-2 border border-gray-400 border-opacity-30 shadow-lg "
                             >
-                                <label
-                                    for=""
-                                    class="text-green-500 "
-                                    >{{ filenameNewItem }}</label
-                                >
+                                <label for="" class="text-green-500 "
+                                    >{{ filenameNewItem }}
+                                    <span
+                                        ><a
+                                            v-if="!loading"
+                                            @click="
+                                                cancel_selected_file_new_item
+                                            "
+                                            class="underline "
+                                            >remove file</a
+                                        ></span
+                                    >
+                                </label>
                                 <div class=" text-white font-bold text-sm ">
                                     <button
                                         @click="upload_selected_file_new_item"
@@ -133,7 +140,7 @@
                                         Upload
                                     </button>
                                     <button
-                                        @click="cancel_selected_file_new_item"
+                                        @click="cancelRequest"
                                         class="bg-red-500 px-2 py-1 w-20 focus:outline-none hover:bg-red-600 transition duration-300  rounded"
                                     >
                                         Cancel
@@ -153,9 +160,7 @@
                                 <div
                                     class="flex flex-col items-center justify-between space-y-4"
                                 >
-                                    <label
-                                        for=""
-                                        class="mt-3"
+                                    <label for="" class="mt-3"
                                         >Please be patient, the file is being
                                         uploaded. Details about the upload are
                                         not available.</label
@@ -192,7 +197,7 @@
                                     </button>
                                 </div>
                             </transition>
-                            <button
+                            <!-- <button
                                 @click="open2 = !open2"
                                 @blur="exitImage"
                                 class="text-blue-500 focus:outline-none "
@@ -211,7 +216,8 @@
                                         d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                                     />
                                 </svg>
-                            </button>
+                            </button> -->
+
                             <label
                                 class="flex flex-col items-center px-4 py-5 border bg-white uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transistion duration-500"
                             >
@@ -254,11 +260,19 @@
                                 v-if="filenamePriceUpdate"
                                 class="flex justify-between items-center mt-2 bg-white p-2 border border-gray-400 border-opacity-30 shadow-lg "
                             >
-                                <label
-                                    for=""
-                                    class="text-green-500 "
-                                    >{{ filenamePriceUpdate }}</label
-                                >
+                                <label for="" class="text-green-500 "
+                                    >{{ filenamePriceUpdate }}
+                                    <span
+                                        ><a
+                                            v-if="!loading2"
+                                            @click="
+                                                cancel_selected_file_price_update
+                                            "
+                                            class="underline "
+                                            >remove file</a
+                                        ></span
+                                    >
+                                </label>
                                 <div class=" text-white font-bold text-sm ">
                                     <button
                                         @click="
@@ -269,9 +283,7 @@
                                         Upload
                                     </button>
                                     <button
-                                        @click="
-                                            cancel_selected_file_price_update
-                                        "
+                                        @click="cancelRequest"
                                         class="bg-red-500 px-2 py-1 w-20 focus:outline-none hover:bg-red-600 transition duration-300 rounded "
                                     >
                                         Cancel
@@ -282,7 +294,7 @@
                     </div>
                 </div>
             </div>
-            <transition
+            <!-- <transition
                 enter-active-class="ease-out duration-500"
                 enter-class="opacity-0"
                 enter-to-class="opacity-100"
@@ -319,7 +331,7 @@
                         class="w-3/4 h-3/4  object-contain shadow-lg"
                     />
                 </div>
-            </transition>
+            </transition> -->
         </div>
     </div>
 </template>
@@ -328,6 +340,8 @@
 import Upload from "../../../services/Uploading";
 import { mapState, mapMutations } from "vuex";
 import { LoopingRhombusesSpinner } from "epic-spinners";
+import axios from "axios";
+import NProgress from "nprogress";
 export default {
     components: { LoopingRhombusesSpinner },
     data() {
@@ -339,7 +353,8 @@ export default {
             filenameNewItem: "",
             filenamePriceUpdate: "",
             open: false,
-            open2: false
+            open2: false,
+            request: null,
         };
     },
     computed: {
@@ -359,18 +374,24 @@ export default {
             let formData = new FormData();
             formData.append("file_item", this.fileNewItem);
             this.loading = true;
-            Upload.upload_new_item(formData)
+
+            let axiosSource = axios.CancelToken.source();
+            this.request = { cancel: axiosSource.cancel };
+
+            Upload.upload_new_item(formData, axiosSource)
                 .then(() => {
                     this.filenameNewItem = "";
+                    this.fileNewItem = "";
                     this.loading = false;
-                    swal.fire(
-                        "Success",
-                        "New item uploaded successfully.",
-                        "info"
-                    );
+                    toast.fire({
+                        icon: "success",
+                        title: "Success",
+                        text: "Uploaded successfully"
+                    });
                 })
                 .catch(error => {
                     this.loading = false;
+                    NProgress.done();
                     if (error.response.status === 422) {
                         this.SET_ERRORS(error.response.data.errors);
                     }
@@ -378,31 +399,45 @@ export default {
         },
         cancel_selected_file_new_item() {
             this.filenameNewItem = "";
+            this.fileNewItem = "";
             this.errors.file_item = "";
         },
         upload_selected_file_price_update() {
             let formData = new FormData();
             formData.append("file_price", this.filePriceUpdate);
             this.loading2 = true;
-            Upload.upload_price_update(formData)
+
+            let axiosSource = axios.CancelToken.source();
+            this.request = { cancel: axiosSource.cancel };
+
+            Upload.upload_price_update(formData, axiosSource)
                 .then(() => {
                     this.filenamePriceUpdate = "";
+                    this.filePriceUpdate = "";
                     this.loading2 = false;
-                    swal.fire(
-                        "Success",
-                        "Price uploaded successfully.",
-                        "info"
-                    );
+                    toast.fire({
+                        icon: "success",
+                        title: "Success",
+                        text: "Uploaded successfully"
+                    });
                 })
                 .catch(error => {
                     this.loading2 = false;
+                    NProgress.done();
                     if (error.response.status === 422) {
                         this.SET_ERRORS(error.response.data.errors);
                     }
                 });
         },
+        cancelRequest() {
+            if (this.request) {
+                this.request.cancel("File upload has been cancelled.");
+                this.loading2 = false;
+            }
+        },
         cancel_selected_file_price_update() {
             this.filenamePriceUpdate = "";
+            this.filePriceUpdate = "";
             this.errors.file_price = "";
         },
         handleFilePriceUpdate() {

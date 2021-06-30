@@ -15,6 +15,7 @@ export default {
      isModal: false,
      isLoading: false,
      isUpload: false,
+     waiting: false,
      errors: {},
      priceCount: '',
      PriceChangeInfo: [],

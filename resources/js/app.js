@@ -20,7 +20,17 @@ import excel from 'vue-excel-export'
 
 import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';
-import Axios from 'axios';
+import 'nprogress/nprogress.css'
+// import Axios from 'axios';
+
+
+// import VueProgressBar from 'vue-progressbar'
+// 
+// Vue.use(VueProgressBar, {
+//   color: 'rgb(255, 128, 0)',
+//   failedColor: 'red',
+//   height: '4px'
+// })
 
 Vue.use(excel)
 

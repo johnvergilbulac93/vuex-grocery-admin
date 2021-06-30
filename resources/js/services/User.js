@@ -27,11 +27,12 @@ export default {
     changeUsername(user) {
         return BaseApi.post('/user/change_username', user)
     },
-    profilePhoto(formData) {
+    profilePhoto(formData,axiosSource) {
         return BaseApi.post('/user/profile_image', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
-            }
+            },
+            cancelToken: axiosSource.token
         })
     },
 }

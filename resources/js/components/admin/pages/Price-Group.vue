@@ -11,7 +11,7 @@
             >
                 <div class="p-2 space-y-4 ">
                     <div class="w-full space-y-1">
-                        <label for="store">Store</label>
+                        <label for="store" class="font-semibold">Store</label>
                         <select
                             v-model="store"
                             v-bind:class="{
@@ -36,7 +36,7 @@
                         </p>
                     </div>
                     <div class="w-full space-y-1">
-                        <label for="store">Price Group</label>
+                        <label for="store" class="font-semibold">Price Group</label>
                         <select
                             v-model="price_group"
                             v-bind:class="{
