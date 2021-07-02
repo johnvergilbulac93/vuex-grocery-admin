@@ -6,6 +6,7 @@
                     >Manage User</label
                 >
             </div>
+
             <div
                 class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
             >
@@ -62,7 +63,7 @@
                     </button>
                 </div>
                 <div class="text-sm">
-                    <span >Show</span>
+                    <span>Show</span>
                     <select
                         class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
                         v-model="tableData.length"
@@ -76,7 +77,7 @@
                             {{ records }}
                         </option>
                     </select>
-                    <span >Entries</span>
+                    <span>Entries</span>
                 </div>
             </div>
             <Datatable
@@ -253,9 +254,7 @@
                         </div>
                         <div class="p-2 border-b border-t">
                             <fieldset>
-                                <legend
-                                    class="text-sm px-2 mx-2 "
-                                >
+                                <legend class="text-sm px-2 mx-2 ">
                                     Registration Form
                                 </legend>
                                 <div
@@ -293,7 +292,9 @@
                                         </div>
                                     </div>
                                     <div class="p-2 w-full">
-                                        <label for="name" class="block font-semibold"
+                                        <label
+                                            for="name"
+                                            class="block font-semibold"
                                             >Employee ID</label
                                         >
                                         <input
@@ -306,7 +307,9 @@
                                 </div>
 
                                 <div class="p-2 w-full">
-                                    <label for="username" class="block font-semibold"
+                                    <label
+                                        for="username"
+                                        class="block font-semibold"
                                         >Username</label
                                     >
                                     <input
@@ -319,7 +322,9 @@
                                     />
                                 </div>
                                 <div class="p-2 w-full">
-                                    <label for="usertype" class="block font-semibold"
+                                    <label
+                                        for="usertype"
+                                        class="block font-semibold"
                                         >User Type</label
                                     >
                                     <select
@@ -340,7 +345,9 @@
                                     </select>
                                 </div>
                                 <div class="p-2 w-full">
-                                    <label for="store" class="block font-semibold"
+                                    <label
+                                        for="store"
+                                        class="block font-semibold"
                                         >Store</label
                                     >
                                     <select
@@ -361,7 +368,9 @@
                                     </select>
                                 </div>
                                 <div class="p-2 w-full">
-                                    <label for="cpassword" class="block font-semibold"
+                                    <label
+                                        for="cpassword"
+                                        class="block font-semibold"
                                         >Password</label
                                     >
                                     <input
@@ -518,12 +527,11 @@ export default {
             this.form.store = "";
             this.form.username = "";
             this.form.usertype = "";
-            this.errors.name = ""
-            this.errors.store = ""
-            this.errors.usertype = ""
-            this.errors.username = ""
-            this.form.password = ''
-
+            this.errors.name = "";
+            this.errors.store = "";
+            this.errors.usertype = "";
+            this.errors.username = "";
+            this.form.password = "";
         },
         update() {
             let user = {
