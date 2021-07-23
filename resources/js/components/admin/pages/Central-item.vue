@@ -94,7 +94,7 @@
                 </div>
 
                 <div class="text-sm">
-                    <span >Show</span>
+                    <span>Show</span>
                     <select
                         class="mb-2 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
                         v-model="tableData.length"
@@ -108,7 +108,7 @@
                             {{ records }}
                         </option>
                     </select>
-                    <span >Entries</span>
+                    <span>Entries</span>
                 </div>
             </div>
             <Datatable
@@ -117,9 +117,9 @@
                 :sortOrders="sortOrders"
                 @sort="sortBy"
             >
-                <tbody class="tbody text-center">
+                <tbody class="tbody ">
                     <tr class="tr" v-if="!Items.length">
-                        <td colspan="7" class="td ">
+                        <td colspan="7" class="td text-center">
                             NO DATA AVAILABLE
                         </td>
                     </tr>
@@ -131,7 +131,7 @@
                             </td>
                         </a>
                         <td class="td">{{ item.category_name }}</td>
-                        <td>
+                        <td class="text-center">
                             <select
                                 v-if="item.item_price.length"
                                 class="cursor-pointer w-20 py-1 px-2 focus:outline-none my-1 border rounded focus:border-yellow-500 text-sm  "
@@ -150,19 +150,20 @@
                                 NO PRICE AVAILABLE</span
                             >
                         </td>
-                        <td class="td">
-                            <span
-                                :id="`price-${i}`"
-                                class="text-blue-500 "
-                            >
+                        <td class="td text-center">
+                            <span :id="`price-${i}`" class="text-blue-500 ">
                                 {{
                                     !item.item_price.length
                                         ? "0.00"
                                         : item.item_price[0].price_with_vat
+                                          | toCurrency2
                                 }}</span
                             >
                         </td>
-                        <td class="td" v-if="item.status == 'active'">
+                        <td
+                            class="td text-center"
+                            v-if="item.status == 'active'"
+                        >
                             <a @click="showPerItemStatusActive(item.itemcode)">
                                 <span
                                     class="bg-green-400 px-2 py-1 rounded-full text-gray-50  text-xs hover:bg-green-500 hover:text-white transition duration-500"
@@ -184,10 +185,13 @@
                                 >
                             </a>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <button
                                 class="focus:outline-none"
                                 @click="showUpload(item)"
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Upload image"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -409,11 +413,9 @@
                                     v-if="filename"
                                     class="flex justify-between items-center mt-1 bg-white p-2 border border-gray-400 border-opacity-30  shadow-lg"
                                 >
-                                    <label
-                                        for=""
-                                        class="text-green-500 "
-                                        >{{ filename }}</label
-                                    >
+                                    <label for="" class="text-green-500 ">{{
+                                        filename
+                                    }}</label>
                                     <div class=" text-white ">
                                         <button
                                             @click="upload"
@@ -447,13 +449,47 @@ export default {
     data() {
         let sortOrders = {};
         let columns = [
-            { width: "10%", label: "Code", name: "itemcode" },
-            { width: "20%", label: "Description", name: "description" },
-            { width: "15%", label: "Category", name: "category" },
-            { width: "8%", label: "UOM", name: "uom" },
-            { width: "10%", label: "Price", name: "price" },
-            { width: "12%", label: "Status", name: "status" },
-            { width: "12%", label: "", name: "upload" }
+            {
+                width: "10%",
+                label: "Code",
+                name: "itemcode",
+                class: "text-left"
+            },
+            {
+                width: "20%",
+                label: "Description",
+                name: "description",
+                class: "text-left"
+            },
+            {
+                width: "15%",
+                label: "Category",
+                name: "category",
+                class: "text-left"
+            },
+            {
+                 width: "8%", 
+                 label: "UOM", 
+                 name: "uom", 
+                 class: "text-center" },
+            {
+                width: "10%",
+                label: "Price",
+                name: "price",
+                class: "text-center"
+            },
+            {
+                width: "12%",
+                label: "Status",
+                name: "status",
+                class: "text-center"
+            },
+            {
+                width: "12%",
+                label: "Action",
+                name: "upload",
+                class: "text-center"
+            }
         ];
         columns.forEach(column => {
             sortOrders[column.name] = -1;

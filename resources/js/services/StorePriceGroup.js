@@ -8,7 +8,7 @@ export default {
          return BaseApi.get(`/show/price_group?page=${page}`, { params: filterData })
      },
      delete(id) {
-         return BaseApi.delete(`/business_time/delete/${id}`) 
+         return BaseApi.delete(`/price_group/${id}/delete`) 
      },
  }
  

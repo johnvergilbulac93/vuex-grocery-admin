@@ -48,7 +48,7 @@
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 "
+                            class="h-4 w-4 "
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -86,21 +86,51 @@
                 :sortOrders="sortOrders"
                 @sort="sortBy"
             >
-                <tbody class="tbody text-center">
+                <tbody class="tbody ">
                     <tr class="tr" v-if="!Users.length">
-                        <td colspan="6" class="td ">
+                        <td colspan="6" class="td text-center">
                             NO DATA AVAILABLE
                         </td>
                     </tr>
                     <tr v-for="(user, i) in Users" :key="i" class="tr">
-                        <td class="td">
+                        <td class="td uppercase ">{{ user.name }}</td>
+                        <td class="td  ">{{ user.username }}</td>
+                        <td class="td">{{ user.business_unit }}</td>
+                        <td class="td text-center">
+                            {{ user.created_at | formatDateNoTime }}
+                        </td>
+                        <td class="td text-center">
+                            {{ user.created_at | formatDateNoTime }}
+                        </td>
+                        <td class="td text-center" v-if="user.status == 1">
+                            <a @click="statusActive(user)">
+                                <span
+                                    class="bg-green-400 px-2 py-1 rounded-full text-gray-50  text-xs hover:bg-green-500 hover:text-white transition duration-500"
+                                >
+                                    Active</span
+                                >
+                            </a>
+                        </td>
+                        <td class="td text-center" v-else>
+                            <a @click="statusInActive(user)">
+                                <span
+                                    class="bg-red-500 px-2 py-1 rounded-full text-gray-50 text-xs hover:bg-red-600 hover:text-white transition duration-500"
+                                >
+                                    Inactive</span
+                                >
+                            </a>
+                        </td>
+                        <td class="td text-center">
                             <button
                                 class="p-1 focus:outline-none"
                                 @click="remove(user.id)"
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Delete"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-gray-700 hover:text-red-500"
+                                    class="h-5 w-5 text-gray-700 hover:text-red-600"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -113,38 +143,16 @@
                                     />
                                 </svg>
                             </button>
-                        </td>
-                        <td class="td uppercase">{{ user.name }}</td>
-                        <td class="td">{{ user.business_unit }}</td>
-                        <td class="td">
-                            {{ user.created_at | formatDateNoTime }}
-                        </td>
-                        <td class="td" v-if="user.status == 1">
-                            <a @click="statusActive(user)">
-                                <span
-                                    class="bg-green-400 px-2 py-1 rounded-full text-gray-50  text-xs hover:bg-green-500 hover:text-white transition duration-500"
-                                >
-                                    Active</span
-                                >
-                            </a>
-                        </td>
-                        <td class="text-center" v-else>
-                            <a @click="statusInActive(user)">
-                                <span
-                                    class="bg-red-500 px-2 py-1 rounded-full text-gray-50 text-xs hover:bg-red-600 hover:text-white transition duration-500"
-                                >
-                                    Inactive</span
-                                >
-                            </a>
-                        </td>
-                        <td class="td">
                             <button
                                 class="focus:outline-none"
                                 @click="editInfo(user)"
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Edit"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-gray-700 hover:text-green-500"
+                                    class="h-5 w-5 text-gray-700 hover:text-green-600"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -153,7 +161,7 @@
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                         stroke-width="2"
-                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                                     />
                                 </svg>
                             </button>
@@ -413,6 +421,9 @@
         <button
             @click="addModal"
             v-if="!isModal"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Add"
             class="fixed z-30 bottom-0 right-0 mb-16 mr-3 focus:outline-none bg-blue-400 hover:bg-blue-500 w-12 h-12 rounded-full shadow-xl transition duration-700 ease-in-out transform hover:scale-105 "
         >
             <svg
@@ -444,12 +455,48 @@ export default {
     data() {
         let sortOrders = {};
         let columns = [
-            { width: "5%", label: "", name: "id" },
-            { width: "25%", label: "Full Name", name: "name" },
-            { width: "15%", label: "Location", name: "username" },
-            { width: "15%", label: "Registered Date", name: "usertype_id" },
-            { width: "20%", label: "Status", name: "bunit_code" },
-            { width: "15%", label: "", name: "idss" }
+            {
+                width: "25%",
+                label: "Full Name",
+                name: "name",
+                class: "text-left"
+            },
+            {
+                width: "25%",
+                label: "User Name",
+                name: "uname",
+                class: "text-left"
+            },
+            {
+                width: "15%",
+                label: "Location",
+                name: "loc",
+                class: "text-left"
+            },
+            {
+                width: "15%",
+                label: "Registered Date",
+                name: "reg_date",
+                class: "text-center"
+            },
+            {
+                width: "15%",
+                label: "Date of Inactivity",
+                name: "inactive_date",
+                class: "text-center"
+            },
+            {
+                width: "20%",
+                label: "Status",
+                name: "stat",
+                class: "text-center"
+            },
+            {
+                width: "15%",
+                label: "Action",
+                name: "action",
+                class: "text-center"
+            }
         ];
         columns.forEach(column => {
             sortOrders[column.name] = -1;

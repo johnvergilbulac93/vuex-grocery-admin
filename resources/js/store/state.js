@@ -16,6 +16,7 @@ export default {
      isLoading: false,
      isUpload: false,
      waiting: false,
+     checkSession: false,
      errors: {},
      priceCount: '',
      PriceChangeInfo: [],

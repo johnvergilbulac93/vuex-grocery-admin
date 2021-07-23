@@ -82,7 +82,7 @@ class LoginController extends Controller
 
     } else {
 
-      return ['username' => $request->username, 'password' => $request->password];
+      return ['username' => $request->username, 'password' => $request->password, 'status' => 1, 'isAdmin' => 1 ];
     }
   }
 

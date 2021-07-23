@@ -6,21 +6,69 @@
                     >Delivery Charges</label
                 >
             </div>
-            <div
-                class="flex sm:flex-wrap md:flex-row  sm:flex-col sm:space-y-2 justify-between items-center pb-2"
-            >
-                <div
-                    class="w-1/2 flex md:flex-row justify-between sm:flex-col tracking-normal "
-                >
+            <div class="grid grid-cols-6 grid-flow-col gap-4 mb-2">
+                <div class="col-span-5 flex items-center space-x-2">
+                    <div class="w-80 flex">
+                        <div
+                            class="relative w-full border overflow-hidden flex rounded-l-lg "
+                        >
+                            <input
+                                type="text"
+                                class="relative py-2 px-4 focus:outline-none w-full "
+                                placeholder="Search...."
+                                v-model="tableData.search"
+                                @keyup.enter="search"
+                            />
+                            <button
+                                @click="clear"
+                                v-if="tableData.search.length"
+                                class="absolute right-0 z-10   pr-2 w-8 h-full leading-snug bg-transparent rounded  flex items-center justify-center focus:outline-none "
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5  hover:text-red-500"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                        <button
+                            @click="search"
+                            class="py-2.5 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4 "
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                />
+                            </svg>
+                        </button>
+                    </div>
                     <div class="w-56">
-                        <span class="mb-10 font-semibold" >Province</span>
-                        <div class="py-1">
+                        <!-- <span class="mb-10 font-semibold">Province</span> -->
+                        <div class="">
                             <select
                                 @change="fetch()"
                                 class="text-sm py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  w-full"
                                 v-model="tableData.province"
                             >
-                                <option value="">Select Province</option>
+                                <option value="">Choose Province</option>
                                 <option
                                     v-for="(prov, index) in Provinces"
                                     :key="index"
@@ -31,15 +79,15 @@
                             </select>
                         </div>
                     </div>
-                    <div class="w-56 md:mr-2 md:ml-2 sm:mr-0 sm:ml-0">
-                        <span class="mb-10 font-semibold ">Town</span>
-                        <div class="py-1">
+                    <div class="w-56 ">
+                        <!-- <span class="mb-10 font-semibold ">Town</span> -->
+                        <div class="">
                             <select
                                 @change="fetch()"
                                 class="text-sm py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  w-full"
                                 v-model="tableData.town"
                             >
-                                <option value="">Select Town</option>
+                                <option value="">Choose Town</option>
                                 <option
                                     v-for="(town, index) in Towns"
                                     :key="index"
@@ -51,14 +99,16 @@
                         </div>
                     </div>
                     <div class="w-56">
-                        <span class="mb-10 font-semibold ">Transportation</span>
-                        <div class="py-1">
+                        <!-- <span class="mb-10 font-semibold "
+                                >Transportation</span
+                            > -->
+                        <div class="">
                             <select
                                 @change="fetch()"
                                 class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg w-full"
                                 v-model="tableData.transportation"
                             >
-                                <option value="">Select Transportation</option>
+                                <option value="">Choose Transportation</option>
                                 <option
                                     v-for="(transpo, index) in Transportations"
                                     :key="index"
@@ -70,24 +120,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-sm">
-                    <span >Show</span>
-                    <select
-                        @change="fetch()"
-                        class="py-2 px-4 mt-4 focus:outline-none cursor-pointer border rounded-lg "
-                        v-model="tableData.length"
-                    >
-                        <option
-                            v-for="(records, index) in perPage"
-                            :key="index"
-                            :value="records"
+                <div class="flex justify-end ">
+                    <div class="text-sm mt-1">
+                        <span>Show</span>
+                        <select
+                            class="mb-2 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
+                            v-model="tableData.length"
+                            @change="fetch()"
                         >
-                            {{ records }}
-                        </option>
-                    </select>
-                    <span >Entries</span>
+                            <option
+                                v-for="(records, index) in perPage"
+                                :key="index"
+                                :value="records"
+                            >
+                                {{ records }}
+                            </option>
+                        </select>
+                        <span>Entries</span>
+                    </div>
                 </div>
             </div>
+
             <Datatable
                 :columns="columns"
                 :sortKey="sortKey"
@@ -96,15 +149,44 @@
             >
                 <tbody class="tbody ">
                     <tr class="tr" v-if="!DCharges.length">
-                        <td colspan="8" class=" td">
+                        <td colspan="8" class=" td text-center">
                             NO DATA AVAILABLE
                         </td>
                     </tr>
-                    <tr v-for="(charge, i) in DCharges" :key="i" class="tr">
+                    <tr v-for="(charge, i) in DCharges" :key="i" class="tr ">
+                        <td class="td ">{{ charge.prov_name }}</td>
+                        <td class="td">{{ charge.town_name }}</td>
                         <td class="td">
+                            {{ !charge.brgy ? "" : charge.brgy.brgy_name }}
+                        </td>
+                        <td class="td">{{ charge.transpo_name }}</td>
+                        <td class="td text-center">
+                            {{ charge.charge_amt | toCurrency2 }}
+                        </td>
+                        <td class="td text-center">
+                            {{ charge.rider_shared | toCurrency2 }}
+                        </td>
+                        <td class="td text-center" v-if="charge.status == 1">
+                            <span
+                                class="bg-green-400 px-2 py-1 rounded-full text-white  text-xs hover:bg-green-500 hover:text-white transition duration-500"
+                            >
+                                Active</span
+                            >
+                        </td>
+                        <td class="text-center" v-else>
+                            <span
+                                class="bg-red-500 px-2 py-1 rounded-full text-white  text-xs hover:bg-red-600 hover:text-white transition duration-500"
+                            >
+                                Inactive</span
+                            >
+                        </td>
+                        <td class="td text-center">
                             <button
                                 class="p-1 focus:outline-none"
                                 @click="remove(charge.chrg_id)"
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Delete"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -121,37 +203,16 @@
                                     />
                                 </svg>
                             </button>
-                        </td>
-                        <td class="td">{{ charge.prov_name }}</td>
-                        <td class="td">{{ charge.town_name }}</td>
-                        <td class="td">
-                            {{ !charge.brgy ? "" : charge.brgy.brgy_name }}
-                        </td>
-                        <td class="td">{{ charge.transpo_name }}</td>
-                        <td class="td">{{ charge.charge_amt }}</td>
-                        <td class="td">{{ charge.rider_shared }}</td>
-                        <td class="td" v-if="charge.status == 1">
-                            <span
-                                class="bg-green-400 px-2 py-1 rounded-full text-white  text-xs hover:bg-green-500 hover:text-white transition duration-500"
-                            >
-                                Active</span
-                            >
-                        </td>
-                        <td class="text-center" v-else>
-                            <span
-                                class="bg-red-500 px-2 py-1 rounded-full text-white  text-xs hover:bg-red-600 hover:text-white transition duration-500"
-                            >
-                                Inactive</span
-                            >
-                        </td>
-                        <td class="td">
                             <button
                                 class="p-i focus:outline-none"
                                 @click="updateModal(charge)"
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Edit"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-gray-700 hover:text-green-500"
+                                    class="h-5 w-5 text-gray-700 hover:text-green-600"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -160,7 +221,7 @@
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                         stroke-width="2"
-                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                                     />
                                 </svg>
                             </button>
@@ -236,15 +297,13 @@
                     <div
                         class="sm:w-full lg:w-1/2  bg-white rounded sm:m-5 md:m-5"
                     >
-                        <div class="p-2 flex justify-between items-center text-lg tracking-wider">
-                            <label
-                                for=""
-                                v-if="!editMode"
+                        <div
+                            class="p-2 flex justify-between items-center text-lg tracking-wider"
+                        >
+                            <label for="" v-if="!editMode"
                                 >Setup new delivery charges</label
                             >
-                            <label
-                                for=""
-                                v-if="editMode"
+                            <label for="" v-if="editMode"
                                 >Update delivery charges</label
                             >
                             <a
@@ -269,7 +328,9 @@
                         </div>
                         <div class="w-full p-5 border-b border-t text-sm">
                             <div class="flex flex-col w-1/2">
-                                <label for="province" class="font-semibold">Province</label>
+                                <label for="province" class="font-semibold"
+                                    >Province</label
+                                >
                                 <select
                                     @change="filteredTown"
                                     v-bind:class="{
@@ -296,7 +357,9 @@
                             </div>
                             <div class="flex flex-row space-x-4 my-2 w-full ">
                                 <div class="flex flex-col w-1/2">
-                                    <label for="town" class="font-semibold">Town</label>
+                                    <label for="town" class="font-semibold"
+                                        >Town</label
+                                    >
                                     <select
                                         v-if="editMode"
                                         class=" px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
@@ -388,7 +451,9 @@
                                 </div>
                             </div>
                             <div class="flex flex-col w-1/2">
-                                <label for="transpo" class="font-semibold">Transportation</label>
+                                <label for="transpo" class="font-semibold"
+                                    >Transportation</label
+                                >
                                 <select
                                     v-bind:class="{
                                         'border-red-600': errors.transportation
@@ -441,7 +506,9 @@
                                     </p>
                                 </div>
                                 <div class="flex flex-col w-1/2 ">
-                                    <label for="brgy" class="font-semibold">Rider Share</label>
+                                    <label for="brgy" class="font-semibold"
+                                        >Rider Share</label
+                                    >
                                     <input
                                         v-model="form.rider_share"
                                         v-bind:class="{
@@ -508,6 +575,9 @@
         <button
             @click="addModal"
             v-if="!isModal"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Add"
             class="fixed z-30 bottom-0 right-0 mb-16 mr-3 focus:outline-none bg-blue-400 hover:bg-blue-500 w-12 h-12 rounded-full shadow-xl transition duration-700 ease-in-out transform hover:scale-105 "
         >
             <!-- <i class="text-white fas fa-plus fa-2x "></i> -->
@@ -540,15 +610,54 @@ export default {
     data() {
         let sortOrders = {};
         let columns = [
-            { width: "10%", label: "", name: "id" },
-            { width: "15%", label: "Province", name: "prov_id" },
-            { width: "15%", label: "Town", name: "town_id" },
-            { width: "15%", label: "Barangay", name: "brgy_id" },
-            { width: "15%", label: "Transportation", name: "transpo_id" },
-            { width: "15%", label: "Charge Amount", name: "charge_amt" },
-            { width: "15%", label: "Rider Share", name: "rider_shared" },
-            { width: "15%", label: "Status", name: "statuss" },
-            { width: "10%", label: "", name: "" }
+            {
+                width: "15%",
+                label: "Province",
+                name: "prov_id",
+                class: "text-left"
+            },
+            {
+                width: "15%",
+                label: "Town",
+                name: "town_id",
+                class: "text-left"
+            },
+            {
+                width: "15%",
+                label: "Barangay",
+                name: "brgy_id",
+                class: "text-left"
+            },
+            {
+                width: "15%",
+                label: "Transportation",
+                name: "transpo_id",
+                class: "text-left"
+            },
+            {
+                width: "15%",
+                label: "Charge Amount",
+                name: "charge_amt",
+                class: "text-center"
+            },
+            {
+                width: "15%",
+                label: "Rider Share",
+                name: "rider_shared",
+                class: "text-center"
+            },
+            {
+                width: "15%",
+                label: "Status",
+                name: "statuss",
+                class: "text-center"
+            },
+            {
+                width: "10%",
+                label: "Action",
+                name: "asd",
+                class: "text-center"
+            }
         ];
         columns.forEach(column => {
             sortOrders[column.name] = -1;
@@ -560,6 +669,7 @@ export default {
             sortOrders: sortOrders,
             tableData: {
                 length: 10,
+                search: "",
                 town: "",
                 province: "",
                 transportation: "",
@@ -608,6 +718,13 @@ export default {
             "updateCharge",
             "deleteCharge"
         ]),
+        clear() {
+            this.tableData.search = "";
+            this.fetch();
+        },
+        search() {
+            this.fetch()
+        },
         remove(id) {
             this.deleteCharge({
                 id: id

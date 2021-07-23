@@ -123,7 +123,7 @@
                     class="border-t-2 border-gray-300 bg-gray-100 tracking-normal "
                 >
                     <tr>
-                        <th class="th">
+                        <th class="th text-center">
                             <input
                                 type="checkbox"
                                 class="h-4 w-4 cursor-pointer focus:outline-none "
@@ -131,21 +131,21 @@
                                 v-model="allSelected"
                             />
                         </th>
-                        <th class="th">Itemcode</th>
-                        <th class="th">Description</th>
-                        <th class="th">Category Name</th>
-                        <th class="th">UOM</th>
-                        <th class="th">Price</th>
+                        <th class="th text-left">Itemcode</th>
+                        <th class="th text-left">Description</th>
+                        <th class="th text-left">Category Name</th>
+                        <th class="th text-center">UOM</th>
+                        <th class="th text-center">Price</th>
                     </tr>
                 </thead>
-                <tbody class="tbody text-center">
+                <tbody class="tbody ">
                     <tr class="tr" v-if="!Items.length">
-                        <td colspan="6" class="td  ">
+                        <td colspan="6" class="td text-center ">
                             NO DATA AVAILABLE
                         </td>
                     </tr>
                     <tr v-for="(item, i) in Items" :key="i" class="tr">
-                        <td class="td">
+                        <td class="td text-center">
                             <input
                                 type="checkbox"
                                 class="h-4 w-4 cursor-pointer focus:outline-none checked:bg-yellow-500"
@@ -154,12 +154,12 @@
                                 @click="select"
                             />
                         </td>
-                        <td class="td">{{ item.itemcode }}</td>
+                        <td class="td ">{{ item.itemcode }}</td>
                         <td class="td">{{ item.product_name }}</td>
                         <td class="td">{{ item.category_name }}</td>
-                        <td class="td">{{ item.UOM }}</td>
-                        <td class="text-blue-500 ">
-                            {{ item.price_with_vat }}
+                        <td class="td text-center">{{ item.UOM }}</td>
+                        <td class="text-blue-500 text-center ">
+                            {{ item.price_with_vat | toCurrency2 }}
                         </td>
                     </tr>
                 </tbody>

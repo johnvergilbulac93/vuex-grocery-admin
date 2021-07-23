@@ -75,6 +75,15 @@ Vue.filter('toCurrency', function (value) {
     return formatter.format(value)
 })
 
+Vue.filter('toCurrency2', function (value) {
+    var formatter = new Intl.NumberFormat('en-PH', {
+        style: 'currency',
+        currency: 'PHP',
+    })
+    return formatter.format(value)
+})
+
+
 let serverDateTime = document.head.querySelector('meta[name="server-datetime"]').content
 let userType = document.head.querySelector('meta[name="user-type"]').content
 let id = document.head.querySelector('meta[name="id"]').content
@@ -98,7 +107,6 @@ window.id = id
 // Vue.component('page404', require('./components/admin/pages/404_page.vue').default);
 // Vue.component('Top', require('./components/admin/pages/Top.vue').default);
 Vue.component('Profile', require('./components/admin/pages/Profile-Upload.vue').default);
-
 
 
 
@@ -126,7 +134,8 @@ const app = new Vue({
             open: false,
             openMenu: false,
             upload_profile: false,
-
+            showPassword: false,
+            password: '',
         }
     },
     methods: {
@@ -142,6 +151,9 @@ const app = new Vue({
         },
         showUpload() {
             this.upload_profile = true
+        },
+        toggleShow() {
+            this.showPassword = !this.showPassword;
         },
     },
 

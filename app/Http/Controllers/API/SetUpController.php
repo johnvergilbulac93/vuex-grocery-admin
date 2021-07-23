@@ -181,11 +181,11 @@ class SetUpController extends Controller
         $query = DB::table('bu_time_setups')
             ->join('locate_business_units', 'bu_time_setups.bunit_code', '=', 'locate_business_units.bunit_code')
             ->select(
-                'bu_time_setups.id', 
-                'locate_business_units.bunit_code', 
-                'locate_business_units.business_unit', 
-                'locate_business_units.acroname', 
-                'bu_time_setups.time_in', 
+                'bu_time_setups.id',
+                'locate_business_units.bunit_code',
+                'locate_business_units.business_unit',
+                'locate_business_units.acroname',
+                'bu_time_setups.time_in',
                 'bu_time_setups.time_out',
                 'bu_time_setups.status',
             )
@@ -206,12 +206,12 @@ class SetUpController extends Controller
         if ($request->id === null) {
             $this->validate($request, [
                 'store'        => 'required|unique:bu_time_setups,bunit_code',
-                'opening_time'    => 'required|date_format:h:i:s',
+                'opening_time'    => 'required|date_format:h:i',
                 'closing_time'      => 'required|after:opening_time',
             ]);
         } else {
             $this->validate($request, [
-                'opening_time'    => 'required|date_format:h:i',
+                'opening_time'    => 'required|date_format:h:i:s',
                 'closing_time'      => 'required|after:opening_time',
             ]);
         }
@@ -321,8 +321,8 @@ class SetUpController extends Controller
         ]);
 
         $checking_data =  gc_minimum_order_delivery::where('bunit_code', $request->store)
-        ->where('department_id',     $request->department)
-        ->exists();
+            ->where('department_id',     $request->department)
+            ->exists();
 
         if (!$checking_data) {
 
@@ -442,6 +442,8 @@ class SetUpController extends Controller
         $transpo    = $request->transportation;
         $town       = $request->town;
         $province   = $request->province;
+        $searchValue     = $request->search;
+
 
         $query = gc_delivery_charge::with(['brgy'])
             ->join('province', 'gc_delivery_charges.prov_id', '=', 'province.prov_id')
@@ -461,12 +463,26 @@ class SetUpController extends Controller
                 'gc_transportations.transpo_name',
             )
             ->orderBy('gc_delivery_charges.chrg_id', $dir);
-
-        if ($town || $province || $transpo) {
-            $query->where(function ($query) use ($town, $transpo, $province) {
-                $query->where('gc_delivery_charges.town_id', $town)
-                    ->orWhere('gc_delivery_charges.transpo_id', $transpo)
-                    ->orWhere('gc_delivery_charges.prov_id', $province);
+        if ($searchValue) {
+            $query->where(function ($query) use ($searchValue) {
+                $query->where('province.prov_name',  'like', '%' . $searchValue . '%')
+                    ->orWhere('towns.town_name', 'like', '%' . $searchValue . '%')
+                    ->orWhere('gc_transportations.transpo_name', 'like', '%' . $searchValue . '%');
+            });
+        }
+        if ($province) {
+            $query->where(function ($query) use ($province) {
+                $query->where('gc_delivery_charges.prov_id', $province);
+            });
+        }
+        if ($town) {
+            $query->where(function ($query) use ($town) {
+                $query->where('gc_delivery_charges.town_id', $town);
+            });
+        }
+        if ($transpo) {
+            $query->where(function ($query) use ($transpo) {
+                $query->where('gc_delivery_charges.transpo_id', $transpo);
             });
         }
         $finalResults = $query->paginate($length);
@@ -530,16 +546,16 @@ class SetUpController extends Controller
         $searchValue = $request->search;
 
         $query = DB::table('locate_business_units')
-                ->join('gc_price_groups', 'locate_business_units.price_group_code','gc_price_groups.price_group_code')
-                ->select(
-                    'locate_business_units.bunit_code',
-                    'locate_business_units.business_unit',
-                    'locate_business_units.price_group_code',
-                    'gc_price_groups.price_group_name',
-                    'gc_price_groups.id'
-                )
-                ->where('locate_business_units.active',1)
-                ->orderBy('locate_business_units.bunit_code', $dir);
+            ->join('gc_price_groups', 'locate_business_units.price_group_code', 'gc_price_groups.price_group_code')
+            ->select(
+                'locate_business_units.bunit_code',
+                'locate_business_units.business_unit',
+                'locate_business_units.price_group_code',
+                'gc_price_groups.price_group_name',
+                'gc_price_groups.id'
+            )
+            ->where('locate_business_units.active', 1)
+            ->orderBy('locate_business_units.bunit_code', $dir);
 
         if ($searchValue) {
             $query->where(function ($query) use ($searchValue) {
@@ -568,16 +584,20 @@ class SetUpController extends Controller
                 'price_group'    => 'required',
             ]);
         }
-        DB::table('locate_business_units')->where('locate_business_units.bunit_code',$request->id)->update([
+        DB::table('locate_business_units')->where('locate_business_units.bunit_code', $request->id)->update([
             'price_group_code' => $request->price_group
         ]);
     }
-    public function business_time_active(Request $request)
+    public function delete_price_group($id){
+        DB::table('locate_business_units')->where('locate_business_units.bunit_code', $id)->update([
+            'active' => 0
+        ]);
+    }
+    public function business_time_active(Request $request)  
     {
         Bu_time_setup::whereId($request->id)->update([
             'status' => 0
         ]);
-
     }
     public function business_time_inactive(Request $request)
     {

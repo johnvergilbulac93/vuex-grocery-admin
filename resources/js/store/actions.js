@@ -23,7 +23,7 @@ export const townFiltered = ({commit},{province}) => {
 }
 export const getPriceChangedInfo = ({commit},{currentPage, filterData}) => {
      Common.Price_changed_info(currentPage, filterData)
-     .then( res=> {
+     .then( res => {
           commit('SET_PRICE_CHANGED_INFO', res.data.data)
           commit('PAGINATION', res.data)
      })
@@ -625,6 +625,22 @@ export const saveStorePriceGroup = ({commit}, {storepricegroup}) => {
                icon: "success",
                title: "Success",
                text: "Successfully saved"
+          });
+     })
+     .catch( error => {
+          if(error.response.status === 422) {
+               commit('SET_ERRORS',error.response.data.errors )
+          } 
+     })
+}
+export const deleteStorePriceGroup = ({commit}, {id}) => {
+     StorePriceGroup.delete(id)
+     .then( ()=> {
+          Fire.$emit("reload_price_group");
+          toast.fire({
+               icon: "success",
+               title: "Success",
+               text: "Deleted Successfully"
           });
      })
      .catch( error => {

@@ -75,7 +75,7 @@ class UserController extends Controller
             'store'         => ['required'],
         ]);
 
-        $default_password = 'alturush2020';
+        $default_password = '@ltur4s2020';
 
         if ($request->get('password')) {
             if (

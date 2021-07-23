@@ -1,9 +1,7 @@
 <template>
-    <div class="container bg-gray-50 shadow-lg p-5 rounded text-gray-800">
+    <div class="container bg-gray-50 shadow-lg p-5 rounded text-gray-800 ">
         <div class="mb-5 bg-gray-100 p-2">
-            <label for="" class="tracking-wider text-lg "
-                >Store Time</label
-            >
+            <label for="" class="tracking-wider text-lg ">Store Time</label>
         </div>
         <div
             class="grid lg:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 sm:grid-flow-row sm:grid-cols-1 sm:grid-rows-1 gap-2"
@@ -171,9 +169,9 @@
                     :sortOrders="sortOrders"
                     @sort="sortBy"
                 >
-                    <tbody class="tbody text-center">
+                    <tbody class="tbody">
                         <tr class="tr" v-if="!StoreHourList.length">
-                            <td colspan="5" class="td">
+                            <td colspan="5" class="td text-center">
                                 NO DATA AVAILABLE
                             </td>
                         </tr>
@@ -182,12 +180,16 @@
                             v-for="(data, i) in StoreHourList"
                             :key="i"
                         >
-                            <a @click="editInfo(data)"
+                            <a
+                                @click="editInfo(data)"
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Edit"
                                 ><td class="td">{{ data.business_unit }}</td></a
                             >
-                            <td class="td">{{ data.time_in }}</td>
-                            <td class="td">{{ data.time_out }}</td>
-                            <td class="td" v-if="data.status == 1">
+                            <td class="td text-center">{{ data.time_in }}</td>
+                            <td class="td text-center">{{ data.time_out }}</td>
+                            <td class="td text-center" v-if="data.status == 1">
                                 <a @click="statusActive(data)">
                                     <span
                                         class="bg-green-400 px-2 py-1 rounded-full text-gray-50  text-xs hover:bg-green-500 hover:text-white transition duration-500"
@@ -205,10 +207,13 @@
                                     >
                                 </a>
                             </td>
-                            <td class="td">
+                            <td class="td text-center">
                                 <button
                                     class="p-1 focus:outline-none"
                                     @click="remove(data.id)"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Delete"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -222,6 +227,28 @@
                                             stroke-linejoin="round"
                                             stroke-width="2"
                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                        />
+                                    </svg>
+                                </button>
+                                <button
+                                    class="p-1 focus:outline-none"
+                                    @click="editInfo(data)"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Edit"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5 text-gray-700 hover:text-green-600"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                                         />
                                     </svg>
                                 </button>
@@ -299,11 +326,11 @@ export default {
     data() {
         let sortOrders = {};
         let columns = [
-            { width: "70%", label: "Store", name: "description" },
-            { width: "20%", label: "Opening Time", name: "opening_time" },
-            { width: "20%", label: "Closing Time", name: "closing_time" },
-            { width: "20%", label: "Status", name: "statuss" },
-            { width: "10%", label: "", name: "idss" }
+            { width: "70%", label: "Store", name: "description", class:'text-left' },
+            { width: "20%", label: "Opening Time", name: "opening_time", class:'text-center' },
+            { width: "20%", label: "Closing Time", name: "closing_time" , class:'text-center'},
+            { width: "20%", label: "Status", name: "statuss" , class:'text-center'},
+            { width: "10%", label: "Action", name: "idss", class:'text-center' }
         ];
         columns.forEach(column => {
             sortOrders[column.name] = -1;
@@ -415,7 +442,7 @@ export default {
             this.saveStoreHour({
                 storehour: storehour
             });
-            this.reset();
+            
         },
         sortBy(key) {
             this.sortKey = key;
@@ -431,6 +458,7 @@ export default {
     mounted() {
         Fire.$on("reload_time", () => {
             this.fetch();
+            this.reset();
         });
         this.fetch();
         this.getStore();

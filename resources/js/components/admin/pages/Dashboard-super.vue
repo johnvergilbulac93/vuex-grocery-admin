@@ -144,6 +144,11 @@ export default {
     mounted() {
         this.getPriceChanged();
         this.getItems();
+        let session =  this.$store.state.checkSession
+        if(session == true ){
+            location.reload()
+        }
+
     }
 };
 </script>

@@ -2,9 +2,7 @@
     <div class="container text-black">
         <div class=" bg-gray-50 shadow-lg p-5 rounded  ">
             <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="text-lg tracking-wider"
-                    >Price Group</label
-                >
+                <label for="" class="text-lg tracking-wider">Price Group</label>
             </div>
             <div
                 class="grid lg:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 sm:grid-flow-row sm:grid-cols-1 sm:grid-rows-1 gap-2"
@@ -36,7 +34,9 @@
                         </p>
                     </div>
                     <div class="w-full space-y-1">
-                        <label for="store" class="font-semibold">Price Group</label>
+                        <label for="store" class="font-semibold"
+                            >Price Group</label
+                        >
                         <select
                             v-model="price_group"
                             v-bind:class="{
@@ -149,7 +149,7 @@
                                     {{ records }}
                                 </option>
                             </select>
-                            <span >Entries</span>
+                            <span>Entries</span>
                         </div>
                     </div>
                     <Datatable
@@ -158,23 +158,67 @@
                         :sortOrders="sortOrders"
                         @sort="sortBy"
                     >
-                        <tbody class="tbody text-center">
+                        <tbody class="tbody ">
                             <tr class="tr" v-if="!StorePriceGroup.length">
-                                <td colspan="4" class="td ">
+                                <td colspan="4" class="td text-center ">
                                     NO DATA AVAILABLE
                                 </td>
                             </tr>
                             <tr
-                                class="tr"
+                                class="tr "
                                 v-for="(data, i) in StorePriceGroup"
                                 :key="i"
                             >
-                                <a @click="editInfo(data)"
+                                <a
+                                    @click="editInfo(data)"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Edit"
                                     ><td class="td">
                                         {{ data.business_unit }}
                                     </td></a
                                 >
                                 <td class="td">{{ data.price_group_name }}</td>
+                                <td class="td text-center">
+                                    <button
+                                        class="p-1 focus:outline-none"
+                                        @click="remove(data.id)"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 text-gray-700 hover:text-red-600"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                            />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        class="focus:outline-none"
+                                        @click="editInfo(data)"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5 text-gray-700 hover:text-green-600"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                            />
+                                        </svg>
+                                    </button>
+                                </td>
                             </tr>
                         </tbody>
                     </Datatable>
@@ -251,8 +295,19 @@ export default {
     data() {
         let sortOrders = {};
         let columns = [
-            { width: "20%", label: "Store", name: "store" },
-            { width: "20%", label: "Price Group", name: "price_group_code" }
+            { width: "20%", label: "Store", name: "store", class: "text-left" },
+            {
+                width: "20%",
+                label: "Price Group",
+                name: "price_group_code",
+                class: "text-left"
+            },
+            {
+                width: "20%",
+                label: "Action",
+                name: "action",
+                class: "text-center"
+            }
         ];
         columns.forEach(column => {
             sortOrders[column.name] = -1;
@@ -288,7 +343,8 @@ export default {
             "getStore",
             "getPriceGroup",
             "getStorePriceGroup",
-            "saveStorePriceGroup"
+            "saveStorePriceGroup",
+            "deleteStorePriceGroup"
         ]),
         editInfo(data) {
             (this.id = data.bunit_code),
@@ -296,7 +352,9 @@ export default {
                 (this.price_group = data.price_group_code);
             (this.errors.store = ""), (this.errors.price_group = "");
         },
-        remove() {},
+        remove(id) {
+            this.deleteStorePriceGroup({ id: id})
+        },
         save() {
             let storepricegroup = {
                 id: this.id,

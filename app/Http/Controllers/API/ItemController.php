@@ -393,8 +393,7 @@ class ItemController extends Controller
     }
 
     public function price_count_changed_info(Request $request)
-    {
-
+    {   
         $price_group = $request->input('price_group');;
         $length = $request->input('length');
         $column = $request->input('column');

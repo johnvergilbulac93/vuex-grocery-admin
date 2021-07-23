@@ -1,6 +1,7 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap'); */
 /* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap'); */
 /* @import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -10,7 +11,7 @@
     @apply divide-y divide-gray-300 tracking-normal;
 }
 .td {
-    @apply p-2 whitespace-nowrap text-sm text-center text-black ;
+    @apply p-2 whitespace-nowrap text-sm  text-black ;
 }
 .tr {
     @apply hover:bg-gray-100 text-black;

@@ -88,6 +88,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/price_group', 'API\SetUpController@price_group')->name('price-group');
     Route::get('/show/price_group', 'API\SetUpController@show_price_group')->name('show-price-group');
     Route::post('/price_group/save', 'API\SetUpController@save_store_price_group')->name('save-store-price-group');
+    Route::delete('/price_group/{id}/delete', 'API\SetUpController@delete_price_group')->name('delete-price-group');
 
     Route::get('setup_rules', 'API\SetUpController@setup_rules')->name('setup-rules');
     Route::get('pickers', 'API\SetUpController@pickers')->name('pickers');

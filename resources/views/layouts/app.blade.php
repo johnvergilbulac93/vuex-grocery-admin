@@ -24,7 +24,7 @@
     <div id='app'>
         <nav class="fixed w-full z-10 top-0 shadow ">
             <div
-                class=" flex items-center justify-between  bg-gray-100 p-4 shadow-lg border-gray-200 dark:bg-gray-900 dark:text-white">
+                class=" flex items-center justify-between  bg-gray-100 p-4 shadow-lg border-gray-200  ">
                 <div class="flex items-center flex-shrink-0 text-white  ">
                     <router-link to="/" class="brand-logo ">
                         <img class="mr-6 w-40" src="{{ asset('img/alturush.png') }}" alt="main">
@@ -121,9 +121,9 @@
                     </form>
                 </div>
             </div>
-            <div class="w-full bg-yellow-500 shadow-md">
+            <div class="w-full bg-yellow-500 shadow-md font-rubik">
                 @can('isSuperAdmin')
-                    <div class="container">
+                    <div class="container ">
                         <ul
                             class="list-reset flex items-center sm:justify-center md:justify-start  space-x-5 text-white text-sm antialiased p-2">
                             <router-link :to="{ name: 'dashboard', params: { id: {{ Auth::user()->usertype_id }}  } }"
@@ -314,7 +314,7 @@
         </nav>
 
         <header>
-            <div class="absolute top-0 bottom-80 left-0 right-0 bg-gray-200"></div>
+            <div class="fixed top-0 bottom-80 left-0 right-0 bg-gray-200"></div>
         </header>
         <div class=" relative p-5 mt-36 ">
             <!-- for  router view -->

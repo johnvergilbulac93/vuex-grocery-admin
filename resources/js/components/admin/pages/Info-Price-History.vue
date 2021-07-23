@@ -64,8 +64,8 @@
                             @change="fetch()"
                         >
                             <option value="">Choose Price Group</option>
-                            <option value="TAGBI">TAGBILARAN</option>
-                            <option value="TALBN">TALIBON</option>
+                            <option value="TAGB">TAGBILARAN</option>
+                            <option value="TALB">TALIBON</option>
                         </select>
                     </div>
                 </div>
@@ -204,7 +204,7 @@ export default {
                 search: "",
                 column: 1,
                 dir: "asc",
-                price_group: "TAGBI"
+                price_group: "TAGB"
             },
             currentPage: 1
         };

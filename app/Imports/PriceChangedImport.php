@@ -45,6 +45,7 @@ class PriceChangedImport implements ToCollection
                     'price_with_vat'    =>  floatval(str_replace(',','',$row[5])),
         
                 );
+
                 gc_product_price::where('itemcode','=',intval($row[0]))
                                 ->where('UOM','=',$row[2])
                                 ->where('price_group','=',$row[6])

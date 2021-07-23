@@ -1,9 +1,7 @@
 <template>
     <div class="container bg-gray-50 shadow-lg p-5 rounded text-gray-800">
         <div class="mb-5 bg-gray-100 p-2">
-            <label for="" class=" text-lg tracking-wider"
-                >Tenant</label
-            >
+            <label for="" class=" text-lg tracking-wider">Tenant</label>
         </div>
         <div
             class="grid lg:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 sm:grid-flow-row sm:grid-cols-1 sm:grid-rows-1 gap-2"
@@ -12,7 +10,9 @@
                 <form @submit.prevent="editMode ? update() : create()">
                     <div class="flex flex-col space-y-2">
                         <div class="w-full space-y-1">
-                            <label for="store" class="font-semibold">Store</label>
+                            <label for="store" class="font-semibold"
+                                >Store</label
+                            >
                             <select
                                 v-model="form.store"
                                 tabindex="1"
@@ -37,7 +37,9 @@
                             </p>
                         </div>
                         <div class="w-full space-y-1">
-                            <label for="store" class="font-semibold">Department</label>
+                            <label for="store" class="font-semibold"
+                                >Department</label
+                            >
                             <select
                                 v-model="form.department"
                                 tabindex="2"
@@ -150,7 +152,7 @@
                         </button>
                     </div>
                     <div class="text-sm">
-                        <span >Show</span>
+                        <span>Show</span>
                         <select
                             class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
                             v-model="tableData.length"
@@ -173,20 +175,24 @@
                     :sortOrders="sortOrders"
                     @sort="sortBy"
                 >
-                    <tbody class="tbody text-center">
+                    <tbody class="tbody">
                         <tr class="tr" v-if="!Tenants.length">
-                            <td colspan="4" class="td font-semibold">
+                            <td colspan="4" class="td font-semibold text-center">
                                 NO DATA AVAILABLE
                             </td>
                         </tr>
                         <tr class="tr" v-for="(tenant, i) in Tenants" :key="i">
-                            <a @click="editInfo(tenant)"
-                                ><td class="td">
+                            <a
+                                @click="editInfo(tenant)"
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Edit"
+                                ><td class="td text-left">
                                     {{ tenant.business_unit }}
                                 </td></a
                             >
                             <td class="td">{{ tenant.name }}</td>
-                            <td class="td">
+                            <td class="td text-center">
                                 <span
                                     class=" px-2 py-1 text-white text-xs rounded-full"
                                     :class="[
@@ -199,14 +205,17 @@
                                     }}</span
                                 >
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <button
                                     class="p-1 focus:outline-none"
                                     @click="remove(tenant.tenant_id)"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Delete"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        class="h-5 w-5 text-gray-700 hover:text-red-500"
+                                        class="h-5 w-5 text-gray-700 hover:text-red-600"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -216,6 +225,28 @@
                                             stroke-linejoin="round"
                                             stroke-width="2"
                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                        />
+                                    </svg>
+                                </button>
+                                <button
+                                    class="p-1 focus:outline-none"
+                                    @click="editInfo(tenant)"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Edit"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5 text-gray-700 hover:text-green-600"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
                                         />
                                     </svg>
                                 </button>
@@ -292,10 +323,10 @@ export default {
     data() {
         let sortOrders = {};
         let columns = [
-            { width: "70%", label: "Store", name: "description" },
-            { width: "20%", label: "Department", name: "category" },
-            { width: "20%", label: "Status", name: "status" },
-            { width: "10%", label: "", name: "idss" }
+            { width: "70%", label: "Store", name: "description", class:'text-left' },
+            { width: "20%", label: "Department", name: "category", class:'text-left' },
+            { width: "20%", label: "Status", name: "status", class:'text-center' },
+            { width: "10%", label: "Action", name: "idss", class:'text-center' }
         ];
         columns.forEach(column => {
             sortOrders[column.name] = -1;

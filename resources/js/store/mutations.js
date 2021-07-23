@@ -10,6 +10,9 @@ export const PAGINATION = (state, pagination) => {
           to: pagination.to
      }
 }
+export const CHECK_SESSION  = (state, payload) => {
+     state.checkSession = payload
+}
 export const SET_ERRORS  = (state, payload) => {
      state.errors = payload
 }
