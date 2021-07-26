@@ -160,7 +160,7 @@
                                     </p>
                                 </center>
                             </div>
-                            <div class="container">
+                            <div class="container mt-5 ">
                                 <table
                                     class="min-w-full divide-y divide-gray-300 mb-10"
                                     v-for="(byMonth, i) in get_results_by_month"
@@ -170,19 +170,19 @@
                                     <thead
                                         class="border-t-2 border-gray-300 bg-gray-100  tracking-normal"
                                     >
-                                        <tr class="tr">
-                                            <th class="p-2">Date</th>
-                                            <th class="p-2">Customer</th>
-                                            <th class="p-2">
+                                        <tr class="tr ">
+                                            <th class="p-2 text-center">Date</th>
+                                            <th class="p-2 text-left">Customer</th>
+                                            <th class="p-2 text-center">
                                                 Transaction #
                                             </th>
-                                            <th class="p-2">
+                                            <th class="p-2 text-right">
                                                 Gross Amount
                                             </th>
-                                            <th class="p-2">
+                                            <th class="p-2 text-right">
                                                 Pick-up Charge
                                             </th>
-                                            <th class="p-2">
+                                            <th class="p-2 text-right">
                                                 Total Amount
                                             </th>
                                         </tr>
@@ -199,7 +199,7 @@
                                             :key="innerIndex"
                                             class="tr"
                                         >
-                                            <td class="td">
+                                            <td class="td text-center">
                                                 {{
                                                     trans.order_pickup
                                                         | formatDateNoTime
@@ -208,7 +208,7 @@
                                             <td class="td">
                                                 {{ trans.customer }}
                                             </td>
-                                            <td class="td">
+                                            <td class="td text-center">
                                                 {{ trans.receipt }}
                                             </td>
                                             <td class="td text-right">
@@ -314,19 +314,19 @@
                                             <tr class="tr">
                                                 <td
                                                     colspan="2"
-                                                    class="td font-semibold text-center"
+                                                    class="td font-semibold "
                                                 >
                                                     Grand Total
                                                 </td>
                                                 <td
-                                                    class="td text-right font-semibold"
+                                                    class="td  text-center font-semibold"
                                                 >
                                                     {{
                                                         orderSummary.gTotalTransaction
                                                     }}
                                                 </td>
                                                 <td
-                                                    class="td text-right font-semibold"
+                                                    class="td text-center font-semibold"
                                                 >
                                                     {{
                                                         orderSummary.orderAmount
@@ -334,7 +334,7 @@
                                                     }}
                                                 </td>
                                                 <td
-                                                    class="td text-right font-semibold"
+                                                    class="td text-center font-semibold"
                                                 >
                                                     {{
                                                         orderSummary.pickupCharge
@@ -342,7 +342,7 @@
                                                     }}
                                                 </td>
                                                 <td
-                                                    class="td text-right font-semibold"
+                                                    class="td text-center font-semibold"
                                                 >
                                                     {{
                                                         orderSummary.grandTotal
@@ -390,7 +390,7 @@
                                     </p>
                                 </center>
                             </div>
-                            <div class="container">
+                            <div class="container mt-5">
                                 <table
                                     class="min-w-full divide-y divide-gray-300 mb-10"
                                     v-for="(store, i) in get_results_by_store"
@@ -411,12 +411,12 @@
                                             </th>
                                         </tr>
                                         <tr class="td">
-                                            <th class="p-2">DATE</th>
-                                            <th class="p-2">CUSTOMER</th>
-                                            <th class="p-2">TRANSACTION NO.</th>
-                                            <th class="p-2">GROSS AMOUNT</th>
-                                            <th class="p-2">PICKING CHARGE</th>
-                                            <th class="p-2">TOTAL AMOUNT</th>
+                                            <th class="p-2 text-center">Date</th>
+                                            <th class="p-2 text-left"> Customer</th>
+                                            <th class="p-2 text-center">Transaction #.</th>
+                                            <th class="p-2 text-right">Gross Amount</th>
+                                            <th class="p-2 text-right">Picking Charge</th>
+                                            <th class="p-2 text-right">Total Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody class="tbody">
@@ -430,25 +430,25 @@
                                             :key="innerIndex"
                                             class="tr"
                                         >
-                                            <td class="td">
+                                            <td class="td text-center">
                                                 {{
                                                     trans.order_pickup
                                                         | formatDateNoTime
                                                 }}
                                             </td>
-                                            <td class="td">
+                                            <td class="td text-left">
                                                 {{ trans.customer }}
                                             </td>
-                                            <td class="td">
+                                            <td class="td text-center">
                                                 {{ trans.receipt }}
                                             </td>
-                                            <td class="td">
+                                            <td class="td text-right">
                                                 {{
                                                     orderedAmount(trans)
                                                         | toCurrency
                                                 }}
                                             </td>
-                                            <td class="td">
+                                            <td class="td text-right">
                                                 {{
                                                     parseFloat(
                                                         trans.customer_bill[0]
@@ -456,7 +456,7 @@
                                                     ) | toCurrency
                                                 }}
                                             </td>
-                                            <td class="td">
+                                            <td class="td text-right">
                                                 {{
                                                     parseFloat(
                                                         totalAmount(trans)
@@ -468,24 +468,24 @@
                                             <td colspan="2" class="td ">
                                                 Sub Total
                                             </td>
-                                            <td class="td">
+                                            <td class="td text-center">
                                                 {{ store.length }}
                                             </td>
-                                            <td class="td">
+                                            <td class="td text-right">
                                                 {{
                                                     totalOrderAmount(store)
                                                         .orderAmount
                                                         | toCurrency
                                                 }}
                                             </td>
-                                            <td class="td">
+                                            <td class="td text-right">
                                                 {{
                                                     totalOrderAmount(store)
                                                         .pickupCharge
                                                         | toCurrency
                                                 }}
                                             </td>
-                                            <td class="td">
+                                            <td class="td text-right">
                                                 {{
                                                     totalOrderAmount(store)
                                                         .grandTotal | toCurrency
@@ -509,14 +509,14 @@
                                                     colspan="2"
                                                     class="p-2"
                                                 ></th>
-                                                <th class="p-2">Transaction</th>
-                                                <th class="p-2">
+                                                <th class="p-2">Transaction #</th>
+                                                <th class="p-2 text-right">
                                                     Gross Amount
                                                 </th>
-                                                <th class="p-2">
+                                                <th class="p-2 text-right">
                                                     Picking Charge
                                                 </th>
-                                                <th class="p-2">
+                                                <th class="p-2 text-right">
                                                     Total Amount
                                                 </th>
                                             </tr>
@@ -529,24 +529,24 @@
                                                 >
                                                     GRAND TOTAL
                                                 </td>
-                                                <td class="td font-semibold">
+                                                <td class="td font-semibold text-center">
                                                     {{
                                                         orderSummary.gTotalTransaction
                                                     }}
                                                 </td>
-                                                <td class="td font-semibold">
+                                                <td class="td font-semibold text-right">
                                                     {{
                                                         orderSummary.orderAmount
                                                             | toCurrency
                                                     }}
                                                 </td>
-                                                <td class="td font-semibold">
+                                                <td class="td font-semibold text-right">
                                                     {{
                                                         orderSummary.pickupCharge
                                                             | toCurrency
                                                     }}
                                                 </td>
-                                                <td class="td font-semibold">
+                                                <td class="td font-semibold text-right">
                                                     {{
                                                         orderSummary.grandTotal
                                                             | toCurrency
@@ -596,9 +596,9 @@
                                     </p>
                                 </center>
                             </div>
-                            <div id="transaction_body">
+                            <div id="transaction_body ">
                                 <table
-                                    class="min-w-full divide-y divide-gray-300"
+                                    class="min-w-full divide-y divide-gray-300  mt-5"
                                 >
                                     <thead
                                         class="border-t-2 border-gray-300 bg-gray-100 tracking-normal"
@@ -721,9 +721,9 @@
                                     </p>
                                 </center>
                             </div>
-                            <div id="transaction_body">
+                            <div id="transaction_body ">
                                 <table
-                                    class="min-w-full divide-y divide-gray-300"
+                                    class="min-w-full divide-y divide-gray-300 mt-5"
                                 >
                                     <thead
                                         class="border-t-2 border-gray-300 bg-gray-100  tracking-normal"
@@ -749,7 +749,7 @@
                                             :key="i"
                                             class="tr"
                                         >
-                                            <td class="td">
+                                            <td class="td ">
                                                 {{
                                                     store[0].order_pickup
                                                         | formatDateMonthOnly

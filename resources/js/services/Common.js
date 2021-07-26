@@ -43,5 +43,6 @@ export default {
     },
     ViewPriceGroup(){
         return BaseApi.get('/price_group')
-    }
+    },
+
 }

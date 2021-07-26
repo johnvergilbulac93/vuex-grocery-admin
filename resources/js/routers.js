@@ -58,7 +58,8 @@ let router = new VueRouter({
         {
             path: '/change_username',
             name: 'change_username',
-            component: change_username
+            component: change_username,
+            
 
         },
         {
@@ -422,13 +423,12 @@ let router = new VueRouter({
 
     ]
 })
-
 router.beforeEach((to, from, next) => {
-    if (store.state.checkSession === true) {
-        alert('Session expired, this page need to reload.')
+    if (store.state.checkSession) {
+        alert("Session expired. You'll be take to the login page.");
         location.reload()
     } else {
-        next();
+        next()
     }
 })
 export default router;

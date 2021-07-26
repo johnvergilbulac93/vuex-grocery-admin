@@ -764,6 +764,9 @@ export const userChangePass = ({commit}, {user}) => {
                          title: "Success",
                          text: "Successfully change."
                     });
+                    axios.post('/logout').then( ()=> {
+                         location.reload();
+                    })
                })
                .catch( error => {
                     if(error.response.status === 422) {

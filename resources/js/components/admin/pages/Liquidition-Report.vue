@@ -115,6 +115,7 @@
                     v-for="(cashier, index) in transactions.cashier_details"
                     :key="index"
                 >
+                    
                     <table
                         id="table-body-content"
                         class="min-w-full divide-y divide-gray-300"
@@ -123,27 +124,27 @@
                             class="border-t-2 border-gray-300 bg-gray-100  tracking-normal"
                         >
                             <tr class="tr">
-                                <th class="p-2">Cashier</th>
+                                <th class="p-2 text-left">Cashier</th>
                                 <th class="p-2">Date</th>
                                 <th class="p-2">Ticket #</th>
-                                <th class="p-2">Customer</th>
+                                <th class="p-2 text-left">Customer</th>
                                 <th class="p-2">Transaction #</th>
-                                <th class="p-2">Gross Amt.</th>
-                                <th class="p-2">Disc.</th>
-                                <th class="p-2">Less Disc.</th>
-                                <th class="p-2">Picking Charge</th>
-                                <th class="p-2">Total</th>
+                                <th class="p-2 text-right">Gross Amt.</th>
+                                <th class="p-2 text-right">Disc.</th>
+                                <th class="p-2 text-right">Less Disc.</th>
+                                <th class="p-2 text-right">Picking Charge</th>
+                                <th class="p-2 text-right">Total</th>
                             </tr>
                         </thead>
                         <tbody class="tbody">
-                            <!-- <tr v-if="transactions.cashier_details.length" class="tr">
+                            <tr class="tr">
                                 <td
                                     colspan="10"
                                     class="text-center font-semibold tracking-normal"
                                 >
                                     NO DATA AVAILABLE
                                 </td>
-                            </tr> -->
+                            </tr>
                             <tr
                                 v-for="(trans, index) in cashier"
                                 :key="index"
@@ -167,16 +168,16 @@
                                 <td class="td ">
                                     {{ trans.tickets[0].receipt }}
                                 </td>
-                                <td class="td ">
+                                <td class="td text-right">
                                     {{ orderedAmount(trans) | toCurrency }}
                                 </td>
-                                <td class="td ">
+                                <td class="td text-right ">
                                     {{ discountAmount(trans) | toCurrency }}
                                 </td>
-                                <td class="td ">
+                                <td class="td text-right">
                                     {{ lessDiscount(trans) | toCurrency }}
                                 </td>
-                                <td class="td ">
+                                <td class="td text-right">
                                     {{
                                         parseFloat(
                                             trans.customer_bill[0]
@@ -184,7 +185,7 @@
                                         ) | toCurrency
                                     }}
                                 </td>
-                                <td class="td ">
+                                <td class="td text-right">
                                     {{
                                         parseFloat(totalAmount(trans))
                                             | toCurrency
@@ -196,31 +197,31 @@
                                     GRAND TOTAL:
                                 </th>
                                 <th>{{ cashier.length }}</th>
-                                <th>
+                                <th class="text-right">
                                     {{
                                         totalOrderAmount(cashier).orderAmount
                                             | toCurrency
                                     }}
                                 </th>
-                                <th>
+                                <th class="text-right">
                                     {{
                                         totalOrderAmount(cashier).discount
                                             | toCurrency
                                     }}
                                 </th>
-                                <th>
+                                <th class="text-right">
                                     {{
                                         totalOrderAmount(cashier).lessDiscount
                                             | toCurrency
                                     }}
                                 </th>
-                                <th>
+                                <th class="text-right">
                                     {{
                                         totalOrderAmount(cashier).pickupCharge
                                             | toCurrency
                                     }}
                                 </th>
-                                <th>
+                                <th class="text-right">
                                     {{
                                         totalOrderAmount(cashier).grandTotal
                                             | toCurrency

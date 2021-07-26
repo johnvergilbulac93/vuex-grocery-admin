@@ -108,8 +108,6 @@ window.id = id
 // Vue.component('Top', require('./components/admin/pages/Top.vue').default);
 Vue.component('Profile', require('./components/admin/pages/Profile-Upload.vue').default);
 
-
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

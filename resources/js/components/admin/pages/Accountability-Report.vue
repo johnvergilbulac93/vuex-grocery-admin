@@ -108,17 +108,17 @@
                         </center>
                     </div>
                     <table
-                        class="min-w-full divide-y divide-gray-300 mt-2"
+                        class="min-w-full divide-y divide-gray-300 mt-5"
                         id="accountability_table"
                     >
                         <thead
                             class="border-t border-gray-300 bg-gray-100 tracking-normal"
                         >
                             <tr class="tr">
-                                <th class="p-2">Cashier</th>
-                                <th class="p-2">Ticket #</th>
-                                <th class="p-2">Transaction #</th>
-                                <th class="p-2">Net Amount</th>
+                                <th class="p-2 text-left ">Cashier</th>
+                                <th class="p-2 text-center">Ticket #</th>
+                                <th class="p-2 text-right">Transaction #</th>
+                                <th class="p-2 text-right">Net Amount</th>
                             </tr>
                         </thead>
                         <tbody class="tbody text-center">
@@ -135,12 +135,12 @@
                                 :key="i"
                                 class="tr"
                             >
-                                <td class="td">
+                                <td class="td text-left">
                                     {{ trans.cashier_monitoring[0].name }}
                                 </td>
-                                <td class="td">{{ trans.ticket }}</td>
-                                <td class="td">{{ trans.receipt }}</td>
-                                <td class="td">
+                                <td class="td text-center">{{ trans.ticket }}</td>
+                                <td class="td text-right">{{ trans.receipt }}</td>
+                                <td class="td text-right">
                                     {{
                                         parseFloat(totalAmount(trans))
                                             | toCurrency
@@ -171,7 +171,7 @@
                                         >SUB TOTAL :</span
                                     >
                                 </td>
-                                <td colspan="2" class="font-semibold td">
+                                <td colspan="2" class="font-semibold td text-right">
                                     {{ orderSummary.lessDiscount | toCurrency }}
                                 </td>
                             </tr>
@@ -186,7 +186,7 @@
                                 <td class=" td font-semibold">
                                     TOTAL PICKING CHARGE :
                                 </td>
-                                <td colspan="2" class="td font-semibold">
+                                <td colspan="2" class="td font-semibold text-right">
                                     {{ orderSummary.pickupCharge | toCurrency }}
                                 </td>
                             </tr>
@@ -200,7 +200,7 @@
                                 <td class="td font-semibold">
                                     GRAND TOTAL :
                                 </td>
-                                <td colspan="2" class="font-semibold td">
+                                <td colspan="2" class="font-semibold td text-right">
                                     {{ orderSummary.grandTotal | toCurrency }}
                                 </td>
                             </tr>

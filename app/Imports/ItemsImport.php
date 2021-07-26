@@ -16,7 +16,7 @@ class ItemsImport implements ToCollection,WithHeadingRow
 {
     use Importable;
     
-    public function collection(Collection $rows)
+    public function collection(Collection $row)
     {
 
             $check_price =  gc_product_price::where('itemcode','=',intval($row['no']))->where('UOM','=',$row['uom'])->exists();
@@ -41,11 +41,7 @@ class ItemsImport implements ToCollection,WithHeadingRow
                );
                gc_product_price::create($data_price);
            }
-
-            
-        }
-
-        
-
+  
     }
+    
 }

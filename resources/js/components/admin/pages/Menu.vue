@@ -218,7 +218,7 @@
                                     class="text-gray-800 hover:text-black"
                                 >
                                     <span class="tracking-wider"
-                                        >Upload New Item and New Price</span
+                                        >Upload New Item and Price Update</span
                                     >
                                 </router-link>
                             </li>
