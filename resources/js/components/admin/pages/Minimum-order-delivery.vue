@@ -1,381 +1,427 @@
 <template>
-    <div class="container text-gray-800">
-        <div class=" bg-gray-50 shadow-lg p-5 rounded">
-            <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="text-lg tracking-wider"
-                    >Minimum Order Delivery</label
+    <div class="space-y-2">
+        <Breadcrumb :routes="routes" title="setup" />
+        <div class="container text-gray-800">
+            <div class=" bg-gray-50 shadow-lg p-5 rounded">
+                <div class="mb-5 bg-gray-100 p-2">
+                    <label for="" class="text-lg tracking-wider"
+                        >Minimum Order Delivery</label
+                    >
+                </div>
+                <div
+                    class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
                 >
-            </div>
-            <div
-                class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
-            >
-                <div class="  md:w-1/2 sm:w-full flex">
-                    <div
-                        class="relative w-1/2 border overflow-hidden flex rounded-l-lg"
-                    >
-                        <input
-                            type="text"
-                            class="relative py-2 px-4 pr-10 w-full  placeholder-gray-400 focus:outline-none "
-                            placeholder="Search...."
-                            v-model="tableData.search"
-                            @keyup.enter="search"
-                        />
-                        <button
-                            @click="clear"
-                            v-if="tableData.search.length"
-                            class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded text-sm flex items-center justify-center focus:outline-none "
+                    <div class="  md:w-1/2 sm:w-full flex">
+                        <div
+                            class="relative w-1/2 border overflow-hidden flex rounded-l-lg"
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5 hover:text-red-500"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                    <button
-                        @click="search"
-                        class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500  hover:text-white rounded-r-lg"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 "
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            />
-                        </svg>
-                    </button>
-                </div>
-                <div class="text-sm">
-                    <span>Show</span>
-                    <select
-                        class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
-                        v-model="tableData.length"
-                        @change="fetch()"
-                    >
-                        <option
-                            v-for="(records, index) in perPage"
-                            :key="index"
-                            :value="records"
-                        >
-                            {{ records }}
-                        </option>
-                    </select>
-                    <span>Entries</span>
-                </div>
-            </div>
-            <Datatable
-                :columns="columns"
-                :sortKey="sortKey"
-                :sortOrders="sortOrders"
-                @sort="sortBy"
-            >
-                <tbody class="tbody text-center">
-                    <tr class="tr" v-if="!MinOrders.length">
-                        <td colspan="4" class="td text-center">
-                            NO DATA AVAILABLE
-                        </td>
-                    </tr>
-                    <tr class="tr" v-for="(minorder, i) in MinOrders" :key="i">
-                        <td class="td text-left">
-                            {{ minorder.business_unit }}
-                        </td>
-                        <td class="td text-left">{{ minorder.name }}</td>
-                        <td class="td">{{ minorder.amount | toCurrency2 }}</td>
-                        <td class="td">
-                            <button
-                                class="p-1 focus:outline-none"
-                                @click="remove(minorder.min_id)"
-                                data-toggle="tooltip"
-                                data-placement="bottom"
-                                title="Delete"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-gray-700 hover:text-red-600"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                    />
-                                </svg>
-                            </button>
-                            <button
-                                class="focus:outline-none p-1"
-                                @click="editInfo(minorder)"
-                                data-toggle="tooltip"
-                                data-placement="bottom"
-                                title="Edit"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-gray-700 hover:text-green-600"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                                    />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </Datatable>
-            <div class="border-t ">
-                <div class="flex justify-between items-center mt-2">
-                    <span class="text-sm"
-                        >Showing {{ !pagination.from ? 0 : pagination.from }} to
-                        {{ !pagination.to ? 0 : pagination.to }} of
-                        {{ pagination.total }} entries</span
-                    >
-                    <div class="flex flex-row space-x-1">
-                        <button
-                            :disabled="!pagination.prevPageUrl"
-                            @click="previousPage(pagination.prevPageUrl)"
-                            class="footer-btn flex items-center"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M15 19l-7-7 7-7"
-                                /></svg
-                            >Prev
-                        </button>
-                        <button
-                            :disabled="!pagination.nextPageUrl"
-                            @click="nextPage(pagination.nextPageUrl)"
-                            class="footer-btn flex items-center"
-                        >
-                            Next
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9 5l7 7-7 7"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <transition
-            enter-active-class="ease-out duration-500"
-            enter-class="opacity-0"
-            enter-to-class="opacity-100"
-            leave-active-class="ease-in duration-300"
-            leave-class="opacity-100"
-            leave-to-class="opacity-0"
-        >
-            <div
-                v-if="isModal"
-                class="bg-black bg-opacity-40 fixed top-0 left-0 flex justify-center items-center w-full min-h-screen"
-            >
-                <div class="w-96  bg-white rounded sm:m-5 md:m-5 text-gray-800">
-                    <div
-                        class="p-2 flex justify-between items-center tracking-wider"
-                    >
-                        <label for="new" v-if="!editMode" class="text-lg "
-                            >Setup new minimum order</label
-                        >
-                        <label for="update" v-if="editMode" class="text-lg"
-                            >Update this minimum order</label
-                        >
-                        <button
-                            class="focus:outline-none   "
-                            @click="closeModal"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-6 w-6 text-gray-500 hover:text-red-500"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="w-full p-5 border-b border-t space-y-4">
-                        <div class="flex flex-col w-full">
-                            <label for="store" class="font-semibold"
-                                >Store</label
-                            >
-                            <select
-                                v-bind:class="{
-                                    'border-red-600': errors.store
-                                }"
-                                class="px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
-                                v-model="form.store"
-                            >
-                                <option value="">Select Store</option>
-                                <option
-                                    :value="store.bunit_code"
-                                    v-for="(store, index) in Stores"
-                                    :key="index"
-                                >
-                                    {{ store.business_unit }}
-                                </option>
-                            </select>
-                            <p
-                                class="text-red-500 text-center text-sm"
-                                v-if="errors.store"
-                            >
-                                <small>{{ errors.store[0] }}</small>
-                            </p>
-                        </div>
-                        <div class="flex flex-col w-full">
-                            <label for="department" class="font-semibold"
-                                >Department</label
-                            >
-                            <select
-                                v-bind:class="{
-                                    'border-red-600': errors.department
-                                }"
-                                class=" px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
-                                v-model="form.department"
-                            >
-                                <option value="">Select Department</option>
-                                <option
-                                    :value="dept.dept_id"
-                                    v-for="(dept, index) in Departments"
-                                    :key="index"
-                                >
-                                    {{ dept.name }}
-                                </option>
-                            </select>
-                            <p
-                                class="text-red-500 text-center text-sm"
-                                v-if="errors.department"
-                            >
-                                <small>{{ errors.department[0] }}</small>
-                            </p>
-                        </div>
-                        <div class="flex flex-col w-full">
-                            <label for="amount" class="font-semibold"
-                                >Amount</label
-                            >
                             <input
-                                v-model="form.amount"
-                                v-bind:class="{
-                                    'border-red-600': errors.amount
-                                }"
-                                type="number"
-                                class="text-center  px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                type="text"
+                                class="relative py-2 px-4 pr-10 w-full  placeholder-gray-400 focus:outline-none "
+                                placeholder="Search...."
+                                v-model="tableData.search"
+                                @keyup.enter="search"
                             />
-                            <p
-                                class="text-red-500 text-center text-sm"
-                                v-if="errors.amount"
+                            <button
+                                @click="clear"
+                                v-if="tableData.search.length"
+                                class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded text-sm flex items-center justify-center focus:outline-none "
                             >
-                                <small>{{ errors.amount[0] }}</small>
-                            </p>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 hover:text-red-500"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            </button>
                         </div>
+                        <button
+                            @click="search"
+                            class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500  hover:text-white rounded-r-lg"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 "
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                />
+                            </svg>
+                        </button>
                     </div>
-                    <div class="p-2 flex justify-end items-center space-x-1">
-                        <button
-                            v-if="!editMode"
-                            @click="create"
-                            class="px-4 py-2 bg-blue-500 text-white  hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
+                    <div class="text-sm">
+                        <span>Show</span>
+                        <select
+                            class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
+                            v-model="tableData.length"
+                            @change="fetch()"
                         >
-                            Save
-                        </button>
-                        <button
-                            v-if="editMode"
-                            @click="update"
-                            class="px-4 py-2 bg-blue-500 text-white  hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
+                            <option
+                                v-for="(records, index) in perPage"
+                                :key="index"
+                                :value="records"
+                            >
+                                {{ records }}
+                            </option>
+                        </select>
+                        <span>Entries</span>
+                    </div>
+                </div>
+                <Datatable
+                    :columns="columns"
+                    :sortKey="sortKey"
+                    :sortOrders="sortOrders"
+                    @sort="sortBy"
+                >
+                    <tbody class="tbody text-center">
+                        <tr class="tr" v-if="!MinOrders.length">
+                            <td colspan="4" class="td text-center">
+                                NO DATA AVAILABLE
+                            </td>
+                        </tr>
+                        <tr
+                            class="tr"
+                            v-for="(minorder, i) in MinOrders"
+                            :key="i"
                         >
-                            Update
-                        </button>
-                        <button
-                            @click="closeModal"
-                            class="px-4 py-2 bg-red-500 text-white  hover:bg-red-600 rounded transition duration-500 focus:outline-none"
+                            <td class="td text-left">
+                                {{ minorder.business_unit }}
+                            </td>
+                            <td class="td text-left">{{ minorder.name }}</td>
+                            <td class="td">
+                                {{ minorder.amount | toCurrency2 }}
+                            </td>
+                            <td class="td">
+                                <button
+                                    class="p-1 focus:outline-none"
+                                    @click="remove(minorder.min_id)"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Delete"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5 text-gray-700 hover:text-red-600"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                        />
+                                    </svg>
+                                </button>
+                                <button
+                                    class="focus:outline-none p-1"
+                                    @click="editInfo(minorder)"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Edit"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5 text-gray-700 hover:text-green-600"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                        />
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </Datatable>
+                <div class="border-t ">
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-sm"
+                            >Showing
+                            {{ !pagination.from ? 0 : pagination.from }} to
+                            {{ !pagination.to ? 0 : pagination.to }} of
+                            {{ pagination.total }} entries</span
                         >
-                            Close
-                        </button>
+                        <div class="flex flex-row space-x-1">
+                            <button
+                                :disabled="!pagination.prevPageUrl"
+                                @click="previousPage(pagination.prevPageUrl)"
+                                class="footer-btn flex items-center"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M15 19l-7-7 7-7"
+                                    /></svg
+                                >Prev
+                            </button>
+                            <button
+                                :disabled="!pagination.nextPageUrl"
+                                @click="nextPage(pagination.nextPageUrl)"
+                                class="footer-btn flex items-center"
+                            >
+                                Next
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 5l7 7-7 7"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </transition>
-        <button
-            @click="addModal"
-            v-if="!isModal"
-            data-toggle="tooltip"
-            data-placement="bottom"
-            title="Add"
-            class="fixed z-30 bottom-0 right-0 mb-16 mr-3 focus:outline-none bg-blue-400 hover:bg-blue-500 w-12 h-12 rounded-full shadow-xl transition duration-700 ease-in-out transform hover:scale-105 "
-        >
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6 text-white mx-auto"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+
+            <transition
+                enter-active-class="ease-out duration-500"
+                enter-class="opacity-0"
+                enter-to-class="opacity-100"
+                leave-active-class="ease-in duration-300"
+                leave-class="opacity-100"
+                leave-to-class="opacity-0"
             >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                />
-            </svg>
-        </button>
+                <div
+                    v-if="isModal"
+                    class="bg-black bg-opacity-40 fixed top-0 left-0 flex justify-center items-center w-full min-h-screen"
+                >
+                    <div
+                        class="w-96  bg-white rounded sm:m-5 md:m-5 text-gray-800"
+                    >
+                        <div
+                            class="p-2 flex justify-between items-center tracking-wider"
+                        >
+                            <label for="new" v-if="!editMode" class="text-lg "
+                                >Setup new minimum order</label
+                            >
+                            <label for="update" v-if="editMode" class="text-lg"
+                                >Update this minimum order</label
+                            >
+                            <button
+                                class="focus:outline-none   "
+                                @click="closeModal"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-6 w-6 text-gray-500 hover:text-red-500"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="w-full p-5 border-b border-t space-y-4">
+                            <div class="flex flex-col w-full">
+                                <label for="store" class="font-semibold"
+                                    >Store</label
+                                >
+                                <select
+                                    v-bind:class="{
+                                        'border-red-600': errors.store
+                                    }"
+                                    class="px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                    v-model="form.store"
+                                >
+                                    <option value="">Select Store</option>
+                                    <option
+                                        :value="store.bunit_code"
+                                        v-for="(store, index) in Stores"
+                                        :key="index"
+                                    >
+                                        {{ store.business_unit }}
+                                    </option>
+                                </select>
+                                <p
+                                    class="text-red-500 text-center text-sm"
+                                    v-if="errors.store"
+                                >
+                                    <small>{{ errors.store[0] }}</small>
+                                </p>
+                            </div>
+                            <div class="flex flex-col w-full">
+                                <label for="department" class="font-semibold"
+                                    >Department</label
+                                >
+                                <select
+                                    v-bind:class="{
+                                        'border-red-600': errors.department
+                                    }"
+                                    class=" px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                    v-model="form.department"
+                                >
+                                    <option value="">Select Department</option>
+                                    <option
+                                        :value="dept.dept_id"
+                                        v-for="(dept, index) in Departments"
+                                        :key="index"
+                                    >
+                                        {{ dept.name }}
+                                    </option>
+                                </select>
+                                <p
+                                    class="text-red-500 text-center text-sm"
+                                    v-if="errors.department"
+                                >
+                                    <small>{{ errors.department[0] }}</small>
+                                </p>
+                            </div>
+                            <div class="flex flex-col w-full">
+                                <label for="amount" class="font-semibold"
+                                    >Amount</label
+                                >
+                                <input
+                                    v-model="form.amount"
+                                    v-bind:class="{
+                                        'border-red-600': errors.amount
+                                    }"
+                                    type="number"
+                                    class="text-center  px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                />
+                                <p
+                                    class="text-red-500 text-center text-sm"
+                                    v-if="errors.amount"
+                                >
+                                    <small>{{ errors.amount[0] }}</small>
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            class="p-2 flex justify-end items-center space-x-1"
+                        >
+                            <button
+                                v-if="!editMode"
+                                @click="create"
+                                class="px-4 py-2 bg-blue-500 text-white  hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
+                            >
+                                Save
+                            </button>
+                            <button
+                                v-if="editMode"
+                                @click="update"
+                                class="px-4 py-2 bg-blue-500 text-white  hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
+                            >
+                                Update
+                            </button>
+                            <button
+                                @click="closeModal"
+                                class="px-4 py-2 bg-red-500 text-white  hover:bg-red-600 rounded transition duration-500 focus:outline-none"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+            <button
+                @click="addModal"
+                v-if="!isModal"
+                data-toggle="tooltip"
+                data-placement="bottom"
+                title="Add"
+                class="fixed z-30 bottom-0 right-0 mb-16 mr-3 focus:outline-none bg-blue-400 hover:bg-blue-500 w-12 h-12 rounded-full shadow-xl transition duration-700 ease-in-out transform hover:scale-105 "
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 text-white mx-auto"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
+                </svg>
+            </button>
+        </div>
     </div>
 </template>
 
 <script>
 import Datatable from "./../../../Usable/Datatable";
 import { mapActions, mapState } from "vuex";
+import Breadcrumb from "./../../../Usable/Breadcrumb";
+
 export default {
     name: "Minimum-Order",
-    components: { Datatable },
+    components: { Datatable, Breadcrumb },
     data() {
         let sortOrders = {};
+        let routes = [
+            {
+                label: "Business Rules",
+                route: "/business_rules"
+            },
+            {
+                label: "Store time",
+                route: "/bu_time"
+            },
+            {
+                label: "Tenant",
+                route: "/tenant"
+            },
+            {
+                label: "Delivery Charges",
+                route: "/delivery_charges"
+            },
+            {
+                label: "Minimum Order Delivery",
+                route: "/minimum_delivery"
+            },
+            {
+                label: "Manage User",
+                route: "/users"
+            },
+            {
+                label: "Price Group",
+                route: "/price_group"
+            }
+        ];
         let columns = [
             { width: "15%", label: "Store", name: "store", class: "text-left" },
             {
@@ -404,6 +450,7 @@ export default {
             editMode: false,
             selectMin: false,
             columns: columns,
+            routes: routes,
             sortKey: "id",
             sortOrders: sortOrders,
             tableData: {

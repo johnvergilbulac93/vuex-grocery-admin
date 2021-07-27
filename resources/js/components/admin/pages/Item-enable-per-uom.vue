@@ -1,33 +1,55 @@
 <template>
-    <div class="container text-gray-800">
-        <div class="bg-gray-50 shadow-lg p-5 rounded overflow-x-auto">
-            <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="text-lg tracking-wider"
-                    >Enable Item Unit of Measure(UOM)</label
-                >
-            </div>
-            <div
-                class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
-            >
-                <div class=" md:w-1/2 sm:w-full flex">
-                    <div
-                        class="relative w-1/2 border overflow-hidden flex rounded-l-lg"
+    <div class="space-y-2">
+        <Breadcrumb :routes="routes" title="item" />
+        <div class="container text-gray-800">
+            <div class="bg-gray-50 shadow-lg p-5 rounded overflow-x-auto">
+                <div class="mb-5 bg-gray-100 p-2">
+                    <label for="" class="text-lg tracking-wider"
+                        >Enable Item Unit of Measure(UOM)</label
                     >
-                        <input
-                            type="text"
-                            class="relative py-2 px-4 pr-10 w-full  focus:outline-none focus:shadow-outline"
-                            placeholder="Search...."
-                            v-model="tableData.search"
-                            @keyup.enter="search"
-                        />
+                </div>
+                <div
+                    class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
+                >
+                    <div class=" md:w-1/2 sm:w-full flex">
+                        <div
+                            class="relative w-1/2 border overflow-hidden flex rounded-l-lg"
+                        >
+                            <input
+                                type="text"
+                                class="relative py-2 px-4 pr-10 w-full  focus:outline-none focus:shadow-outline"
+                                placeholder="Search...."
+                                v-model="tableData.search"
+                                @keyup.enter="search"
+                            />
+                            <button
+                                @click="clear"
+                                v-if="tableData.search.length"
+                                class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded  flex items-center justify-center focus:outline-none "
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5  hover:text-red-500"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
                         <button
-                            @click="clear"
-                            v-if="tableData.search.length"
-                            class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded  flex items-center justify-center focus:outline-none "
+                            @click="search"
+                            class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5  hover:text-red-500"
+                                class="h-5 w-5 "
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -36,18 +58,54 @@
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                                 />
                             </svg>
                         </button>
                     </div>
+                    <div class="w-72">
+                        <select
+                            class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
+                            v-model="tableData.category"
+                            @change="fetch()"
+                        >
+                            <option value="">Filter by Category</option>
+                            <option
+                                v-for="(category, index) in ItemCategory"
+                                :key="index"
+                                :value="category.category_name"
+                            >
+                                {{ category.category_name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="text-sm">
+                        <span>Show</span>
+                        <select
+                            class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
+                            v-model="tableData.length"
+                            @change="fetch()"
+                        >
+                            <option
+                                v-for="(records, index) in perPage"
+                                :key="index"
+                                :value="records"
+                            >
+                                {{ records }}
+                            </option>
+                        </select>
+                        <span>Entries</span>
+                    </div>
+                </div>
+                <div class="mb-1">
                     <button
-                        @click="search"
-                        class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
+                        class="flex items-center bg-green-500 px-2 py-1 focus:outline-none text-white  hover:bg-green-600 transition duration-500 rounded"
+                        v-if="form.itemIds.length != 0"
+                        @click="enabledAll"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 "
+                            class="h-5 w-5 mr-1"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -56,163 +114,109 @@
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
                             />
                         </svg>
+                        Enable
                     </button>
                 </div>
-                <div class="w-72">
-                    <select
-                        class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
-                        v-model="tableData.category"
-                        @change="fetch()"
+                <table class="min-w-full divide-y divide-gray-300">
+                    <thead
+                        class="border-t-2 border-gray-300 bg-gray-100 tracking-normal"
                     >
-                        <option value="">Filter by Category</option>
-                        <option
-                            v-for="(category, index) in ItemCategory"
-                            :key="index"
-                            :value="category.category_name"
-                        >
-                            {{ category.category_name }}
-                        </option>
-                    </select>
-                </div>
-                <div class="text-sm">
-                    <span >Show</span>
-                    <select
-                        class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
-                        v-model="tableData.length"
-                        @change="fetch()"
-                    >
-                        <option
-                            v-for="(records, index) in perPage"
-                            :key="index"
-                            :value="records"
-                        >
-                            {{ records }}
-                        </option>
-                    </select>
-                    <span >Entries</span>
-                </div>
-            </div>
-            <div class="mb-1">
-                <button
-                    class="flex items-center bg-green-500 px-2 py-1 focus:outline-none text-white  hover:bg-green-600 transition duration-500 rounded"
-                    v-if="form.itemIds.length != 0"
-                    @click="enabledAll"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5 mr-1"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                        />
-                    </svg>
-                    Enable
-                </button>
-            </div>
-            <table class="min-w-full divide-y divide-gray-300">
-                <thead
-                    class="border-t-2 border-gray-300 bg-gray-100 tracking-normal"
-                >
-                    <tr>
-                        <th class="th">
-                            <input
-                                type="checkbox"
-                                class="h-4 w-4 cursor-pointer focus:outline-none "
-                                @click="selectAll"
-                                v-model="allSelected"
-                            />
-                        </th>
-                        <th class="th">Itemcode</th>
-                        <th class="th">Description</th>
-                        <th class="th">Category Name</th>
-                        <th class="th">UOM</th>
-                        <th class="th">Price</th>
-                    </tr>
-                </thead>
-                <tbody class="tbody text-center">
-                    <tr class="tr" v-if="!Items.length">
-                        <td colspan="6" class="td ">
-                            NO DATA AVAILABLE
-                        </td>
-                    </tr>
-                    <tr v-for="(item, i) in Items" :key="i" class="tr">
-                        <td class="td">
-                            <input
-                                type="checkbox"
-                                class="h-4 w-4 cursor-pointer "
-                                :value="item.price_id"
-                                v-model="form.itemIds"
-                                @click="select"
-                            />
-                        </td>
-                        <td class="td">{{ item.itemcode }}</td>
-                        <td class="td">{{ item.product_name }}</td>
-                        <td class="td">{{ item.category_name }}</td>
-                        <td class="td">{{ item.UOM }}</td>
-                        <td class=" text-blue-500">
-                            {{ item.price_with_vat }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="border-t ">
-                <div class="flex justify-between items-center mt-2">
-                    <span class="text-sm  "
-                        >Showing {{ !pagination.from ? 0 : pagination.from }} to
-                        {{ !pagination.to ? 0 : pagination.to }} of
-                        {{ pagination.total }} entries</span
-                    >
-                    <div class="flex flex-row space-x-1">
-                        <button
-                            :disabled="!pagination.prevPageUrl"
-                            @click="previousPage(pagination.prevPageUrl)"
-                            class="footer-btn flex items-center"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M15 19l-7-7 7-7"
-                                /></svg
-                            >Prev
-                        </button>
-                        <button
-                            :disabled="!pagination.nextPageUrl"
-                            @click="nextPage(pagination.nextPageUrl)"
-                            class="footer-btn flex items-center"
-                        >
-                            Next
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9 5l7 7-7 7"
+                        <tr>
+                            <th class="th">
+                                <input
+                                    type="checkbox"
+                                    class="h-4 w-4 cursor-pointer focus:outline-none "
+                                    @click="selectAll"
+                                    v-model="allSelected"
                                 />
-                            </svg>
-                        </button>
+                            </th>
+                            <th class="th">Itemcode</th>
+                            <th class="th">Description</th>
+                            <th class="th">Category Name</th>
+                            <th class="th">UOM</th>
+                            <th class="th">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody text-center">
+                        <tr class="tr" v-if="!Items.length">
+                            <td colspan="6" class="td ">
+                                NO DATA AVAILABLE
+                            </td>
+                        </tr>
+                        <tr v-for="(item, i) in Items" :key="i" class="tr">
+                            <td class="td">
+                                <input
+                                    type="checkbox"
+                                    class="h-4 w-4 cursor-pointer "
+                                    :value="item.price_id"
+                                    v-model="form.itemIds"
+                                    @click="select"
+                                />
+                            </td>
+                            <td class="td">{{ item.itemcode }}</td>
+                            <td class="td">{{ item.product_name }}</td>
+                            <td class="td">{{ item.category_name }}</td>
+                            <td class="td">{{ item.UOM }}</td>
+                            <td class=" text-blue-500">
+                                {{ item.price_with_vat }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="border-t ">
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-sm  "
+                            >Showing
+                            {{ !pagination.from ? 0 : pagination.from }} to
+                            {{ !pagination.to ? 0 : pagination.to }} of
+                            {{ pagination.total }} entries</span
+                        >
+                        <div class="flex flex-row space-x-1">
+                            <button
+                                :disabled="!pagination.prevPageUrl"
+                                @click="previousPage(pagination.prevPageUrl)"
+                                class="footer-btn flex items-center"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M15 19l-7-7 7-7"
+                                    /></svg
+                                >Prev
+                            </button>
+                            <button
+                                :disabled="!pagination.nextPageUrl"
+                                @click="nextPage(pagination.nextPageUrl)"
+                                class="footer-btn flex items-center"
+                            >
+                                Next
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 5l7 7-7 7"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -221,15 +225,31 @@
 </template>
 
 <script>
-import Pagination from "./Pagination.vue";
 import { mapActions, mapState } from "vuex";
+import Breadcrumb from "./../../../Usable/Breadcrumb";
 
 export default {
-    components: { pagination: Pagination },
+    components: { Breadcrumb },
     name: "Tagging-Enable-UOM",
 
     data() {
+        let routes = [
+
+            {
+                label: "Item Masterfile",
+                route: "/central_item"
+            },
+            {
+                label: "Disable Item Unit of Measure(UOM)",
+                route: "/disable_uom"
+            },
+            {
+                label: "Enable Item Unit of Measure(UOM)",
+                route: "/enable_uom"
+            }
+        ];
         return {
+            routes: routes,
             selected: [],
             allSelected: false,
             form: {

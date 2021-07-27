@@ -1,56 +1,59 @@
 <template>
-    <div class="container text-black">
-        <div class=" bg-gray-50 shadow-lg p-5 rounded">
-            <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="text-lg tracking-wider"
-                    >Upload Multiple Images</label
-                >
-            </div>
-            <span class="text-blue-500 ">NOTE:</span> Limit of
-            images is 100.
-            <div class="mt-2">
-                <Upload
-                    ref="upload"
-                    :show-upload-list="false"
-                    :format="['jpg', 'jpeg', 'png']"
-                    :on-error="handleError"
-                    :on-success="handleSuccess"
-                    :headers="{
-                        'x-csrf-token': token,
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }"
-                    multiple
-                    type="drag"
-                    action="/api/upload/multiple"
-                    style="display: inline-block; width: 150px"
-                >
-                    <div
-                        style="width: 150px; height: 120px; line-height: 130px"
+    <div class="space-y-2">
+        <Breadcrumb :routes="routes" title="Uploading" />
+        <div class="container text-black">
+            <div class=" bg-gray-50 shadow-lg p-5 rounded">
+                <div class="mb-5 bg-gray-100 p-2">
+                    <label for="" class="text-lg tracking-wider"
+                        >Upload Multiple Images</label
                     >
-                        <Icon type="ios-camera" size="50"></Icon>
-                    </div>
-                </Upload>
-                <div
-                    class="demo-upload-list"
-                    v-for="(item, i) in uploadList"
-                    :key="i"
-                >
-                    <template v-if="item.status === 'finished'">
-                        <img :src="item.url" />
-                        <div class="demo-upload-list-cover">
-                            <Icon
-                                type="ios-trash-outline"
-                                @click.native="handleRemove(item)"
-                            ></Icon>
+                </div>
+                <span class="text-blue-500 ">NOTE:</span> Limit of images is
+                100.
+                <div class="mt-2">
+                    <Upload
+                        ref="upload"
+                        :show-upload-list="false"
+                        :format="['jpg', 'jpeg', 'png']"
+                        :on-error="handleError"
+                        :on-success="handleSuccess"
+                        :headers="{
+                            'x-csrf-token': token,
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }"
+                        multiple
+                        type="drag"
+                        action="/api/upload/multiple"
+                        style="display: inline-block; width: 150px"
+                    >
+                        <div
+                            style="width: 150px; height: 120px; line-height: 130px"
+                        >
+                            <Icon type="ios-camera" size="50"></Icon>
                         </div>
-                    </template>
-                    <template v-else>
-                        <Progress
-                            v-if="item.showProgress"
-                            :percent="item.percentage"
-                            hide-info
-                        ></Progress>
-                    </template>
+                    </Upload>
+                    <div
+                        class="demo-upload-list"
+                        v-for="(item, i) in uploadList"
+                        :key="i"
+                    >
+                        <template v-if="item.status === 'finished'">
+                            <img :src="item.url" />
+                            <div class="demo-upload-list-cover">
+                                <Icon
+                                    type="ios-trash-outline"
+                                    @click.native="handleRemove(item)"
+                                ></Icon>
+                            </div>
+                        </template>
+                        <template v-else>
+                            <Progress
+                                v-if="item.showProgress"
+                                :percent="item.percentage"
+                                hide-info
+                            ></Progress>
+                        </template>
+                    </div>
                 </div>
             </div>
         </div>
@@ -58,9 +61,27 @@
 </template>
 
 <script>
+import Breadcrumb from "./../../../Usable/Breadcrumb";
+
 export default {
+    components: { Breadcrumb },
     data() {
+        let routes = [
+            {
+                label: "Upload New Item and Price Update",
+                route: "/uploading"
+            },
+            {
+                label: "Upload Image filename and Category",
+                route: "/setting"
+            },
+            {
+                label: "Upload Multiple Images",
+                route: "/multiple"
+            }
+        ];
         return {
+            routes: routes,
             token: "",
             uploadList: [],
             imgName: "",

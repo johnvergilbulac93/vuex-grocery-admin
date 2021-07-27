@@ -1,36 +1,58 @@
 <template>
-    <div class="container text-gray-800">
-        <div class=" bg-gray-50 shadow-lg p-5 rounded overflow-x-auto">
-            <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="text-lg tracking-wider"
-                    >Item Masterfile</label
-                >
-            </div>
-            <div
-                class="flex sm:flex-wrap sm:space-y-2 lg:justify-between sm:justify-start items-center pb-2"
-            >
+    <div class="space-y-2">
+        <Breadcrumb :routes="routes" title="item" />
+        <div class="container text-gray-800">
+            <div class=" bg-gray-50 shadow-lg p-5 rounded overflow-x-auto">
+                <div class="mb-5 bg-gray-100 p-2">
+                    <label for="" class="text-lg tracking-wider"
+                        >Item Masterfile</label
+                    >
+                </div>
                 <div
-                    class="w-3/4 flex sm:flex-col lg:flex-row justify-between items-center sm:space-y-2 md:space-y-2 lg:space-y-0 "
+                    class="flex sm:flex-wrap sm:space-y-2 lg:justify-between sm:justify-start items-center pb-2"
                 >
-                    <div class="w-72 flex">
-                        <div
-                            class="relative w-full border overflow-hidden flex rounded-l-lg "
-                        >
-                            <input
-                                type="text"
-                                class="relative py-2 px-4 pr-10 w-full  focus:outline-none "
-                                placeholder="Search...."
-                                v-model="tableData.search"
-                                @keyup.enter="search"
-                            />
+                    <div
+                        class="w-3/4 flex sm:flex-col lg:flex-row justify-between items-center sm:space-y-2 md:space-y-2 lg:space-y-0 "
+                    >
+                        <div class="w-72 flex">
+                            <div
+                                class="relative w-full border overflow-hidden flex rounded-l-lg "
+                            >
+                                <input
+                                    type="text"
+                                    class="relative py-2 px-4 pr-10 w-full  focus:outline-none "
+                                    placeholder="Search...."
+                                    v-model="tableData.search"
+                                    @keyup.enter="search"
+                                />
+                                <button
+                                    @click="clear"
+                                    v-if="tableData.search.length"
+                                    class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded  flex items-center justify-center focus:outline-none "
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5  hover:text-red-500"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"
+                                        />
+                                    </svg>
+                                </button>
+                            </div>
                             <button
-                                @click="clear"
-                                v-if="tableData.search.length"
-                                class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded  flex items-center justify-center focus:outline-none "
+                                @click="search"
+                                class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5  hover:text-red-500"
+                                    class="h-5 w-5 "
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -39,163 +61,180 @@
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                         stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                                     />
                                 </svg>
                             </button>
                         </div>
-                        <button
-                            @click="search"
-                            class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5 "
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class=" w-72">
-                        <select
-                            class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
-                            v-model="tableData.category"
-                            @change="fetch()"
-                        >
-                            <option value="">Filter by Category</option>
-                            <option
-                                v-for="(category, index) in ItemCategory"
-                                :key="index"
-                                :value="category.category_name"
-                            >
-                                {{ category.category_name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class=" w-72">
-                        <select
-                            class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
-                            v-model="tableData.price_group"
-                            @change="fetch()"
-                        >
-                            <option value="">Choose Price Group</option>
-                            <option value="TAGB">TAGBILARAN</option>
-                            <option value="TALB">TALIBON</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="text-sm">
-                    <span>Show</span>
-                    <select
-                        class="mb-2 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
-                        v-model="tableData.length"
-                        @change="fetch()"
-                    >
-                        <option
-                            v-for="(records, index) in perPage"
-                            :key="index"
-                            :value="records"
-                        >
-                            {{ records }}
-                        </option>
-                    </select>
-                    <span>Entries</span>
-                </div>
-            </div>
-            <Datatable
-                :columns="columns"
-                :sortKey="sortKey"
-                :sortOrders="sortOrders"
-                @sort="sortBy"
-            >
-                <tbody class="tbody ">
-                    <tr class="tr" v-if="!Items.length">
-                        <td colspan="7" class="td text-center">
-                            NO DATA AVAILABLE
-                        </td>
-                    </tr>
-                    <tr v-for="(item, i) in Items" :key="i" class="tr">
-                        <td class="td uppercase">{{ item.itemcode }}</td>
-                        <a @click="showImage(item)">
-                            <td class="td ">
-                                {{ item.product_name }}
-                            </td>
-                        </a>
-                        <td class="td">{{ item.category_name }}</td>
-                        <td class="text-center">
+                        <div class=" w-72">
                             <select
-                                v-if="item.item_price.length"
-                                class="cursor-pointer w-20 py-1 px-2 focus:outline-none my-1 border rounded focus:border-yellow-500 text-sm  "
-                                @change="getPrice($event, i)"
+                                class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
+                                v-model="tableData.category"
+                                @change="fetch()"
                             >
+                                <option value="">Filter by Category</option>
                                 <option
-                                    v-for="(data, index) in item.item_price"
+                                    v-for="(category, index) in ItemCategory"
                                     :key="index"
-                                    :value="data.price_with_vat"
+                                    :value="category.category_name"
                                 >
-                                    {{ data.UOM }}
+                                    {{ category.category_name }}
                                 </option>
                             </select>
+                        </div>
+                        <div class=" w-72">
+                            <select
+                                class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
+                                v-model="tableData.price_group"
+                                @change="fetch()"
+                            >
+                                <option value="">Choose Price Group</option>
+                                <option value="TAGB">TAGBILARAN</option>
+                                <option value="TALB">TALIBON</option>
+                            </select>
+                        </div>
+                    </div>
 
-                            <span v-else class="text-xs text-red-500">
-                                NO PRICE AVAILABLE</span
-                            >
-                        </td>
-                        <td class="td text-center">
-                            <span :id="`price-${i}`" class="text-blue-500 ">
-                                {{
-                                    !item.item_price.length
-                                        ? "0.00"
-                                        : item.item_price[0].price_with_vat
-                                          | toCurrency2
-                                }}</span
-                            >
-                        </td>
-                        <td
-                            class="td text-center"
-                            v-if="item.status == 'active'"
+                    <div class="text-sm">
+                        <span>Show</span>
+                        <select
+                            class="mb-2 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
+                            v-model="tableData.length"
+                            @change="fetch()"
                         >
-                            <a @click="showPerItemStatusActive(item.itemcode)">
-                                <span
-                                    class="bg-green-400 px-2 py-1 rounded-full text-gray-50  text-xs hover:bg-green-500 hover:text-white transition duration-500"
-                                >
-                                    {{ item.status | textformat }}</span
-                                >
-                            </a>
-                        </td>
-                        <td class="text-center" v-else>
-                            <a
-                                @click="
-                                    showPerItemStatusInactive(item.itemcode)
-                                "
+                            <option
+                                v-for="(records, index) in perPage"
+                                :key="index"
+                                :value="records"
                             >
-                                <span
-                                    class="bg-red-500 px-2 py-1 rounded-full text-gray-50 text-xs hover:bg-red-600 hover:text-white transition duration-500"
-                                >
-                                    {{ item.status | textformat }}</span
-                                >
+                                {{ records }}
+                            </option>
+                        </select>
+                        <span>Entries</span>
+                    </div>
+                </div>
+                <Datatable
+                    :columns="columns"
+                    :sortKey="sortKey"
+                    :sortOrders="sortOrders"
+                    @sort="sortBy"
+                >
+                    <tbody class="tbody ">
+                        <tr class="tr" v-if="!Items.length">
+                            <td colspan="7" class="td text-center">
+                                NO DATA AVAILABLE
+                            </td>
+                        </tr>
+                        <tr v-for="(item, i) in Items" :key="i" class="tr">
+                            <td class="td uppercase">{{ item.itemcode }}</td>
+                            <a @click="showImage(item)">
+                                <td class="td ">
+                                    {{ item.product_name }}
+                                </td>
                             </a>
-                        </td>
-                        <td class="text-center">
+                            <td class="td">{{ item.category_name }}</td>
+                            <td class="text-center">
+                                <select
+                                    v-if="item.item_price.length"
+                                    class="cursor-pointer w-20 py-1 px-2 focus:outline-none my-1 border rounded focus:border-yellow-500 text-sm  "
+                                    @change="getPrice($event, i)"
+                                >
+                                    <option
+                                        v-for="(data, index) in item.item_price"
+                                        :key="index"
+                                        :value="data.price_with_vat"
+                                    >
+                                        {{ data.UOM }}
+                                    </option>
+                                </select>
+
+                                <span v-else class="text-xs text-red-500">
+                                    NO PRICE AVAILABLE</span
+                                >
+                            </td>
+                            <td class="td text-center">
+                                <span :id="`price-${i}`" class="text-blue-500 ">
+                                    {{
+                                        !item.item_price.length
+                                            ? "0.00"
+                                            : item.item_price[0].price_with_vat
+                                              | toCurrency2
+                                    }}</span
+                                >
+                            </td>
+                            <td
+                                class="td text-center"
+                                v-if="item.status == 'active'"
+                            >
+                                <a
+                                    @click="
+                                        showPerItemStatusActive(item.itemcode)
+                                    "
+                                >
+                                    <span
+                                        class="bg-green-400 px-2 py-1 rounded-full text-gray-50  text-xs hover:bg-green-500 hover:text-white transition duration-500"
+                                    >
+                                        {{ item.status | textformat }}</span
+                                    >
+                                </a>
+                            </td>
+                            <td class="text-center" v-else>
+                                <a
+                                    @click="
+                                        showPerItemStatusInactive(item.itemcode)
+                                    "
+                                >
+                                    <span
+                                        class="bg-red-500 px-2 py-1 rounded-full text-gray-50 text-xs hover:bg-red-600 hover:text-white transition duration-500"
+                                    >
+                                        {{ item.status | textformat }}</span
+                                    >
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <button
+                                    class="focus:outline-none"
+                                    @click="showUpload(item)"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Upload image"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5 text-gray-700 hover:text-blue-500"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                        />
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </Datatable>
+                <div class="border-t ">
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-sm  "
+                            >Showing
+                            {{ !pagination.from ? 0 : pagination.from }} to
+                            {{ !pagination.to ? 0 : pagination.to }} of
+                            {{ pagination.total }} entries</span
+                        >
+                        <div class="flex flex-row space-x-1">
                             <button
-                                class="focus:outline-none"
-                                @click="showUpload(item)"
-                                data-toggle="tooltip"
-                                data-placement="bottom"
-                                title="Upload image"
+                                :disabled="!pagination.prevPageUrl"
+                                @click="previousPage(pagination.prevPageUrl)"
+                                class="footer-btn flex items-center"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 text-gray-700 hover:text-blue-500"
+                                    class="h-5 w-5"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -204,124 +243,19 @@
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                         stroke-width="2"
-                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                    />
-                                </svg>
+                                        d="M15 19l-7-7 7-7"
+                                    /></svg
+                                >Prev
                             </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </Datatable>
-            <div class="border-t ">
-                <div class="flex justify-between items-center mt-2">
-                    <span class="text-sm  "
-                        >Showing {{ !pagination.from ? 0 : pagination.from }} to
-                        {{ !pagination.to ? 0 : pagination.to }} of
-                        {{ pagination.total }} entries</span
-                    >
-                    <div class="flex flex-row space-x-1">
-                        <button
-                            :disabled="!pagination.prevPageUrl"
-                            @click="previousPage(pagination.prevPageUrl)"
-                            class="footer-btn flex items-center"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M15 19l-7-7 7-7"
-                                /></svg
-                            >Prev
-                        </button>
-                        <button
-                            :disabled="!pagination.nextPageUrl"
-                            @click="nextPage(pagination.nextPageUrl)"
-                            class="footer-btn flex items-center"
-                        >
-                            Next
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9 5l7 7-7 7"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <transition
-                enter-active-class="ease-out duration-500"
-                enter-class="opacity-0"
-                enter-to-class="opacity-100"
-                leave-active-class="ease-in duration-300"
-                leave-class="opacity-100"
-                leave-to-class="opacity-0"
-            >
-                <div
-                    v-if="viewImage"
-                    class="bg-black bg-opacity-40 fixed top-0 left-0 flex justify-center items-center w-full min-h-screen"
-                    @click="closeDialog"
-                >
-                    <div class="relative ">
-                        <img
-                            :src="$root.url + form.previewImage"
-                            v-if="form.previewImage"
-                            alt="item-image"
-                            class="h-96 w-full object-contain"
-                        />
-
-                        <img
-                            :src="$root.url + 'noimage.png'"
-                            v-else
-                            alt="item-image"
-                            class="h-96 w-full object-contain"
-                        />
-                    </div>
-                </div>
-            </transition>
-
-            <transition
-                enter-active-class="ease-out duration-500"
-                enter-class="opacity-0"
-                enter-to-class="opacity-100"
-                leave-active-class="ease-in duration-300"
-                leave-class="opacity-100"
-                leave-to-class="opacity-0"
-            >
-                <div
-                    v-if="isUpload"
-                    class="bg-black bg-opacity-40 fixed top-0 left-0 flex justify-center items-center w-full min-h-screen"
-                >
-                    <div class=" bg-white w-1/2  relative">
-                        <div
-                            class="border-b flex justify-between items-center p-2"
-                        >
-                            <label for="" class="text-lg tracking-wider"
-                                >Upload Image</label
-                            >
                             <button
-                                class="focus:outline-none "
-                                @click="closeDialog"
+                                :disabled="!pagination.nextPageUrl"
+                                @click="nextPage(pagination.nextPageUrl)"
+                                class="footer-btn flex items-center"
                             >
+                                Next
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-6 w-6 text-gray-700 hover:text-red-500"
+                                    class="h-5 w-5"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -330,112 +264,186 @@
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
                                         stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"
+                                        d="M9 5l7 7-7 7"
                                     />
                                 </svg>
                             </button>
                         </div>
-                        <div class="p-4">
-                            <transition
-                                enter-active-class="ease-out duration-500"
-                                enter-class="opacity-0"
-                                enter-to-class="opacity-100"
-                                leave-active-class="ease-in duration-500"
-                                leave-class="opacity-100"
-                                leave-to-class="opacity-0"
-                            >
-                                <div
-                                    class="mb-1 bg-red-500 bg-opacity-75 px-2 py-1 flex justify-between items-center transition duration-500"
-                                    v-if="errors.item_image"
-                                >
-                                    <small class="text-white text-sm ">
-                                        {{ errors.item_image[0] }}
-                                    </small>
-                                    <button
-                                        class="focus:outline-none"
-                                        @click="clearErrorMessage"
-                                    >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            class="h-6 w-6 text-gray-100 hover:text-white"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M6 18L18 6M6 6l12 12"
-                                            />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </transition>
+                    </div>
+                </div>
 
-                            <label
-                                class="flex flex-col items-center px-4 py-6 border bg-white  uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transition duration-500"
+                <transition
+                    enter-active-class="ease-out duration-500"
+                    enter-class="opacity-0"
+                    enter-to-class="opacity-100"
+                    leave-active-class="ease-in duration-300"
+                    leave-class="opacity-100"
+                    leave-to-class="opacity-0"
+                >
+                    <div
+                        v-if="viewImage"
+                        class="bg-black bg-opacity-40 fixed top-0 left-0 flex justify-center items-center w-full min-h-screen"
+                        @click="closeDialog"
+                    >
+                        <div class="relative ">
+                            <img
+                                :src="$root.url + form.previewImage"
+                                v-if="form.previewImage"
+                                alt="item-image"
+                                class="h-96 w-full object-contain"
+                            />
+
+                            <img
+                                :src="$root.url + 'noimage.png'"
+                                v-else
+                                alt="item-image"
+                                class="h-96 w-full object-contain"
+                            />
+                        </div>
+                    </div>
+                </transition>
+
+                <transition
+                    enter-active-class="ease-out duration-500"
+                    enter-class="opacity-0"
+                    enter-to-class="opacity-100"
+                    leave-active-class="ease-in duration-300"
+                    leave-class="opacity-100"
+                    leave-to-class="opacity-0"
+                >
+                    <div
+                        v-if="isUpload"
+                        class="bg-black bg-opacity-40 fixed top-0 left-0 flex justify-center items-center w-full min-h-screen"
+                    >
+                        <div class=" bg-white w-1/2  relative">
+                            <div
+                                class="border-b flex justify-between items-center p-2"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-6 w-6 text-gray-700"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
+                                <label for="" class="text-lg tracking-wider"
+                                    >Upload Image</label
                                 >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                                    />
-                                </svg>
-                                <span class="mt-2 "
-                                    >Click here to select image</span
+                                <button
+                                    class="focus:outline-none "
+                                    @click="closeDialog"
                                 >
-                                <input
-                                    type="file"
-                                    id="item_image"
-                                    ref="item_image"
-                                    class="hidden"
-                                    @change="handleFileUploadItem()"
-                                />
-                            </label>
-                            <transition
-                                enter-active-class="ease-out duration-500"
-                                enter-class="opacity-0"
-                                enter-to-class="opacity-100"
-                                leave-active-class="ease-in duration-500"
-                                leave-class="opacity-100"
-                                leave-to-class="opacity-0"
-                            >
-                                <div
-                                    v-if="filename"
-                                    class="flex justify-between items-center mt-1 bg-white p-2 border border-gray-400 border-opacity-30  shadow-lg"
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-6 w-6 text-gray-700 hover:text-red-500"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"
+                                        />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="p-4">
+                                <transition
+                                    enter-active-class="ease-out duration-500"
+                                    enter-class="opacity-0"
+                                    enter-to-class="opacity-100"
+                                    leave-active-class="ease-in duration-500"
+                                    leave-class="opacity-100"
+                                    leave-to-class="opacity-0"
                                 >
-                                    <label for="" class="text-green-500 ">{{
-                                        filename
-                                    }}</label>
-                                    <div class=" text-white ">
+                                    <div
+                                        class="mb-1 bg-red-500 bg-opacity-75 px-2 py-1 flex justify-between items-center transition duration-500"
+                                        v-if="errors.item_image"
+                                    >
+                                        <small class="text-white text-sm ">
+                                            {{ errors.item_image[0] }}
+                                        </small>
                                         <button
-                                            @click="upload"
-                                            class="bg-green-500 px-2 py-1 w-20 focus:outline-none hover:bg-green-600 transition duration-300"
+                                            class="focus:outline-none"
+                                            @click="clearErrorMessage"
                                         >
-                                            Upload
-                                        </button>
-                                        <button
-                                            @click="cancelImage"
-                                            class="bg-red-500 px-2 py-1 w-20 focus:outline-none hover:bg-red-600 transition duration-300"
-                                        >
-                                            Cancel
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                class="h-6 w-6 text-gray-100 hover:text-white"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M6 18L18 6M6 6l12 12"
+                                                />
+                                            </svg>
                                         </button>
                                     </div>
-                                </div>
-                            </transition>
+                                </transition>
+
+                                <label
+                                    class="flex flex-col items-center px-4 py-6 border bg-white  uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transition duration-500"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-6 w-6 text-gray-700"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                                        />
+                                    </svg>
+                                    <span class="mt-2 "
+                                        >Click here to select image</span
+                                    >
+                                    <input
+                                        type="file"
+                                        id="item_image"
+                                        ref="item_image"
+                                        class="hidden"
+                                        @change="handleFileUploadItem()"
+                                    />
+                                </label>
+                                <transition
+                                    enter-active-class="ease-out duration-500"
+                                    enter-class="opacity-0"
+                                    enter-to-class="opacity-100"
+                                    leave-active-class="ease-in duration-500"
+                                    leave-class="opacity-100"
+                                    leave-to-class="opacity-0"
+                                >
+                                    <div
+                                        v-if="filename"
+                                        class="flex justify-between items-center mt-1 bg-white p-2 border border-gray-400 border-opacity-30  shadow-lg"
+                                    >
+                                        <label for="" class="text-green-500 ">{{
+                                            filename
+                                        }}</label>
+                                        <div class=" text-white ">
+                                            <button
+                                                @click="upload"
+                                                class="bg-green-500 px-2 py-1 w-20 focus:outline-none hover:bg-green-600 transition duration-300"
+                                            >
+                                                Upload
+                                            </button>
+                                            <button
+                                                @click="cancelImage"
+                                                class="bg-red-500 px-2 py-1 w-20 focus:outline-none hover:bg-red-600 transition duration-300"
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </transition>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </transition>
+                </transition>
+            </div>
         </div>
     </div>
 </template>
@@ -443,11 +451,27 @@
 <script>
 import Datatable from "./../../../Usable/Datatable";
 import { mapActions, mapState } from "vuex";
+import Breadcrumb from "./../../../Usable/Breadcrumb";
+
 export default {
     name: "Central-Item",
-    components: { Datatable },
+    components: { Datatable, Breadcrumb },
     data() {
         let sortOrders = {};
+        let routes = [
+            {
+                label: "Item Masterfile",
+                route: "/central_item"
+            },
+            {
+                label: "Disable Item Unit of Measure(UOM)",
+                route: "/disable_uom"
+            },
+            {
+                label: "Enable Item Unit of Measure(UOM)",
+                route: "/enable_uom"
+            }
+        ];
         let columns = [
             {
                 width: "10%",
@@ -468,10 +492,11 @@ export default {
                 class: "text-left"
             },
             {
-                 width: "8%", 
-                 label: "UOM", 
-                 name: "uom", 
-                 class: "text-center" },
+                width: "8%",
+                label: "UOM",
+                name: "uom",
+                class: "text-center"
+            },
             {
                 width: "10%",
                 label: "Price",
@@ -498,6 +523,7 @@ export default {
             viewImage: false,
             uploadImage: false,
             columns: columns,
+            routes: routes,
             sortKey: "itemcode",
             sortOrders: sortOrders,
             file: "",

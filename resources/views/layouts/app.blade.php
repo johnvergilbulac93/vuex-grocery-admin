@@ -126,7 +126,7 @@
                     <div class="container ">
                         <ul
                             class="list-reset flex items-center sm:justify-center md:justify-start  space-x-5 text-white text-sm antialiased p-2">
-                            <router-link :to="{ name: 'dashboard', params: { id: {{ Auth::user()->usertype_id }}  } }"
+                            {{-- <router-link :to="{ name: 'dashboard', params: { id: {{ Auth::user()->usertype_id }}  } }"
                                 class=" text-white hover:bg-white hover:text-yellow-500 rounded transition duration-500 p-2 flex">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
@@ -134,14 +134,14 @@
                                         d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                 </svg>
                                 <span class="">DASHBOARD</span>
-                            </router-link>
+                            </router-link> --}}
                             <router-link :to="{ name: 'menu', params: { id: {{ Auth::user()->usertype_id }}  } }"
                                 class=" text-white hover:bg-white hover:text-yellow-500 rounded transition duration-500 p-2 flex">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24"
+                                {{-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M4 6h16M4 12h16M4 18h16" />
-                                </svg>
+                                </svg> --}}
                                 <span>MENU</span>
                             </router-link>
                         </ul>
@@ -316,7 +316,7 @@
         <header>
             <div class="fixed top-0 bottom-80 left-0 right-0 bg-gray-200"></div>
         </header>
-        <div class=" relative p-5 mt-36 ">
+        <div class=" relative p-5 mt-28 ">
             <!-- for  router view -->
             <router-view></router-view>
             <!-- set progressbar -->

@@ -1,4 +1,6 @@
 <template>
+<div class="space-y-2">
+    <Breadcrumb :routes="routes" title="setup" />
     <div class="container bg-gray-50 shadow-lg p-5 rounded text-gray-800">
         <div class="mb-5 bg-gray-100 p-2">
             <label for="" class=" text-lg tracking-wider">Tenant</label>
@@ -177,7 +179,10 @@
                 >
                     <tbody class="tbody">
                         <tr class="tr" v-if="!Tenants.length">
-                            <td colspan="4" class="td font-semibold text-center">
+                            <td
+                                colspan="4"
+                                class="td font-semibold text-center"
+                            >
                                 NO DATA AVAILABLE
                             </td>
                         </tr>
@@ -310,23 +315,79 @@
             </div>
         </div>
     </div>
+</div>
+
 </template>
 
 <script>
 import Datatable from "./../../../Usable/Datatable";
 import { mapActions, mapState } from "vuex";
+import Breadcrumb from "./../../../Usable/Breadcrumb";
+
 export default {
+    
     name: "Tenants",
     components: {
-        Datatable
+        Datatable,
+        Breadcrumb
     },
     data() {
         let sortOrders = {};
         let columns = [
-            { width: "70%", label: "Store", name: "description", class:'text-left' },
-            { width: "20%", label: "Department", name: "category", class:'text-left' },
-            { width: "20%", label: "Status", name: "status", class:'text-center' },
-            { width: "10%", label: "Action", name: "idss", class:'text-center' }
+            {
+                width: "70%",
+                label: "Store",
+                name: "description",
+                class: "text-left"
+            },
+            {
+                width: "20%",
+                label: "Department",
+                name: "category",
+                class: "text-left"
+            },
+            {
+                width: "20%",
+                label: "Status",
+                name: "status",
+                class: "text-center"
+            },
+            {
+                width: "10%",
+                label: "Action",
+                name: "idss",
+                class: "text-center"
+            }
+        ];
+        let routes = [
+            {
+                label: "Business Rules",
+                route: "/business_rules"
+            },
+            {
+                label: "Store time",
+                route: "/bu_time"
+            },
+            {
+                label: "Tenant",
+                route: "/tenant"
+            },
+            {
+                label: "Delivery Charges",
+                route: "/delivery_charges"
+            },
+            {
+                label: "Minimum Order Delivery",
+                route: "/minimum_delivery"
+            },
+            {
+                label: "Manage User",
+                route: "/users"
+            },
+            {
+                label: "Price Group",
+                route: "/price_group"
+            }
         ];
         columns.forEach(column => {
             sortOrders[column.name] = -1;
@@ -334,6 +395,7 @@ export default {
         return {
             editMode: false,
             columns: columns,
+            routes: routes,
             sortKey: "deadline",
             sortOrders: sortOrders,
             form: {

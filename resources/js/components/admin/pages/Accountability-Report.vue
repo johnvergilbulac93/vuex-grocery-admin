@@ -1,211 +1,238 @@
 <template>
-    <div class="container text-gray-800">
-        <div class=" bg-gray-50 shadow-lg p-5 rounded">
-            <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="tracking-wider text-lg "
-                    >Accountability Report</label
-                >
-            </div>
-            <div
-                class="flex sm:flex-col sm:space-y-5 md:space-y-0 md:flex-row justify-between items-center"
-            >
+    <div class="space-y-2">
+        <Breadcrumb :routes="routes" title="Reports" />
+        <div class="container text-gray-800">
+            <div class=" bg-gray-50 shadow-lg p-5 rounded">
+                <div class="mb-5 bg-gray-100 p-2">
+                    <label for="" class="tracking-wider text-lg "
+                        >Accountability Report</label
+                    >
+                </div>
                 <div
-                    class=" w-3/4 flex sm:flex-col lg:flex-row sm:space-x-0 sm:space-y-5 lg:space-x-5 lg:space-y-0 space-x-5"
+                    class="flex sm:flex-col sm:space-y-5 md:space-y-0 md:flex-row justify-between items-center"
                 >
-                    <div class="block w-1/4 sm:w-full md:w-1/2">
-                        <label for="" class="font-semibold">Store</label>
-                        <select
-                            class="form-input w-full "
-                            v-model="filter.store"
-                            tabindex="1"
-                        >
-                            <option value="">Choose Store</option>
-                            <option
-                                v-for="(store, i) in Stores"
-                                :value="store.bunit_code"
-                                :key="i"
+                    <div
+                        class=" w-3/4 flex sm:flex-col lg:flex-row sm:space-x-0 sm:space-y-5 lg:space-x-5 lg:space-y-0 space-x-5"
+                    >
+                        <div class="block w-1/4 sm:w-full md:w-1/2">
+                            <label for="" class="font-semibold">Store</label>
+                            <select
+                                class="form-input w-full "
+                                v-model="filter.store"
+                                tabindex="1"
                             >
-                                {{ store.business_unit }}
-                            </option>
-                        </select>
-                        <p
-                            class="text-red-500 text-center text-sm"
-                            v-if="errors.store"
-                        >
-                            <small>{{ errors.store[0] }}</small>
-                        </p>
-                    </div>
-                    <div class="block w-1/4 sm:w-full md:w-1/2 ">
-                        <label for="" class="font-semibold">Date from</label>
-                        <input
-                            type="date"
-                            class="w-full form-input "
-                            tabindex="2"
-                            v-model="filter.dateFrom"
-                        />
-                    </div>
-                    <div class="block w-1/4 sm:w-full md:w-1/2">
-                        <label for="" class="font-semibold" >Date to</label>
-                        <input
-                            type="date"
-                            class="w-full form-input "
-                            tabindex="3"
-                            v-model="filter.dateTo"
-                        />
-                    </div>
-                </div>
-                <div class="flex space-x-2">
-                    <button
-                        tabindex="4"
-                        @click="generate()"
-                        class="h-10 px-4 py-2  focus:outline-none text-white  bg-blue-500 hover:bg-blue-600 rounded"
-                    >
-                        Generate
-                    </button>
-
-                    <button
-                        tabindex="4"
-                        class="h-10 px-4 py-2 flex disabled:opacity-50  focus:outline-none text-white  bg-green-500 hover:bg-green-600 rounded"
-                        @click="printBtn"
-                        v-if="transactions.b_unit != null"
-                        :disabled="!transactions.data.length"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
-                            />
-                        </svg>
-                        Print
-                    </button>
-                </div>
-            </div>
-            <hr class="mt-2" />
-            <div id="section-to-print2" class="mt-2">
-                <div v-if="transactions.b_unit != null">
-                    <div class="flex justify-center items-center">
-                        <center>
-                            <h6 class="text-lg">
-                                {{
-                                    transactions.hasOwnProperty("b_unit") &&
-                                        transactions.b_unit.business_unit
-                                }}
-                            </h6>
-                            <p >ALTURUSH GOODS ORDERING</p>
-                            <p >ACCOUNTABILITY REPORT</p>
-                            <p class="text-center">
-                                {{ filter.dateFrom | formatDateNoTime }} To
-                                {{ filter.dateTo | formatDateNoTime }}
-                            </p>
-                        </center>
-                    </div>
-                    <table
-                        class="min-w-full divide-y divide-gray-300 mt-5"
-                        id="accountability_table"
-                    >
-                        <thead
-                            class="border-t border-gray-300 bg-gray-100 tracking-normal"
-                        >
-                            <tr class="tr">
-                                <th class="p-2 text-left ">Cashier</th>
-                                <th class="p-2 text-center">Ticket #</th>
-                                <th class="p-2 text-right">Transaction #</th>
-                                <th class="p-2 text-right">Net Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody class="tbody text-center">
-                            <tr v-if="!transactions.data.length">
-                                <td
-                                    colspan="4"
-                                    class="text-center td"
+                                <option value="">Choose Store</option>
+                                <option
+                                    v-for="(store, i) in Stores"
+                                    :value="store.bunit_code"
+                                    :key="i"
                                 >
-                                    NO DATA AVAILABLE
-                                </td>
-                            </tr>
-                            <tr
-                                v-for="(trans, i) in transactions.data"
-                                :key="i"
-                                class="tr"
+                                    {{ store.business_unit }}
+                                </option>
+                            </select>
+                            <p
+                                class="text-red-500 text-center text-sm"
+                                v-if="errors.store"
                             >
-                                <td class="td text-left">
-                                    {{ trans.cashier_monitoring[0].name }}
-                                </td>
-                                <td class="td text-center">{{ trans.ticket }}</td>
-                                <td class="td text-right">{{ trans.receipt }}</td>
-                                <td class="td text-right">
+                                <small>{{ errors.store[0] }}</small>
+                            </p>
+                        </div>
+                        <div class="block w-1/4 sm:w-full md:w-1/2 ">
+                            <label for="" class="font-semibold"
+                                >Date from</label
+                            >
+                            <input
+                                type="date"
+                                class="w-full form-input "
+                                tabindex="2"
+                                v-model="filter.dateFrom"
+                            />
+                        </div>
+                        <div class="block w-1/4 sm:w-full md:w-1/2">
+                            <label for="" class="font-semibold">Date to</label>
+                            <input
+                                type="date"
+                                class="w-full form-input "
+                                tabindex="3"
+                                v-model="filter.dateTo"
+                            />
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button
+                            tabindex="4"
+                            @click="generate()"
+                            class="h-10 px-4 py-2  focus:outline-none text-white  bg-blue-500 hover:bg-blue-600 rounded"
+                        >
+                            Generate
+                        </button>
+
+                        <button
+                            tabindex="4"
+                            class="h-10 px-4 py-2 flex disabled:opacity-50  focus:outline-none text-white  bg-green-500 hover:bg-green-600 rounded"
+                            @click="printBtn"
+                            v-if="transactions.b_unit != null"
+                            :disabled="!transactions.data.length"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
+                                />
+                            </svg>
+                            Print
+                        </button>
+                    </div>
+                </div>
+                <hr class="mt-2" />
+                <div id="section-to-print2" class="mt-2">
+                    <div v-if="transactions.b_unit != null">
+                        <div class="flex justify-center items-center">
+                            <center>
+                                <h6 class="text-lg">
                                     {{
-                                        parseFloat(totalAmount(trans))
-                                            | toCurrency
+                                        transactions.hasOwnProperty("b_unit") &&
+                                            transactions.b_unit.business_unit
                                     }}
-                                </td>
-                            </tr>
-                            <tr
-                                v-if="
-                                    transactions.hasOwnProperty('data') &&
-                                        transactions.data.length
-                                "
-                                class="tr"
+                                </h6>
+                                <p>ALTURUSH GOODS ORDERING</p>
+                                <p>ACCOUNTABILITY REPORT</p>
+                                <p class="text-center">
+                                    {{ filter.dateFrom | formatDateNoTime }} To
+                                    {{ filter.dateTo | formatDateNoTime }}
+                                </p>
+                            </center>
+                        </div>
+                        <table
+                            class="min-w-full divide-y divide-gray-300 mt-5"
+                            id="accountability_table"
+                        >
+                            <thead
+                                class="border-t border-gray-300 bg-gray-100 tracking-normal"
                             >
-                                <td colspan="5" class="text-center td">
-                                    <span class="font-semibold">SUMMARY</span>
-                                </td>
-                            </tr>
-                            <tr
-                                class="tr"
-                                v-if="
-                                    transactions.hasOwnProperty('data') &&
-                                        transactions.data.length
-                                "
-                            >
-                                <td colspan="2" class="td"></td>
-                                <td class="td">
-                                    <span class="font-semibold"
-                                        >SUB TOTAL :</span
+                                <tr class="tr">
+                                    <th class="p-2 text-left ">Cashier</th>
+                                    <th class="p-2 text-center">Ticket #</th>
+                                    <th class="p-2 text-right">
+                                        Transaction #
+                                    </th>
+                                    <th class="p-2 text-right">Net Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody text-center">
+                                <tr v-if="!transactions.data.length">
+                                    <td colspan="4" class="text-center td">
+                                        NO DATA AVAILABLE
+                                    </td>
+                                </tr>
+                                <tr
+                                    v-for="(trans, i) in transactions.data"
+                                    :key="i"
+                                    class="tr"
+                                >
+                                    <td class="td text-left">
+                                        {{ trans.cashier_monitoring[0].name }}
+                                    </td>
+                                    <td class="td text-center">
+                                        {{ trans.ticket }}
+                                    </td>
+                                    <td class="td text-right">
+                                        {{ trans.receipt }}
+                                    </td>
+                                    <td class="td text-right">
+                                        {{
+                                            parseFloat(totalAmount(trans))
+                                                | toCurrency
+                                        }}
+                                    </td>
+                                </tr>
+                                <tr
+                                    v-if="
+                                        transactions.hasOwnProperty('data') &&
+                                            transactions.data.length
+                                    "
+                                    class="tr"
+                                >
+                                    <td colspan="5" class="text-center td">
+                                        <span class="font-semibold"
+                                            >SUMMARY</span
+                                        >
+                                    </td>
+                                </tr>
+                                <tr
+                                    class="tr"
+                                    v-if="
+                                        transactions.hasOwnProperty('data') &&
+                                            transactions.data.length
+                                    "
+                                >
+                                    <td colspan="2" class="td"></td>
+                                    <td class="td">
+                                        <span class="font-semibold"
+                                            >SUB TOTAL :</span
+                                        >
+                                    </td>
+                                    <td
+                                        colspan="2"
+                                        class="font-semibold td text-right"
                                     >
-                                </td>
-                                <td colspan="2" class="font-semibold td text-right">
-                                    {{ orderSummary.lessDiscount | toCurrency }}
-                                </td>
-                            </tr>
-                            <tr
-                                class="tr"
-                                v-if="
-                                    transactions.hasOwnProperty('data') &&
-                                        transactions.data.length
-                                "
-                            >
-                                <td colspan="2"></td>
-                                <td class=" td font-semibold">
-                                    TOTAL PICKING CHARGE :
-                                </td>
-                                <td colspan="2" class="td font-semibold text-right">
-                                    {{ orderSummary.pickupCharge | toCurrency }}
-                                </td>
-                            </tr>
-                            <tr
-                                v-if="
-                                    transactions.hasOwnProperty('data') &&
-                                        transactions.data.length
-                                "
-                            >
-                                <td colspan="2"></td>
-                                <td class="td font-semibold">
-                                    GRAND TOTAL :
-                                </td>
-                                <td colspan="2" class="font-semibold td text-right">
-                                    {{ orderSummary.grandTotal | toCurrency }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                        {{
+                                            orderSummary.lessDiscount
+                                                | toCurrency
+                                        }}
+                                    </td>
+                                </tr>
+                                <tr
+                                    class="tr"
+                                    v-if="
+                                        transactions.hasOwnProperty('data') &&
+                                            transactions.data.length
+                                    "
+                                >
+                                    <td colspan="2"></td>
+                                    <td class=" td font-semibold">
+                                        TOTAL PICKING CHARGE :
+                                    </td>
+                                    <td
+                                        colspan="2"
+                                        class="td font-semibold text-right"
+                                    >
+                                        {{
+                                            orderSummary.pickupCharge
+                                                | toCurrency
+                                        }}
+                                    </td>
+                                </tr>
+                                <tr
+                                    v-if="
+                                        transactions.hasOwnProperty('data') &&
+                                            transactions.data.length
+                                    "
+                                >
+                                    <td colspan="2"></td>
+                                    <td class="td font-semibold">
+                                        GRAND TOTAL :
+                                    </td>
+                                    <td
+                                        colspan="2"
+                                        class="font-semibold td text-right"
+                                    >
+                                        {{
+                                            orderSummary.grandTotal | toCurrency
+                                        }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -215,10 +242,32 @@
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
 import Report from "../../../services/Report";
+import Breadcrumb from "./../../../Usable/Breadcrumb";
+
 export default {
+    components: { Breadcrumb },
     name: "Accountability",
     data() {
+        let routes = [
+            {
+                label: "Item Report",
+                route: "/reports"
+            },
+            {
+                label: "Liquidation Report",
+                route: "/liquidition"
+            },
+            {
+                label: "Accountability Report",
+                route: "/accountability"
+            },
+            {
+                label: "Total Order Report - REMITTED",
+                route: "/transaction"
+            }
+        ];
         return {
+            routes: routes,
             transactions: [],
             stores: [],
             logo: null,
