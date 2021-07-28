@@ -1,10 +1,10 @@
 <template>
     <div class="space-y-2">
-        <Breadcrumb :routes="routes" title="item"/>
+        <Breadcrumb :routes="routes" title="item" />
         <div class="container text-gray-800">
             <div class="bg-gray-50 shadow-lg p-5 rounded overflow-x-auto">
                 <div class="mb-5 bg-gray-100 p-2">
-                    <label for="" class=" text-lg tracking-wider"
+                    <label for="" class=" text-lg font-semibold"
                         >Disable Item Unit of Measure(UOM)</label
                     >
                 </div>
@@ -120,12 +120,10 @@
                         Disable
                     </button>
                 </div>
-                <table class="min-w-full divide-y divide-gray-300">
-                    <thead
-                        class="border-t-2 border-gray-300 bg-gray-100 tracking-normal "
-                    >
+                <table class="min-w-full">
+                    <thead class="border bg-gray-100 tracking-normal ">
                         <tr>
-                            <th class="th text-center">
+                            <th class="th text-center border">
                                 <input
                                     type="checkbox"
                                     class="h-4 w-4 cursor-pointer focus:outline-none "
@@ -133,11 +131,11 @@
                                     v-model="allSelected"
                                 />
                             </th>
-                            <th class="th text-left">Itemcode</th>
-                            <th class="th text-left">Description</th>
-                            <th class="th text-left">Category Name</th>
-                            <th class="th text-center">UOM</th>
-                            <th class="th text-center">Price</th>
+                            <th class="th text-left border">Code</th>
+                            <th class="th text-left border">Description</th>
+                            <th class="th text-left border">Category Name</th>
+                            <th class="th text-center border">UOM</th>
+                            <th class="th text-right border">Price</th>
                         </tr>
                     </thead>
                     <tbody class="tbody ">
@@ -160,65 +158,17 @@
                             <td class="td">{{ item.product_name }}</td>
                             <td class="td">{{ item.category_name }}</td>
                             <td class="td text-center">{{ item.UOM }}</td>
-                            <td class="text-blue-500 text-center ">
+                            <td class=" td text-right">
                                 {{ item.price_with_vat | toCurrency2 }}
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="border-t ">
-                    <div class="flex justify-between items-center mt-2">
-                        <span class="text-sm  "
-                            >Showing
-                            {{ !pagination.from ? 0 : pagination.from }} to
-                            {{ !pagination.to ? 0 : pagination.to }} of
-                            {{ pagination.total }} entries</span
-                        >
-                        <div class="flex flex-row space-x-1">
-                            <button
-                                :disabled="!pagination.prevPageUrl"
-                                @click="previousPage(pagination.prevPageUrl)"
-                                class="footer-btn flex items-center"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M15 19l-7-7 7-7"
-                                    /></svg
-                                >Prev
-                            </button>
-                            <button
-                                :disabled="!pagination.nextPageUrl"
-                                @click="nextPage(pagination.nextPageUrl)"
-                                class="footer-btn flex items-center"
-                            >
-                                Next
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M9 5l7 7-7 7"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <Pagination
+                    :pagination="pagination"
+                    @prev="previousPage(pagination.prevPageUrl)"
+                    @next="nextPage(pagination.nextPageUrl)"
+                />
             </div>
         </div>
     </div>
@@ -226,12 +176,8 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import Breadcrumb from "./../../../Usable/Breadcrumb";
 
 export default {
-    components: {
-        Breadcrumb
-    },
     name: "Tagging-Disable-UOM",
     data() {
         let routes = [
@@ -249,7 +195,7 @@ export default {
             }
         ];
         return {
-            routes:routes,
+            routes: routes,
             selected: [],
             allSelected: false,
             form: {

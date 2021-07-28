@@ -4,7 +4,7 @@
         <div class="container text-gray-800">
             <div class=" bg-gray-50 shadow-lg p-5 rounded">
                 <div class="mb-5 bg-gray-100 p-2">
-                    <label for="" class="tracking-wider text-lg "
+                    <label for="" class="font-semibold text-lg "
                         >Accountability Report</label
                     >
                 </div>
@@ -242,10 +242,8 @@
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
 import Report from "../../../services/Report";
-import Breadcrumb from "./../../../Usable/Breadcrumb";
 
 export default {
-    components: { Breadcrumb },
     name: "Accountability",
     data() {
         let routes = [

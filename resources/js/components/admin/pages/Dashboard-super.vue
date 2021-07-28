@@ -56,7 +56,7 @@
                         class="border-b-2 p-3 flex justify-between items-center"
                     >
                         <span
-                            class="tracking-wider text-lg"
+                            class="font-semibold text-lg"
                             >Today's Price Changed</span
                         >
                         <a @click="closeModal">

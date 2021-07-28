@@ -4,7 +4,7 @@
         <div class="container text-gray-800">
             <div class="h-96 bg-gray-50 shadow-lg p-5 rounded">
                 <div class="mb-5 bg-gray-100 p-2">
-                    <label for="" class="tracking-wider text-lg "
+                    <label for="" class="font-semibold text-lg "
                         >Item Report</label
                     >
                 </div>
@@ -100,11 +100,10 @@
 import { mapActions, mapMutations, mapState } from "vuex";
 import { HalfCircleSpinner } from "epic-spinners";
 import Report from "../../../services/Report";
-import Breadcrumb from "./../../../Usable/Breadcrumb";
 
 export default {
     name: "Reports",
-    components: { HalfCircleSpinner, Breadcrumb },
+    components: { HalfCircleSpinner },
     data() {
         let routes = [
             {

@@ -4,7 +4,7 @@
         <div class="container text-black">
             <div class=" bg-gray-50 shadow-lg p-5 rounded">
                 <div class="mb-5 bg-gray-100 p-2">
-                    <label for="" class="tracking-wider text-lg "
+                    <label for="" class="font-semibold text-lg "
                         >Upload Image filename and Category</label
                     >
                 </div>
@@ -239,10 +239,9 @@
 import Upload from "../../../services/Uploading";
 import { mapState, mapMutations } from "vuex";
 import { LoopingRhombusesSpinner } from "epic-spinners";
-import Breadcrumb from "./../../../Usable/Breadcrumb";
 
 export default {
-    components: { LoopingRhombusesSpinner, Breadcrumb },
+    components: { LoopingRhombusesSpinner },
     data() {
         let routes = [
             {

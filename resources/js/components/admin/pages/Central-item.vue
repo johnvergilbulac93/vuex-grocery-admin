@@ -4,7 +4,7 @@
         <div class="container text-gray-800">
             <div class=" bg-gray-50 shadow-lg p-5 rounded overflow-x-auto">
                 <div class="mb-5 bg-gray-100 p-2">
-                    <label for="" class="text-lg tracking-wider"
+                    <label for="" class="text-lg font-semibold"
                         >Item Masterfile</label
                     >
                 </div>
@@ -127,16 +127,14 @@
                         </tr>
                         <tr v-for="(item, i) in Items" :key="i" class="tr">
                             <td class="td uppercase">{{ item.itemcode }}</td>
-                            <a @click="showImage(item)">
-                                <td class="td ">
-                                    {{ item.product_name }}
-                                </td>
-                            </a>
+                            <td class="td ">
+                                {{ item.product_name }}
+                            </td>
                             <td class="td">{{ item.category_name }}</td>
-                            <td class="text-center">
+                            <td class="text-center td">
                                 <select
                                     v-if="item.item_price.length"
-                                    class="cursor-pointer w-20 py-1 px-2 focus:outline-none my-1 border rounded focus:border-yellow-500 text-sm  "
+                                    class="cursor-pointer w-20  focus:outline-none  border rounded focus:border-yellow-500 text-sm  "
                                     @change="getPrice($event, i)"
                                 >
                                     <option
@@ -191,13 +189,35 @@
                                     >
                                 </a>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center td">
                                 <button
                                     class="focus:outline-none"
                                     @click="showUpload(item)"
                                     data-toggle="tooltip"
                                     data-placement="bottom"
                                     title="Upload image"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5 text-gray-700 hover:text-blue-500"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                                        />
+                                    </svg>
+                                </button>
+                                <button
+                                    class="focus:outline-none"
+                                    @click="showImage(item)"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="View image"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -218,59 +238,11 @@
                         </tr>
                     </tbody>
                 </Datatable>
-                <div class="border-t ">
-                    <div class="flex justify-between items-center mt-2">
-                        <span class="text-sm  "
-                            >Showing
-                            {{ !pagination.from ? 0 : pagination.from }} to
-                            {{ !pagination.to ? 0 : pagination.to }} of
-                            {{ pagination.total }} entries</span
-                        >
-                        <div class="flex flex-row space-x-1">
-                            <button
-                                :disabled="!pagination.prevPageUrl"
-                                @click="previousPage(pagination.prevPageUrl)"
-                                class="footer-btn flex items-center"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M15 19l-7-7 7-7"
-                                    /></svg
-                                >Prev
-                            </button>
-                            <button
-                                :disabled="!pagination.nextPageUrl"
-                                @click="nextPage(pagination.nextPageUrl)"
-                                class="footer-btn flex items-center"
-                            >
-                                Next
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M9 5l7 7-7 7"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <Pagination
+                    :pagination="pagination"
+                    @prev="previousPage(pagination.prevPageUrl)"
+                    @next="nextPage(pagination.nextPageUrl)"
+                />
 
                 <transition
                     enter-active-class="ease-out duration-500"
@@ -449,13 +421,10 @@
 </template>
 
 <script>
-import Datatable from "./../../../Usable/Datatable";
 import { mapActions, mapState } from "vuex";
-import Breadcrumb from "./../../../Usable/Breadcrumb";
 
 export default {
     name: "Central-Item",
-    components: { Datatable, Breadcrumb },
     data() {
         let sortOrders = {};
         let routes = [

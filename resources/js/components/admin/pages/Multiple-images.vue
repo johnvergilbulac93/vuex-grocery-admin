@@ -4,7 +4,7 @@
         <div class="container text-black">
             <div class=" bg-gray-50 shadow-lg p-5 rounded">
                 <div class="mb-5 bg-gray-100 p-2">
-                    <label for="" class="text-lg tracking-wider"
+                    <label for="" class="text-lg font-semibold"
                         >Upload Multiple Images</label
                     >
                 </div>
@@ -61,10 +61,7 @@
 </template>
 
 <script>
-import Breadcrumb from "./../../../Usable/Breadcrumb";
-
 export default {
-    components: { Breadcrumb },
     data() {
         let routes = [
             {

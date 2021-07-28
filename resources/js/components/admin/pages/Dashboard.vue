@@ -59,7 +59,7 @@
                             class="border-b-2 p-1 flex justify-between items-center"
                         >
                             <span
-                                class="tracking-wider text-lg"
+                                class="font-semibold text-lg"
                                 >Item's not available</span
                             >
                             <button
