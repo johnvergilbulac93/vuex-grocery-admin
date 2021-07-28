@@ -8,10 +8,10 @@
 @tailwind utilities;
 
 .tbody {
-    @apply divide-y divide-gray-300 tracking-normal;
+    @apply text-gray-800;
 }
 .td {
-    @apply p-2 whitespace-nowrap text-sm  text-black ;
+    @apply p-2  text-sm  text-black border;
 }
 .tr {
     @apply hover:bg-gray-100 text-black;
@@ -25,7 +25,7 @@
     @apply bg-yellow-500 text-gray-50 text-sm p-2 rounded mt-1 disabled:opacity-50 focus:outline-none w-14 h-8 hover:bg-yellow-600 hover:text-white transition duration-500;
 }
 .th {
-    @apply p-2;
+    @apply p-2 ;
 }
 .li{
     @apply px-3 py-2 transition duration-200 relative block  hover:bg-gray-100 

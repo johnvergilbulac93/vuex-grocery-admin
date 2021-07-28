@@ -85,81 +85,6 @@ export const getPriceChanged = ({commit}) => {
      })
      
 }
-export const minamount = ({commit}, {minAmount}) => {
-     Rules.minAmount(minAmount)
-     .then(()=> {
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Successfully saved"
-          });
-     })
-     .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
-     })
-}
-export const pickupCharge = ({commit}, {chargeAmount}) => {
-     Rules.pickupCharge(chargeAmount)
-     .then(()=> {
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Successfully saved"
-          });
-     })
-     .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
-     })
-}
-export const orderTimeCutoff = ({commit}, {timeCutoff}) => {
-     Rules.orderTimeCutoff(timeCutoff)
-     .then(()=> {
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Successfully saved"
-          });
-     })
-     .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
-     })
-}
-export const maxOrder = ({commit}, {maxOrder}) => {
-     Rules.maxOrder(maxOrder)
-     .then(()=> {
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Successfully saved"
-          });
-     })
-     .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
-     })
-}
-export const servingTime = ({commit}, {timeCutoff}) => {
-     Rules.servingTimeCutoff(timeCutoff)
-     .then(()=> {
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Successfully saved"
-          });
-     })
-     .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
-     })
-}
 export const getStore = ({commit}) => {
      Common.ViewStore()
      .then( res => {
@@ -184,9 +109,13 @@ export const saveStoreHour = ({commit},{storehour}) => {
           });
      })
      .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
+          switch (error.response.status) {
+               case 422:
+                    commit('SET_ERRORS',error.response.data.errors )
+                   break;
+               default:
+                   break;
+           }
      })
 }
 
@@ -238,9 +167,13 @@ export const saveTenant = ({commit}, {tenant}) => {
            }
      })
      .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
+          switch (error.response.status) {
+               case 422:
+                    commit('SET_ERRORS',error.response.data.errors )
+                   break;
+               default:
+                   break;
+           }
      })
 }
 export const updateTenant = ({commit}, {tenant}) => {
@@ -254,9 +187,13 @@ export const updateTenant = ({commit}, {tenant}) => {
           });
      })
      .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
+          switch (error.response.status) {
+               case 422:
+                    commit('SET_ERRORS',error.response.data.errors )
+                   break;
+               default:
+                   break;
+           }
      })
 }
 export const deleteTenant = ({commit}, {id}) => {
@@ -310,9 +247,13 @@ export const saveCharge = ({commit},{charge}) => {
            }
      })
      .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
+          switch (error.response.status) {
+               case 422:
+                    commit('SET_ERRORS',error.response.data.errors )
+                   break;
+               default:
+                   break;
+           }
      })
 }
 export const updateCharge = ({commit}, {charge}) => {
@@ -327,9 +268,13 @@ export const updateCharge = ({commit}, {charge}) => {
           });
      })
      .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
+          switch (error.response.status) {
+               case 422:
+                    commit('SET_ERRORS',error.response.data.errors )
+                   break;
+               default:
+                   break;
+           }
      })
 }
 export const deleteCharge = ({commit}, {id}) => {
@@ -375,9 +320,13 @@ export const saveMinOrder = ({commit}, {minorder}) => {
            }
      })
      .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
+          switch (error.response.status) {
+               case 422:
+                    commit('SET_ERRORS',error.response.data.errors )
+                   break;
+               default:
+                   break;
+           }
      })
 }
 export const getMinOrder = ({commit},{currentPage,filterData}) => {
@@ -399,9 +348,13 @@ export const updateMinOrder = ({commit},{minorder}) => {
           });
      })
      .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
+          switch (error.response.status) {
+               case 422:
+                    commit('SET_ERRORS',error.response.data.errors )
+                   break;
+               default:
+                   break;
+           }
      })
 
 }
@@ -453,9 +406,13 @@ export const saveUser = ({commit}, {user}) => {
           });
      })
      .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
+          switch (error.response.status) {
+               case 422:
+                    commit('SET_ERRORS',error.response.data.errors )
+                   break;
+               default:
+                   break;
+           }
      })
 }
 export const deleteUser = ({commit},{id}) => {
@@ -517,9 +474,13 @@ export const upload_image = ({commit},{formData}) => {
           });
      })
      .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
+          switch (error.response.status) {
+               case 422:
+                    commit('SET_ERRORS',error.response.data.errors )
+                   break;
+               default:
+                   break;
+           }
      })
 }
 export const item_inactive = ({commit}, {itemCode}) => {
@@ -628,9 +589,13 @@ export const saveStorePriceGroup = ({commit}, {storepricegroup}) => {
           });
      })
      .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
+          switch (error.response.status) {
+               case 422:
+                    commit('SET_ERRORS',error.response.data.errors )
+                   break;
+               default:
+                   break;
+           }
      })
 }
 export const deleteStorePriceGroup = ({commit}, {id}) => {
@@ -644,9 +609,13 @@ export const deleteStorePriceGroup = ({commit}, {id}) => {
           });
      })
      .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
+          switch (error.response.status) {
+               case 422:
+                    commit('SET_ERRORS',error.response.data.errors )
+                   break;
+               default:
+                   break;
+           }
      })
 }
 export const activeUser = ({commit},{user}) => {
@@ -769,9 +738,13 @@ export const userChangePass = ({commit}, {user}) => {
                     })
                })
                .catch( error => {
-                    if(error.response.status === 422) {
-                         commit('SET_ERRORS',error.response.data.errors )
-                    } 
+                    switch (error.response.status) {
+                         case 422:
+                              commit('SET_ERRORS',error.response.data.errors )
+                             break;
+                         default:
+                             break;
+                     }
                })
           }
         })
@@ -789,8 +762,39 @@ export const userChangeUsername =({commit}, {user}) => {
           location.reload()
      })
      .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
+          switch (error.response.status) {
+               case 422:
+                    commit('SET_ERRORS',error.response.data.errors )
+                   break;
+               default:
+                   break;
+           }
+     })
+}
+export const saveRule = ( {commit},{rule}) => {
+     Rules.update(rule)
+     .then( ()=> {
+          commit('MODAL_FLAG', false)
+          toast.fire({
+               icon: "success",
+               title: "Success",
+               text: "Successfully saved."
+          });
+          Fire.$emit("reload_rules");
+     })
+     .catch( error => {
+          switch (error.response.status) {
+               case 422:
+                    commit('SET_ERRORS',error.response.data.errors )
+                   break;
+               default:
+                   break;
+           }
+     })
+}
+export const getRules = ( {commit}) => {
+     Rules.loadRules()
+     .then( res => {
+          commit('SET_RULES', res.data)
      })
 }

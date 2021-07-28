@@ -39,5 +39,6 @@ export default {
      Items: [],
      ItemCategory: [],
      PriceGroup:[],
-     StorePriceGroup:[]
+     StorePriceGroup:[],
+     Rules: []
 }

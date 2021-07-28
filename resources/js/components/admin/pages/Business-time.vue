@@ -3,7 +3,7 @@
         <Breadcrumb :routes="routes" title="Setup" />
         <div class="container bg-gray-50 shadow-lg p-5 rounded text-gray-800 ">
             <div class="mb-5 bg-gray-100 p-2">
-                <label for="" class="tracking-wider text-lg ">Store Time</label>
+                <label class="font-semibold text-lg ">Store Time</label>
             </div>
             <div
                 class="grid lg:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 sm:grid-flow-row sm:grid-cols-1 sm:grid-rows-1 gap-2"
@@ -182,24 +182,18 @@
                                 </td>
                             </tr>
                             <tr
-                                class="tr"
+                                class="tr "
                                 v-for="(data, i) in StoreHourList"
                                 :key="i"
                             >
-                                <a
-                                    @click="editInfo(data)"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="Edit"
-                                    ><td class="td">
-                                        {{ data.business_unit }}
-                                    </td></a
-                                >
-                                <td class="td text-center">
-                                    {{ data.time_in }}
+                                <td class="td">
+                                    {{ data.business_unit }}
+                                </td>
+                                <td class="td text-center ">
+                                    {{ data.time_in | formatTime2 }}
                                 </td>
                                 <td class="td text-center">
-                                    {{ data.time_out }}
+                                    {{ data.time_out | formatTime2 }}
                                 </td>
                                 <td
                                     class="td text-center"
@@ -263,7 +257,7 @@
                                                 stroke-linecap="round"
                                                 stroke-linejoin="round"
                                                 stroke-width="2"
-                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                                             />
                                         </svg>
                                     </button>
@@ -271,61 +265,62 @@
                             </tr>
                         </tbody>
                     </Datatable>
-                    <div class="border-t ">
-                        <div class="flex justify-between items-center mt-2">
-                            <span class="text-sm"
-                                >Showing
-                                {{ !pagination.from ? 0 : pagination.from }} to
-                                {{ !pagination.to ? 0 : pagination.to }} of
-                                {{ pagination.total }} entries</span
+                    <Pagination
+                        :pagination="pagination"
+                        @prev="previousPage(pagination.prevPageUrl)"
+                        @next="nextPage(pagination.nextPageUrl)"
+                    />
+                    <!-- <div class="flex justify-between items-center mt-2">
+                        <span class="text-sm"
+                            >Showing
+                            {{ !pagination.from ? 0 : pagination.from }} to
+                            {{ !pagination.to ? 0 : pagination.to }} of
+                            {{ pagination.total }} entries</span
+                        >
+                        <div class="flex flex-row space-x-1">
+                            <button
+                                :disabled="!pagination.prevPageUrl"
+                                @click="previousPage(pagination.prevPageUrl)"
+                                class="footer-btn flex items-center"
                             >
-                            <div class="flex flex-row space-x-1">
-                                <button
-                                    :disabled="!pagination.prevPageUrl"
-                                    @click="
-                                        previousPage(pagination.prevPageUrl)
-                                    "
-                                    class="footer-btn flex items-center"
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-6 w-6"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
                                 >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M15 19l-7-7 7-7"
-                                        /></svg
-                                    >Prev
-                                </button>
-                                <button
-                                    :disabled="!pagination.nextPageUrl"
-                                    @click="nextPage(pagination.nextPageUrl)"
-                                    class="footer-btn flex items-center"
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M15 19l-7-7 7-7"
+                                    /></svg
+                                >Prev
+                            </button>
+                            <button
+                                :disabled="!pagination.nextPageUrl"
+                                @click="nextPage(pagination.nextPageUrl)"
+                                class="footer-btn flex items-center"
+                            >
+                                Next
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-6 w-6"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
                                 >
-                                    Next
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M9 5l7 7-7 7"
-                                        />
-                                    </svg>
-                                </button>
-                            </div>
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 5l7 7-7 7"
+                                    />
+                                </svg>
+                            </button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -333,16 +328,9 @@
 </template>
 
 <script>
-import Datatable from "./../../../Usable/Datatable";
 import { mapActions, mapState } from "vuex";
-import Breadcrumb from "./../../../Usable/Breadcrumb";
-
 export default {
     name: "Business-Time",
-    components: {
-        Datatable,
-        Breadcrumb
-    },
     data() {
         let sortOrders = {};
         let routes = [

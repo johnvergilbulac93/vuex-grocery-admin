@@ -90,7 +90,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/price_group/save', 'API\SetUpController@save_store_price_group')->name('save-store-price-group');
     Route::delete('/price_group/{id}/delete', 'API\SetUpController@delete_price_group')->name('delete-price-group');
 
-    Route::get('setup_rules', 'API\SetUpController@setup_rules')->name('setup-rules');
+    Route::get('/rules', 'API\SetUpController@setup_rules')->name('setup-rules');
+    Route::post('/rules/update', 'API\SetUpController@rule_update')->name('rule-update');
+
     Route::get('pickers', 'API\SetUpController@pickers')->name('pickers');
     Route::post('pickercreate', 'API\SetUpController@pickercreate')->name('picker-create');
     Route::get('getpicker', 'API\SetUpController@getpicker')->name('get-picker');

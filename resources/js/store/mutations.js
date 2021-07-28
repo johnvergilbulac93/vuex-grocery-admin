@@ -132,3 +132,6 @@ export const START_LOADING = (state) => {
 export const FINISH_LOADING = (state) => {
      state.waiting = false
 }
+export const SET_RULES = (state, payload) => {
+     state.Rules = payload
+}

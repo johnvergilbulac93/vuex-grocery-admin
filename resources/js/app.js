@@ -62,6 +62,7 @@ Vue.filter('formatDate', date => moment(date).format('MMMM Do YYYY, h:mm:ss a'))
 Vue.filter('formatDateNoTime', date => moment(date).format('MMM DD, YYYY'))
 Vue.filter('formatDateMonthOnly', date => moment(date).format('MMMM'))
 Vue.filter('formatTime', date => moment(date).format('h:mm A'))
+Vue.filter('formatTime2', time => moment(time, ["HH.mm"]).format('hh:mm a'))
 
 Vue.filter('toCurrency', function (value) {
     if (typeof value !== 'number') {
@@ -107,6 +108,10 @@ window.id = id
 // Vue.component('page404', require('./components/admin/pages/404_page.vue').default);
 // Vue.component('Top', require('./components/admin/pages/Top.vue').default);
 Vue.component('Profile', require('./components/admin/pages/Profile-Upload.vue').default);
+Vue.component('Pagination', require('./Usable/Pagination.vue').default);
+Vue.component('Datatable', require('./Usable/Datatable.vue').default);
+Vue.component('Breadcrumb', require('./Usable/Breadcrumb.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -1,10 +1,10 @@
 <template>
     <div class="space-y-2">
-        <Breadcrumb :routes="routes" title="setup"/>
+        <Breadcrumb :routes="routes" title="setup" />
         <div class="container text-gray-800">
             <div class=" bg-gray-50 shadow-lg p-5 rounded ">
                 <div class="mb-5 bg-gray-100 p-2">
-                    <label for="" class="tracking-wider text-lg"
+                    <label class="font-semibold text-lg"
                         >Delivery Charges</label
                     >
                 </div>
@@ -233,7 +233,7 @@
                                             stroke-linecap="round"
                                             stroke-linejoin="round"
                                             stroke-width="2"
-                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                                         />
                                     </svg>
                                 </button>
@@ -241,60 +241,11 @@
                         </tr>
                     </tbody>
                 </Datatable>
-                <div class="border-t ">
-                    <div class="flex justify-between items-center mt-2">
-                        <span class="text-sm  "
-                            >Showing
-                            {{ !pagination.from ? 0 : pagination.from }} to
-                            {{ !pagination.to ? 0 : pagination.to }} of
-                            {{ pagination.total }} entries</span
-                        >
-                        <div class="flex flex-row space-x-1">
-                            <button
-                                :disabled="!pagination.prevPageUrl"
-                                @click="previousPage(pagination.prevPageUrl)"
-                                class="footer-btn flex items-center"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M15 19l-7-7 7-7"
-                                    /></svg
-                                >Prev
-                            </button>
-                            <button
-                                :disabled="!pagination.nextPageUrl"
-                                @click="nextPage(pagination.nextPageUrl)"
-                                class="footer-btn flex items-center"
-                            >
-                                Next
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M9 5l7 7-7 7"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
+                <Pagination
+                    :pagination="pagination"
+                    @prev="previousPage(pagination.prevPageUrl)"
+                    @next="nextPage(pagination.nextPageUrl)"
+                />
                 <transition
                     enter-active-class="ease-out duration-500"
                     enter-class="opacity-0"
@@ -311,12 +262,16 @@
                             class="sm:w-full lg:w-1/2  bg-white rounded sm:m-5 md:m-5"
                         >
                             <div
-                                class="p-2 flex justify-between items-center text-lg tracking-wider"
+                                class="p-2 flex justify-between items-center text-lg "
                             >
-                                <label for="" v-if="!editMode"
+                                <label
+                                    class="font-semibold text-lg"
+                                    v-if="!editMode"
                                     >Setup new delivery charges</label
                                 >
-                                <label for="" v-if="editMode"
+                                <label
+                                    class="font-semibold text-lg"
+                                    v-if="editMode"
                                     >Update delivery charges</label
                                 >
                                 <a
@@ -396,9 +351,9 @@
                                         <select
                                             v-else
                                             @change="filteredBrgy"
-                                                v-bind:class="{
-                                                    'border-red-600': errors.town
-                                                }"
+                                            v-bind:class="{
+                                                'border-red-600': errors.town
+                                            }"
                                             class=" px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
                                             v-model="form.town"
                                         >
@@ -631,14 +586,10 @@
 </template>
 
 <script>
-import Datatable from "./../../../Usable/Datatable";
 import { mapActions, mapState } from "vuex";
-import Breadcrumb from "./../../../Usable/Breadcrumb";
 
 export default {
     name: "Delivery-Charged",
-    components: { Datatable, Breadcrumb },
-
     data() {
         let sortOrders = {};
         let routes = [

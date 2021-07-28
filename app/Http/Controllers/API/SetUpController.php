@@ -605,4 +605,26 @@ class SetUpController extends Controller
             'status' => 1
         ]);
     }
+    public function rule_update(Request $request)
+    {
+        $this->validate($request, [
+            'minimum_order_amount'      => 'required',
+            'pickup_charge'             => 'required',
+            'order_time_cutoff_start'   => 'required|',
+            'order_time_cutoff_end'     => 'required|after:order_time_cutoff_start',
+            'serving_time_start'        => 'required|',
+            'serving_time_end'          => 'required|after:serving_time_start',
+            'maximum_no_of_order'       => 'required',
+        ]);
+        gc_setup_business_rule::whereId($request->id)->update([
+            'minimum_order_amount'          => $request->minimum_order_amount,
+            'pickup_charge'                 => $request->pickup_charge,
+            'ordering_cutoff_time_start'    => $request->order_time_cutoff_start,
+            'ordering_cutoff_time_end'      => $request->order_time_cutoff_end,
+            'serving_time_start'            => $request->serving_time_start,
+            'serving_time_end'              => $request->serving_time_end,
+            'maximum_no_of_orders'          => $request->maximum_no_of_order,
+        ]);
+
+    }
 }

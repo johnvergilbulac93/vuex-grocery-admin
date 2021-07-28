@@ -4,7 +4,7 @@
         <div class="container text-black">
             <div class=" bg-gray-50 shadow-lg p-5 rounded  ">
                 <div class="mb-5 bg-gray-100 p-2">
-                    <label for="" class="text-lg tracking-wider"
+                    <label for="" class="text-lg font-semibold"
                         >Price Group</label
                     >
                 </div>
@@ -175,15 +175,9 @@
                                     v-for="(data, i) in StorePriceGroup"
                                     :key="i"
                                 >
-                                    <a
-                                        @click="editInfo(data)"
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
-                                        title="Edit"
-                                        ><td class="td">
-                                            {{ data.business_unit }}
-                                        </td></a
-                                    >
+                                    <td class="td">
+                                        {{ data.business_unit }}
+                                    </td>
                                     <td class="td">
                                         {{ data.price_group_name }}
                                     </td>
@@ -222,7 +216,7 @@
                                                     stroke-linecap="round"
                                                     stroke-linejoin="round"
                                                     stroke-width="2"
-                                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                                                 />
                                             </svg>
                                         </button>
@@ -230,64 +224,11 @@
                                 </tr>
                             </tbody>
                         </Datatable>
-                        <div class="border-t ">
-                            <div class="flex justify-between items-center mt-2">
-                                <span class="text-sm  "
-                                    >Showing
-                                    {{ !pagination.from ? 0 : pagination.from }}
-                                    to
-                                    {{ !pagination.to ? 0 : pagination.to }} of
-                                    {{ pagination.total }} entries</span
-                                >
-                                <div class="flex flex-row space-x-1">
-                                    <button
-                                        :disabled="!pagination.prevPageUrl"
-                                        @click="
-                                            previousPage(pagination.prevPageUrl)
-                                        "
-                                        class="footer-btn flex items-center"
-                                    >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            class="h-5 w-5"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M15 19l-7-7 7-7"
-                                            /></svg
-                                        >Prev
-                                    </button>
-                                    <button
-                                        :disabled="!pagination.nextPageUrl"
-                                        @click="
-                                            nextPage(pagination.nextPageUrl)
-                                        "
-                                        class="footer-btn flex items-center"
-                                    >
-                                        Next
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            class="h-5 w-5"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M9 5l7 7-7 7"
-                                            />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <Pagination
+                            :pagination="pagination"
+                            @prev="previousPage(pagination.prevPageUrl)"
+                            @next="nextPage(pagination.nextPageUrl)"
+                        />
                     </div>
                 </div>
             </div>
@@ -296,16 +237,10 @@
 </template>
 
 <script>
-import Datatable from "./../../../Usable/Datatable";
 import { mapActions, mapState } from "vuex";
-import Breadcrumb from "./../../../Usable/Breadcrumb";
 
 export default {
     name: "Price-Group",
-    components: {
-        Datatable,
-        Breadcrumb
-    },
     data() {
         let sortOrders = {};
         let routes = [
