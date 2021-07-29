@@ -19,7 +19,7 @@
                                 >Report Type</label
                             >
                             <select
-                                class="form-input w-full "
+                                class="form "
                                 v-model="filter.type"
                                 @change="clearData"
                             >
@@ -37,7 +37,7 @@
                         <div class="block w-1/4 sm:w-full md:w-1/2">
                             <label for="" class="font-semibold">Store</label>
                             <select
-                                class="form-input w-full"
+                                class="form"
                                 v-model="filter.store"
                                 tabindex="1"
                                 @change="clearData"
@@ -65,7 +65,7 @@
                             >
                             <input
                                 type="date"
-                                class="w-full form-input "
+                                class="form "
                                 tabindex="2"
                                 v-model="filter.dateFrom"
                             />
@@ -80,7 +80,7 @@
                             <label for="" class="font-semibold">Date to</label>
                             <input
                                 type="date"
-                                class="w-full form-input "
+                                class="form "
                                 tabindex="3"
                                 v-model="filter.dateTo"
                             />
@@ -179,25 +179,25 @@
                                         id="transaction_body"
                                     >
                                         <thead
-                                            class="border-t-2 border-gray-300 bg-gray-100  tracking-normal"
+                                            class="border bg-gray-100  tracking-normal"
                                         >
                                             <tr class="tr ">
-                                                <th class="p-2 text-center">
+                                                <th class="p-2 border text-center">
                                                     Date
                                                 </th>
-                                                <th class="p-2 text-left">
+                                                <th class="p-2 border text-left">
                                                     Customer
                                                 </th>
-                                                <th class="p-2 text-center">
+                                                <th class="p-2 border text-center">
                                                     Transaction #
                                                 </th>
-                                                <th class="p-2 text-right">
+                                                <th class="p-2 border text-right">
                                                     Gross Amount
                                                 </th>
-                                                <th class="p-2 text-right">
+                                                <th class="p-2 border text-right">
                                                     Pick-up Charge
                                                 </th>
-                                                <th class="p-2 text-right">
+                                                <th class="p-2 border text-right">
                                                     Total Amount
                                                 </th>
                                             </tr>
@@ -314,7 +314,7 @@
                                             "
                                         >
                                             <thead
-                                                class="border-t-2 border-gray-300 bg-gray-100  tracking-wide font-poppins"
+                                                class="border  bg-gray-100  tracking-wide font-poppins"
                                             >
                                                 <tr class="tr">
                                                     <th
@@ -425,10 +425,10 @@
                                         id="transaction_body"
                                     >
                                         <thead
-                                            class="border-t-2 border-gray-300 bg-gray-100  tracking-wide font-poppins"
+                                            class="border  bg-gray-100  tracking-wide font-poppins"
                                         >
                                             <tr class="tr">
-                                                <th colspan="6" class="td">
+                                                <th colspan="6" class=" p-2 border">
                                                     <span
                                                         class="font-semibold flex justify-start"
                                                         >{{
@@ -439,22 +439,22 @@
                                                 </th>
                                             </tr>
                                             <tr class="td">
-                                                <th class="p-2 text-center">
+                                                <th class="p-2 text-center border">
                                                     Date
                                                 </th>
-                                                <th class="p-2 text-left">
+                                                <th class="p-2 text-left border">
                                                     Customer
                                                 </th>
-                                                <th class="p-2 text-center">
+                                                <th class="p-2 text-center border">
                                                     Transaction #.
                                                 </th>
-                                                <th class="p-2 text-right">
+                                                <th class="p-2 text-right border">
                                                     Gross Amount
                                                 </th>
-                                                <th class="p-2 text-right">
+                                                <th class="p-2 text-right border">
                                                     Picking Charge
                                                 </th>
-                                                <th class="p-2 text-right">
+                                                <th class="p-2 text-right border">
                                                     Total Amount
                                                 </th>
                                             </tr>
@@ -546,23 +546,23 @@
                                             "
                                         >
                                             <thead
-                                                class="border-t-2 border-gray-300 bg-gray-100 tracking-normal"
+                                                class="border  bg-gray-100 tracking-normal"
                                             >
                                                 <tr class="tr">
                                                     <th
                                                         colspan="2"
-                                                        class="p-2"
+                                                        class="p-2 border"
                                                     ></th>
-                                                    <th class="p-2">
+                                                    <th class="p-2 border">
                                                         Transaction #
                                                     </th>
-                                                    <th class="p-2 text-right">
+                                                    <th class="p-2 border text-right">
                                                         Gross Amount
                                                     </th>
-                                                    <th class="p-2 text-right">
+                                                    <th class="p-2 border text-right">
                                                         Picking Charge
                                                     </th>
-                                                    <th class="p-2 text-right">
+                                                    <th class="p-2 border text-right">
                                                         Total Amount
                                                     </th>
                                                 </tr>
@@ -619,13 +619,14 @@
                             </div>
                         </div>
                     </div>
-                    <div v-else>
+                    <div v-else >
                         <div v-if="ArrDataStore.b_unit != null">
                             <div
                                 class="flex flex-col "
                                 v-if="filter.store === 'all'"
+                                id="transaction_body"
                             >
-                                <div class="container" id="transaction_header">
+                                <div class="container" >
                                     <center>
                                         <h6 class="text-lg">
                                             ALL STORES
@@ -651,26 +652,26 @@
                                         </p>
                                     </center>
                                 </div>
-                                <div id="transaction_body ">
+                                <div >
                                     <table
                                         class="min-w-full divide-y divide-gray-300  mt-5"
                                     >
                                         <thead
-                                            class="border-t-2 border-gray-300 bg-gray-100 tracking-normal"
+                                            class="border bg-gray-100 tracking-normal"
                                         >
                                             <tr class="tr">
-                                                <th class="p-2">STORE NAME</th>
-                                                <th class="p-2">
+                                                <th class="p-2 border text-left">STORE NAME</th>
+                                                <th class="p-2 border">
                                                     Total Orders
                                                 </th>
 
-                                                <th class="p-2">
+                                                <th class="p-2 border text-right">
                                                     Gross Amount
                                                 </th>
-                                                <th class="p-2">
+                                                <th class="p-2 border text-right">
                                                     Picking Charge
                                                 </th>
-                                                <th class="p-2">Total</th>
+                                                <th class="p-2 border text-right">Total</th>
                                             </tr>
                                         </thead>
                                         <tbody class="tbody">
@@ -683,24 +684,24 @@
                                                 <td class="td">
                                                     {{ store[0].business_unit }}
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-center">
                                                     {{ store.length }}
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-right">
                                                     {{
                                                         totalOrderAmount(store)
                                                             .orderAmount
                                                             | toCurrency
                                                     }}
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-right">
                                                     {{
                                                         totalOrderAmount(store)
                                                             .pickupCharge
                                                             | toCurrency
                                                     }}
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-right" >
                                                     {{
                                                         totalOrderAmount(store)
                                                             .grandTotal
@@ -712,24 +713,24 @@
                                                 <td class="td">
                                                     GRAND TOTAL
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-center">
                                                     {{
                                                         orderSummary.gTotalTransaction
                                                     }}
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-right">
                                                     {{
                                                         orderSummary.orderAmount
                                                             | toCurrency
                                                     }}
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-right">
                                                     {{
                                                         orderSummary.pickupCharge
                                                             | toCurrency
                                                     }}
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-right">
                                                     {{
                                                         orderSummary.grandTotal
                                                             | toCurrency
@@ -745,8 +746,8 @@
                                     >
                                 </div>
                             </div>
-                            <div class="container" v-else>
-                                <div class="container" id="transaction_header">
+                            <div class="container" v-else >
+                                <div id="transaction_body">
                                     <center>
                                         <h6 class="text-lg">
                                             {{
@@ -778,25 +779,25 @@
                                         </p>
                                     </center>
                                 </div>
-                                <div id="transaction_body ">
+                                <div id="transaction_body">
                                     <table
                                         class="min-w-full divide-y divide-gray-300 mt-5"
                                     >
                                         <thead
-                                            class="border-t-2 border-gray-300 bg-gray-100  tracking-normal"
+                                            class="border bg-gray-100  tracking-normal"
                                         >
                                             <tr class="tr">
-                                                <th class="p-2">Date</th>
-                                                <th class="p-2">
+                                                <th class="p-2 border text-left">Date</th>
+                                                <th class="p-2 border ">
                                                     Total Order
                                                 </th>
-                                                <th class="p-2">
+                                                <th class="p-2 border text-right">
                                                     Gross Amount
                                                 </th>
-                                                <th class="p-2">
+                                                <th class="p-2 border text-right">
                                                     Picking Charge
                                                 </th>
-                                                <th class="p-2">Total</th>
+                                                <th class="p-2 border text-right">Total</th>
                                             </tr>
                                         </thead>
                                         <tbody class="tbody">
@@ -812,24 +813,24 @@
                                                             | formatDateMonthOnly
                                                     }}
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-center">
                                                     {{ store.length }}
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-right">
                                                     {{
                                                         totalOrderAmount(store)
                                                             .orderAmount
                                                             | toCurrency
                                                     }}
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-right">
                                                     {{
                                                         totalOrderAmount(store)
                                                             .pickupCharge
                                                             | toCurrency
                                                     }}
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-right">
                                                     {{
                                                         totalOrderAmount(store)
                                                             .grandTotal
@@ -841,24 +842,24 @@
                                                 <td class="td">
                                                     GRAND TOTAL
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-center">
                                                     {{
                                                         orderSummary.gTotalTransaction
                                                     }}
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-right">
                                                     {{
                                                         orderSummary.orderAmount
                                                             | toCurrency
                                                     }}
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-right">
                                                     {{
                                                         orderSummary.pickupCharge
                                                             | toCurrency
                                                     }}
                                                 </td>
-                                                <td class="td">
+                                                <td class="td text-right">
                                                     {{
                                                         orderSummary.grandTotal
                                                             | toCurrency

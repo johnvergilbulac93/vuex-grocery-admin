@@ -12,13 +12,11 @@
                 <div
                     class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
                 >
-                    <div class=" md:w-1/2 sm:w-full flex">
-                        <div
-                            class="relative w-64 border overflow-hidden flex rounded-l-lg"
-                        >
+                    <div class=" md:w-1/2 sm:w-full flex items-center gap-0.5 ">
+                        <div class="relative w-1/2 flex items-center ">
                             <input
                                 type="text"
-                                class="relative py-2 px-4 pr-10 w-full  focus:outline-none "
+                                class="form-search "
                                 placeholder="Search"
                                 v-model="tableData.search"
                                 @keyup.enter="search"
@@ -44,13 +42,10 @@
                                 </svg>
                             </button>
                         </div>
-                        <button
-                            @click="search"
-                            class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
-                        >
+                        <button @click="search" class="button-search">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                class="h-4 w-4 "
+                                class="h-5 w-5 "
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -67,7 +62,7 @@
                     <div class="text-sm">
                         <span>Show</span>
                         <select
-                            class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
+                            class="form-sort"
                             v-model="tableData.length"
                             @change="fetch()"
                         >
@@ -101,8 +96,17 @@
                             <td class="td text-center">
                                 {{ user.created_at | formatDateNoTime }}
                             </td>
-                            <td class="td text-center">
-                                {{ user.created_at | formatDateNoTime }}
+                            <td
+                                class="td text-center"
+                                v-if="user.inactivity_date != null"
+                            >
+                                {{ user.inactivity_date | formatDateNoTime }}
+                            </td>
+                            <td
+                                class="td text-center"
+                                v-else
+                            >
+                                
                             </td>
                             <td class="td text-center" v-if="user.status == 1">
                                 <a @click="statusActive(user)">
@@ -235,13 +239,13 @@
                                             <input
                                                 type="text"
                                                 list="employee"
-                                                v-bind:class="{
-                                                    'border-red-600':
-                                                        errors.name
-                                                }"
                                                 v-model="form.name"
                                                 @keyup="autoComplete"
-                                                class="w-full form-input  "
+                                                class="form "
+                                            />
+                                            <Error
+                                                :message="errors.name[0]"
+                                                v-if="errors.name"
                                             />
                                             <div
                                                 class="bg-gray-50 h-40 absolute mt-1 shadow-lg rounded py-2 overflow-y-scroll"
@@ -266,8 +270,12 @@
                                             <input
                                                 type="text"
                                                 disabled
-                                                v-model="form.emp_id"
-                                                class="w-full form-input "
+                                                v-model="form.employee_id"
+                                                class="form"
+                                            />
+                                            <Error
+                                                :message="errors.employee_id[0]"
+                                                v-if="errors.employee_id"
                                             />
                                         </div>
                                     </div>
@@ -280,12 +288,12 @@
                                         >
                                         <input
                                             type="text"
-                                            v-bind:class="{
-                                                'border-red-600':
-                                                    errors.username
-                                            }"
                                             v-model="form.username"
-                                            class="w-full form-input "
+                                            class="form "
+                                        />
+                                        <Error
+                                            :message="errors.username[0]"
+                                            v-if="errors.username"
                                         />
                                     </div>
                                     <div class="p-2 w-full">
@@ -296,11 +304,7 @@
                                         >
                                         <select
                                             name=""
-                                            v-bind:class="{
-                                                'border-red-600':
-                                                    errors.usertype
-                                            }"
-                                            class="w-full form-input "
+                                            class="form "
                                             v-model="form.usertype"
                                         >
                                             <option value=""
@@ -313,6 +317,10 @@
                                                 >{{ type.usertype }}</option
                                             >
                                         </select>
+                                        <Error
+                                            :message="errors.usertype[0]"
+                                            v-if="errors.usertype"
+                                        />
                                     </div>
                                     <div class="p-2 w-full">
                                         <label
@@ -322,10 +330,7 @@
                                         >
                                         <select
                                             name=""
-                                            v-bind:class="{
-                                                'border-red-600': errors.store
-                                            }"
-                                            class="w-full form-input "
+                                            class="form"
                                             v-model="form.store"
                                         >
                                             <option value=""
@@ -340,6 +345,10 @@
                                                 }}</option
                                             >
                                         </select>
+                                        <Error
+                                            :message="errors.store[0]"
+                                            v-if="errors.store"
+                                        />
                                     </div>
                                     <div class="p-2 w-full">
                                         <label
@@ -350,7 +359,11 @@
                                         <input
                                             type="password"
                                             v-model="form.password"
-                                            class="w-full form-input "
+                                            class="form"
+                                        />
+                                        <Error
+                                            :message="errors.password[0]"
+                                            v-if="errors.password"
                                         />
                                     </div>
                                 </fieldset>
@@ -518,7 +531,7 @@ export default {
                 usertype: "",
                 password: "",
                 store: "",
-                emp_id: ""
+                employee_id: ""
             },
             currentPage: 1
             // end form
@@ -565,7 +578,7 @@ export default {
         },
         reset() {
             this.form.name = "";
-            this.form.emp_id = "";
+            this.form.employee_id = "";
             this.form.store = "";
             this.form.username = "";
             this.form.usertype = "";
@@ -573,6 +586,8 @@ export default {
             this.errors.store = "";
             this.errors.usertype = "";
             this.errors.username = "";
+            this.errors.password = "";
+            this.errors.employee_id = "";
             this.form.password = "";
         },
         update() {
@@ -581,7 +596,7 @@ export default {
                 name: this.form.name,
                 username: this.form.username,
                 usertype: this.form.usertype,
-                emp_id: this.form.emp_id,
+                employee_id: this.form.employee_id,
                 store: this.form.store,
                 password: this.form.password
             };
@@ -592,7 +607,7 @@ export default {
                 name: this.form.name,
                 username: this.form.username,
                 usertype: this.form.usertype,
-                emp_id: this.form.emp_id,
+                employee_id: this.form.employee_id,
                 store: this.form.store,
                 password: this.form.password
             };
@@ -629,7 +644,7 @@ export default {
             this.form.name = user.name;
             this.form.username = user.username;
             this.form.store = user.bunit_code;
-            this.form.emp_id = user.emp_id;
+            this.form.employee_id = user.employee_id;
             this.form.usertype = user.usertype_id;
             this.modal({
                 flag: true
@@ -659,7 +674,7 @@ export default {
         },
         selectEmp(employee) {
             this.form.name = employee.name;
-            this.form.emp_id = employee.emp_id;
+            this.form.employee_id = employee.emp_id;
             this.form.username = employee.emp_id;
             this.CLEAR_EMPLOYEE();
         },

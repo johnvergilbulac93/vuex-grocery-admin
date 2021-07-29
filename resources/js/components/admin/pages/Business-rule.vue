@@ -144,7 +144,7 @@
                                     v-model="form.minimum_order_amount"
                                     tabindex="1"
                                     type="number"
-                                    class="w-full text-sm font-semibold px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                                    class="form"
                                 />
                             </fieldset>
                             <fieldset class="p-2">
@@ -155,7 +155,7 @@
                                     v-model="form.pickup_charge"
                                     tabindex="2"
                                     type="number"
-                                    class="w-full font-semibold  text-sm px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                                    class="form"
                                 />
                             </fieldset>
                             <fieldset class="p-2">
@@ -166,7 +166,7 @@
                                     v-model="form.maximum_no_of_order"
                                     tabindex="3"
                                     type="number"
-                                    class="w-full font-semibold text-sm px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                                    class="form"
                                 />
                             </fieldset>
                         </div>
@@ -182,14 +182,14 @@
                                     v-model="form.order_time_cutoff_start"
                                     tabindex="4"
                                     type="time"
-                                    class="w-full font-semibold  text-sm px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                                    class="form"
                                 />
                                 <label>End</label>
                                 <input
                                     v-model="form.order_time_cutoff_end"
                                     tabindex="5"
                                     type="time"
-                                    class="w-full font-semibold text-sm px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                                    class="form"
                                 />
                             </fieldset>
                             <fieldset class="p-2">
@@ -201,14 +201,14 @@
                                     v-model="form.serving_time_start"
                                     tabindex="6"
                                     type="time"
-                                    class="w-full font-semibold text-sm px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                                    class="form"
                                 />
                                 <label>End</label>
                                 <input
                                     v-model="form.serving_time_end"
                                     tabindex="7"
                                     type="time"
-                                    class="w-full font-semibold text-sm px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                                    class="form"
                                 />
                             </fieldset>
                         </div>

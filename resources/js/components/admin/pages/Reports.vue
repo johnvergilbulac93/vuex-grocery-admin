@@ -14,7 +14,7 @@
                     >
                         <div class="w-full">
                             <select
-                                class="form-input  w-full "
+                                class="form"
                                 tabindex="1"
                                 v-model="filter.store"
                                 @change="changestore"
@@ -37,7 +37,7 @@
                         </div>
                         <div class="w-full">
                             <select
-                                class="form-input w-full  "
+                                class="form "
                                 v-model="filter.type"
                                 tabindex="2"
                                 @change="changestore"

@@ -17,7 +17,7 @@
                         <div class="block w-1/4 sm:w-full md:w-1/2">
                             <label for="" class="font-semibold">Store</label>
                             <select
-                                class="form-input w-full "
+                                class="form"
                                 v-model="filter.store"
                                 tabindex="1"
                             >
@@ -43,7 +43,7 @@
                             >
                             <input
                                 type="date"
-                                class="w-full form-input "
+                                class="form "
                                 tabindex="2"
                                 v-model="filter.dateFrom"
                             />
@@ -52,7 +52,7 @@
                             <label for="" class="font-semibold">Date to</label>
                             <input
                                 type="date"
-                                class="w-full form-input "
+                                class="form"
                                 tabindex="3"
                                 v-model="filter.dateTo"
                             />
@@ -116,12 +116,12 @@
                             id="accountability_table"
                         >
                             <thead
-                                class="border-t border-gray-300 bg-gray-100 tracking-normal"
+                                class="border  bg-gray-100 tracking-normal"
                             >
                                 <tr class="tr">
-                                    <th class="p-2 text-left ">Cashier</th>
-                                    <th class="p-2 text-center">Ticket #</th>
-                                    <th class="p-2 text-right">
+                                    <th class="p-2 border text-left ">Cashier</th>
+                                    <th class="p-2 border text-center">Ticket #</th>
+                                    <th class="p-2 border text-right">
                                         Transaction #
                                     </th>
                                     <th class="p-2 text-right">Net Amount</th>
@@ -174,14 +174,13 @@
                                             transactions.data.length
                                     "
                                 >
-                                    <td colspan="2" class="td"></td>
-                                    <td class="td">
+                                    <td class="td" colspan="3">
                                         <span class="font-semibold"
                                             >SUB TOTAL :</span
                                         >
                                     </td>
                                     <td
-                                        colspan="2"
+                                        colspan="3"
                                         class="font-semibold td text-right"
                                     >
                                         {{
@@ -197,8 +196,7 @@
                                             transactions.data.length
                                     "
                                 >
-                                    <td colspan="2"></td>
-                                    <td class=" td font-semibold">
+                                    <td class=" td font-semibold " colspan="3">
                                         TOTAL PICKING CHARGE :
                                     </td>
                                     <td
@@ -217,8 +215,7 @@
                                             transactions.data.length
                                     "
                                 >
-                                    <td colspan="2"></td>
-                                    <td class="td font-semibold">
+                                    <td class="td font-semibold" colspan="3">
                                         GRAND TOTAL :
                                     </td>
                                     <td

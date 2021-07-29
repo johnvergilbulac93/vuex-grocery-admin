@@ -11,13 +11,11 @@
                 <div
                     class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
                 >
-                    <div class="  md:w-1/2 sm:w-full flex">
-                        <div
-                            class="relative w-1/2 border overflow-hidden flex rounded-l-lg"
-                        >
+                    <div class="  md:w-1/2 sm:w-full flex items-center gap-0.5">
+                        <div class="relative w-1/2 flex items-center">
                             <input
                                 type="text"
-                                class="relative py-2 px-4 pr-10 w-full  placeholder-gray-400 focus:outline-none "
+                                class="form-search"
                                 placeholder="Search...."
                                 v-model="tableData.search"
                                 @keyup.enter="search"
@@ -43,10 +41,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <button
-                            @click="search"
-                            class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500  hover:text-white rounded-r-lg"
-                        >
+                        <button @click="search" class="button-search">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="h-5 w-5 "
@@ -66,7 +61,7 @@
                     <div class="text-sm">
                         <span>Show</span>
                         <select
-                            class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
+                            class="form-sort"
                             v-model="tableData.length"
                             @change="fetch()"
                         >
@@ -211,10 +206,7 @@
                                     >Store</label
                                 >
                                 <select
-                                    v-bind:class="{
-                                        'border-red-600': errors.store
-                                    }"
-                                    class="px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                    class="form"
                                     v-model="form.store"
                                 >
                                     <option value="">Select Store</option>
@@ -226,22 +218,17 @@
                                         {{ store.business_unit }}
                                     </option>
                                 </select>
-                                <p
-                                    class="text-red-500 text-center text-sm"
+                                <Error
+                                    :message="errors.store[0]"
                                     v-if="errors.store"
-                                >
-                                    <small>{{ errors.store[0] }}</small>
-                                </p>
+                                />
                             </div>
                             <div class="flex flex-col w-full">
                                 <label for="department" class="font-semibold"
                                     >Department</label
                                 >
                                 <select
-                                    v-bind:class="{
-                                        'border-red-600': errors.department
-                                    }"
-                                    class=" px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                    class=" form"
                                     v-model="form.department"
                                 >
                                     <option value="">Select Department</option>
@@ -253,12 +240,10 @@
                                         {{ dept.name }}
                                     </option>
                                 </select>
-                                <p
-                                    class="text-red-500 text-center text-sm"
+                                <Error
+                                    :message="errors.department[0]"
                                     v-if="errors.department"
-                                >
-                                    <small>{{ errors.department[0] }}</small>
-                                </p>
+                                />
                             </div>
                             <div class="flex flex-col w-full">
                                 <label for="amount" class="font-semibold"
@@ -266,18 +251,13 @@
                                 >
                                 <input
                                     v-model="form.amount"
-                                    v-bind:class="{
-                                        'border-red-600': errors.amount
-                                    }"
                                     type="number"
-                                    class="text-center  px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                    class="form"
                                 />
-                                <p
-                                    class="text-red-500 text-center text-sm"
+                                <Error
+                                    :message="errors.amount[0]"
                                     v-if="errors.amount"
-                                >
-                                    <small>{{ errors.amount[0] }}</small>
-                                </p>
+                                />
                             </div>
                         </div>
                         <div

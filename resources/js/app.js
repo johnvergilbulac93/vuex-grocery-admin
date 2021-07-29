@@ -23,7 +23,6 @@ import 'view-design/dist/styles/iview.css';
 import 'nprogress/nprogress.css'
 // import Axios from 'axios';
 
-
 // import VueProgressBar from 'vue-progressbar'
 // 
 // Vue.use(VueProgressBar, {
@@ -31,6 +30,7 @@ import 'nprogress/nprogress.css'
 //   failedColor: 'red',
 //   height: '4px'
 // })
+
 
 Vue.use(excel)
 
@@ -111,6 +111,7 @@ Vue.component('Profile', require('./components/admin/pages/Profile-Upload.vue').
 Vue.component('Pagination', require('./Usable/Pagination.vue').default);
 Vue.component('Datatable', require('./Usable/Datatable.vue').default);
 Vue.component('Breadcrumb', require('./Usable/Breadcrumb.vue').default);
+Vue.component('Error', require('./Usable/Error.vue').default);
 
 
 /**

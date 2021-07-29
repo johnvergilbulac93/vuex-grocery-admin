@@ -27,14 +27,14 @@
                         <label for="" class="block font-semibold subpixel-antialiased"
                             >Old Password
                         </label>
-                        <div class="relative w-full  overflow-hidden flex ">
+                        <div class="relative w-full flex ">
                             <input
                                 v-bind:class="{
                                     'border-red-600': errors.old_password
                                 }"
                                 v-if="showPasswordOld"
                                 type="text"
-                                class="relative py-2 px-4 pr-10 w-full outline-none border   focus:border-yellow-500 rounded"
+                                class="relative form "
                                 placeholder="Old Password"
                                 v-model="form.old_password"
                                 tabindex="1"
@@ -46,7 +46,7 @@
                                 }"
                                 v-else
                                 type="password"
-                                class="relative py-2 px-4 pr-10 w-full outline-none border   placeholder-gray-400  focus:border-yellow-500 rounded"
+                                class="relative form"
                                 placeholder="Old Password"
                                 v-model="form.old_password"
                                 tabindex="1"
@@ -108,14 +108,14 @@
                         <label for="" class="block font-semibold"
                             >New Password
                         </label>
-                        <div class="relative w-full  overflow-hidden flex ">
+                        <div class="relative w-full  flex ">
                             <input
                                 v-bind:class="{
                                     'border-red-600': errors.new_password
                                 }"
                                 v-if="showPasswordNew"
                                 type="text"
-                                class="relative py-2 px-4 pr-10 w-full outline-none text-gray-600 placeholder-gray-400 border  focus:border-yellow-500 rounded"
+                                class="relative form"
                                 placeholder="New Password"
                                 v-model="form.new_password"
                                 tabindex="2"
@@ -126,7 +126,7 @@
                                 }"
                                 v-else
                                 type="password"
-                                class="relative py-2 px-4 pr-10 w-full outline-none text-gray-600 placeholder-gray-400 border  focus:border-yellow-500 rounded"
+                                class="relative form"
                                 placeholder="New Password"
                                 v-model="form.new_password"
                                 tabindex="2"
@@ -187,11 +187,11 @@
                         <label for="" class="block font-semibold"
                             >Confirm New Password
                         </label>
-                        <div class="relative w-full overflow-hidden flex ">
+                        <div class="relative w-full  flex ">
                             <input
                                 v-if="showPasswordConfirm"
                                 type="text"
-                                class="relative py-2 px-4 pr-10 w-full outline-none text-gray-600 placeholder-gray-400 border   focus:border-yellow-500 rounded"
+                                class="relative form"
                                 placeholder="Confirm Password"
                                 v-model="form.new_password_confirmation"
                                 tabindex="3"
@@ -199,7 +199,7 @@
                             <input
                                 v-else
                                 type="password"
-                                class="relative py-2 px-4 pr-10 w-full outline-none text-gray-600 placeholder-gray-400 border  focus:border-yellow-500 rounded"
+                                class="relative form"
                                 placeholder="Confirm Password"
                                 v-model="form.new_password_confirmation"
                                 tabindex="3"

@@ -16,6 +16,9 @@ export const CHECK_SESSION  = (state, payload) => {
 export const SET_ERRORS  = (state, payload) => {
      state.errors = payload
 }
+export const CLEAR_ERRORS  = (state) => {
+     state.errors =  {}
+}
 export const MODAL_FLAG = (state, flag) => {
      state.isModal = flag
 }

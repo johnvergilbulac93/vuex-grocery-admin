@@ -55,9 +55,9 @@
                     <div
                         class="border-b-2 p-3 flex justify-between items-center"
                     >
-                        <span
+                        <label
                             class="font-semibold text-lg"
-                            >Today's Price Changed</span
+                            >Today's Price Changed</label
                         >
                         <a @click="closeModal">
                             <svg

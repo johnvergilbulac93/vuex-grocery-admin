@@ -9,18 +9,18 @@
                     >
                 </div>
                 <div
-                    class="flex sm:flex-wrap sm:space-y-2 lg:justify-between sm:justify-start items-center pb-2"
+                    class="flex sm:flex-wrap sm:space-y-2 md:space-y-0 lg:justify-between sm:justify-start items-center mb-2"
                 >
                     <div
                         class="w-3/4 flex sm:flex-col lg:flex-row justify-between items-center sm:space-y-2 md:space-y-2 lg:space-y-0 "
                     >
-                        <div class="w-72 flex">
+                        <div class="w-72 flex items-center gap-0.5">
                             <div
-                                class="relative w-full border overflow-hidden flex rounded-l-lg "
+                                class="relative w-full flex items-center  "
                             >
                                 <input
                                     type="text"
-                                    class="relative py-2 px-4 pr-10 w-full  focus:outline-none "
+                                    class="form-search "
                                     placeholder="Search...."
                                     v-model="tableData.search"
                                     @keyup.enter="search"
@@ -48,7 +48,7 @@
                             </div>
                             <button
                                 @click="search"
-                                class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
+                                class="button-search"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +68,7 @@
                         </div>
                         <div class=" w-72">
                             <select
-                                class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
+                                class="form  "
                                 v-model="tableData.category"
                                 @change="fetch()"
                             >
@@ -84,7 +84,7 @@
                         </div>
                         <div class=" w-72">
                             <select
-                                class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
+                                class="form "
                                 v-model="tableData.price_group"
                                 @change="fetch()"
                             >
@@ -98,7 +98,7 @@
                     <div class="text-sm">
                         <span>Show</span>
                         <select
-                            class="mb-2 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
+                            class="form-sort "
                             v-model="tableData.length"
                             @change="fetch()"
                         >
@@ -134,7 +134,7 @@
                             <td class="text-center td">
                                 <select
                                     v-if="item.item_price.length"
-                                    class="cursor-pointer w-20  focus:outline-none  border rounded focus:border-yellow-500 text-sm  "
+                                    class="form   "
                                     @change="getPrice($event, i)"
                                 >
                                     <option

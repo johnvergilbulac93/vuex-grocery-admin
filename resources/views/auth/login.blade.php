@@ -40,7 +40,7 @@
                                 </svg>
                             </span>
                             <input type="text" name="username"
-                                class="relative py-3 px-3 pl-10 w-full  border focus:border-yellow-500 rounded-lg bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:shadow-outline transition duration-500"
+                                class="relative py-3 px-3 pl-10 w-full  border focus:border-yellow-500 focus:ring-yellow-500 border-gray-300 rounded-lg bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:shadow-outline transition duration-500"
                                 placeholder="Username" value="{{ old('username') }}" required autocomplete="username"
                                 autofocus />
                         </div>
@@ -58,15 +58,15 @@
                                     </svg>
                                 </span>
                                 <input v-if="!showPassword" type="password" name="password" v-model="password"
-                                    class="relative py-3 px-3 pl-10 w-full  border focus:border-yellow-500 rounded-lg bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:shadow-outline transition duration-500"
+                                    class="relative py-3 px-3 pl-10 w-full  border focus:border-yellow-500 focus:ring-yellow-500 border-gray-300 rounded-lg bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:shadow-outline transition duration-500"
                                     placeholder="Password" />
                                 <input v-if="showPassword" type="text" name="password" v-model="password"
-                                    class="relative py-3 px-3 pl-10 w-full  border focus:border-yellow-500 rounded-lg bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:shadow-outline transition duration-500"
+                                    class="relative py-3 px-3 pl-10 w-full  border focus:border-yellow-500 focus:ring-yellow-500 border-gray-300 rounded-lg bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:shadow-outline transition duration-500"
                                     placeholder="Password" />
 
                             </div>
                             <div class="flex items-center justify-end w-full space-x-1 mt-1 ">
-                                <input type="checkbox" name="" @click="toggleShow" id="show_password" class="cursor-pointer focus:outline-none">
+                                <input type="checkbox" name="" @click="toggleShow" id="show_password" class="form-checkbox">
                                 <label for="show_password" class="cursor-pointer">Show Password</label>
                             </div>
                         </div>

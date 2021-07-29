@@ -10,6 +10,7 @@ use App\User;
 use App\store;
 use App\gc_usertype;
 use App\gc_employee;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -36,6 +37,7 @@ class UserController extends Controller
                 'locate_business_units.business_unit',
                 'gc_users.created_at',
                 'gc_users.status',
+                'gc_users.inactivity_date',
 
             )
             ->orderBy('gc_users.id', $dir);
@@ -67,13 +69,26 @@ class UserController extends Controller
     }
     public function create_user(Request $request)
     {
+        if($request->password){
+            $this->validate($request, [
+                'name'          => ['required', 'string', 'max:255'],
+                'username'      => ['required', 'string', 'string', 'max:255', 'unique:gc_users,username'],
+                'employee_id'   => ['required'],
+                'usertype'      => ['required'],
+                'store'         => ['required'],
+                'store'         => ['required'],
+                'password'      => ['required','min:8','regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/']
+                ]);
+        }else{
+            $this->validate($request, [
+                'name'          => ['required', 'string', 'max:255'],
+                'username'      => ['required', 'string', 'string', 'max:255', 'unique:gc_users,username'],
+                'employee_id'   => ['required'],
+                'usertype'      => ['required'],
+                'store'         => ['required'],
+            ]);
+        }
 
-        $this->validate($request, [
-            'name'          => ['required', 'string', 'max:255'],
-            'username'      => ['required', 'string', 'string', 'max:255', 'unique:gc_users,username'],
-            'usertype'      => ['required'],
-            'store'         => ['required'],
-        ]);
 
         $default_password = '@ltur4s2020';
 
@@ -156,13 +171,6 @@ class UserController extends Controller
     public function update_user(Request $request)
     {
 
-        $this->validate($request, [
-            'name'          => 'required',
-            'username'      => 'required',
-            'usertype'      => 'required',
-            'store'         => 'required',
-        ]);
-
         if (
             $request->usertype == 6  ||
             $request->usertype == 12 ||
@@ -233,13 +241,17 @@ class UserController extends Controller
     }
 
     public function active_user(Request $request){
+        
        User::whereId($request->id)->update([
-           'status' => 0
+           'status' => 0,
+           'inactivity_date' => date('Y-m-d H:i:s')
        ]);
     }
     public function inactive_user(Request $request){
+
         User::whereId($request->id)->update([
-            'status' => 1
+            'status' => 1,
+            'inactivity_date' => null
         ]);
     }
     public function change_password(Request $request)

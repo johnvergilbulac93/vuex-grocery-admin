@@ -10,13 +10,11 @@
                 </div>
                 <div class="grid grid-cols-6 grid-flow-col gap-4 mb-2">
                     <div class="col-span-5 flex items-center space-x-2">
-                        <div class="w-80 flex">
-                            <div
-                                class="relative w-full border overflow-hidden flex rounded-l-lg "
-                            >
+                        <div class="w-80 flex items-center gap-0.5">
+                            <div class="relative w-full flex items-center ">
                                 <input
                                     type="text"
-                                    class="relative py-2 px-4 focus:outline-none w-full "
+                                    class="relative form-search"
                                     placeholder="Search...."
                                     v-model="tableData.search"
                                     @keyup.enter="search"
@@ -42,13 +40,10 @@
                                     </svg>
                                 </button>
                             </div>
-                            <button
-                                @click="search"
-                                class="py-2.5 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
-                            >
+                            <button @click="search" class="button-search">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-4 w-4 "
+                                    class="h-5 w-5 "
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -67,7 +62,7 @@
                             <div class="">
                                 <select
                                     @change="fetch()"
-                                    class="text-sm py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  w-full"
+                                    class="form"
                                     v-model="tableData.province"
                                 >
                                     <option value="">Choose Province</option>
@@ -86,7 +81,7 @@
                             <div class="">
                                 <select
                                     @change="fetch()"
-                                    class="text-sm py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  w-full"
+                                    class="form"
                                     v-model="tableData.town"
                                 >
                                     <option value="">Choose Town</option>
@@ -107,7 +102,7 @@
                             <div class="">
                                 <select
                                     @change="fetch()"
-                                    class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg w-full"
+                                    class="form"
                                     v-model="tableData.transportation"
                                 >
                                     <option value=""
@@ -125,11 +120,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex justify-end ">
-                        <div class="text-sm mt-1">
+                    <div class="flex justify-end items-center ">
+                        <div class="text-sm ">
                             <span>Show</span>
                             <select
-                                class="mb-2 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
+                                class="form-sort"
                                 v-model="tableData.length"
                                 @change="fetch()"
                             >
@@ -301,10 +296,7 @@
                                     >
                                     <select
                                         @change="filteredTown"
-                                        v-bind:class="{
-                                            'border-red-600': errors.province
-                                        }"
-                                        class="px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                        class="form"
                                         v-model="form.province"
                                     >
                                         <option value=""
@@ -318,12 +310,10 @@
                                             {{ prov.prov_name }}
                                         </option>
                                     </select>
-                                    <p
-                                        class="text-red-500 text-center text-sm"
+                                    <Error
+                                        :message="errors.province[0]"
                                         v-if="errors.province"
-                                    >
-                                        <small>{{ errors.province[0] }}</small>
-                                    </p>
+                                    />
                                 </div>
                                 <div
                                     class="flex flex-row space-x-4 my-2 w-full "
@@ -334,7 +324,7 @@
                                         >
                                         <select
                                             v-if="editMode"
-                                            class=" px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                            class=" form"
                                             v-model="form.town"
                                         >
                                             <option value=""
@@ -351,10 +341,7 @@
                                         <select
                                             v-else
                                             @change="filteredBrgy"
-                                            v-bind:class="{
-                                                'border-red-600': errors.town
-                                            }"
-                                            class=" px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                            class=" form"
                                             v-model="form.town"
                                         >
                                             <option value=""
@@ -369,12 +356,10 @@
                                                 {{ town.town_name }}
                                             </option>
                                         </select>
-                                        <p
-                                            class="text-red-500 text-center text-sm"
+                                        <Error
+                                            :message="errors.town[0]"
                                             v-if="errors.town"
-                                        >
-                                            <small>{{ errors.town[0] }}</small>
-                                        </p>
+                                        />
                                     </div>
                                     <div class="flex flex-col w-1/2 ">
                                         <label for="brgy" class="font-semibold"
@@ -385,7 +370,7 @@
                                         </label>
                                         <select
                                             v-if="editMode"
-                                            class=" px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                            class=" form"
                                             v-model="form.barangay"
                                         >
                                             <option value=""
@@ -402,11 +387,7 @@
                                         </select>
                                         <select
                                             v-else
-                                            v-bind:class="{
-                                                'border-red-600':
-                                                    errors.barangay
-                                            }"
-                                            class=" px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                            class=" form"
                                             v-model="form.barangay"
                                         >
                                             <option value=""
@@ -421,14 +402,10 @@
                                                 {{ brgy.brgy_name }}
                                             </option>
                                         </select>
-                                        <p
-                                            class="text-red-500 text-center text-sm"
+                                        <Error
+                                            :message="errors.barangay[0]"
                                             v-if="errors.barangay"
-                                        >
-                                            <small>{{
-                                                errors.barangay[0]
-                                            }}</small>
-                                        </p>
+                                        />
                                     </div>
                                 </div>
                                 <div class="flex flex-col w-1/2">
@@ -436,11 +413,7 @@
                                         >Transportation</label
                                     >
                                     <select
-                                        v-bind:class="{
-                                            'border-red-600':
-                                                errors.transportation
-                                        }"
-                                        class=" px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                        class=" form"
                                         v-model="form.transportation"
                                     >
                                         <option value=""
@@ -455,14 +428,10 @@
                                             {{ transpo.transpo_name }}
                                         </option>
                                     </select>
-                                    <p
-                                        class="text-red-500 text-center text-sm"
+                                    <Error
+                                        :message="errors.transportation[0]"
                                         v-if="errors.transportation"
-                                    >
-                                        <small>{{
-                                            errors.transportation[0]
-                                        }}</small>
-                                    </p>
+                                    />
                                 </div>
                                 <div class="flex flex-row space-x-4 my-2">
                                     <div class="flex flex-col w-1/2">
@@ -473,21 +442,13 @@
                                         >
                                         <input
                                             v-model="form.charge_amount"
-                                            v-bind:class="{
-                                                'border-red-600':
-                                                    errors.charge_amount
-                                            }"
                                             type="number"
-                                            class="text-center  px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                            class="form"
                                         />
-                                        <p
-                                            class="text-red-500 text-center text-sm"
+                                        <Error
+                                            :message="errors.charge_amount[0]"
                                             v-if="errors.charge_amount"
-                                        >
-                                            <small>{{
-                                                errors.charge_amount[0]
-                                            }}</small>
-                                        </p>
+                                        />
                                     </div>
                                     <div class="flex flex-col w-1/2 ">
                                         <label for="brgy" class="font-semibold"
@@ -495,21 +456,13 @@
                                         >
                                         <input
                                             v-model="form.rider_share"
-                                            v-bind:class="{
-                                                'border-red-600':
-                                                    errors.rider_share
-                                            }"
                                             type="number"
-                                            class="text-center  px-4 py-2 border focus:outline-none focus:border-yellow-500 rounded"
+                                            class="form"
                                         />
-                                        <p
-                                            class="text-red-500 text-center text-sm"
+                                        <Error
+                                            :message="errors.rider_share[0]"
                                             v-if="errors.rider_share"
-                                        >
-                                            <small>{{
-                                                errors.rider_share[0]
-                                            }}</small>
-                                        </p>
+                                        />
                                     </div>
                                 </div>
                                 <div class="flex items-center space-x-2">
@@ -519,7 +472,7 @@
                                         type="checkbox"
                                         :checked="[form.status == 1]"
                                         tabindex="3"
-                                        class="w-5 h-5 appearance-none rounded bg-white checked:bg-yellow-600 checked:border-gray-300 border cursor-pointer"
+                                        class="form-checkbox"
                                     />
                                     <label
                                         for="status"

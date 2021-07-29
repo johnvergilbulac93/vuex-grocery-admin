@@ -16,14 +16,7 @@
                             <label for="store" class="font-semibold"
                                 >Store</label
                             >
-                            <select
-                                v-model="store"
-                                v-bind:class="{
-                                    'border-red-600': errors.store
-                                }"
-                                tabindex="1"
-                                class="w-full  px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
-                            >
+                            <select v-model="store" tabindex="1" class="form">
                                 <option value="">Choose Store</option>
                                 <option
                                     :value="store.bunit_code"
@@ -32,12 +25,10 @@
                                     >{{ store.business_unit }}
                                 </option>
                             </select>
-                            <p
-                                class="text-red-500 text-center text-sm"
+                            <Error
+                                :message="errors.store[0]"
                                 v-if="errors.store"
-                            >
-                                <small>{{ errors.store[0] }}</small>
-                            </p>
+                            />
                         </div>
                         <div class="w-full space-y-1">
                             <label for="store" class="font-semibold"
@@ -45,11 +36,8 @@
                             >
                             <select
                                 v-model="price_group"
-                                v-bind:class="{
-                                    'border-red-600': errors.store
-                                }"
                                 tabindex="1"
-                                class="w-full  px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                                class="form"
                             >
                                 <option value="">Choose Price Group</option>
                                 <option
@@ -59,19 +47,17 @@
                                     >{{ pGroup.price_group_name }}
                                 </option>
                             </select>
-                            <p
-                                class="text-red-500 text-center text-sm"
+                            <Error
+                                :message="errors.price_group[0]"
                                 v-if="errors.price_group"
-                            >
-                                <small>{{ errors.price_group[0] }}</small>
-                            </p>
+                            />
                         </div>
 
                         <div class="w-full mt-8 flex space-x-2">
                             <button
                                 @click="save"
                                 tabindex="4"
-                                class="w-1/2 bg-yellow-500 py-2 px-4 text-white  hover:bg-yellow-600 transition duration-500 focus:outline-none rounded"
+                                class="w-1/2 bg-blue-500 py-2 px-4 text-white  hover:bg-blue-600 transition duration-500 focus:outline-none rounded"
                             >
                                 Save
                             </button>
@@ -86,15 +72,15 @@
                     </div>
                     <div class=" col-span-2 p-2">
                         <div
-                            class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
+                            class="flex sm:flex-wrap sm:space-y-2 md:space-y-0 justify-between items-center mb-2"
                         >
-                            <div class=" md:w-1/2 sm:w-full flex">
-                                <div
-                                    class="relative w-1/2 border overflow-hidden flex rounded-l-lg"
-                                >
+                            <div
+                                class=" md:w-1/2 sm:w-full flex items-center gap-0.5"
+                            >
+                                <div class="relative w-1/2 flex items-center ">
                                     <input
                                         type="text"
-                                        class="relative py-2 px-4 pr-10 w-full   placeholder-gray-400 focus:outline-none "
+                                        class="form-search"
                                         placeholder="Search...."
                                         v-model="tableData.search"
                                         @keyup.enter="fetch()"
@@ -120,10 +106,7 @@
                                         </svg>
                                     </button>
                                 </div>
-                                <button
-                                    @click="fetch()"
-                                    class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
-                                >
+                                <button @click="fetch()" class="button-search">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         class="h-5 w-5 "
@@ -143,7 +126,7 @@
                             <div class="text-sm">
                                 <span>Show</span>
                                 <select
-                                    class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
+                                    class="form-sort"
                                     v-model="tableData.length"
                                     @change="fetch()"
                                 >

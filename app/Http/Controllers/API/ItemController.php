@@ -305,12 +305,12 @@ class ItemController extends Controller
     public function show_item_disable_per_uom(Request $request)
     {
 
+        
         $length = $request->input('length');
         $column = $request->input('column');
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
         $categoryValue = $request->input('category');
-
         $query =  DB::table('gc_product_items')
             ->join('gc_product_prices', 'gc_product_items.itemcode', '=', 'gc_product_prices.itemcode')
             ->where('gc_product_prices.status', '=', 1)

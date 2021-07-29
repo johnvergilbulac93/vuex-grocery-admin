@@ -18,10 +18,7 @@
                                 <select
                                     v-model="form.store"
                                     tabindex="1"
-                                    v-bind:class="{
-                                        'border-red-600': errors.store
-                                    }"
-                                    class="w-full text-sm px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                                    class="form"
                                 >
                                     <option value="">Select Store</option>
                                     <option
@@ -31,12 +28,10 @@
                                         >{{ store.business_unit }}
                                     </option>
                                 </select>
-                                <p
-                                    class="text-red-500 text-center text-sm"
+                                <Error
+                                    :message="errors.store[0]"
                                     v-if="errors.store"
-                                >
-                                    <small>{{ errors.store[0] }}</small>
-                                </p>
+                                />
                             </div>
                             <div class="w-full space-y-1">
                                 <label for="store" class="font-semibold"
@@ -45,10 +40,7 @@
                                 <select
                                     v-model="form.department"
                                     tabindex="2"
-                                    v-bind:class="{
-                                        'border-red-600': errors.department
-                                    }"
-                                    class="w-full text-sm px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                                    class="form"
                                 >
                                     <option value="">Select Department</option>
                                     <option
@@ -58,12 +50,10 @@
                                         >{{ dept.name }}
                                     </option>
                                 </select>
-                                <p
-                                    class="text-red-500 text-center text-sm"
+                                <Error
+                                    :message="errors.department[0]"
                                     v-if="errors.department"
-                                >
-                                    <small>{{ errors.department[0] }}</small>
-                                </p>
+                                />
                             </div>
                             <div class="flex items-center space-x-1 ">
                                 <input
@@ -72,7 +62,7 @@
                                     type="checkbox"
                                     :checked="[form.status == 1]"
                                     tabindex="3"
-                                    class="w-5 h-5 appearance-none rounded bg-white checked:bg-yellow-600 checked:border-gray-300 border cursor-pointer "
+                                    class="form-checkbox "
                                 />
                                 <label
                                     for="status"
@@ -99,15 +89,15 @@
                 </div>
                 <div class="col-span-2">
                     <div
-                        class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
+                        class="flex sm:flex-wrap sm:space-y-2 justify-between items-center mb-2"
                     >
-                        <div class="  md:w-1/2 sm:w-full flex">
-                            <div
-                                class="relative w-1/2 border overflow-hidden flex rounded-l-lg"
-                            >
+                        <div
+                            class=" md:w-1/2 sm:w-full flex items-center gap-0.5"
+                        >
+                            <div class="relative w-full  flex items-center">
                                 <input
                                     type="text"
-                                    class="relative py-2 px-4 pr-10 w-full focus:outline-none "
+                                    class="form-search"
                                     placeholder="Search...."
                                     v-model="tableData.search"
                                     @keyup.enter="search"
@@ -133,10 +123,7 @@
                                     </svg>
                                 </button>
                             </div>
-                            <button
-                                @click="search"
-                                class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500  hover:text-white rounded-r-lg"
-                            >
+                            <button @click="search" class="button-search">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     class="h-5 w-5 "
@@ -156,7 +143,7 @@
                         <div class="text-sm">
                             <span>Show</span>
                             <select
-                                class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
+                                class="form-sort "
                                 v-model="tableData.length"
                                 @change="fetch()"
                             >

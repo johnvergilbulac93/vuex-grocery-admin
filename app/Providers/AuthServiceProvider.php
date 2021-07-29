@@ -29,6 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
+        Passport::cookie('grocery_admin_token');
 
         Gate::define('isAdmin', function(){
             return Auth::user()->usertype_id === 6;

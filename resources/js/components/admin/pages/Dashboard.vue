@@ -84,17 +84,17 @@
                         </div>
                         <div class="p-2">
                             <div
-                                class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
+                                class="flex sm:flex-wrap sm:space-y-2 justify-between items-center mb-2"
                             >
                                 <div
-                                    class=" md:w-1/2 sm:w-full flex"
+                                    class=" md:w-1/2 sm:w-full flex items-center gap-0.5"
                                 >
                                     <div
-                                        class="relative border overflow-hidden flex rounded-l-lg"
+                                        class="relative w-1/2  flex items-center"
                                     >
                                         <input
                                             type="text"
-                                            class="relative py-2 px-4 pr-10 w-full   focus:outline-none focus:shadow-outline"
+                                            class="form-search"
                                             placeholder="Search...."
                                             v-model="tableData.search"
                                             @keyup.enter="search"
@@ -122,7 +122,7 @@
                                     </div>
                                     <button
                                         @click="search"
-                                        class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
+                                        class="button-search"
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"

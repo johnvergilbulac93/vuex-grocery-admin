@@ -17,7 +17,7 @@
                         <div class="block w-1/4 sm:w-full md:w-1/2">
                             <label for="" class="font-semibold">Store</label>
                             <select
-                                class="form-input w-full "
+                                class="form"
                                 v-model="filter.store"
                                 tabindex="1"
                             >
@@ -43,7 +43,7 @@
                             >
                             <input
                                 type="date"
-                                class="w-full form-input "
+                                class="form"
                                 tabindex="2"
                                 v-model="filter.dateFrom"
                             />
@@ -52,7 +52,7 @@
                             <label for="" class="font-semibold">Date to</label>
                             <input
                                 type="date"
-                                class="w-full form-input "
+                                class="form "
                                 tabindex="3"
                                 v-model="filter.dateTo"
                             />
@@ -124,32 +124,32 @@
                             class="min-w-full divide-y divide-gray-300"
                         >
                             <thead
-                                class="border-t-2 border-gray-300 bg-gray-100  tracking-normal"
+                                class="border bg-gray-100  tracking-normal"
                             >
                                 <tr class="tr">
-                                    <th class="p-2 text-left">Cashier</th>
-                                    <th class="p-2">Date</th>
-                                    <th class="p-2">Ticket #</th>
-                                    <th class="p-2 text-left">Customer</th>
-                                    <th class="p-2">Transaction #</th>
-                                    <th class="p-2 text-right">Gross Amt.</th>
-                                    <th class="p-2 text-right">Disc.</th>
-                                    <th class="p-2 text-right">Less Disc.</th>
-                                    <th class="p-2 text-right">
+                                    <th class="p-2 border text-left">Cashier</th>
+                                    <th class="p-2 border">Date</th>
+                                    <th class="p-2 border">Ticket #</th>
+                                    <th class="p-2 border text-left">Customer</th>
+                                    <th class="p-2 border">Transaction #</th>
+                                    <th class="p-2 border text-right">Gross Amt.</th>
+                                    <th class="p-2 border text-right">Disc.</th>
+                                    <th class="p-2 border text-right">Less Disc.</th>
+                                    <th class="p-2 border text-right">
                                         Picking Charge
                                     </th>
                                     <th class="p-2 text-right">Total</th>
                                 </tr>
                             </thead>
                             <tbody class="tbody">
-                                <tr class="tr">
+                                <!-- <tr class="tr">
                                     <td
                                         colspan="10"
                                         class="text-center font-semibold tracking-normal"
                                     >
                                         NO DATA AVAILABLE
                                     </td>
-                                </tr>
+                                </tr> -->
                                 <tr
                                     v-for="(trans, index) in cashier"
                                     :key="index"
@@ -198,35 +198,35 @@
                                     </td>
                                 </tr>
                                 <tr class="font-weight-bold tr">
-                                    <th colspan="4" class="text-center">
+                                    <th colspan="4" class="text-center p-2 border">
                                         GRAND TOTAL:
                                     </th>
-                                    <th>{{ cashier.length }}</th>
-                                    <th class="text-right">
+                                    <th class="p-2 border">{{ cashier.length }}</th>
+                                    <th class="text-right p-2 border">
                                         {{
                                             totalOrderAmount(cashier)
                                                 .orderAmount | toCurrency
                                         }}
                                     </th>
-                                    <th class="text-right">
+                                    <th class="text-right p-2 border">
                                         {{
                                             totalOrderAmount(cashier).discount
                                                 | toCurrency
                                         }}
                                     </th>
-                                    <th class="text-right">
+                                    <th class="text-right p-2 border">
                                         {{
                                             totalOrderAmount(cashier)
                                                 .lessDiscount | toCurrency
                                         }}
                                     </th>
-                                    <th class="text-right">
+                                    <th class="text-right p-2 border">
                                         {{
                                             totalOrderAmount(cashier)
                                                 .pickupCharge | toCurrency
                                         }}
                                     </th>
-                                    <th class="text-right">
+                                    <th class="text-right p-2 border">
                                         {{
                                             totalOrderAmount(cashier)
                                                 .grandTotal | toCurrency

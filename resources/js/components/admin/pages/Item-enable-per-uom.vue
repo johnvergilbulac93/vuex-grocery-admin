@@ -9,15 +9,13 @@
                     >
                 </div>
                 <div
-                    class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
+                    class="flex sm:flex-wrap sm:space-y-2 md:space-y-0 justify-between items-center mb-2"
                 >
-                    <div class=" md:w-1/2 sm:w-full flex">
-                        <div
-                            class="relative w-1/2 border overflow-hidden flex rounded-l-lg"
-                        >
+                    <div class=" md:w-1/2 sm:w-full flex items-center gap-0.5">
+                        <div class="relative w-1/2  flex items-center">
                             <input
                                 type="text"
-                                class="relative py-2 px-4 pr-10 w-full  focus:outline-none focus:shadow-outline"
+                                class="form-search"
                                 placeholder="Search...."
                                 v-model="tableData.search"
                                 @keyup.enter="search"
@@ -43,10 +41,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <button
-                            @click="search"
-                            class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
-                        >
+                        <button @click="search" class="button-search">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="h-5 w-5 "
@@ -65,7 +60,7 @@
                     </div>
                     <div class="w-72">
                         <select
-                            class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
+                            class="form"
                             v-model="tableData.category"
                             @change="fetch()"
                         >
@@ -82,7 +77,7 @@
                     <div class="text-sm">
                         <span>Show</span>
                         <select
-                            class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
+                            class="form-sort "
                             v-model="tableData.length"
                             @change="fetch()"
                         >
@@ -121,23 +116,33 @@
                     </button>
                 </div>
                 <table class="min-w-full divide-y divide-gray-300">
-                    <thead
-                        class="border bg-gray-100 tracking-normal"
-                    >
+                    <thead class="border bg-gray-100 tracking-normal">
                         <tr>
                             <th class="th border">
                                 <input
                                     type="checkbox"
-                                    class="h-4 w-4 cursor-pointer focus:outline-none "
+                                    class="form-checkbox "
                                     @click="selectAll"
                                     v-model="allSelected"
                                 />
                             </th>
-                            <th class="th border text-left">Code</th>
-                            <th class="th border text-left">Description</th>
-                            <th class="th border text-left">Category Name</th>
-                            <th class="th border text-center">UOM</th>
-                            <th class="th border text-right">Price</th>
+                            <th
+                                v-for="column in columns"
+                                :key="column.name"
+                                @click="sortBy(column.name)"
+                                class="p-3 border"
+                                :class="[
+                                    sortKey === column.name
+                                        ? sortOrders[column.name] > 0
+                                            ? 'sorting_up'
+                                            : 'sorting_down'
+                                        : 'sorting_both',
+                                    column.class
+                                ]"
+                                style="cursor:pointer;"
+                            >
+                                {{ column.label }}
+                            </th>
                         </tr>
                     </thead>
                     <tbody class="tbody text-center">
@@ -150,17 +155,21 @@
                             <td class="td">
                                 <input
                                     type="checkbox"
-                                    class="h-4 w-4 cursor-pointer "
+                                    class="form-checkbox "
                                     :value="item.price_id"
                                     v-model="form.itemIds"
                                     @click="select"
                                 />
                             </td>
                             <td class="td text-left">{{ item.itemcode }}</td>
-                            <td class="td text-left">{{ item.product_name }}</td>
-                            <td class="td text-left">{{ item.category_name }}</td>
+                            <td class="td text-left">
+                                {{ item.product_name }}
+                            </td>
+                            <td class="td text-left">
+                                {{ item.category_name }}
+                            </td>
                             <td class="td">{{ item.UOM }}</td>
-                            <td class="td text-right ">
+                            <td class="td text-center ">
                                 {{ item.price_with_vat | toCurrency2 }}
                             </td>
                         </tr>
@@ -183,8 +192,8 @@ export default {
     name: "Tagging-Enable-UOM",
 
     data() {
+        let sortOrders = {};
         let routes = [
-
             {
                 label: "Item Masterfile",
                 route: "/central_item"
@@ -198,8 +207,46 @@ export default {
                 route: "/enable_uom"
             }
         ];
+        let columns = [
+            {
+                width: "25%",
+                label: "Code",
+                name: "code",
+                class: "text-left"
+            },
+            {
+                width: "25%",
+                label: "Description",
+                name: "description",
+                class: "text-left"
+            },
+            {
+                width: "15%",
+                label: "Category Name",
+                name: "catname",
+                class: "text-left"
+            },
+            {
+                width: "15%",
+                label: "UOM",
+                name: "uom",
+                class: "text-center"
+            },
+            {
+                width: "15%",
+                label: "Price",
+                name: "price",
+                class: "text-center"
+            }
+        ];
+        columns.forEach(column => {
+            sortOrders[column.name] = -1;
+        });
         return {
             routes: routes,
+            columns: columns,
+            sortKey: "code",
+            sortOrders: sortOrders,
             selected: [],
             allSelected: false,
             form: {
@@ -289,6 +336,16 @@ export default {
         },
         select() {
             this.allSelected = false;
+        },
+        sortBy(key) {
+            this.sortKey = key;
+            this.sortOrders[key] = this.sortOrders[key] * -1;
+            this.tableData.column = this.getIndex(this.columns, "name", key);
+            this.tableData.dir = this.sortOrders[key] === 1 ? "asc" : "desc";
+            this.fetch();
+        },
+        getIndex(array, key, value) {
+            return array.findIndex(i => i[key] == value);
         }
     },
     mounted() {

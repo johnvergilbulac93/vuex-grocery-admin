@@ -16,7 +16,7 @@
                         <label for="" class="font-semibold">Date from</label>
                         <input
                             type="date"
-                            class="w-full form-input "
+                            class="form "
                             tabindex="2"
                             v-model="filter.dateFrom"
                         />
@@ -25,7 +25,7 @@
                         <label for="" class="font-semibold">Date to</label>
                         <input
                             type="date"
-                            class="w-full form-input "
+                            class="form "
                             tabindex="3"
                             v-model="filter.dateTo"
                         />

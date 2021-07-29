@@ -10,7 +10,7 @@
                 <div class="w-1/4 p-5 space-y-5 border">
                     <div class="w-full">
                         <select
-                            class="form-input  w-full "
+                            class="form"
                             v-model="filter.type"
                             @change="changestore"
                         >

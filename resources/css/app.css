@@ -14,13 +14,8 @@
     @apply p-2  text-sm  text-black border;
 }
 .tr {
-    @apply hover:bg-gray-100 text-black;
+    @apply hover:bg-gray-100 text-black hover:shadow-md;
 }
-
-.form-input {
-    @apply px-4 py-2 border focus:outline-none rounded focus:border-yellow-500;
-}
-
 .footer-btn {
     @apply bg-yellow-500 text-gray-50 text-sm p-2 rounded mt-1 disabled:opacity-50 focus:outline-none w-14 h-8 hover:bg-yellow-600 hover:text-white transition duration-500;
 }
@@ -29,4 +24,20 @@
 }
 .li{
     @apply px-3 py-2 transition duration-200 relative block  hover:bg-gray-100 
+}
+
+.form {
+    @apply w-full border-gray-300  focus:border-yellow-500 focus:ring-yellow-500 shadow-sm placeholder-gray-400 text-sm text-gray-700 ;
+}
+.form-search {
+    @apply  text-sm w-full border-gray-300  focus:ring-yellow-500 focus:border-yellow-500 shadow-sm ;
+}
+.button-search {
+    @apply border-gray-300 py-2 px-4 focus:outline-none hover:bg-yellow-500 hover:text-white border focus:ring-yellow-500 ;
+}
+.form-checkbox {
+    @apply w-4 h-4 rounded text-yellow-500 focus:ring-yellow-500 border-gray-300 cursor-pointer;
+}
+.form-sort {
+    @apply focus:border-yellow-500 border-gray-300 focus:ring-yellow-500 shadow-sm;
 }

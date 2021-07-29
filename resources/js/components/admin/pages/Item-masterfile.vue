@@ -7,17 +7,13 @@
                 >
             </div>
             <div
-                class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
+                class="flex sm:flex-wrap sm:space-y-2 md:space-y-0 justify-between items-center mb-2"
             >
-                <div
-                    class="   md:w-1/3 sm:w-full flex"
-                >
-                    <div
-                        class="relative border w-64 overflow-hidden flex rounded-l-lg mt-2 "
-                    >
+                <div class="  md:w-1/3 sm:w-full flex items-center gap-0.5">
+                    <div class="relative w-64  flex items-center ">
                         <input
                             type="text"
-                            class="relative py-2 px-4 pr-10 w-full focus:outline-none focus:shadow-outline "
+                            class="form-search "
                             placeholder="Search...."
                             v-model="tableData.search"
                             @keyup.enter="search"
@@ -43,10 +39,7 @@
                             </svg>
                         </button>
                     </div>
-                    <button
-                        @click="search"
-                        class="mt-2 py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
-                    >
+                    <button @click="search" class="button-search">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="h-5 w-5 "
@@ -63,9 +56,9 @@
                         </svg>
                     </button>
                 </div>
-                <div class=" w-72">
+                <div class="w-72">
                     <select
-                        class="w-72 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg "
+                        class="form"
                         v-model="tableData.category"
                         @change="fetch()"
                     >
@@ -79,9 +72,9 @@
                         </option>
                     </select>
                 </div>
-                <div class=" w-48">
+                <div class="w-48">
                     <select
-                        class="w-48 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
+                        class="form "
                         v-model="tableData.type"
                         @change="fetch()"
                     >
@@ -90,21 +83,10 @@
                         <option value="2">Unavailable Item</option>
                     </select>
                 </div>
-                <div class=" w-40">
-                    <select
-                        class="w-40 py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
-                        v-model="tableData.dir"
-                        @change="fetch()"
-                    >
-                        <option value="">Sort By</option>
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
-                    </select>
-                </div>
                 <div class="text-sm">
-                    <span >Show</span>
+                    <span>Show</span>
                     <select
-                        class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
+                        class="form-sort  "
                         v-model="tableData.length"
                         @change="fetch()"
                     >
@@ -116,7 +98,7 @@
                             {{ records }}
                         </option>
                     </select>
-                    <span >Entries</span>
+                    <span>Entries</span>
                 </div>
             </div>
             <div class="flex space-x-2">
@@ -168,22 +150,33 @@
                 </div>
             </div>
             <table class="min-w-full divide-y divide-gray-300">
-                <thead
-                    class="border-t-2 border-gray-300 bg-gray-100 tracking-normal"
-                >
+                <thead class=" bg-gray-100 tracking-normal">
                     <tr>
-                        <th class="th">
+                        <th class="th border">
                             <input
                                 type="checkbox"
-                                class="h-4 w-4 cursor-pointer focus:outline-none "
+                                class="form-checkbox "
                                 @click="selectAll"
                                 v-model="allSelected"
                             />
                         </th>
-                        <th class="th">Itemcode</th>
-                        <th class="th">Description</th>
-                        <th class="th">Category Name</th>
-                        <th class="th"></th>
+                        <th
+                            v-for="column in columns"
+                            :key="column.name"
+                            @click="sortBy(column.name)"
+                            class="p-3 border"
+                            :class="[
+                                sortKey === column.name
+                                    ? sortOrders[column.name] > 0
+                                        ? 'sorting_up'
+                                        : 'sorting_down'
+                                    : 'sorting_both',
+                                column.class
+                            ]"
+                            style="cursor:pointer;"
+                        >
+                            {{ column.label }}
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="tbody text-center">
@@ -196,22 +189,23 @@
                         <td class="td">
                             <input
                                 type="checkbox"
-                                class="h-4 w-4 cursor-pointer focus:outline-none checked:bg-yellow-500"
+                                class="form-checkbox"
                                 :value="item.itemcode"
                                 v-model="form.itemIds"
                                 @click="select"
                             />
                         </td>
-                        <td class="td">{{ item.itemcode }}</td>
-                        <td class="td">{{ item.product_name }}</td>
-                        <td class="td">{{ item.category_name }}</td>
-                        <td class="td">
-                            <a
+                        <td class="td text-left">{{ item.itemcode }}</td>
+                        <td class="td text-left">{{ item.product_name }}</td>
+                        <td class="td text-left">{{ item.category_name }}</td>
+                        <td class="td ">
+                            <button
                                 v-if="item.items !== null"
                                 @click="ItemEnable(item.itemcode)"
                                 data-toggle="tooltip"
                                 data-placement="bottom"
                                 title="Disable Item"
+                                class="focus:outline-none"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -227,13 +221,14 @@
                                         d="M6 18L18 6M6 6l12 12"
                                     />
                                 </svg>
-                            </a>
-                            <a
+                            </button>
+                            <button
                                 v-else
                                 @click="ItemDisable(item.itemcode)"
                                 data-toggle="tooltip"
                                 data-placement="bottom"
                                 title="Enable Item"
+                                class="focus:outline-none"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -249,63 +244,16 @@
                                         d="M5 13l4 4L19 7"
                                     />
                                 </svg>
-                            </a>
+                            </button>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <div class="border-t ">
-                <div class="flex justify-between items-center mt-2">
-                    <span class="text-sm  "
-                        >Showing {{ !pagination.from ? 0 : pagination.from }} to
-                        {{ !pagination.to ? 0 : pagination.to }} of
-                        {{ pagination.total }} entries</span
-                    >
-                    <div class="flex flex-row space-x-1">
-                        <button
-                            :disabled="!pagination.prevPageUrl"
-                            @click="previousPage(pagination.prevPageUrl)"
-                            class="footer-btn flex items-center"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M15 19l-7-7 7-7"
-                                /></svg
-                            >Prev
-                        </button>
-                        <button
-                            :disabled="!pagination.nextPageUrl"
-                            @click="nextPage(pagination.nextPageUrl)"
-                            class="footer-btn flex items-center"
-                        >
-                            Next
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9 5l7 7-7 7"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <Pagination
+                :pagination="pagination"
+                @prev="previousPage(pagination.prevPageUrl)"
+                @next="nextPage(pagination.nextPageUrl)"
+            />
         </div>
     </div>
 </template>
@@ -314,7 +262,41 @@ import { mapActions, mapState } from "vuex";
 import Item from "../../../services/Item";
 export default {
     data() {
+        let sortOrders = {};
+
+        let columns = [
+            {
+                width: "25%",
+                label: "Code",
+                name: "code",
+                class: "text-left"
+            },
+            {
+                width: "25%",
+                label: "Description",
+                name: "description",
+                class: "text-left"
+            },
+            {
+                width: "15%",
+                label: "Category Name",
+                name: "catname",
+                class: "text-left"
+            },
+            {
+                width: "15%",
+                label: "Action",
+                name: "action",
+                class: "text-center"
+            }
+        ];
+        columns.forEach(column => {
+            sortOrders[column.name] = -1;
+        });
         return {
+            columns: columns,
+            sortKey: "code",
+            sortOrders: sortOrders,
             allSelected: false,
             tableData: {
                 draw: 0,
@@ -493,6 +475,16 @@ export default {
                     );
                 }
             });
+        },
+        sortBy(key) {
+            this.sortKey = key;
+            this.sortOrders[key] = this.sortOrders[key] * -1;
+            this.tableData.column = this.getIndex(this.columns, "name", key);
+            this.tableData.dir = this.sortOrders[key] === 1 ? "asc" : "desc";
+            this.fetch();
+        },
+        getIndex(array, key, value) {
+            return array.findIndex(i => i[key] == value);
         }
     },
     mounted() {
