@@ -22,10 +22,9 @@ class FilenameImport implements ToCollection, WithChunkReading
     {
         foreach ($rows as $row) 
         {
-            $filename = array(
+            gc_product_item::where('itemcode','=', intval($row[1]))->update([
                 'image' =>  $row[0]
-            );
-            gc_product_item::where('itemcode','=', intval($row[1]))->update($filename);
+            ]);
         }
     }
 

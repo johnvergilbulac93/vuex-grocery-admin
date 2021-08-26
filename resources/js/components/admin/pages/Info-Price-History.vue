@@ -1,17 +1,13 @@
 <template>
-    <div class="p-2  text-gray-800">
-        <div class="h-96 overflow-y-scroll">
-            <div
-                class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
-            >
-                <div class="w-1/2 flex sm:flex-col md:flex-row space-x-4">
-                    <div class="w-1/2 flex">
-                        <div
-                            class="relative sm:w-full border overflow-hidden flex rounded-l-lg"
-                        >
+    <div class=" text-gray-800">
+        <div class="h-96 overflow-y-scroll mt-2 p-2">
+            <div class="grid grid-cols-6 grid-flow-col gap-4 mb-2">
+                <div class="col-span-5 flex items-center">
+                    <div class="w-80 flex items-center gap-0.5">
+                        <div class="relative w-full flex items-center ml-1 ">
                             <input
                                 type="text"
-                                class="relative py-2 px-4 pr-10 w-full  focus:outline-none focus:shadow-outline"
+                                class="relative form-search"
                                 placeholder="Search...."
                                 v-model="tableData.search"
                                 @keyup.enter="search"
@@ -19,7 +15,7 @@
                             <button
                                 @click="clear"
                                 v-if="tableData.search.length"
-                                class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded  flex items-center justify-center focus:outline-none "
+                                class="absolute right-0 z-10   pr-2 w-8 h-full leading-snug bg-transparent rounded  flex items-center justify-center focus:outline-none "
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -37,10 +33,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <button
-                            @click="search"
-                            class="py-2 px-4 border-r border-t border-b border-gray-200 focus:outline-none hover:bg-yellow-500 hover:text-white rounded-r-lg"
-                        >
+                        <button @click="search" class="button-search">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="h-5 w-5 "
@@ -57,34 +50,25 @@
                             </svg>
                         </button>
                     </div>
-                    <div class=" w-48">
+                </div>
+                <div class="flex justify-end items-center ">
+                    <div class="text-sm ">
+                        <span>Show</span>
                         <select
-                            class="py-2 px-4 w-full focus:outline-none cursor-pointer border rounded-lg "
-                            v-model="tableData.price_group"
+                            class="form-sort"
+                            v-model="tableData.length"
                             @change="fetch()"
                         >
-                            <option value="">Choose Price Group</option>
-                            <option value="TAGB">TAGBILARAN</option>
-                            <option value="TALB">TALIBON</option>
+                            <option
+                                v-for="(records, index) in perPage"
+                                :key="index"
+                                :value="records"
+                            >
+                                {{ records }}
+                            </option>
                         </select>
+                        <span>Entries</span>
                     </div>
-                </div>
-                <div class="text-sm">
-                    <span>Show</span>
-                    <select
-                        class="py-2 px-4 focus:outline-none cursor-pointer border rounded-lg  "
-                        v-model="tableData.length"
-                        @change="fetch()"
-                    >
-                        <option
-                            v-for="(records, index) in perPage"
-                            :key="index"
-                            :value="records"
-                        >
-                            {{ records }}
-                        </option>
-                    </select>
-                    <span>Entries</span>
                 </div>
             </div>
             <Datatable
@@ -108,12 +92,12 @@
                         <td class="td">{{ data.product_name }}</td>
                         <td class="td">{{ data.UOM }}</td>
                         <td
-                            class=" p-2 whitespace-nowrap text-sm text-red-600 text-center"
+                            class="td p-2 whitespace-nowrap text-sm text-red-600 text-center"
                         >
                             {{ data.prev_price }}
                         </td>
                         <td
-                            class=" p-2 whitespace-nowrap text-sm text-blue-600 text-center"
+                            class="td p-2 whitespace-nowrap text-sm text-blue-600 text-center"
                         >
                             {{ data.new_price }}
                         </td>
@@ -121,58 +105,13 @@
                 </tbody>
             </Datatable>
         </div>
-        <div class="border-t ">
-            <div class="flex justify-between items-center mt-2">
-                <span class="text-sm  "
-                    >Showing {{ !pagination.from ? 0 : pagination.from }} to
-                    {{ !pagination.to ? 0 : pagination.to }} of
-                    {{ pagination.total }} entries</span
-                >
-                <div class="flex flex-row space-x-1">
-                    <button
-                        :disabled="!pagination.prevPageUrl"
-                        @click="previousPage(pagination.prevPageUrl)"
-                        class="footer-btn flex items-center"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M15 19l-7-7 7-7"
-                            /></svg
-                        >Prev
-                    </button>
-                    <button
-                        :disabled="!pagination.nextPageUrl"
-                        @click="nextPage(pagination.nextPageUrl)"
-                        class="footer-btn flex items-center"
-                    >
-                        Next
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M9 5l7 7-7 7"
-                            />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
+        <hr class="mt-2">
+        <Pagination
+            class="p-2"
+            :pagination="pagination"
+            @prev="previousPage(pagination.prevPageUrl)"
+            @next="nextPage(pagination.nextPageUrl)"
+        />
     </div>
 </template>
 

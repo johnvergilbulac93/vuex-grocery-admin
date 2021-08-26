@@ -166,7 +166,7 @@
             >
                 <div
                     v-if="isModal"
-                    class="bg-black bg-opacity-40 fixed top-0 left-0 flex justify-center items-center w-full min-h-screen"
+                    class="bg-black bg-opacity-40 fixed top-0 left-0 flex z-50 justify-center items-center w-full min-h-screen"
                 >
                     <div
                         class="w-96  bg-white rounded sm:m-5 md:m-5 text-gray-800"
@@ -200,15 +200,27 @@
                                 </svg>
                             </button>
                         </div>
-                        <div class="w-full p-5 border-b border-t space-y-4">
+                        <hr />
+                        <transition
+                            enter-active-class="ease-in duration-500"
+                            enter-class="opacity-0 "
+                            enter-to-class="opacity-100"
+                            leave-active-class="ease-out duration-500"
+                            leave-class="opacity-100"
+                            leave-to-class="opacity-0"
+                        >
+                            <ErrorMessage
+                                :message="errors.message[0]"
+                                v-if="errors.message"
+                                @clear="clearError"
+                            />
+                        </transition>
+                        <div class="w-full px-5 my-2 space-y-4">
                             <div class="flex flex-col w-full">
                                 <label for="store" class="font-semibold"
                                     >Store</label
                                 >
-                                <select
-                                    class="form"
-                                    v-model="form.store"
-                                >
+                                <select class="form" v-model="form.store">
                                     <option value="">Select Store</option>
                                     <option
                                         :value="store.bunit_code"
@@ -218,19 +230,25 @@
                                         {{ store.business_unit }}
                                     </option>
                                 </select>
-                                <Error
-                                    :message="errors.store[0]"
-                                    v-if="errors.store"
-                                />
+                                <transition
+                                    enter-active-class="ease-in duration-500"
+                                    enter-class="opacity-0 "
+                                    enter-to-class="opacity-100"
+                                    leave-active-class="ease-out duration-500"
+                                    leave-class="opacity-100"
+                                    leave-to-class="opacity-0"
+                                >
+                                    <Error
+                                        :message="errors.store[0]"
+                                        v-if="errors.store"
+                                    />
+                                </transition>
                             </div>
                             <div class="flex flex-col w-full">
                                 <label for="department" class="font-semibold"
                                     >Department</label
                                 >
-                                <select
-                                    class=" form"
-                                    v-model="form.department"
-                                >
+                                <select class=" form" v-model="form.department">
                                     <option value="">Select Department</option>
                                     <option
                                         :value="dept.dept_id"
@@ -240,10 +258,19 @@
                                         {{ dept.name }}
                                     </option>
                                 </select>
-                                <Error
-                                    :message="errors.department[0]"
-                                    v-if="errors.department"
-                                />
+                                <transition
+                                    enter-active-class="ease-in duration-500"
+                                    enter-class="opacity-0 "
+                                    enter-to-class="opacity-100"
+                                    leave-active-class="ease-out duration-500"
+                                    leave-class="opacity-100"
+                                    leave-to-class="opacity-0"
+                                >
+                                    <Error
+                                        :message="errors.department[0]"
+                                        v-if="errors.department"
+                                    />
+                                </transition>
                             </div>
                             <div class="flex flex-col w-full">
                                 <label for="amount" class="font-semibold"
@@ -254,12 +281,22 @@
                                     type="number"
                                     class="form"
                                 />
-                                <Error
-                                    :message="errors.amount[0]"
-                                    v-if="errors.amount"
-                                />
+                                <transition
+                                    enter-active-class="ease-in duration-500"
+                                    enter-class="opacity-0 "
+                                    enter-to-class="opacity-100"
+                                    leave-active-class="ease-out duration-500"
+                                    leave-class="opacity-100"
+                                    leave-to-class="opacity-0"
+                                >
+                                    <Error
+                                        :message="errors.amount[0]"
+                                        v-if="errors.amount"
+                                    />
+                                </transition>
                             </div>
                         </div>
+                        <hr />
                         <div
                             class="p-2 flex justify-end items-center space-x-1"
                         >
@@ -418,6 +455,9 @@ export default {
             "updateMinOrder",
             "deleteMinOrder"
         ]),
+        clearError() {
+            this.errors.message = "";
+        },
         previousPage() {
             this.currentPage--;
             this.fetch();

@@ -12,36 +12,49 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class ItemsImport implements ToCollection,WithHeadingRow
+class ItemsImport implements ToCollection, WithHeadingRow
 {
     use Importable;
-    
-    public function collection(Collection $row)
+
+    public function collection(Collection $rows)
     {
+        foreach ($rows as $row) {
+            $check_price =  gc_product_price::where('itemcode', '=', intval($row['no']))
+                        ->where('UOM', '=', $row['uom'])
+                        ->where('price_group', '=', $row['price_group'])
+                ->exists();
+            $check_item =  gc_product_item::where('itemcode', '=', intval($row['no']))->exists();
 
-            $check_price =  gc_product_price::where('itemcode','=',intval($row['no']))->where('UOM','=',$row['uom'])->exists();
+            if ($check_item) {
 
-            gc_product_item::updateOrCreate([
-                'itemcode'      => intval($row['no']),
-            ],[
-                'product_name'  => $row['description'],
-                'category_name' => $row['category'],
-                'category_no'   => intval($row['category_no']),
-                'itemcode'      => intval($row['no']),
-                'status'        => 'active'
-            ]);
+                gc_product_item::where('itemcode', '=', intval($row['no']))->update([
+                    'product_name' => $row['description'],
+                    'category_name' => $row['category'],
+                    'category_no' => intval($row['category_no']),
+                    'itemcode' => intval($row['no']),
+                    'status' => 'active'
+                ]);
+            } else {
 
-           if(!$check_price)
-           {
-               $data_price = array(
+                gc_product_item::insert([
+                    'itemcode' => intval($row['no']),
+                    'product_name' => $row['description'],
+                    'category_name' => $row['category'],
+                    'category_no' => intval($row['category_no']),
+                    'itemcode' => intval($row['no']),
+                    'status' => 'active'
+                ]);
+            }
+
+            if (!$check_price) {
+                gc_product_price::insert([
                     'itemcode'        => intval($row['no']),
                     'UOM'             => $row['uom'],
                     'price'           => $row['retail'],
-                    'price_with_vat'  => $row['retail']
-               );
-               gc_product_price::create($data_price);
-           }
-  
+                    'price_with_vat'  => $row['retail'],
+                    'price_group'     => $row['price_group']
+                ]);
+            }
+        }
     }
-    
 }

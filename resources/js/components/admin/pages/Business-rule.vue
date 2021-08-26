@@ -106,7 +106,7 @@
             >
                 <div
                     v-if="isModal"
-                    class="bg-black bg-opacity-40 fixed top-16 left-0 flex justify-center items-center w-full min-h-screen"
+                    class="bg-black bg-opacity-40 fixed top-0 left-0 flex z-50 justify-center items-center w-full min-h-screen"
                 >
                     <div
                         class="sm:w-full lg:w-1/2  bg-white rounded sm:m-5 md:m-5"

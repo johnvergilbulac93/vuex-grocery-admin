@@ -23,7 +23,6 @@ class ItemCategoryImport implements ToCollection, WithHeadingRow,WithBatchInsert
                     'category_name' => $row['cat_name'],
                     'category_no'   => intval($row['cat_code']),
                 ]);
-            // dd($rows);
         }
     }
     public function batchSize(): int

@@ -9,9 +9,11 @@
                     >
                 </div>
                 <div class="grid grid-cols-6 grid-flow-col gap-4 mb-2">
-                    <div class="col-span-5 flex items-center space-x-2">
+                    <div class="col-span-5 flex items-center gap-4">
                         <div class="w-80 flex items-center gap-0.5">
-                            <div class="relative w-full flex items-center ">
+                            <div
+                                class="relative w-full flex items-center ml-1 "
+                            >
                                 <input
                                     type="text"
                                     class="relative form-search"
@@ -251,7 +253,7 @@
                 >
                     <div
                         v-if="isModal"
-                        class="bg-black bg-opacity-40 fixed top-16 left-0 flex justify-center items-center w-full min-h-screen"
+                        class="bg-black bg-opacity-40 fixed top-0 left-0 z-50 flex justify-center items-center w-full min-h-screen"
                     >
                         <div
                             class="sm:w-full lg:w-1/2  bg-white rounded sm:m-5 md:m-5"
@@ -289,7 +291,22 @@
                                     </svg>
                                 </a>
                             </div>
-                            <div class="w-full p-5 border-b border-t text-sm">
+                            <hr />
+                            <transition
+                                enter-active-class="ease-in duration-500"
+                                enter-class="opacity-0 "
+                                enter-to-class="opacity-100"
+                                leave-active-class="ease-out duration-500"
+                                leave-class="opacity-100"
+                                leave-to-class="opacity-0"
+                            >
+                                <ErrorMessage
+                                    :message="errors.message[0]"
+                                    v-if="errors.message"
+                                    @clear="clearError"
+                                />
+                            </transition>
+                            <div class="w-full px-5 my-2 text-sm">
                                 <div class="flex flex-col w-1/2">
                                     <label for="province" class="font-semibold"
                                         >Province</label
@@ -310,10 +327,19 @@
                                             {{ prov.prov_name }}
                                         </option>
                                     </select>
-                                    <Error
-                                        :message="errors.province[0]"
-                                        v-if="errors.province"
-                                    />
+                                    <transition
+                                        enter-active-class="ease-in duration-300"
+                                        enter-class="opacity-0 "
+                                        enter-to-class="opacity-100"
+                                        leave-active-class="ease-out duration-500"
+                                        leave-class="opacity-100"
+                                        leave-to-class="opacity-0"
+                                    >
+                                        <Error
+                                            :message="errors.province[0]"
+                                            v-if="errors.province"
+                                        />
+                                    </transition>
                                 </div>
                                 <div
                                     class="flex flex-row space-x-4 my-2 w-full "
@@ -356,10 +382,19 @@
                                                 {{ town.town_name }}
                                             </option>
                                         </select>
-                                        <Error
-                                            :message="errors.town[0]"
-                                            v-if="errors.town"
-                                        />
+                                        <transition
+                                            enter-active-class="ease-in duration-300"
+                                            enter-class="opacity-0 "
+                                            enter-to-class="opacity-100"
+                                            leave-active-class="ease-out duration-500"
+                                            leave-class="opacity-100"
+                                            leave-to-class="opacity-0"
+                                        >
+                                            <Error
+                                                :message="errors.town[0]"
+                                                v-if="errors.town"
+                                            />
+                                        </transition>
                                     </div>
                                     <div class="flex flex-col w-1/2 ">
                                         <label for="brgy" class="font-semibold"
@@ -402,10 +437,19 @@
                                                 {{ brgy.brgy_name }}
                                             </option>
                                         </select>
-                                        <Error
-                                            :message="errors.barangay[0]"
-                                            v-if="errors.barangay"
-                                        />
+                                        <transition
+                                            enter-active-class="ease-in duration-300"
+                                            enter-class="opacity-0 "
+                                            enter-to-class="opacity-100"
+                                            leave-active-class="ease-out duration-500"
+                                            leave-class="opacity-100"
+                                            leave-to-class="opacity-0"
+                                        >
+                                            <Error
+                                                :message="errors.barangay[0]"
+                                                v-if="errors.barangay"
+                                            />
+                                        </transition>
                                     </div>
                                 </div>
                                 <div class="flex flex-col w-1/2">
@@ -428,10 +472,19 @@
                                             {{ transpo.transpo_name }}
                                         </option>
                                     </select>
-                                    <Error
-                                        :message="errors.transportation[0]"
-                                        v-if="errors.transportation"
-                                    />
+                                    <transition
+                                        enter-active-class="ease-in duration-300"
+                                        enter-class="opacity-0 "
+                                        enter-to-class="opacity-100"
+                                        leave-active-class="ease-out duration-500"
+                                        leave-class="opacity-100"
+                                        leave-to-class="opacity-0"
+                                    >
+                                        <Error
+                                            :message="errors.transportation[0]"
+                                            v-if="errors.transportation"
+                                        />
+                                    </transition>
                                 </div>
                                 <div class="flex flex-row space-x-4 my-2">
                                     <div class="flex flex-col w-1/2">
@@ -445,10 +498,21 @@
                                             type="number"
                                             class="form"
                                         />
-                                        <Error
-                                            :message="errors.charge_amount[0]"
-                                            v-if="errors.charge_amount"
-                                        />
+                                        <transition
+                                            enter-active-class="ease-in duration-300"
+                                            enter-class="opacity-0 "
+                                            enter-to-class="opacity-100"
+                                            leave-active-class="ease-out duration-500"
+                                            leave-class="opacity-100"
+                                            leave-to-class="opacity-0"
+                                        >
+                                            <Error
+                                                :message="
+                                                    errors.charge_amount[0]
+                                                "
+                                                v-if="errors.charge_amount"
+                                            />
+                                        </transition>
                                     </div>
                                     <div class="flex flex-col w-1/2 ">
                                         <label for="brgy" class="font-semibold"
@@ -459,10 +523,19 @@
                                             type="number"
                                             class="form"
                                         />
-                                        <Error
-                                            :message="errors.rider_share[0]"
-                                            v-if="errors.rider_share"
-                                        />
+                                        <transition
+                                            enter-active-class="ease-in duration-300"
+                                            enter-class="opacity-0 "
+                                            enter-to-class="opacity-100"
+                                            leave-active-class="ease-out duration-500"
+                                            leave-class="opacity-100"
+                                            leave-to-class="opacity-0"
+                                        >
+                                            <Error
+                                                :message="errors.rider_share[0]"
+                                                v-if="errors.rider_share"
+                                            />
+                                        </transition>
                                     </div>
                                 </div>
                                 <div class="flex items-center space-x-2">
@@ -481,6 +554,7 @@
                                     >
                                 </div>
                             </div>
+                            <hr />
                             <div
                                 class="p-2 flex justify-end items-center space-x-1 text-sm"
                             >
@@ -765,6 +839,9 @@ export default {
                 status: this.form.status
             };
             this.updateCharge({ charge });
+        },
+        clearError() {
+            this.errors.message = "";
         },
         create() {
             let charge = {

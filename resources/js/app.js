@@ -31,6 +31,13 @@ import 'nprogress/nprogress.css'
 //   height: '4px'
 // })
 
+import IdleVue from 'idle-vue'
+const eventsHub = new Vue()
+ 
+Vue.use(IdleVue, {
+  eventEmitter: eventsHub,
+  idleTime: 1000
+})
 
 Vue.use(excel)
 
@@ -88,7 +95,7 @@ Vue.filter('toCurrency2', function (value) {
 let serverDateTime = document.head.querySelector('meta[name="server-datetime"]').content
 let userType = document.head.querySelector('meta[name="user-type"]').content
 let id = document.head.querySelector('meta[name="id"]').content
-
+ 
 
 window.serverDateTime = serverDateTime
 window.userType = userType
@@ -107,11 +114,15 @@ window.id = id
 
 // Vue.component('page404', require('./components/admin/pages/404_page.vue').default);
 // Vue.component('Top', require('./components/admin/pages/Top.vue').default);
+
+
 Vue.component('Profile', require('./components/admin/pages/Profile-Upload.vue').default);
 Vue.component('Pagination', require('./Usable/Pagination.vue').default);
 Vue.component('Datatable', require('./Usable/Datatable.vue').default);
 Vue.component('Breadcrumb', require('./Usable/Breadcrumb.vue').default);
 Vue.component('Error', require('./Usable/Error.vue').default);
+Vue.component('ErrorMessage', require('./Usable/ErrorMessage.vue').default);
+
 
 
 /**
@@ -140,6 +151,7 @@ const app = new Vue({
             upload_profile: false,
             showPassword: false,
             password: '',
+            messageIdle: ''
         }
     },
     methods: {
@@ -159,6 +171,12 @@ const app = new Vue({
         toggleShow() {
             this.showPassword = !this.showPassword;
         },
+        onIdle() {
+            this.messageStr = 'ZZZ'
+        },
+        onActive() {
+            this.messageStr = 'Hello'
+        }
     },
 
 });

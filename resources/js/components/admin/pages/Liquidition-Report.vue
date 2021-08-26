@@ -14,7 +14,7 @@
                     <div
                         class=" w-3/4 flex sm:flex-col lg:flex-row sm:space-x-0 sm:space-y-5 lg:space-x-5 lg:space-y-0 space-x-5"
                     >
-                        <div class="block w-1/4 sm:w-full md:w-1/2">
+                        <div class="block sm:w-full md:w-56">
                             <label for="" class="font-semibold">Store</label>
                             <select
                                 class="form"
@@ -37,7 +37,7 @@
                                 <small>{{ errors.store[0] }}</small>
                             </p>
                         </div>
-                        <div class="block w-1/4 sm:w-full md:w-1/2 ">
+                        <div class="block sm:w-full md:w-56 ">
                             <label for="" class="font-semibold"
                                 >Date from</label
                             >
@@ -48,7 +48,7 @@
                                 v-model="filter.dateFrom"
                             />
                         </div>
-                        <div class="block w-1/4 sm:w-full md:w-1/2">
+                        <div class="block sm:w-full md:w-56">
                             <label for="" class="font-semibold">Date to</label>
                             <input
                                 type="date"
@@ -69,7 +69,7 @@
 
                         <button
                             tabindex="4"
-                            class="h-10 px-4 py-2 flex disabled:opacity-50  focus:outline-none text-white  bg-green-500 hover:bg-green-600 rounded"
+                            class="h-10 px-4 py-2 flex items-center gap-1 disabled:opacity-50  focus:outline-none text-white  bg-green-500 hover:bg-green-600 rounded"
                             @click="printBtn"
                             v-if="transactions.b_unit != null"
                             :disabled="transactions.cashier_details.length"
@@ -123,18 +123,24 @@
                             id="table-body-content"
                             class="min-w-full divide-y divide-gray-300"
                         >
-                            <thead
-                                class="border bg-gray-100  tracking-normal"
-                            >
+                            <thead class="border bg-gray-100  tracking-normal">
                                 <tr class="tr">
-                                    <th class="p-2 border text-left">Cashier</th>
+                                    <th class="p-2 border text-left">
+                                        Cashier
+                                    </th>
                                     <th class="p-2 border">Date</th>
                                     <th class="p-2 border">Ticket #</th>
-                                    <th class="p-2 border text-left">Customer</th>
+                                    <th class="p-2 border text-left">
+                                        Customer
+                                    </th>
                                     <th class="p-2 border">Transaction #</th>
-                                    <th class="p-2 border text-right">Gross Amt.</th>
+                                    <th class="p-2 border text-right">
+                                        Gross Amt.
+                                    </th>
                                     <th class="p-2 border text-right">Disc.</th>
-                                    <th class="p-2 border text-right">Less Disc.</th>
+                                    <th class="p-2 border text-right">
+                                        Less Disc.
+                                    </th>
                                     <th class="p-2 border text-right">
                                         Picking Charge
                                     </th>
@@ -157,12 +163,6 @@
                                 >
                                     <td class="td ">
                                         {{ trans.name }}
-                                    </td>
-                                    <td class="td ">
-                                        {{
-                                            trans.final_order_status[0]
-                                                .order_pickup | formatDateNoTime
-                                        }}
                                     </td>
                                     <td class="td ">
                                         {{ trans.tickets[0].ticket }}
@@ -198,10 +198,15 @@
                                     </td>
                                 </tr>
                                 <tr class="font-weight-bold tr">
-                                    <th colspan="4" class="text-center p-2 border">
+                                    <th
+                                        colspan="4"
+                                        class="text-center p-2 border"
+                                    >
                                         GRAND TOTAL:
                                     </th>
-                                    <th class="p-2 border">{{ cashier.length }}</th>
+                                    <th class="p-2 border">
+                                        {{ cashier.length }}
+                                    </th>
                                     <th class="text-right p-2 border">
                                         {{
                                             totalOrderAmount(cashier)
@@ -249,7 +254,6 @@
 import { mapActions, mapMutations, mapState } from "vuex";
 import Report from "../../../services/Report";
 import Breadcrumb from "./../../../Usable/Breadcrumb";
-
 export default {
     components: { Breadcrumb },
     name: "Liquidation-Report",
@@ -288,7 +292,7 @@ export default {
     },
     methods: {
         ...mapActions(["getStore"]),
-        ...mapMutations(["SET_ERRORS"]),
+        ...mapMutations(["SET_ERRORS"]), 
         totalOrderAmount(orders) {
             let pickupCharge = 0,
                 orderAmount = 0,

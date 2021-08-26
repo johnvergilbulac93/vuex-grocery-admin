@@ -9,11 +9,15 @@ import Item from  '../services/Item'
 import StorePriceGroup from  '../services/StorePriceGroup'
 
 
-export const userType = ({commit}) => {
-     Common.ViewUserType()
-     .then( res => {
-          commit('USERTYPE', res.data)
-     })
+export const userType = async ({commit}) => {
+     try {
+          const { status, data } = await Common.ViewUserType()
+          if(status === 200){
+               commit('USERTYPE', data)
+          }
+     } catch (error) {
+          console.log(error)
+     }
 }
 export const brgyFiltered = ({commit},{town}) => {
      commit('FILTERED_BRGY', town)
@@ -21,180 +25,238 @@ export const brgyFiltered = ({commit},{town}) => {
 export const townFiltered = ({commit},{province}) => {
      commit('FILTERED_TOWN', province)
 }
-export const getPriceChangedInfo = ({commit},{currentPage, filterData}) => {
-     Common.Price_changed_info(currentPage, filterData)
-     .then( res => {
-          commit('SET_PRICE_CHANGED_INFO', res.data.data)
-          commit('PAGINATION', res.data)
-     })
+export const getPriceChangedInfo = async ({commit},{currentPage, filterData}) => {
+
+     try {
+          const { status, data } = await  Common.Price_changed_info(currentPage, filterData)
+          if(status === 200){
+               commit('SET_PRICE_CHANGED_INFO', data.data)
+               commit('PAGINATION', data)
+          }
+     } catch (error) {
+          
+     }
 }
-export const getItemNotAvailable = ({commit},{currentPage, filterData}) => {
-     Common.Item_not_available(currentPage, filterData)
-     .then( res=> {
-          commit('SET_ITEM_NOT_AVAILABLE', res.data.data)
-          commit('PAGINATION', res.data)
-          commit('TOTAL_NOT_AVAILABLE',res.data.total)
-     })
+export const getItemNotAvailable = async ({commit},{currentPage, filterData}) => {
+
+     try {
+          const { status, data } = await Common.Item_not_available(currentPage, filterData)
+          if(status === 200){
+               commit('SET_ITEM_NOT_AVAILABLE',data.data)
+               commit('PAGINATION', data)
+               commit('TOTAL_NOT_AVAILABLE',data.total)
+          }
+     } catch (error) {
+          console.log(error)
+     }
 }
-export const getPriceGroup = ({commit}) => {
-     Common.ViewPriceGroup()
-     .then( res => {
-          commit('SET_PRICE_GROUP', res.data)
-     })
+export const getPriceGroup = async ({commit}) => {
+
+     try {
+          const { status, data } = await  Common.ViewPriceGroup()
+          if(status === 200){
+               commit('SET_PRICE_GROUP', data)
+          }
+     } catch (error) {
+          console.log(error)
+     }
 }
-export const getProvince = ({commit}) => {
-     Common.ViewProvince()
-     .then( res => {
-          commit('SET_PROVINCE', res.data)
-     })
+export const getProvince = async ({commit}) => {
+
+     try {
+          const { status, data } = await Common.ViewProvince()
+          if(status === 200){
+               commit('SET_PROVINCE', data) 
+          }
+     } catch (error) {
+          console.log(error)
+     }
 }
-export const getItemCategory = ({commit}) => {
-     Common.ViewItemCategory()
-     .then( res => {
-          commit('SET_ITEM_CATEGORY', res.data)
-     })
+export const getItemCategory = async ({commit}) => {
+
+     try {
+          const { status, data } = await Common.ViewItemCategory()
+          if(status === 200){
+               commit('SET_ITEM_CATEGORY', data)
+          }
+     } catch (error) {
+          console.log(error)
+     }
 }
-export const getBarangay = ({commit}) => {
-     Common.ViewBarangay()
-     .then( res => {
-          commit('SET_BARANGAY', res.data)
-     })
+export const getBarangay = async ({commit}) => {
+     try {
+          const { status, data } = await Common.ViewBarangay()
+          if(status === 200){
+               commit('SET_BARANGAY', data)
+          }
+     } catch (error) {
+          console.log(data)
+     }
 }
-export const getTown = ({commit}) => {
-     Common.ViewTown()
-     .then( res => {
-          commit('SET_TOWN', res.data)
-     })
+export const getTown = async ({commit}) => {
+
+     try {
+          const { status, data } = await Common.ViewTown()
+          if(status === 200){
+               commit('SET_TOWN', data)
+          }
+     } catch (error) {
+          console.log(error)
+     }
 }
-export const getTransportation = ({commit}) => {
-     Common.ViewTransportation()
-     .then( res => {
-          commit('SET_TRANSPORTATION', res.data)
-     })
+export const getTransportation = async ({commit}) => {
+     try {
+          const { status, data } = await Common.ViewTransportation()
+          if(status === 200){
+               commit('SET_TRANSPORTATION', data) 
+          }
+     } catch (error) {
+          console.log(error)
+     }
 }      
-export const modal = ({commit}, {flag}) => {
+export const modal =  ({commit}, {flag}) => {
      commit('MODAL_FLAG', flag)
 }
 export const upload_flag = ({commit}, {flag}) => {
      commit('UPLOAD_FLAG', flag)
 }
-export const getPriceChanged = ({commit}) => {
-     Common.Price_changed_count()
-     .then( res => {
-          commit('SET_PRICE_COUNT_CHANGED',res.data)
-     })
-     
-}
-export const getStore = ({commit}) => {
-     Common.ViewStore()
-     .then( res => {
-          commit('SET_STORES',res.data)
-     })
-}
-export const showStoreHour = ({commit},{currentPage,filterData}) => {
-     StoreHour.show(currentPage,filterData)
-     .then( res =>{
-          commit('SET_STORE_HOUR', res.data.data)
-          commit('PAGINATION', res.data)
-     })
-}
-export const saveStoreHour = ({commit},{storehour}) => {
-     StoreHour.saveInfo(storehour)
-     .then( ()=> {
-          Fire.$emit("reload_time");
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Successfully saved"
-          });
-     })
-     .catch( error => {
-          switch (error.response.status) {
-               case 422:
-                    commit('SET_ERRORS',error.response.data.errors )
-                   break;
-               default:
-                   break;
-           }
-     })
-}
-
-export const deleteStoreHour = ({commit},{id}) => {
-     swal
-        .fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-               commit('REMOVE_STORE_HOUR',id)
-               StoreHour.delete(id)
-               .then( () => {
-                    swal.fire("Deleted!", "Successfully.", "success"); 
-               })
+export const getPriceChanged = async ({commit}) => {
+     try {
+          const { status, data } = await Common.Price_changed_count()
+          if(status === 200){
+               commit('SET_PRICE_COUNT_CHANGED', data)
           }
-        });
+     } catch (error) {
+          console.log(error)
+     }
 }
-export const getDepartment = ({commit}) => {
-     Common.ViewDepartment()
-     .then( res => {
-          commit('SET_DEPARTMENTS', res.data)
-     })
+export const getStore = async ({commit}) => { 
+     try {
+          const { status, data} = await Common.ViewStore()
+          if(status === 200){
+               commit('SET_STORES', data)
+          }
+     } catch (error) {
+          console.log(error)
+     }
 }
-export const showTenant = ({commit},{currentPage,filterData}) => {
-     Tenant.show(currentPage,filterData)
-     .then( res =>{
-          commit('SET_TENANTS', res.data.data)
-          commit('PAGINATION', res.data)
-     })
+export const showStoreHour = async ({commit},{currentPage,filterData}) => {
+     try {
+          const { status, data } = await StoreHour.show(currentPage,filterData)
+          if(status === 200){
+               commit('SET_STORE_HOUR', data.data)
+               commit('PAGINATION', data)
+          }
+     } catch (error) {
+          console.log(error)
+     }
 }
-export const saveTenant = ({commit}, {tenant}) => {
-     Tenant.saveInfo(tenant)
-     .then( res => {
-          if (res.data.error === true) {
-               swal.fire(
-                   "Double Entry",
-                   "Please check your data.",
-                   "warning"
-               );
-           }else{
-               Fire.$emit("reload_tenant");
-           }
-     })
-     .catch( error => {
-          switch (error.response.status) {
-               case 422:
-                    commit('SET_ERRORS',error.response.data.errors )
-                   break;
-               default:
-                   break;
-           }
-     })
+export const saveStoreHour = async ({commit},{storehour}) => {
+     try {
+          const { status } = await StoreHour.saveInfo(storehour)
+          if(status === 200){
+               Fire.$emit("reload_time");
+               toast.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Successfully saved"
+               });
+          }
+     } catch (error) {
+          commit('SET_ERRORS',error.response.data.errors )
+          setTimeout(() => {
+               commit('CLEAR_ERRORS')
+          }, 5000); 
+     }
+
 }
-export const updateTenant = ({commit}, {tenant}) => {
-     Tenant.updateInfo(tenant)
-     .then( () => {
-          Fire.$emit("reload_tenant");
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Successfully saved"
+export const deleteStoreHour =  ({commit},{id}) => {
+     
+     try {
+         swal
+          .fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+          })
+          .then(  (result) => {
+            if (result.isConfirmed) {
+                 commit('REMOVE_STORE_HOUR',id)
+                 StoreHour.delete(id)
+                 .then( () => {
+                      swal.fire("Deleted!", "Successfully.", "success"); 
+                 })
+            }
           });
-     })
-     .catch( error => {
-          switch (error.response.status) {
-               case 422:
-                    commit('SET_ERRORS',error.response.data.errors )
-                   break;
-               default:
-                   break;
-           }
-     })
+     } catch (error) {
+          console.log(error)
+     }
+
+}
+export const getDepartment = async ({commit}) => {
+
+     try {
+          const { status, data } = await Common.ViewDepartment()
+          if(status === 200){
+               commit('SET_DEPARTMENTS', data)
+          }
+     } catch (error) {
+          console.log(error)
+     }
+}
+export const showTenant = async({commit},{currentPage,filterData}) => {
+
+     try {
+          const { status, data } = await Tenant.show(currentPage,filterData)
+          if(status === 200){
+               commit('SET_TENANTS', data.data)
+               commit('PAGINATION', data)
+          }
+     } catch (error) {
+          console.log(error)
+     }
+}
+export const saveTenant = async ({commit}, {tenant}) => {
+
+     try {
+          const { status } = await  Tenant.saveInfo(tenant)
+          if(status === 200){
+               Fire.$emit("reload_tenant");
+               toast.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Successfully saved"
+               }); 
+          }
+     } catch (error) {
+          commit('SET_ERRORS',error.response.data.errors )
+          setTimeout(() => {
+               commit('CLEAR_ERRORS' )
+          }, 5000);
+     }
+}
+export const updateTenant = async ({commit}, {tenant}) => {
+
+     try {
+          const { status } = await Tenant.updateInfo(tenant)
+          if(status === 200){
+               Fire.$emit("reload_tenant");
+               toast.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Successfully saved"
+               });        
+          }
+     } catch (error) {
+          commit('SET_ERRORS',error.response.data.errors )
+          setTimeout(() => {
+               commit('CLEAR_ERRORS' )
+          }, 5000);
+     }
 }
 export const deleteTenant = ({commit}, {id}) => {
      swal.fire({
@@ -219,24 +281,23 @@ export const deleteTenant = ({commit}, {id}) => {
           }
       });
 }
-export const getDCharges = ({commit}, {currentPage,filterData}) => {
-     Charge.show(currentPage, filterData)
-     .then( res => {
-          commit('SET_DCHARGE', res.data.data)
-          commit('PAGINATION', res.data)
-     })
-}
-export const saveCharge = ({commit},{charge}) => {
-     Charge.saveInfo(charge)
-     .then( res => {
+export const getDCharges = async ({commit}, {currentPage,filterData}) => {
 
-          if (res.data.error === true) {
-               swal.fire(
-                   "Double Entry",
-                   "Please check your data.",
-                   "warning"
-               );
-           }else if(res.data.error === false){
+     try {
+          const { status, data } = await Charge.show(currentPage, filterData)
+          if(status === 200){
+               commit('SET_DCHARGE', data.data)
+               commit('PAGINATION', data)
+          }
+     } catch (error) {
+          console.log(error)
+     }
+}
+export const saveCharge = async ({commit},{charge}) => {
+
+     try {
+          const { status } = await Charge.saveInfo(charge)
+          if(status === 200){
                Fire.$emit("reload_charge");
                commit('MODAL_FLAG', false)
                toast.fire({
@@ -244,38 +305,35 @@ export const saveCharge = ({commit},{charge}) => {
                     title: "Success",
                     text: "Successfully saved"
                });
-           }
-     })
-     .catch( error => {
-          switch (error.response.status) {
-               case 422:
-                    commit('SET_ERRORS',error.response.data.errors )
-                   break;
-               default:
-                   break;
-           }
-     })
+          }
+     } catch (error) {
+          commit('SET_ERRORS',error.response.data.errors )
+          setTimeout(() => {
+               commit('CLEAR_ERRORS' )
+          }, 5000);
+     }
+
 }
-export const updateCharge = ({commit}, {charge}) => {
-     Charge.updateInfo(charge)
-     .then( () => {
-          Fire.$emit("reload_charge");
-          commit('MODAL_FLAG', false)
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Successfully saved"
-          });
-     })
-     .catch( error => {
-          switch (error.response.status) {
-               case 422:
-                    commit('SET_ERRORS',error.response.data.errors )
-                   break;
-               default:
-                   break;
-           }
-     })
+export const updateCharge = async ({commit}, {charge}) => {
+
+     try {
+          const { status } = await Charge.updateInfo(charge)
+          if(status === 200){
+               Fire.$emit("reload_charge");
+               commit('MODAL_FLAG', false)
+               toast.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Successfully saved"
+               });
+          }
+     } catch (error) {
+          commit('SET_ERRORS',error.response.data.errors )
+          setTimeout(() => {
+               commit('CLEAR_ERRORS')
+          }, 5000);
+     }
+     
 }
 export const deleteCharge = ({commit}, {id}) => {
      swal.fire({
@@ -300,16 +358,43 @@ export const deleteCharge = ({commit}, {id}) => {
           }
       });
 }
-export const saveMinOrder = ({commit}, {minorder}) => {
-     MinOrder.saveInfo(minorder)
-     .then( res => {
-          if (res.data.error === true) {
-               swal.fire(
-                   "Double Entry",
-                   "Please check your data.",
-                   "warning"
-               );
-           }else if(res.data.error === false){
+export const saveMinOrder = async ({commit}, {minorder}) => {
+
+     try {
+          const { status } = await MinOrder.saveInfo(minorder)
+          if(status === 200){
+               Fire.$emit("reload_min_order");
+               toast.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Successfully saved"
+               });
+          }
+     } catch (error) {
+          commit('SET_ERRORS',error.response.data.errors )
+          setTimeout(() => {
+               commit('CLEAR_ERRORS')
+          }, 5000);
+          
+     }
+}
+export const getMinOrder = async ({commit},{currentPage,filterData}) => {
+
+     try {
+          const { status, data } = await MinOrder.show(currentPage, filterData)
+          if(status === 200){
+               commit('SET_MINORDER', data.data)
+               commit('PAGINATION', data)
+          }
+     } catch (error) {
+          console.log(error)
+     }
+}
+export const updateMinOrder = async ({commit},{minorder}) => {
+
+     try {
+          const { status } = await MinOrder.updateInfo(minorder)
+          if(status === 200){
                Fire.$emit("reload_min_order");
                commit('MODAL_FLAG', false)
                toast.fire({
@@ -317,45 +402,14 @@ export const saveMinOrder = ({commit}, {minorder}) => {
                     title: "Success",
                     text: "Successfully saved"
                });
-           }
-     })
-     .catch( error => {
-          switch (error.response.status) {
-               case 422:
-                    commit('SET_ERRORS',error.response.data.errors )
-                   break;
-               default:
-                   break;
-           }
-     })
-}
-export const getMinOrder = ({commit},{currentPage,filterData}) => {
-     MinOrder.show(currentPage, filterData)
-     .then( res => {
-          commit('SET_MINORDER', res.data.data)
-          commit('PAGINATION', res.data)
-     })
-}
-export const updateMinOrder = ({commit},{minorder}) => {
-     MinOrder.updateInfo(minorder)
-     .then( () => {
-          Fire.$emit("reload_min_order");
-          commit('MODAL_FLAG', false)
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Successfully saved"
-          });
-     })
-     .catch( error => {
-          switch (error.response.status) {
-               case 422:
-                    commit('SET_ERRORS',error.response.data.errors )
-                   break;
-               default:
-                   break;
-           }
-     })
+          }
+     } catch (error) {
+          commit('SET_ERRORS',error.response.data.errors )
+          setTimeout(() => {
+               commit('CLEAR_ERRORS')
+          }, 5000);
+     }
+
 
 }
 export const deleteMinOrder = ({commit},{id}) => {
@@ -381,39 +435,49 @@ export const deleteMinOrder = ({commit},{id}) => {
           }
       });
 }
-export const getUser = ({commit},{currentPage,filterData}) => {
-     User.show(currentPage, filterData)
-     .then( res => {
-          commit('SET_USER', res.data.data)
-          commit('PAGINATION', res.data)
-     })
+export const getUser = async ({commit},{currentPage,filterData}) => {
+
+     try {
+          const { status, data } = await User.show(currentPage, filterData)
+          if(status === 200 ){
+               commit('SET_USER', data.data)
+               commit('PAGINATION', data)
+          }
+     } catch (error) {
+          console.log(error)
+     }
 }
-export const getEmployee = ({commit}, {employee}) => {
-     Common.ViewEmployee(employee)
-     .then( res => {
-          commit('SET_EMPLOYEE', res.data)
-     })
+export const getEmployee = async ({commit}, {employee}) => {
+     
+     try {
+          const { status, data } = await Common.ViewEmployee(employee)
+          if(status === 200){
+               commit('SET_EMPLOYEE', data)
+          }
+     } catch (error) {
+          console.log(error)
+     }
 }
-export const saveUser = ({commit}, {user}) => {
-   User.saveInfo(user)
-     .then(()=> {
-          Fire.$emit("reload_user");
-          commit('MODAL_FLAG', false)
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Successfully saved"
-          });
-     })
-     .catch( error => {
-          switch (error.response.status) {
-               case 422:
-                    commit('SET_ERRORS',error.response.data.errors )
-                   break;
-               default:
-                   break;
-           }
-     })
+export const saveUser = async ({commit}, {user}) => {
+
+     try {
+          const { status } = await User.saveInfo(user)
+          if(status === 200){
+               Fire.$emit("reload_user");
+               commit('MODAL_FLAG', false)
+               toast.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Successfully saved"
+               });
+          }
+     } catch (error) {
+          commit('SET_ERRORS',error.response.data.errors )
+          setTimeout(() => {
+             commit('CLEAR_ERRORS')  
+          }, 5000);
+     }
+
 }
 export const deleteUser = ({commit},{id}) => {
      swal.fire({
@@ -439,49 +503,59 @@ export const deleteUser = ({commit},{id}) => {
       });
 
 }
-export const updateUser = ({commit},{user}) => {
-     User.updateInfo(user)
-     .then( ()=> {
-          Fire.$emit("reload_user");
-          commit('MODAL_FLAG', false)
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Successfully saved"
-          });
-     })
-     .catch( error => {
-          if(error.response.status === 422) {
-               commit('SET_ERRORS',error.response.data.errors )
-          } 
-     })
+export const updateUser = async ({commit},{user}) => {
+
+     try {
+          const { status } = await User.updateInfo(user)
+          if(status === 200){
+               Fire.$emit("reload_user"); 
+               commit('MODAL_FLAG', false)
+               toast.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Successfully saved"
+               });
+          }
+     } catch (error) {
+          commit('SET_ERRORS',error.response.data.errors)
+          setTimeout(() => {
+               commit('CLEAR_ERRORS')
+          }, 5000);
+     }
+
 }
-export const getItems = ({commit}, {currentPage, filterData}) => {
-     Item.show(currentPage, filterData)
-     .then( res => {
-          commit('SET_ITEM', res.data.data)
-          commit('PAGINATION', res.data)
-     })
+export const getItems = async ({commit}, {currentPage, filterData}) => {
+
+     try {
+          const { status, data } = await Item.show(currentPage, filterData)
+          if(status === 200){
+               commit('SET_ITEM', data.data)
+               commit('PAGINATION',data)
+          }
+     } catch (error) {
+          console.log(error)
+     }
+
 }
-export const upload_image = ({commit},{formData}) => {
-     Item.uploadImage(formData)
-     .then( ()=> {
-          commit('UPLOAD_FLAG', false)
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Successfully uploaded"
-          });
-     })
-     .catch( error => {
-          switch (error.response.status) {
-               case 422:
-                    commit('SET_ERRORS',error.response.data.errors )
-                   break;
-               default:
-                   break;
-           }
-     })
+export const upload_image = async ({commit},{formData}) => {
+
+     try {
+          const { status } = await Item.uploadImage(formData)
+          if(status === 200){
+               commit('UPLOAD_FLAG', false)
+               toast.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Successfully uploaded"
+               });
+          }
+     } catch (error) {
+          commit('SET_ERRORS',error.response.data.errors )
+          setTimeout(() => {
+               commit('CLEAR_ERRORS')
+          }, 5000);
+     }
+
 }
 export const item_inactive = ({commit}, {itemCode}) => {
      swal.fire({
@@ -530,93 +604,129 @@ export const item_active = ({commit}, {itemCode}) => {
           }
       });
 }
-export const getItemEnable = ({commit}, {currentPage, filterData}) => {
-     Item.show_item_enable_per_uom(currentPage, filterData)
-     .then( res => {
-          commit('SET_ITEM', res.data.data)
-          commit('PAGINATION', res.data)
-     })
+export const getItemEnable = async ({commit}, {currentPage, filterData}) => {
+
+     try {
+          const { status, data} = await Item.show_item_enable_per_uom(currentPage, filterData)
+          if(status === 200){
+               commit('SET_ITEM', data.data)
+               commit('PAGINATION', data)
+          }
+     } catch (error) {
+         console.log(error) 
+     }
+
 }
-export const disableItemPerUOM = ({commit},{itemCode}) => {
-     Item.item_disable_per_uom(itemCode,)
-     .then( () => {
-          swal.fire(
-               "Success!",
-               "Selected item/uom successfully disable.",
-               "success"
-           );
-     })
+export const disableItemPerUOM = async ({commit},{itemCode}) => {
+
+     try {
+          const { status } = await Item.item_disable_per_uom(itemCode)
+          if(status === 200){
+               swal.fire(
+                    "Success!",
+                    "Selected item/uom successfully disable.",
+                    "success"
+                );
+          }
+     } catch (error) {
+          console.log(error)
+     }
+
 }
-export const getItemDisable = ({commit}, {currentPage, filterData}) => {
-     Item.show_item_disable_per_uom(currentPage, filterData)
-     .then( res => {
-          commit('SET_ITEM', res.data.data)
-          commit('PAGINATION', res.data)
-     })
+export const getItemDisable = async ({commit}, {currentPage, filterData}) => {
+
+     try {
+          const { status, data } = await Item.show_item_disable_per_uom(currentPage, filterData)
+          if(status === 200){
+               commit('SET_ITEM', data.data)
+               commit('PAGINATION', data)
+          }
+     } catch (error) {
+          console.log(error)
+     }
 }
-export const enableItemPerUOM = ({commit},{itemCode}) => {
-     Item.item_enable_per_uom(itemCode,)
-     .then( () => {
-          swal.fire(
-               "Success!",
-               "Selected item/uom successfully enable.",
-               "success"
-           );
-     })
+export const enableItemPerUOM = async ({commit},{itemCode}) => {
+
+     try {
+          const { status } = await Item.item_enable_per_uom(itemCode)
+          if(status === 200){
+               swal.fire(
+                    "Success!",
+                    "Selected item/uom successfully enable.",
+                    "success"
+                ); 
+          }
+     } catch (error) {
+          console.log(error)
+     }
+
 }
-export const getStoreItem = ({commit},{currentPage,filterData}) => {
-     Item.store_item_masterfile(currentPage,filterData)
-     .then( res =>{
-          commit('SET_ITEM', res.data.data)
-          commit('PAGINATION', res.data)
-     })
+export const getStoreItem = async ({commit},{currentPage,filterData}) => {
+
+     try {
+          const { status, data } =  Item.store_item_masterfile(currentPage,filterData)
+          if(status === 200){
+               commit('SET_ITEM', data.data)
+               commit('PAGINATION', data)
+          }
+
+     } catch (error) {
+          console.log(error)
+     }
+
 }
-export const getStorePriceGroup = ({commit}, {currentPage, filterData}) => {
-     StorePriceGroup.show(currentPage, filterData)
-     .then( res => {
-          commit('SET_STORE_PRICE_GROUP', res.data.data)
-          commit('PAGINATION', res.data)
-     })
+export const getStorePriceGroup = async ({commit}, {currentPage, filterData}) => {
+
+     try {
+          const { status, data } = await StorePriceGroup.show(currentPage, filterData)
+          if(status === 200){
+               commit('SET_STORE_PRICE_GROUP', data.data)
+               commit('PAGINATION', data)
+          }
+
+     } catch (error) {
+          console.log(error)
+     }
+
 }
-export const saveStorePriceGroup = ({commit}, {storepricegroup}) => {
-     StorePriceGroup.saveInfo(storepricegroup)
-     .then( ()=> {
-          Fire.$emit("reload_price_group");
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Successfully saved"
-          });
-     })
-     .catch( error => {
-          switch (error.response.status) {
-               case 422:
-                    commit('SET_ERRORS',error.response.data.errors )
-                   break;
-               default:
-                   break;
-           }
-     })
+export const saveStorePriceGroup = async ({commit}, {storepricegroup}) => {
+
+     try {
+          const { status } = await StorePriceGroup.saveInfo(storepricegroup)
+          if(status === 200){
+               Fire.$emit("reload_price_group");
+               toast.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Successfully saved"
+               });
+          }
+     } catch (error) {
+          commit('SET_ERRORS',error.response.data.errors )
+          setTimeout(() => {
+             commit('CLEAR_ERRORS')  
+          }, 5000);
+     }
+
 }
-export const deleteStorePriceGroup = ({commit}, {id}) => {
-     StorePriceGroup.delete(id)
-     .then( ()=> {
-          Fire.$emit("reload_price_group");
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Deleted Successfully"
-          });
-     })
-     .catch( error => {
-          switch (error.response.status) {
-               case 422:
-                    commit('SET_ERRORS',error.response.data.errors )
-                   break;
-               default:
-                   break;
-           }
-     })
+export const deleteStorePriceGroup = async ({commit}, {id}) => {
+
+     try {
+          const { status } = await StorePriceGroup.delete(id)
+          if(status === 200){
+               Fire.$emit("reload_price_group");
+               toast.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Deleted Successfully"
+               }); 
+          }
+     } catch (error) {
+          commit('SET_ERRORS',error.response.data.errors )
+          setTimeout(() => {
+               commit('CLEAR_ERRORS')
+          }, 5000);
+     }
 }
 export const activeUser = ({commit},{user}) => {
      swal.fire({
@@ -715,7 +825,7 @@ export const statusStoreInactive = ({commit}, {status}) => {
       });
 }
 export const userChangePass = ({commit}, {user}) => {
-     swal.fire({
+      swal.fire({
           title: 'Are you sure?',
           text: "You won't be able to revert this!",
           icon: 'warning',
@@ -723,8 +833,9 @@ export const userChangePass = ({commit}, {user}) => {
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
           confirmButtonText: 'Yes, change it!'
-        }).then((result) => {
+        }).then ((result) => {
           if (result.isConfirmed) {
+
                User.changePassword(user)
                .then( ()=> {
                     Fire.$emit("clear_field");
@@ -741,6 +852,9 @@ export const userChangePass = ({commit}, {user}) => {
                     switch (error.response.status) {
                          case 422:
                               commit('SET_ERRORS',error.response.data.errors )
+                              setTimeout(() => {
+                                   commit('CLEAR_ERRORS')
+                              }, 5000);
                              break;
                          default:
                              break;
@@ -750,51 +864,50 @@ export const userChangePass = ({commit}, {user}) => {
         })
 
 }
-export const userChangeUsername =({commit}, {user}) => {
-     User.changeUsername(user)
-     .then( ()=> {
-          Fire.$emit("clear_field");
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Successfully change."
-          });
-          location.reload()
-     })
-     .catch( error => {
-          switch (error.response.status) {
-               case 422:
-                    commit('SET_ERRORS',error.response.data.errors )
-                   break;
-               default:
-                   break;
-           }
-     })
+export const userChangeUsername = async ({commit}, {user}) => {
+
+     try {
+          const { status } = await User.changeUsername(user)
+          if(status === 200){
+               Fire.$emit("clear_field");
+               toast.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Successfully change."
+               });
+               location.reload()
+          }
+     } catch (error) {
+          commit('SET_ERRORS',error.response.data.errors )
+          setTimeout(() => {
+               commit('CLEAR_ERRORS')
+          }, 5000);
+     }
 }
-export const saveRule = ( {commit},{rule}) => {
-     Rules.update(rule)
-     .then( ()=> {
-          commit('MODAL_FLAG', false)
-          toast.fire({
-               icon: "success",
-               title: "Success",
-               text: "Successfully saved."
-          });
-          Fire.$emit("reload_rules");
-     })
-     .catch( error => {
-          switch (error.response.status) {
-               case 422:
-                    commit('SET_ERRORS',error.response.data.errors )
-                   break;
-               default:
-                   break;
-           }
-     })
+export const saveRule = async ( {commit},{rule}) => {
+     try {
+          const { status } = await Rules.update(rule)
+          if(status === 200){
+               commit('MODAL_FLAG', false)
+               toast.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Successfully saved."
+               }); 
+               Fire.$emit("reload_rules");
+          }
+
+     } catch (error) {
+          commit('SET_ERRORS',error.response.data.errors )
+     }
 }
-export const getRules = ( {commit}) => {
-     Rules.loadRules()
-     .then( res => {
-          commit('SET_RULES', res.data)
-     })
+export const getRules = async ( {commit}) => {
+     try {
+          const { status, data } = await Rules.loadRules()
+          if(status === 200){
+               commit('SET_RULES', data)
+          }
+     } catch (error) {
+          console.log(error)
+     }
 }

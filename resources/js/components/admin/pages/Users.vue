@@ -102,12 +102,7 @@
                             >
                                 {{ user.inactivity_date | formatDateNoTime }}
                             </td>
-                            <td
-                                class="td text-center"
-                                v-else
-                            >
-                                
-                            </td>
+                            <td class="td text-center" v-else></td>
                             <td class="td text-center" v-if="user.status == 1">
                                 <a @click="statusActive(user)">
                                     <span
@@ -190,7 +185,7 @@
                 >
                     <div
                         v-if="isModal"
-                        class="bg-black bg-opacity-40 fixed top-14 left-0 flex justify-center items-center w-full min-h-screen"
+                        class="bg-black bg-opacity-40 fixed top-0 left-0 z-50 flex justify-center items-center w-full min-h-screen"
                     >
                         <div
                             class="lg:w-1/2 md:w-3/4 md:mx-0 bg-white rounded sm:w-full sm:m-5 md:m-5 lg:m-0"
@@ -243,13 +238,23 @@
                                                 @keyup="autoComplete"
                                                 class="form "
                                             />
-                                            <Error
-                                                :message="errors.name[0]"
-                                                v-if="errors.name"
-                                            />
+                                            <transition
+                                                enter-active-class="ease-in duration-300"
+                                                enter-class="opacity-0 "
+                                                enter-to-class="opacity-100"
+                                                leave-active-class="ease-out duration-500"
+                                                leave-class="opacity-100"
+                                                leave-to-class="opacity-0"
+                                            >
+                                                <Error
+                                                    :message="errors.name[0]"
+                                                    v-if="errors.name"
+                                                />
+                                            </transition>
+
                                             <div
                                                 class="bg-gray-50 h-40 absolute mt-1 shadow-lg rounded py-2 overflow-y-scroll"
-                                                style="width: 301px;"
+                                                style="width: 316px;"
                                                 v-if="Employees.length"
                                             >
                                                 <a
@@ -273,10 +278,22 @@
                                                 v-model="form.employee_id"
                                                 class="form"
                                             />
-                                            <Error
-                                                :message="errors.employee_id[0]"
-                                                v-if="errors.employee_id"
-                                            />
+
+                                            <transition
+                                                enter-active-class="ease-in duration-300"
+                                                enter-class="opacity-0 "
+                                                enter-to-class="opacity-100"
+                                                leave-active-class="ease-out duration-500"
+                                                leave-class="opacity-100"
+                                                leave-to-class="opacity-0"
+                                            >
+                                                <Error
+                                                    :message="
+                                                        errors.employee_id[0]
+                                                    "
+                                                    v-if="errors.employee_id"
+                                                />
+                                            </transition>
                                         </div>
                                     </div>
 
@@ -291,10 +308,19 @@
                                             v-model="form.username"
                                             class="form "
                                         />
-                                        <Error
-                                            :message="errors.username[0]"
-                                            v-if="errors.username"
-                                        />
+                                        <transition
+                                            enter-active-class="ease-in duration-300"
+                                            enter-class="opacity-0 "
+                                            enter-to-class="opacity-100"
+                                            leave-active-class="ease-out duration-500"
+                                            leave-class="opacity-100"
+                                            leave-to-class="opacity-0"
+                                        >
+                                            <Error
+                                                :message="errors.username[0]"
+                                                v-if="errors.username"
+                                            />
+                                        </transition>
                                     </div>
                                     <div class="p-2 w-full">
                                         <label
@@ -317,10 +343,19 @@
                                                 >{{ type.usertype }}</option
                                             >
                                         </select>
-                                        <Error
-                                            :message="errors.usertype[0]"
-                                            v-if="errors.usertype"
-                                        />
+                                        <transition
+                                            enter-active-class="ease-in duration-300"
+                                            enter-class="opacity-0 "
+                                            enter-to-class="opacity-100"
+                                            leave-active-class="ease-out duration-500"
+                                            leave-class="opacity-100"
+                                            leave-to-class="opacity-0"
+                                        >
+                                            <Error
+                                                :message="errors.usertype[0]"
+                                                v-if="errors.usertype"
+                                            />
+                                        </transition>
                                     </div>
                                     <div class="p-2 w-full">
                                         <label
@@ -345,10 +380,19 @@
                                                 }}</option
                                             >
                                         </select>
-                                        <Error
-                                            :message="errors.store[0]"
-                                            v-if="errors.store"
-                                        />
+                                        <transition
+                                            enter-active-class="ease-in duration-300"
+                                            enter-class="opacity-0 "
+                                            enter-to-class="opacity-100"
+                                            leave-active-class="ease-out duration-500"
+                                            leave-class="opacity-100"
+                                            leave-to-class="opacity-0"
+                                        >
+                                            <Error
+                                                :message="errors.store[0]"
+                                                v-if="errors.store"
+                                            />
+                                        </transition>
                                     </div>
                                     <div class="p-2 w-full">
                                         <label
@@ -361,10 +405,19 @@
                                             v-model="form.password"
                                             class="form"
                                         />
-                                        <Error
-                                            :message="errors.password[0]"
-                                            v-if="errors.password"
-                                        />
+                                        <transition
+                                            enter-active-class="ease-in duration-300"
+                                            enter-class="opacity-0 "
+                                            enter-to-class="opacity-100"
+                                            leave-active-class="ease-out duration-500"
+                                            leave-class="opacity-100"
+                                            leave-to-class="opacity-0"
+                                        >
+                                            <Error
+                                                :message="errors.password[0]"
+                                                v-if="errors.password"
+                                            />
+                                        </transition>
                                     </div>
                                 </fieldset>
                             </div>
@@ -564,6 +617,9 @@ export default {
             "inactiveUser"
         ]),
         ...mapMutations(["CLEAR_EMPLOYEE"]),
+        clearError() {
+            this.errors.message = "";
+        },
         statusActive(data) {
             let user = {
                 id: data.id
@@ -624,6 +680,7 @@ export default {
             });
         },
         closeModal() {
+            this.clearSearchEmployee();
             this.editMode = false;
             this.modal({
                 flag: false

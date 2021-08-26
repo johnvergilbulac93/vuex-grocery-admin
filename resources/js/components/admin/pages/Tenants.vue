@@ -9,6 +9,21 @@
                 class="grid lg:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 sm:grid-flow-row sm:grid-cols-1 sm:grid-rows-1 gap-2"
             >
                 <div class="p-2">
+                    <transition
+                        enter-active-class="ease-in duration-500"
+                        enter-class="opacity-0 "
+                        enter-to-class="opacity-100"
+                        leave-active-class="ease-out duration-500"
+                        leave-class="opacity-100"
+                        leave-to-class="opacity-0"
+                    >
+                        <ErrorMessage
+                            :message="errors.message[0]"
+                            v-if="errors.message"
+                            @clear="clearError"
+                        />
+                    </transition>
+
                     <form @submit.prevent="editMode ? update() : create()">
                         <div class="flex flex-col space-y-2">
                             <div class="w-full space-y-1">
@@ -28,10 +43,19 @@
                                         >{{ store.business_unit }}
                                     </option>
                                 </select>
-                                <Error
-                                    :message="errors.store[0]"
-                                    v-if="errors.store"
-                                />
+                                <transition
+                                    enter-active-class="ease-in duration-300"
+                                    enter-class="opacity-0 "
+                                    enter-to-class="opacity-100"
+                                    leave-active-class="ease-out duration-500"
+                                    leave-class="opacity-100"
+                                    leave-to-class="opacity-0"
+                                >
+                                    <Error
+                                        :message="errors.store[0]"
+                                        v-if="errors.store"
+                                    />
+                                </transition>
                             </div>
                             <div class="w-full space-y-1">
                                 <label for="store" class="font-semibold"
@@ -50,12 +74,21 @@
                                         >{{ dept.name }}
                                     </option>
                                 </select>
-                                <Error
-                                    :message="errors.department[0]"
-                                    v-if="errors.department"
-                                />
+                                <transition
+                                    enter-active-class="ease-in duration-300"
+                                    enter-class="opacity-0 "
+                                    enter-to-class="opacity-100"
+                                    leave-active-class="ease-out duration-500"
+                                    leave-class="opacity-100"
+                                    leave-to-class="opacity-0"
+                                >
+                                    <Error
+                                        :message="errors.department[0]"
+                                        v-if="errors.department"
+                                    />
+                                </transition>
                             </div>
-                            <div class="flex items-center space-x-1 ">
+                            <div class="flex items-center space-x-1 DURA ">
                                 <input
                                     id="status"
                                     v-model="form.status"
@@ -371,6 +404,9 @@ export default {
             this.form.department = tenant.dept_id;
             this.form.status = tenant.status;
         },
+        clearError() {
+            this.errors.message = "";
+        },
         remove(id) {
             this.deleteTenant({
                 id: id
@@ -429,7 +465,9 @@ export default {
             this.saveTenant({
                 tenant: tenant
             });
-            this.reset();
+            Fire.$on("reload_tenant", () => {
+                this.reset();
+            });
         },
         clear() {
             this.tableData.search = "";

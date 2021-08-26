@@ -235,8 +235,8 @@ class SetUpController extends Controller
             'department'    => 'required',
         ]);
         $checking_data =  gc_tenant::where('bunit_code', $request->get('store'))
-            ->where('dept_id', $request->get('department'))
-            ->exists();
+                                    ->where('dept_id', $request->get('department'))
+                                    ->exists();
 
         if (!$checking_data) {
 
@@ -248,13 +248,10 @@ class SetUpController extends Controller
                 'status'    => 1
             ]);
 
-            return response()->json([
-                'error' => false,
-            ], 200);
         } else {
             return response()->json([
-                'error' => true,
-            ], 200);
+                'errors' => ['message' => ['The system detected double entry! Please try again.']],
+            ], 409);
         }
     }
 
@@ -321,8 +318,8 @@ class SetUpController extends Controller
         ]);
 
         $checking_data =  gc_minimum_order_delivery::where('bunit_code', $request->store)
-            ->where('department_id',     $request->department)
-            ->exists();
+                                                    ->where('department_id',     $request->department)
+                                                    ->exists();
 
         if (!$checking_data) {
 
@@ -332,13 +329,10 @@ class SetUpController extends Controller
                 'amount'        => floatval($request->amount)
             ]);
 
-            return response()->json([
-                'error' => false,
-            ], 200);
         } else {
             return response()->json([
-                'error' => true,
-            ], 200);
+                'errors' => ['message' => ['The system detected double entry! Please try again.']],
+            ], 409);
         }
     }
     public function show_min_order(Request $request)
@@ -502,17 +496,15 @@ class SetUpController extends Controller
         if ($request->barangay) {
 
             $checking_data =  gc_delivery_charge::where('town_id', $request->town)
-                ->where('brgy_id',     $request->barangay)
-                ->where('transpo_id',  $request->transportation)
-                ->exists();
+                                                ->where('brgy_id',     $request->barangay)
+                                                ->where('transpo_id',  $request->transportation)
+                                                ->exists();
         } else {
             $checking_data =  gc_delivery_charge::where('town_id', $request->town)
-                ->where('transpo_id',  $request->transportation)
-                ->exists();
+                                                ->where('transpo_id',  $request->transportation)
+                                                ->exists();
         }
-
         if (!$checking_data) {
-
             gc_delivery_charge::create([
                 'prov_id'           => $request->province,
                 'town_id'           => $request->town,
@@ -521,14 +513,10 @@ class SetUpController extends Controller
                 'charge_amt'        => $request->charge_amount,
                 'rider_shared'      => $request->rider_share,
             ]);
-
-            return response()->json([
-                'error' => false,
-            ], 200);
         } else {
             return response()->json([
-                'error' => true,
-            ], 200);
+                'errors' => ['message' => ['The system detected double entry! Please try again.']],
+            ], 409);
         }
     }
     public function delete_charges($id)
@@ -588,12 +576,13 @@ class SetUpController extends Controller
             'price_group_code' => $request->price_group
         ]);
     }
-    public function delete_price_group($id){
+    public function delete_price_group($id)
+    {
         DB::table('locate_business_units')->where('locate_business_units.bunit_code', $id)->update([
             'active' => 0
         ]);
     }
-    public function business_time_active(Request $request)  
+    public function business_time_active(Request $request)
     {
         Bu_time_setup::whereId($request->id)->update([
             'status' => 0
@@ -625,6 +614,5 @@ class SetUpController extends Controller
             'serving_time_end'              => $request->serving_time_end,
             'maximum_no_of_orders'          => $request->maximum_no_of_order,
         ]);
-
     }
 }

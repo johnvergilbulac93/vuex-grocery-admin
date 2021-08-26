@@ -134,14 +134,15 @@
                             <td class="text-center td">
                                 <select
                                     v-if="item.item_price.length"
-                                    class="form   "
+                                    class="form"
                                     @change="getPrice($event, i)"
-                                >
+                                >       
                                     <option
                                         v-for="(data, index) in item.item_price"
                                         :key="index"
                                         :value="data.price_with_vat"
-                                    >
+                                    >   
+                                        
                                         {{ data.UOM }}
                                     </option>
                                 </select>
@@ -254,7 +255,7 @@
                 >
                     <div
                         v-if="viewImage"
-                        class="bg-black bg-opacity-40 fixed top-0 left-0 flex justify-center items-center w-full min-h-screen"
+                        class="bg-black bg-opacity-40 fixed top-0 left-0 z-50 flex justify-center items-center w-full min-h-screen"
                         @click="closeDialog"
                     >
                         <div class="relative ">
@@ -285,7 +286,7 @@
                 >
                     <div
                         v-if="isUpload"
-                        class="bg-black bg-opacity-40 fixed top-0 left-0 flex justify-center items-center w-full min-h-screen"
+                        class="bg-black bg-opacity-40 fixed top-0 left-0 z-50 flex  justify-center items-center w-full min-h-screen"
                     >
                         <div class=" bg-white w-1/2  relative">
                             <div
@@ -635,7 +636,8 @@ export default {
             this.fetch();
         },
         getPrice(e, i) {
-            $("#price-" + i).text(e.target.value);
+            console.log( i, e)
+           $("#price-" + i).text(e.target.value);
         },
         showPerItemStatusActive(itemcode) {
             let itemCode = {

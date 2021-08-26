@@ -25,10 +25,19 @@
                                     >{{ store.business_unit }}
                                 </option>
                             </select>
-                            <Error
-                                :message="errors.store[0]"
-                                v-if="errors.store"
-                            />
+                            <transition
+                                enter-active-class="ease-in duration-300"
+                                enter-class="opacity-0 "
+                                enter-to-class="opacity-100"
+                                leave-active-class="ease-out duration-500"
+                                leave-class="opacity-100"
+                                leave-to-class="opacity-0"
+                            >
+                                <Error
+                                    :message="errors.store[0]"
+                                    v-if="errors.store"
+                                />
+                            </transition>
                         </div>
                         <div class="w-full space-y-1">
                             <label for="store" class="font-semibold"
@@ -47,10 +56,19 @@
                                     >{{ pGroup.price_group_name }}
                                 </option>
                             </select>
-                            <Error
-                                :message="errors.price_group[0]"
-                                v-if="errors.price_group"
-                            />
+                            <transition
+                                enter-active-class="ease-in duration-300"
+                                enter-class="opacity-0 "
+                                enter-to-class="opacity-100"
+                                leave-active-class="ease-out duration-500"
+                                leave-class="opacity-100"
+                                leave-to-class="opacity-0"
+                            >
+                                <Error
+                                    :message="errors.price_group[0]"
+                                    v-if="errors.price_group"
+                                />
+                            </transition>
                         </div>
 
                         <div class="w-full mt-8 flex space-x-2">
