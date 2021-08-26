@@ -30,12 +30,19 @@
                                     {{ store.business_unit }}
                                 </option>
                             </select>
-                            <p
-                                class="text-red-500 text-center text-sm"
-                                v-if="errors.store"
+                            <transition
+                                enter-active-class="ease-in duration-300"
+                                enter-class="opacity-0 "
+                                enter-to-class="opacity-100"
+                                leave-active-class="ease-out duration-500"
+                                leave-class="opacity-100"
+                                leave-to-class="opacity-0"
                             >
-                                <small>{{ errors.store[0] }}</small>
-                            </p>
+                                <Error
+                                    :message="errors.store[0]"
+                                    v-if="errors.store"
+                                />
+                            </transition>
                         </div>
                         <div class="block w-1/4 sm:w-full md:w-1/2 ">
                             <label for="" class="font-semibold"
@@ -115,12 +122,14 @@
                             class="min-w-full divide-y divide-gray-300 mt-5"
                             id="accountability_table"
                         >
-                            <thead
-                                class="border  bg-gray-100 tracking-normal"
-                            >
+                            <thead class="border  bg-gray-100 tracking-normal">
                                 <tr class="tr">
-                                    <th class="p-2 border text-left ">Cashier</th>
-                                    <th class="p-2 border text-center">Ticket #</th>
+                                    <th class="p-2 border text-left ">
+                                        Cashier
+                                    </th>
+                                    <th class="p-2 border text-center">
+                                        Ticket #
+                                    </th>
                                     <th class="p-2 border text-right">
                                         Transaction #
                                     </th>
@@ -319,7 +328,8 @@ export default {
     },
     methods: {
         ...mapActions(["getStore"]),
-        ...mapMutations(["SET_ERRORS"]),
+        ...mapMutations(["SET_ERRORS", "CLEAR_ERRORS"]),
+
         printBtn() {
             window.print();
         },
@@ -405,6 +415,9 @@ export default {
                     .catch(error => {
                         if (error.response.status === 422) {
                             this.SET_ERRORS(error.response.data.errors);
+                            setTimeout(() => {
+                                this.CLEAR_ERRORS();
+                            }, 5000);
                         }
                     });
             }

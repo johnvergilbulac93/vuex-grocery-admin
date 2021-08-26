@@ -372,7 +372,7 @@
             >
                 <div
                     v-if="isModal"
-                    class="bg-black bg-opacity-30 fixed top-16  left-0 flex justify-center items-center shadow-xl p-20 w-full min-h-screen"
+                    class="bg-black bg-opacity-30 fixed top-0 left-0 z-50 flex justify-center items-center shadow-xl p-20 w-full min-h-screen"
                 >
                     <div
                         class="bg-white md:w-full sm:max-w-full rounded text-gray-800"

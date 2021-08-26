@@ -2,9 +2,7 @@
     <div class=" bg-gray-50 shadow-lg p-5 rounded text-gray-800 ">
         <div class="flex flex-col justify-center items-center ">
             <div class="mb-5 bg-gray-100 p-2 md:w-1/2 sm:w-full  border">
-                <label
-                    class=" flex items-center space-x-1"
-                >
+                <label class=" flex items-center space-x-1">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-7 w-7"
@@ -37,12 +35,19 @@
                             autofocus
                             placeholder="Old Username"
                         />
-                        <p
-                            class="text-red-500  text-sm"
-                            v-if="errors.old_username"
+                        <transition
+                            enter-active-class="ease-in duration-300"
+                            enter-class="opacity-0 "
+                            enter-to-class="opacity-100"
+                            leave-active-class="ease-out duration-500"
+                            leave-class="opacity-100"
+                            leave-to-class="opacity-0"
                         >
-                            <small>{{ errors.old_username[0] }}</small>
-                        </p>
+                            <Error
+                                :message="errors.old_username[0]"
+                                v-if="errors.old_username"
+                            />
+                        </transition>
                     </div>
                     <div>
                         <label for="" class="block font-semibold"
@@ -57,14 +62,20 @@
                             class="form"
                             tabindex="2"
                             placeholder="New Username"
-
                         />
-                        <p
-                            class="text-red-500  text-sm"
-                            v-if="errors.new_username"
+                        <transition
+                            enter-active-class="ease-in duration-300"
+                            enter-class="opacity-0 "
+                            enter-to-class="opacity-100"
+                            leave-active-class="ease-out duration-500"
+                            leave-class="opacity-100"
+                            leave-to-class="opacity-0"
                         >
-                            <small>{{ errors.new_username[0] }}</small>
-                        </p>
+                            <Error
+                                :message="errors.new_username[0]"
+                                v-if="errors.new_username"
+                            />
+                        </transition>
                     </div>
                     <button
                         @click="saveChanges"

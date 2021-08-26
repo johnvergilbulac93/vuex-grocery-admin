@@ -27,12 +27,19 @@
                                 <option value="DETAILED">DETAILED</option>
                                 <option value="SUMMARY">SUMMARY</option>
                             </select>
-                            <p
-                                class="text-red-500 text-center text-sm"
-                                v-if="errors.type"
+                            <transition
+                                enter-active-class="ease-in duration-300"
+                                enter-class="opacity-0 "
+                                enter-to-class="opacity-100"
+                                leave-active-class="ease-out duration-500"
+                                leave-class="opacity-100"
+                                leave-to-class="opacity-0"
                             >
-                                <small>{{ errors.type[0] }}</small>
-                            </p>
+                                <Error
+                                    :message="errors.type[0]"
+                                    v-if="errors.type"
+                                />
+                            </transition>
                         </div>
                         <div class="block w-1/4 sm:w-full md:w-1/2">
                             <label for="" class="font-semibold">Store</label>
@@ -52,12 +59,19 @@
                                     {{ store.business_unit }}
                                 </option>
                             </select>
-                            <p
-                                class="text-red-500 text-center text-sm"
-                                v-if="errors.store"
+                            <transition
+                                enter-active-class="ease-in duration-300"
+                                enter-class="opacity-0 "
+                                enter-to-class="opacity-100"
+                                leave-active-class="ease-out duration-500"
+                                leave-class="opacity-100"
+                                leave-to-class="opacity-0"
                             >
-                                <small>{{ errors.store[0] }}</small>
-                            </p>
+                                <Error
+                                    :message="errors.store[0]"
+                                    v-if="errors.store"
+                                />
+                            </transition>
                         </div>
                         <div class="block w-1/4 sm:w-full md:w-1/2 ">
                             <label for="" class="font-semibold"
@@ -69,12 +83,19 @@
                                 tabindex="2"
                                 v-model="filter.dateFrom"
                             />
-                            <p
-                                class="text-red-500 text-center text-sm"
-                                v-if="errors.startDate"
+                            <transition
+                                enter-active-class="ease-in duration-300"
+                                enter-class="opacity-0 "
+                                enter-to-class="opacity-100"
+                                leave-active-class="ease-out duration-500"
+                                leave-class="opacity-100"
+                                leave-to-class="opacity-0"
                             >
-                                <small>{{ errors.startDate[0] }}</small>
-                            </p>
+                                <Error
+                                    :message="errors.startDate[0]"
+                                    v-if="errors.startDate"
+                                />
+                            </transition>
                         </div>
                         <div class="block w-1/4 sm:w-full md:w-1/2">
                             <label for="" class="font-semibold">Date to</label>
@@ -84,12 +105,19 @@
                                 tabindex="3"
                                 v-model="filter.dateTo"
                             />
-                            <p
-                                class="text-red-500 text-center text-sm"
-                                v-if="errors.endDate"
+                            <transition
+                                enter-active-class="ease-in duration-300"
+                                enter-class="opacity-0 "
+                                enter-to-class="opacity-100"
+                                leave-active-class="ease-out duration-500"
+                                leave-class="opacity-100"
+                                leave-to-class="opacity-0"
                             >
-                                <small>{{ errors.endDate[0] }}</small>
-                            </p>
+                                <Error
+                                    :message="errors.endDate[0]"
+                                    v-if="errors.endDate"
+                                />
+                            </transition>
                         </div>
                     </div>
                     <div class="flex justify-end items-center space-x-2">
@@ -182,22 +210,34 @@
                                             class="border bg-gray-100  tracking-normal"
                                         >
                                             <tr class="tr ">
-                                                <th class="p-2 border text-center">
+                                                <th
+                                                    class="p-2 border text-center"
+                                                >
                                                     Date
                                                 </th>
-                                                <th class="p-2 border text-left">
+                                                <th
+                                                    class="p-2 border text-left"
+                                                >
                                                     Customer
                                                 </th>
-                                                <th class="p-2 border text-center">
+                                                <th
+                                                    class="p-2 border text-center"
+                                                >
                                                     Transaction #
                                                 </th>
-                                                <th class="p-2 border text-right">
+                                                <th
+                                                    class="p-2 border text-right"
+                                                >
                                                     Gross Amount
                                                 </th>
-                                                <th class="p-2 border text-right">
+                                                <th
+                                                    class="p-2 border text-right"
+                                                >
                                                     Pick-up Charge
                                                 </th>
-                                                <th class="p-2 border text-right">
+                                                <th
+                                                    class="p-2 border text-right"
+                                                >
                                                     Total Amount
                                                 </th>
                                             </tr>
@@ -428,7 +468,10 @@
                                             class="border  bg-gray-100  tracking-wide font-poppins"
                                         >
                                             <tr class="tr">
-                                                <th colspan="6" class=" p-2 border">
+                                                <th
+                                                    colspan="6"
+                                                    class=" p-2 border"
+                                                >
                                                     <span
                                                         class="font-semibold flex justify-start"
                                                         >{{
@@ -439,22 +482,34 @@
                                                 </th>
                                             </tr>
                                             <tr class="td">
-                                                <th class="p-2 text-center border">
+                                                <th
+                                                    class="p-2 text-center border"
+                                                >
                                                     Date
                                                 </th>
-                                                <th class="p-2 text-left border">
+                                                <th
+                                                    class="p-2 text-left border"
+                                                >
                                                     Customer
                                                 </th>
-                                                <th class="p-2 text-center border">
+                                                <th
+                                                    class="p-2 text-center border"
+                                                >
                                                     Transaction #.
                                                 </th>
-                                                <th class="p-2 text-right border">
+                                                <th
+                                                    class="p-2 text-right border"
+                                                >
                                                     Gross Amount
                                                 </th>
-                                                <th class="p-2 text-right border">
+                                                <th
+                                                    class="p-2 text-right border"
+                                                >
                                                     Picking Charge
                                                 </th>
-                                                <th class="p-2 text-right border">
+                                                <th
+                                                    class="p-2 text-right border"
+                                                >
                                                     Total Amount
                                                 </th>
                                             </tr>
@@ -556,13 +611,19 @@
                                                     <th class="p-2 border">
                                                         Transaction #
                                                     </th>
-                                                    <th class="p-2 border text-right">
+                                                    <th
+                                                        class="p-2 border text-right"
+                                                    >
                                                         Gross Amount
                                                     </th>
-                                                    <th class="p-2 border text-right">
+                                                    <th
+                                                        class="p-2 border text-right"
+                                                    >
                                                         Picking Charge
                                                     </th>
-                                                    <th class="p-2 border text-right">
+                                                    <th
+                                                        class="p-2 border text-right"
+                                                    >
                                                         Total Amount
                                                     </th>
                                                 </tr>
@@ -619,14 +680,14 @@
                             </div>
                         </div>
                     </div>
-                    <div v-else >
+                    <div v-else>
                         <div v-if="ArrDataStore.b_unit != null">
                             <div
                                 class="flex flex-col "
                                 v-if="filter.store === 'all'"
                                 id="transaction_body"
                             >
-                                <div class="container" >
+                                <div class="container">
                                     <center>
                                         <h6 class="text-lg">
                                             ALL STORES
@@ -652,7 +713,7 @@
                                         </p>
                                     </center>
                                 </div>
-                                <div >
+                                <div>
                                     <table
                                         class="min-w-full divide-y divide-gray-300  mt-5"
                                     >
@@ -660,18 +721,30 @@
                                             class="border bg-gray-100 tracking-normal"
                                         >
                                             <tr class="tr">
-                                                <th class="p-2 border text-left">STORE NAME</th>
+                                                <th
+                                                    class="p-2 border text-left"
+                                                >
+                                                    STORE NAME
+                                                </th>
                                                 <th class="p-2 border">
                                                     Total Orders
                                                 </th>
 
-                                                <th class="p-2 border text-right">
+                                                <th
+                                                    class="p-2 border text-right"
+                                                >
                                                     Gross Amount
                                                 </th>
-                                                <th class="p-2 border text-right">
+                                                <th
+                                                    class="p-2 border text-right"
+                                                >
                                                     Picking Charge
                                                 </th>
-                                                <th class="p-2 border text-right">Total</th>
+                                                <th
+                                                    class="p-2 border text-right"
+                                                >
+                                                    Total
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody class="tbody">
@@ -701,7 +774,7 @@
                                                             | toCurrency
                                                     }}
                                                 </td>
-                                                <td class="td text-right" >
+                                                <td class="td text-right">
                                                     {{
                                                         totalOrderAmount(store)
                                                             .grandTotal
@@ -746,7 +819,7 @@
                                     >
                                 </div>
                             </div>
-                            <div class="container" v-else >
+                            <div class="container" v-else>
                                 <div id="transaction_body">
                                     <center>
                                         <h6 class="text-lg">
@@ -787,17 +860,29 @@
                                             class="border bg-gray-100  tracking-normal"
                                         >
                                             <tr class="tr">
-                                                <th class="p-2 border text-left">Date</th>
+                                                <th
+                                                    class="p-2 border text-left"
+                                                >
+                                                    Date
+                                                </th>
                                                 <th class="p-2 border ">
                                                     Total Order
                                                 </th>
-                                                <th class="p-2 border text-right">
+                                                <th
+                                                    class="p-2 border text-right"
+                                                >
                                                     Gross Amount
                                                 </th>
-                                                <th class="p-2 border text-right">
+                                                <th
+                                                    class="p-2 border text-right"
+                                                >
                                                     Picking Charge
                                                 </th>
-                                                <th class="p-2 border text-right">Total</th>
+                                                <th
+                                                    class="p-2 border text-right"
+                                                >
+                                                    Total
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody class="tbody">
@@ -980,7 +1065,7 @@ export default {
     },
     methods: {
         ...mapActions(["getStore"]),
-        ...mapMutations(["SET_ERRORS"]),
+        ...mapMutations(["SET_ERRORS","CLEAR_ERRORS"]),
         clearData() {
             this.ArrDataStore = [];
         },
@@ -1090,6 +1175,9 @@ export default {
                     .catch(error => {
                         if (error.response.status === 422) {
                             this.SET_ERRORS(error.response.data.errors);
+                            setTimeout(() => {
+                                this.CLEAR_ERRORS()
+                            }, 5000);
                         }
                     });
             }

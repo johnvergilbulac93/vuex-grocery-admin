@@ -28,12 +28,19 @@
                                     {{ store.business_unit }}
                                 </option>
                             </select>
-                            <p
-                                class="text-red-500 text-center text-sm block"
-                                v-if="errors.store"
+                            <transition
+                                enter-active-class="ease-in duration-300"
+                                enter-class="opacity-0 "
+                                enter-to-class="opacity-100"
+                                leave-active-class="ease-out duration-500"
+                                leave-class="opacity-100"
+                                leave-to-class="opacity-0"
                             >
-                                <small>{{ errors.store[0] }}</small>
-                            </p>
+                                <Error
+                                    :message="errors.store[0]"
+                                    v-if="errors.store"
+                                />
+                            </transition>
                         </div>
                         <div class="w-full">
                             <select
@@ -51,12 +58,19 @@
                                     >Unavailable Items</option
                                 >
                             </select>
-                            <p
-                                class="text-red-500 text-center text-sm"
-                                v-if="errors.type"
+                            <transition
+                                enter-active-class="ease-in duration-300"
+                                enter-class="opacity-0 "
+                                enter-to-class="opacity-100"
+                                leave-active-class="ease-out duration-500"
+                                leave-class="opacity-100"
+                                leave-to-class="opacity-0"
                             >
-                                <small>{{ errors.type[0] }}</small>
-                            </p>
+                                <Error
+                                    :message="errors.type[0]"
+                                    v-if="errors.type"
+                                />
+                            </transition>
                         </div>
                         <div class="w-full">
                             <button
@@ -82,28 +96,16 @@
                     </div>
                 </div>
             </div>
-            <div
-                class="fixed top-0 left-0 flex justify-center items-center w-full min-h-screen bg-white"
-                v-if="loading"
-            >
-                <HalfCircleSpinner
-                    :animation-duration="1000"
-                    :size="60"
-                    color="#ff1d5e"
-                />
-            </div>
         </div>
     </div>
 </template>
 
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
-import { HalfCircleSpinner } from "epic-spinners";
 import Report from "../../../services/Report";
 
 export default {
     name: "Reports",
-    components: { HalfCircleSpinner },
     data() {
         let routes = [
             {
@@ -155,7 +157,7 @@ export default {
     },
     methods: {
         ...mapActions(["getStore"]),
-        ...mapMutations(["SET_ERRORS"]),
+        ...mapMutations(["SET_ERRORS", "CLEAR_ERRORS"]),
         changestore() {
             this.results = [];
         },
@@ -182,6 +184,9 @@ export default {
                     this.loading = false;
                     if (error.response.status === 422) {
                         this.SET_ERRORS(error.response.data.errors);
+                        setTimeout(() => {
+                            this.CLEAR_ERRORS();
+                        }, 5000);
                     }
                 });
         }

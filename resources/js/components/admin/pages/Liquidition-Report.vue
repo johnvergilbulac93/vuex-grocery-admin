@@ -30,12 +30,19 @@
                                     {{ store.business_unit }}
                                 </option>
                             </select>
-                            <p
-                                class="text-red-500 text-center text-sm"
-                                v-if="errors.store"
+                            <transition
+                                enter-active-class="ease-in duration-300"
+                                enter-class="opacity-0 "
+                                enter-to-class="opacity-100"
+                                leave-active-class="ease-out duration-500"
+                                leave-class="opacity-100"
+                                leave-to-class="opacity-0"
                             >
-                                <small>{{ errors.store[0] }}</small>
-                            </p>
+                                <Error
+                                    :message="errors.store[0]"
+                                    v-if="errors.store"
+                                />
+                            </transition>
                         </div>
                         <div class="block sm:w-full md:w-56 ">
                             <label for="" class="font-semibold"
@@ -292,7 +299,7 @@ export default {
     },
     methods: {
         ...mapActions(["getStore"]),
-        ...mapMutations(["SET_ERRORS"]), 
+        ...mapMutations(["SET_ERRORS",'CLEAR_ERRORS']),
         totalOrderAmount(orders) {
             let pickupCharge = 0,
                 orderAmount = 0,
@@ -420,6 +427,9 @@ export default {
                     .catch(error => {
                         if (error.response.status === 422) {
                             this.SET_ERRORS(error.response.data.errors);
+                            setTimeout(() => {
+                                 this.CLEAR_ERRORS()
+                            }, 5000);
                         }
                     });
             }

@@ -2,10 +2,7 @@
     <div class=" bg-gray-50 shadow-lg p-5 rounded text-gray-800">
         <div class="flex flex-col justify-center items-center sm:w-full  ">
             <div class="mb-5 bg-gray-100 p-2 md:w-1/2 sm:w-full  border">
-                <label
-                    for=""
-                    class=" flex items-center space-x-1"
-                >
+                <label for="" class=" flex items-center space-x-1">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-7 w-7"
@@ -24,7 +21,9 @@
                 </label>
                 <div class=" mt-5 p-2 space-y-4 text-gray-800">
                     <div>
-                        <label for="" class="block font-semibold subpixel-antialiased"
+                        <label
+                            for=""
+                            class="block font-semibold subpixel-antialiased"
                             >Old Password
                         </label>
                         <div class="relative w-full flex ">
@@ -97,12 +96,19 @@
                                 </svg>
                             </button>
                         </div>
-                        <p
-                            class="text-red-500  text-sm"
-                            v-if="errors.old_password"
+                        <transition
+                            enter-active-class="ease-in duration-300"
+                            enter-class="opacity-0 "
+                            enter-to-class="opacity-100"
+                            leave-active-class="ease-out duration-500"
+                            leave-class="opacity-100"
+                            leave-to-class="opacity-0"
                         >
-                            <small>{{ errors.old_password[0] }}</small>
-                        </p>
+                            <Error
+                                :message="errors.old_password[0]"
+                                v-if="errors.old_password"
+                            />
+                        </transition>
                     </div>
                     <div>
                         <label for="" class="block font-semibold"
@@ -176,12 +182,19 @@
                                 </svg>
                             </button>
                         </div>
-                        <p
-                            class="text-red-500 text-sm"
-                            v-if="errors.new_password"
+                        <transition
+                            enter-active-class="ease-in duration-300"
+                            enter-class="opacity-0 "
+                            enter-to-class="opacity-100"
+                            leave-active-class="ease-out duration-500"
+                            leave-class="opacity-100"
+                            leave-to-class="opacity-0"
                         >
-                            <small>{{ errors.new_password[0] }}</small>
-                        </p>
+                            <Error
+                                :message="errors.new_password[0]"
+                                v-if="errors.new_password"
+                            />
+                        </transition>
                     </div>
                     <div>
                         <label for="" class="block font-semibold"
@@ -304,10 +317,19 @@ export default {
                 new_password: this.form.new_password,
                 new_password_confirmation: this.form.new_password_confirmation
             };
-            this.userChangePass({ user });
 
-            Fire.$on("clear_field", () => {
-                this.clear();
+            swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, change it!"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    this.userChangePass({ user });
+                }
             });
         },
         clear() {
@@ -321,7 +343,11 @@ export default {
             this.showPasswordConfirm = false;
         }
     },
-    mounted() {}
+    mounted() {
+        Fire.$on("clear_field", () => {
+             this.clear();
+        });
+    }
 };
 </script>
 
