@@ -133,7 +133,7 @@
                             <td class="td">{{ item.category_name }}</td>
                             <td class="text-center td">
                                 <select
-                                    v-if="item.item_price.length"
+                                    v-if="item.item_price != 0"
                                     class="form"
                                     @change="getPrice($event, i)"
                                 >       
@@ -636,7 +636,6 @@ export default {
             this.fetch();
         },
         getPrice(e, i) {
-            console.log( i, e)
            $("#price-" + i).text(e.target.value);
         },
         showPerItemStatusActive(itemcode) {

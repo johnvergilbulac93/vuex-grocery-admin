@@ -138,10 +138,12 @@ const app = new Vue({
     store,
     data() {
         return {
-            // url: "https://admins.alturush.com/ITEM-IMAGES/",
-            // path: "https://admins.alturush.com/img/",
+            url: "https://admins.alturush.com/ITEM-IMAGES/",
+            path: "https://admins.alturush.com/img/",
             url: process.env.MIX_URL_LOCAL,
             path: process.env.MIX_URL_PATH,
+            // url: process.env.MIX_URL_ITEM_IMAGES, v  
+            // path: process.env.MIX_URL_RESOURCES,
             serverDateTime,
             userType,
             id,
@@ -154,6 +156,7 @@ const app = new Vue({
             messageIdle: ''
         }
     },
+    
     methods: {
         handleBlur(e) {
             setTimeout(() => {
@@ -171,12 +174,6 @@ const app = new Vue({
         toggleShow() {
             this.showPassword = !this.showPassword;
         },
-        onIdle() {
-            this.messageStr = 'ZZZ'
-        },
-        onActive() {
-            this.messageStr = 'Hello'
-        }
-    },
+    },  
 
 });

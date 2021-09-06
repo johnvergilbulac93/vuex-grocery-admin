@@ -171,6 +171,12 @@
                                     <td class="td ">
                                         {{ trans.name }}
                                     </td>
+                                    <td class="td">
+                                        {{
+                                            trans.final_order_status[0]
+                                                .order_pickup | formatDateNoTime
+                                        }}
+                                    </td>
                                     <td class="td ">
                                         {{ trans.tickets[0].ticket }}
                                     </td>
@@ -299,7 +305,7 @@ export default {
     },
     methods: {
         ...mapActions(["getStore"]),
-        ...mapMutations(["SET_ERRORS",'CLEAR_ERRORS']),
+        ...mapMutations(["SET_ERRORS", "CLEAR_ERRORS"]),
         totalOrderAmount(orders) {
             let pickupCharge = 0,
                 orderAmount = 0,
@@ -428,7 +434,7 @@ export default {
                         if (error.response.status === 422) {
                             this.SET_ERRORS(error.response.data.errors);
                             setTimeout(() => {
-                                 this.CLEAR_ERRORS()
+                                this.CLEAR_ERRORS();
                             }, 5000);
                         }
                     });

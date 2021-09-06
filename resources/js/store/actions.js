@@ -633,7 +633,7 @@ export const enableItemPerUOM = async ({ commit }, { itemCode }) => {
 };
 export const getStoreItem = async ({ commit }, { currentPage, filterData }) => {
     try {
-        const { status, data } = Item.store_item_masterfile(
+        const { status, data } = await Item.store_item_masterfile(
             currentPage,
             filterData
         );
@@ -645,15 +645,10 @@ export const getStoreItem = async ({ commit }, { currentPage, filterData }) => {
         console.log(error);
     }
 };
-export const getStorePriceGroup = async (
-    { commit },
-    { currentPage, filterData }
-) => {
+export const getStorePriceGroup = async ({ commit },{ currentPage, filterData }) => {
     try {
-        const { status, data } = await StorePriceGroup.show(
-            currentPage,
-            filterData
-        );
+        const { status, data } = await StorePriceGroup.show(currentPage,filterData);
+
         if (status === 200) {
             commit("SET_STORE_PRICE_GROUP", data.data);
             commit("PAGINATION", data);

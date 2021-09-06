@@ -487,7 +487,7 @@ export default {
             return array.findIndex(i => i[key] == value);
         }
     },
-    mounted() {
+    created() {
         this.fetch();
         this.getItemCategory();
     }

@@ -3,7 +3,7 @@ import NProgress from 'nprogress'
 import store from '../store'
 
 const Http = axios.create({
-    baseURL: process.env.MIX_APP_URL
+    baseURL: '/api/'
 });
 
 Http.interceptors.request.use(config => { // Called on request

@@ -555,8 +555,6 @@ class SetUpController extends Controller
         $finalResults = $query->paginate($length);
 
         return $finalResults;
-
-        return $query;
     }
     public function save_store_price_group(Request $request)
     {
