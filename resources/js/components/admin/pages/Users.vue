@@ -652,7 +652,7 @@ export default {
                 name: this.form.name,
                 username: this.form.username,
                 usertype: this.form.usertype,
-                employee_id: this.form.employee_id,
+                emp_id: this.form.employee_id,
                 store: this.form.store,
                 password: this.form.password
             };
@@ -663,7 +663,7 @@ export default {
                 name: this.form.name,
                 username: this.form.username,
                 usertype: this.form.usertype,
-                employee_id: this.form.employee_id,
+                emp_id: this.form.employee_id,
                 store: this.form.store,
                 password: this.form.password
             };
@@ -701,7 +701,7 @@ export default {
             this.form.name = user.name;
             this.form.username = user.username;
             this.form.store = user.bunit_code;
-            this.form.employee_id = user.employee_id;
+            this.form.employee_id = user.emp_id;
             this.form.usertype = user.usertype_id;
             this.modal({
                 flag: true

@@ -211,7 +211,7 @@ class SetUpController extends Controller
             ]);
         } else {
             $this->validate($request, [
-                'opening_time'    => 'required|date_format:h:i:s',
+                'opening_time'    => 'required|date_format:h:i',
                 'closing_time'      => 'required|after:opening_time',
             ]);
         }
@@ -237,7 +237,6 @@ class SetUpController extends Controller
         $checking_data =  gc_tenant::where('bunit_code', $request->get('store'))
                                     ->where('dept_id', $request->get('department'))
                                     ->exists();
-
         if (!$checking_data) {
 
             gc_tenant::updateOrCreate([

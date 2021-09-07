@@ -69,11 +69,13 @@ class UserController extends Controller
     }
     public function create_user(Request $request)
     {
+
+        
         if($request->password){
             $this->validate($request, [
                 'name'          => ['required', 'string', 'max:255'],
                 'username'      => ['required', 'string', 'string', 'max:255', 'unique:gc_users,username'],
-                'employee_id'   => ['required'],
+                'emp_id'        => ['required'],
                 'usertype'      => ['required'],
                 'store'         => ['required'],
                 'store'         => ['required'],
@@ -83,7 +85,7 @@ class UserController extends Controller
             $this->validate($request, [
                 'name'          => ['required', 'string', 'max:255'],
                 'username'      => ['required', 'string', 'string', 'max:255', 'unique:gc_users,username'],
-                'employee_id'   => ['required'],
+                'emp_id'        => ['required'],
                 'usertype'      => ['required'],
                 'store'         => ['required'],
             ]);
@@ -229,7 +231,6 @@ class UserController extends Controller
                 );
             }
         }
-
         User::where('id', $request->id )->update($user_edit_data);
     
     }
