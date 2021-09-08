@@ -7,6 +7,7 @@ import MinOrder from "../services/MinOrder";
 import User from "../services/User";
 import Item from "../services/Item";
 import StorePriceGroup from "../services/StorePriceGroup";
+import axios from "axios";
 
 export const userType = async ({ commit }) => {
     try {
@@ -645,9 +646,15 @@ export const getStoreItem = async ({ commit }, { currentPage, filterData }) => {
         console.log(error);
     }
 };
-export const getStorePriceGroup = async ({ commit },{ currentPage, filterData }) => {
+export const getStorePriceGroup = async (
+    { commit },
+    { currentPage, filterData }
+) => {
     try {
-        const { status, data } = await StorePriceGroup.show(currentPage,filterData);
+        const { status, data } = await StorePriceGroup.show(
+            currentPage,
+            filterData
+        );
 
         if (status === 200) {
             commit("SET_STORE_PRICE_GROUP", data.data);
@@ -871,15 +878,22 @@ export const saveRule = async ({ commit }, { rule }) => {
         }
     } catch (error) {
         commit("SET_ERRORS", error.response.data.errors);
+        setTimeout(() => {
+            commit("CLEAR_ERRORS");
+        }, 5000);
     }
 };
 export const getRules = async ({ commit }) => {
     try {
         const { status, data } = await Rules.loadRules();
+        console.log(data)
         if (status === 200) {
             commit("SET_RULES", data);
         }
     } catch (error) {
-        console.log(error);
+        commit("SET_ERRORS", error.response.data.errors);
+        setTimeout(() => {
+            commit("CLEAR_ERRORS");
+        }, 5000);
     }
 };

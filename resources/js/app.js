@@ -31,13 +31,6 @@ import 'nprogress/nprogress.css'
 //   height: '4px'
 // })
 
-import IdleVue from 'idle-vue'
-const eventsHub = new Vue()
- 
-Vue.use(IdleVue, {
-  eventEmitter: eventsHub,
-  idleTime: 1000
-})
 
 Vue.use(excel)
 
@@ -138,12 +131,12 @@ const app = new Vue({
     store,
     data() {
         return {
-            url: "https://admins.alturush.com/ITEM-IMAGES/",
-            path: "https://admins.alturush.com/img/",
-            url: process.env.MIX_URL_LOCAL,
-            path: process.env.MIX_URL_PATH,
-            // url: process.env.MIX_URL_ITEM_IMAGES, v  
-            // path: process.env.MIX_URL_RESOURCES,
+            // url: "https://admins.alturush.com/ITEM-IMAGES/",
+            // path: "https://admins.alturush.com/img/",
+            // url: process.env.MIX_URL_LOCAL,
+            // path: process.env.MIX_URL_PATH,
+            url: process.env.MIX_URL_ITEM_IMAGES,
+            path: process.env.MIX_URL_RESOURCES,
             serverDateTime,
             userType,
             id,

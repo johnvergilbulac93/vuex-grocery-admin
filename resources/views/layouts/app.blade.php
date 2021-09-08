@@ -23,8 +23,7 @@
 <body class="font-poppins antialiased ">
     <div id='app'>
         <nav class="fixed w-full z-10 top-0 shadow ">
-            <div
-                class=" flex items-center justify-between  bg-gray-100 p-4 shadow-lg border-gray-200  ">
+            <div class=" flex items-center justify-between  bg-gray-100 p-4 shadow-lg border-gray-200  ">
                 <div class="flex items-center flex-shrink-0 text-white  ">
                     <router-link to="/" class="brand-logo ">
                         <img class="mr-6 w-40" src="{{ asset('img/alturush.png') }}" alt="main">
@@ -36,61 +35,62 @@
                         id="user-menu" aria-label="User menu" aria-haspopup="true">
                         <div class="sm:hidden md:block">
                             {{-- <span class="text-gray-500  text-center font-semibold px-3  tracking-wide">Welcome, <span
-                                    class="uppercase">{{ Auth::user()->username }}</span>
-                            </span> --}}
+                                        class="uppercase">{{ Auth::user()->username }}</span>
+                                </span> --}}
                             <div class="flex items-center text-black">
                                 <span class="text-center  px-3  tracking-wide">Welcome!
                                 </span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 " fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 " fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
                                         d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
-
+    
                         </div>
                     </button>
-
+                
                     <figure v-if="open" id='menu'
-                        class=" absolute z-30 right-0 mt-2 w-80 bg-white rounded-lg overflow-hidden tracking-wide ">
-                        <div class="grid grid-cols-3 gap-3 p-5 ">
-                            <div class=" rounded-full h-20 w-20 relative bg-gray-200">
-                                <img class="w-20 rounded-full"
-                                    src="{{ asset('USER-PROFILE/' . Auth::user()->image) }}" alt="">
-                                <button @click="showUpload"
-                                    class="absolute bottom-0 right-0 p-1 bg-white rounded-full focus:outline-none text-black hover:text-blue-500 transition duration-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5  " fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class=" col-span-2">
-                                <div class="w-full flex flex-col items-center justify-between space-y-2">
-                                    <router-link to="/change_username"
-                                        class=" text-center w-full p-2   rounded bg-blue-500 bg-opacity-80 text-white  hover:text-white hover:bg-blue-500 transition duration-500">
-                                        Change Username
-                                    </router-link>
-                                    <router-link to="/change_password"
-                                        class="text-center w-full p-2  rounded bg-blue-500 bg-opacity-80 text-white  hover:text-white hover:bg-blue-500 transition duration-500">
-                                        Change Password
-                                    </router-link>
-                                </div>
+                    class="absolute z-30 right-0 top-16 w-80 bg-white rounded-lg overflow-hidden tracking-wide ">
+                    <div class="grid grid-cols-3 gap-3 p-5 ">
+                        <div class=" rounded-full h-20 w-20 relative bg-gray-200">
+                            <img class="w-20 rounded-full" src="{{ asset('USER-PROFILE/' . Auth::user()->image) }}"
+                                alt="">
+                            <button @click="showUpload"
+                                class="absolute bottom-0 right-0 p-1 bg-white rounded-full focus:outline-none text-black hover:text-blue-500 transition duration-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5  " fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class=" col-span-2">
+                            <div class="w-full flex flex-col items-center justify-between space-y-2">
+                                <router-link to="/change_username"
+                                    class=" text-center w-full p-2   rounded bg-blue-500 bg-opacity-80 text-white  hover:text-white hover:bg-blue-500 transition duration-500">
+                                    Change Username 
+                                </router-link>
+                                <router-link to="/change_password"
+                                    class="text-center w-full p-2  rounded bg-blue-500 bg-opacity-80 text-white  hover:text-white hover:bg-blue-500 transition duration-500">
+                                    Change Password
+                                </router-link>
                             </div>
                         </div>
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                    </div>
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();"
-                            class=" flex justify-end items-center uppercase  focus:outline-none  bg-yellow-500 w-full  px-4 py-2 text-white hover:text-white hover:bg-yellow-600 transition duration-500">
-                            <span class="mx-auto">Logout</span>
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </figure>
+                        class=" flex justify-end items-center uppercase  focus:outline-none  bg-yellow-500 w-full  px-4 py-2 text-white hover:text-white hover:bg-yellow-600 transition duration-500">
+                        <span class="mx-auto">Logout</span>
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </figure>
                 </div>
+
                 <button class="focus:outline-none sm:block md:hidden" @click="openMenu = !openMenu" @blur="toggleMenu">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
@@ -100,7 +100,7 @@
                 </button>
 
             </div>
-            <div v-if="openMenu" class="bg-gray-100 p-4 flex justify-center items-center transistion duration-500">
+            <div v-if="openMenu" class="bg-gray-100 p-4 flex items-center transistion duration-500">
                 <div class="w-48 flex flex-col items-center space-y-2 ">
                     <router-link to="/change_username"
                         class=" text-center w-full p-2 text-sm  rounded bg-blue-500 bg-opacity-80 text-white  hover:text-white hover:bg-blue-500 transition duration-500">
@@ -333,8 +333,8 @@
 
         <Profile v-if="upload_profile" />
     </div>
-    <script defer src="{{ asset('js/app.js') }}"></script>
-    <script defer src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/custom.js') }}" defer></script>
 
 </body>
 

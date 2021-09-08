@@ -87,11 +87,15 @@ class SetUpController extends Controller
         ]);
     }
 
-    public function setup_rules()
+    public function show_rules()
+    {
+        return gc_setup_business_rule::get();
+    }
+    public function view_rules()
     {
         return gc_setup_business_rule::all();
-    }
 
+    }
     public function pickers()
     {
 
@@ -206,12 +210,12 @@ class SetUpController extends Controller
         if ($request->id === null) {
             $this->validate($request, [
                 'store'        => 'required|unique:bu_time_setups,bunit_code',
-                'opening_time'    => 'required|date_format:h:i',
+                'opening_time'    => 'required',
                 'closing_time'      => 'required|after:opening_time',
             ]);
         } else {
             $this->validate($request, [
-                'opening_time'    => 'required|date_format:h:i',
+                'opening_time'    => 'required',
                 'closing_time'      => 'required|after:opening_time',
             ]);
         }
@@ -602,6 +606,7 @@ class SetUpController extends Controller
             'serving_time_end'          => 'required|after:serving_time_start',
             'maximum_no_of_order'       => 'required',
         ]);
+        
         gc_setup_business_rule::whereId($request->id)->update([
             'minimum_order_amount'          => $request->minimum_order_amount,
             'pickup_charge'                 => $request->pickup_charge,
