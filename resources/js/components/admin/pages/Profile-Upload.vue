@@ -1,6 +1,6 @@
 <template>
     <div
-        class=" fixed top-0 left-0 flex justify-center items-center w-full min-h-screen text-gray-800"
+        class=" fixed top-0 left-0 z-50 flex justify-center items-center w-full min-h-screen text-gray-800"
     >
         <div class="bg-white border border-gray-300 w-1/2 shadow-lg ">
             <div class="p-2 flex justify-between items-center">
@@ -28,7 +28,7 @@
             <div class="p-3 my-2">
                 <div class="text-red-600 text-xs ">
                     <ul v-for="(error, i) in errors.profile_image" :key="i">
-                        <li>{{ error }}</li>
+                        <li>{{   }}</li>
                     </ul>
                 </div>
                 <label

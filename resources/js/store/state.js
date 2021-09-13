@@ -40,5 +40,7 @@ export default {
      ItemCategory: [],
      PriceGroup:[],
      StorePriceGroup:[],
-     Rules: []
+     Rules: [],
+     Unfounds:[],
+     Instructions: []
 }

@@ -1,40 +1,35 @@
 @media print {
-
-    @page {
-        margin-top: .1cm;
-        margin-left: 1cm;
-        margin-right: 1cm;
-        margin-bottom: .1cm;
-    }
-
     body {
         visibility: hidden;
     }
-
     table td {
         border-collapse: collapse !important;
     }
-    table{
+
+    table {
         border: 1px solid #ccc !important;
-        
+
     }
+
     #section-to-print,
     #section-to-print * {
         visibility: visible;
         margin: 0 !important;
     }
+
     #section-to-print {
         position: absolute;
         left: 0 !important;
         top: 0 !important;
-        margin-top: -50px !important;
-        
+        margin-top: -40px !important;
+
     }
-    
+
     #section-to-print2,
     #section-to-print2 * {
-        visibility: visible;        
+        visibility: visible;
     }
+
     #section-to-print2 {
         position: absolute;
         left: 0 !important;
@@ -45,33 +40,53 @@
 
     #section-to-print3,
     #section-to-print3 * {
-        visibility: visible;  
-        /* margin: 0 !important;       */
+        visibility: visible;
     }
+
     #section-to-print3 {
         position: absolute;
         left: 0 !important;
         top: 0 !important;
         margin-top: -78px !important;
-        
+
     }
+
     #allstore_detailed {
         position: absolute;
         left: 0 !important;
         top: 0 !important;
-        margin: 0 auto ;
+        margin: 0 auto;
     }
-    #transaction_header{
-      margin-left: 270px !important;
-      width: 100% !important;
+
+    #transaction_header {
+        margin-left: 270px !important;
+        width: 100% !important;
     }
-    #transaction_footer{
+
+    #transaction_footer {
         width: 100vh !important;
 
     }
-    #transaction_body{
+
+    #transaction_body {
         width: 100vh !important;
+    }
+
+    #print_this,
+    #print_this * {
+        visibility: visible;
+        margin: 0 !important;
+        /* width: 100vh !important; */
+    }
+
+    #print_this {
+        position: absolute;
+        left: 0 !important;
+        top: 0 !important;
+        margin-top: -80px !important;
+
     }
 
 }
+
 

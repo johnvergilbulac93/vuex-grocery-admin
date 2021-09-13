@@ -68,11 +68,7 @@ Vue.filter('toCurrency', function (value) {
     if (typeof value !== 'number') {
         return value
     }
-    var formatter = new Intl.NumberFormat('en-PH', {
-        style: 'currency',
-        currency: 'PHP',
-        minimumFractionDigits: 2
-    })
+    var formatter = new Intl.NumberFormat()
     return formatter.format(value)
 })
 
@@ -115,6 +111,8 @@ Vue.component('Datatable', require('./Usable/Datatable.vue').default);
 Vue.component('Breadcrumb', require('./Usable/Breadcrumb.vue').default);
 Vue.component('Error', require('./Usable/Error.vue').default);
 Vue.component('ErrorMessage', require('./Usable/ErrorMessage.vue').default);
+Vue.component('Clock', require('./Usable/Clock.vue').default);
+
 
 
 

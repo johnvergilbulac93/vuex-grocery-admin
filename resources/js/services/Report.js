@@ -36,6 +36,12 @@ export default {
             params: filter
         })
     },
+    store_instruction(filter){
+        return BaseApi.get('/report/instruction',{params: filter})
+    },
+    store_unfound(filter){
+        return BaseApi.get('/report/unfound',{params: filter})
+    }
 
 
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\gc_bunit_code;
 use App\Ticket;
 use Carbon\Carbon;
 use App\GcCashierMonitoring;
+use App\GCUnfoundItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -366,5 +368,29 @@ class ReportController extends Controller
             $result['data'] = $data;
             return $result;
         }
+    }
+    public function get_instruction(Request $request){
+        $buId = $request->store;
+
+        $getBU = DB::table('locate_business_units')->where('bunit_code', $buId)->first();
+        $query = DB::table('gc_special_instructions')->where('bu_id', $buId)->orderBy('id','DESC')->get();
+        
+        $result['b_unit'] = $getBU;
+        $result['data'] = $query;
+
+        return $result;
+    }
+    public function get_unfound(Request $request){
+
+        $buId = $request->store;
+
+        $getBU = DB::table('locate_business_units')->where('bunit_code', $buId)->first();
+        $query = DB::table('gc_unfound_items')->where('bu_id', $buId)->orderBy('id','DESC')->get();
+        
+        $result['b_unit'] = $getBU;
+        $result['data'] = $query;
+
+        return $result;
+        
     }
 }

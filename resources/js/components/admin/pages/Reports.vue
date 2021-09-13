@@ -15,7 +15,7 @@
                         <div class="w-full">
                             <select
                                 class="form"
-                                tabindex="1"
+                                tabindex="1" 
                                 v-model="filter.store"
                                 @change="changestore"
                             >
@@ -123,6 +123,10 @@ export default {
             {
                 label: "Total Order Report - REMITTED",
                 route: "/transaction"
+            },
+            {
+                label: "Special Instruction & Unfound Items Report",
+                route: "/special_instruction_unfound_item"
             }
         ];
         return {

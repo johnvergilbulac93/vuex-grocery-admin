@@ -8,6 +8,7 @@ import User from "../services/User";
 import Item from "../services/Item";
 import StorePriceGroup from "../services/StorePriceGroup";
 import axios from "axios";
+import Report from "../services/Report";
 
 export const userType = async ({ commit }) => {
     try {
@@ -886,7 +887,6 @@ export const saveRule = async ({ commit }, { rule }) => {
 export const getRules = async ({ commit }) => {
     try {
         const { status, data } = await Rules.loadRules();
-        console.log(data)
         if (status === 200) {
             commit("SET_RULES", data);
         }
@@ -897,3 +897,23 @@ export const getRules = async ({ commit }) => {
         }, 5000);
     }
 };
+export const getInstruction = async ({commit}, {filter}) => {
+    try {
+        const { status, data} = await Report.store_instruction(filter)
+        if(status === 200){
+            commit('SET_INSTRUCTION', data)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+export const getUnfound = async ({commit}, {filter}) => {
+    try {
+        const { status, data} = await Report.store_unfound(filter)
+        if(status === 200){
+            commit('SET_UNFOUNDS', data)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}

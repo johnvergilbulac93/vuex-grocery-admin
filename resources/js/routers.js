@@ -37,6 +37,7 @@ import viewcharge from './components/admin/pages/View-Charge'
 import price_group from './components/admin/pages/Price-Group'
 import change_password from './components/admin/pages/Change-Password'
 import change_username from './components/admin/pages/Change-Username'
+import special_instruction_unfound_item from './components/admin/pages/Special-Instructions-Unfound-Item.vue'
 
 
 Vue.use(VueRouter)
@@ -419,6 +420,18 @@ let router = new VueRouter({
             component: viewcharge,
             props: true
 
+        },
+        {
+            path: '/special_instruction_unfound_item',
+            name: 'special_instruction_unfound_item',
+            component: special_instruction_unfound_item,
+            // beforeEnter: (to, from, next) => {
+            //     if (to.params.id === 12) {
+            //         next();
+            //     } else {
+            //         next('/');
+            //     }
+            // }
         },
 
     ]

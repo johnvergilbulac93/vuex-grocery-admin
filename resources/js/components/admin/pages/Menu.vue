@@ -1,9 +1,6 @@
 <template>
     <div class="flex gap-4  sm:flex-col lg:flex-row ">
-        <div
-            class="w-full bg-gray-50 shadow-lg p-5 rounded"
-            id="style-4"
-        >
+        <div class="w-full bg-gray-50 shadow-lg p-5 rounded" id="style-4">
             <ul class="text-gray-800">
                 <li>
                     <h5
@@ -318,6 +315,19 @@
                                 </span>
                             </router-link>
                         </li>
+                        <li class="li">
+                            <router-link
+                                :to="{
+                                    name: 'special_instruction_unfound_item',
+                                    params: { id: $root.userType }
+                                }"
+                                class=" text-gray-800 hover:text-black"
+                            >
+                                <span class="tracking-wider"
+                                    >Special Instruction & Unfound Items Report
+                                </span>
+                            </router-link>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -473,7 +483,6 @@ export default {
         if (session == true) {
             location.reload();
         }
-
     }
 };
 </script>

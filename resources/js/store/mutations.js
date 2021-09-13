@@ -138,3 +138,15 @@ export const FINISH_LOADING = (state) => {
 export const SET_RULES = (state, payload) => {
      state.Rules = payload
 }
+export const SET_UNFOUNDS = (state, payload) => {
+     state.Unfounds = payload
+}
+export const CLEAR_UNFOUNDS = (state) => {
+     state.Unfounds = []
+}
+export const SET_INSTRUCTION = (state, payload) => {
+     state.Instructions = payload
+}
+export const CLEAR_INSTRUCTION = (state) => {
+     state.Instructions = []
+}

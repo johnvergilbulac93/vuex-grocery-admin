@@ -126,6 +126,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/report/store/liquidation', 'API\ReportController@getLiquidation_store')->name('get-liquidition-store');
     Route::get('/report/store/accountability', 'API\ReportController@getAccountability_store')->name('get-accoutability-store');
     Route::get('/report/transactions', 'API\ReportController@getTransactions')->name('get-transactions');
+    Route::get('/report/instruction', 'API\ReportController@get_instruction')->name('get-instruction');
+    Route::get('/report/unfound', 'API\ReportController@get_unfound')->name('get-unfound');
+
 });
 
 // Route::middleware('auth:api')->group(function () {
