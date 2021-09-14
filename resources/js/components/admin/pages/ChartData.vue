@@ -1,50 +1,60 @@
 <script>
 import { Doughnut } from "vue-chartjs";
-const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    animation: {
-        animateRotate: false
-    }
-};
 export default {
     extends: Doughnut,
-    // mixins: [mixins.reactiveProp],
-    props: ["Data", "Labels", "options"],
-    data() {
-        return {};
+    props: ["data", "labels"],
+    computed: {
+        chartData() {
+            return this.data;
+        },
+        chartLabels() {
+            return this.labels;
+        }
     },
     methods: {
-        loadChart: function() {
+        loadChart() {
             this.renderChart(
                 {
-                    labels: this.Labels,
+                    labels: this.chartLabels,
                     datasets: [
                         {
                             backgroundColor: [
                                 "#34D399",
                                 "#F59E0B",
                                 "#B45309",
-                                "#DC2626"
+                                "#389941",
+                                "#312E81"
                             ],
-                            data: this.Data
+                            data: this.chartData
                         }
                     ]
                 },
-                { responsive: true, maintainAspectRatio: false }
+                {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    resizeDelay: 0,
+                    animation: {
+                        animateRotate: true
+                    }
+                }
             );
         }
     },
     watch: {
-        data: function() {
-            this._chart.destroy();
+        data() {
+            // this.$data._chart.destroy();
             this.loadChart();
         }
     },
     mounted() {
-        // this.renderChart(this.chartData, this.options);
         this.loadChart();
     }
 };
 </script>
-x
+<style>
+canvas {
+    width: 700px !important;
+    height: 300px !important;
+    display: inline-block !important;
+}
+</style>

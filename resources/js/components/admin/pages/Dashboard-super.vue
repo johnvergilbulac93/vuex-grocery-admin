@@ -24,7 +24,7 @@
 
             </div> -->
         </div>
-        <!-- <div class="border-t mt-5">
+        <div class="border-t mt-5">
             <div class="mb-5 bg-gray-100 p-2">
                 <label for="" class="text-gray-500 text-lg font-semibold"
                     >Item Count Not Available Per Store</label
@@ -37,7 +37,7 @@
                 :Options="options"
             >
             </ChartData>
-        </div> -->
+        </div>
 
         <transition
             enter-active-class="ease-out duration-700"
@@ -144,11 +144,6 @@ export default {
     mounted() {
         this.getPriceChanged();
         this.getItems();
-        let session =  this.$store.state.checkSession
-        if(session == true ){
-            location.reload()
-        }
-
     }
 };
 </script>

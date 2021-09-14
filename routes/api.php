@@ -45,11 +45,11 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/enable_item_per_uom', 'API\ItemController@enable_item_per_uom')->name('enable-item-per-uom');
     Route::get('/price_changed/count', 'API\ItemController@price_count_changed')->name('price-count-changed');
     Route::get('/price_changed/info', 'API\ItemController@price_count_changed_info')->name('price-count-changed-info');
-    Route::get('/item_count_available', 'API\ItemController@item_count_available')->name('item-count-available');
+    Route::get('/not_available_item', 'API\ItemController@not_available_item')->name('not-available-item');
     Route::get('/count/category', 'API\ItemController@count_per_category')->name('count-per-category');
     Route::post('/store/enable_item', 'API\ItemController@enable_selected_item')->name('enable-selected-item');
     Route::post('/store/disable_item', 'API\ItemController@disable_selected_item')->name('disable-selected-item');
-
+    Route::get('/top_items', 'API\ItemController@top_items')->name('top-items');
     Route::get('count/price_changes','API\ItemController@count_price_changes')->name('count_price_changes');
 });
 

@@ -422,13 +422,31 @@ class ItemController extends Controller
         return  $final_result;
     }
 
-    public function item_count_available()
+    public function not_available_item()
     {
 
         return DB::table('gc_item_log_availables')
             ->join('locate_business_units', 'locate_business_units.bunit_code', '=', 'store')
             ->select('locate_business_units.business_unit', DB::raw('COUNT(store) as store'))
             ->groupBy('store')
+            ->get();
+    }
+
+    public function top_items(){
+        return DB::table('gc_final_order')
+            ->join('gc_product_items', 'gc_product_items.product_id', '=','gc_final_order.product_id')
+            ->where('canceled_status', 0)
+            ->select(
+                'gc_product_items.product_name',
+                'gc_product_items.category_group',
+                'gc_product_items.category_name',
+                'gc_product_items.product_id',
+                 DB::raw('COUNT(gc_product_items.product_id) as sales')
+            )           
+            ->groupBy('product_id')
+            ->orderBy('sales', 'DESC' )
+             
+            ->take(10)
             ->get();
     }
 
