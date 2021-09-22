@@ -1,7 +1,7 @@
 <template>
-    <section class="flex items-center gap-4">
+    <section class="flex items-center gap-4 font-inter">
         <!-- <h1 v-text="message"></h1> -->
-        <h1 v-text="currentTime"></h1>
+        <h2 v-text="currentTime" class="text-xl font-semibold "></h2>
     </section>
 </template>
 
@@ -19,7 +19,7 @@ export default {
         }
     },
     created() {
-        this.currentTime = moment().format("LL");
+        this.currentTime = moment().format("LLLL");
         setInterval(() => this.updateCurrentTime(), 1 * 1000);
     }
 };

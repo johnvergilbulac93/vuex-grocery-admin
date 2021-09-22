@@ -37,5 +37,13 @@ export default {
                 'Content-Type': 'multipart/form-data'
             }
         })
+    },
+    update_item_description(formData,axiosSource) {
+        return BaseApi.post('/upload/item_description', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            cancelToken: axiosSource.token
+        })
     }
 }

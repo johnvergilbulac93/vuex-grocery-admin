@@ -5,8 +5,8 @@ backtoTop.addEventListener('click',(e) => {
     window.scroll({top:0, left:0, behavior:'smooth'})
 });
 
-window.addEventListener('scroll',(e) => {
-    if(window.scrollY >= 400){
+window.addEventListener('scroll',() => {
+    if(window.scrollY >= 500){
          backtoTop.classList.remove('hidden')
     }
     else{

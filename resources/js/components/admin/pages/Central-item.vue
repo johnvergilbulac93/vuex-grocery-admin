@@ -12,12 +12,10 @@
                     class="flex sm:flex-wrap sm:space-y-2 md:space-y-0 lg:justify-between sm:justify-start items-center mb-2"
                 >
                     <div
-                        class="w-3/4 flex sm:flex-col lg:flex-row justify-between items-center sm:space-y-2 md:space-y-2 lg:space-y-0 "
+                        class=" flex sm:flex-col lg:flex-row gap-1 items-center sm:space-y-2 md:space-y-2 lg:space-y-0 "
                     >
                         <div class="w-72 flex items-center gap-0.5">
-                            <div
-                                class="relative w-full flex items-center  "
-                            >
+                            <div class="relative w-full flex items-center  ">
                                 <input
                                     type="text"
                                     class="form-search "
@@ -46,10 +44,7 @@
                                     </svg>
                                 </button>
                             </div>
-                            <button
-                                @click="search"
-                                class="button-search"
-                            >
+                            <button @click="search" class="button-search">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     class="h-5 w-5 "
@@ -82,7 +77,7 @@
                                 </option>
                             </select>
                         </div>
-                        <div class=" w-72">
+                        <div class="w-40">
                             <select
                                 class="form "
                                 v-model="tableData.price_group"
@@ -91,6 +86,21 @@
                                 <option value="">Choose Price Group</option>
                                 <option value="TAGB">TAGBILARAN</option>
                                 <option value="TALB">TALIBON</option>
+                            </select>
+                        </div>
+                        <div class="w-48">
+                            <select
+                                class="form"
+                                v-model="tableData.store"
+                                @change="fetch()"
+                            >
+                                <option value="">Choose Store</option>
+                                <option
+                                    :value="store.bunit_code"
+                                    v-for="(store, i) in Stores"
+                                    :key="i"
+                                    >{{ store.business_unit }}</option
+                                >
                             </select>
                         </div>
                     </div>
@@ -136,13 +146,12 @@
                                     v-if="item.item_price != 0"
                                     class="form"
                                     @change="getPrice($event, i)"
-                                >       
+                                >
                                     <option
                                         v-for="(data, index) in item.item_price"
                                         :key="index"
                                         :value="data.price_with_vat"
-                                    >   
-                                        
+                                    >
                                         {{ data.UOM }}
                                     </option>
                                 </select>
@@ -161,34 +170,42 @@
                                     }}</span
                                 >
                             </td>
-                            <td
-                                class="td text-center"
-                                v-if="item.status == 'active'"
-                            >
-                                <a
-                                    @click="
-                                        showPerItemStatusActive(item.itemcode)
-                                    "
-                                >
+                            <td class="td text-center">
+                                <a href="#" @click="changeStatus(item)">
                                     <span
-                                        class="bg-green-400 px-2 py-1 rounded-full text-gray-50  text-xs hover:bg-green-500 hover:text-white transition duration-500"
+                                        class=" px-2 py-1 rounded-full text-gray-50  text-xs  hover:text-white transition duration-500"
+                                        :class="
+                                            item.status === 'active'
+                                                ? 'bg-green-400 hover:bg-green-500'
+                                                : 'bg-red-500 hover:bg-red-600'
+                                        "
                                     >
-                                        {{ item.status | textformat }}</span
+                                        {{
+                                            item.status === "active"
+                                                ? "Active"
+                                                : "Inactive"
+                                        }}</span
                                     >
                                 </a>
                             </td>
-                            <td class="text-center" v-else>
-                                <a
-                                    @click="
-                                        showPerItemStatusInactive(item.itemcode)
+                            <td class="td text-center">
+ 
+
+                                <button
+                                    @click="changeStatusPerStore(item)"
+                                    class=" px-2 py-1 rounded-full text-gray-50 focus:outline-none  text-xs  hover:text-white transition duration-500"
+                                    :class="
+                                        item.item_not_available === null
+                                            ? 'bg-green-400 hover:bg-green-500'
+                                            : 'bg-red-500 hover:bg-red-600'
                                     "
                                 >
-                                    <span
-                                        class="bg-red-500 px-2 py-1 rounded-full text-gray-50 text-xs hover:bg-red-600 hover:text-white transition duration-500"
-                                    >
-                                        {{ item.status | textformat }}</span
-                                    >
-                                </a>
+                                    {{
+                                        item.item_not_available === null
+                                            ? "Active"
+                                            : "Inactive"
+                                    }}
+                                </button>
                             </td>
                             <td class="text-center td">
                                 <button
@@ -481,6 +498,12 @@ export default {
             },
             {
                 width: "12%",
+                label: "Status Per Store",
+                name: "sstatus",
+                class: "text-center"
+            },
+            {
+                width: "12%",
                 label: "Action",
                 name: "upload",
                 class: "text-center"
@@ -506,7 +529,8 @@ export default {
                 column: 1,
                 dir: "desc",
                 category: "",
-                price_group: "TAGB"
+                price_group: "TAGB",
+                store: ""
             },
             form: {
                 product_id: "",
@@ -522,6 +546,7 @@ export default {
     },
     computed: {
         ...mapState([
+            "Stores",
             "perPage",
             "isModal",
             "errors",
@@ -533,13 +558,14 @@ export default {
     },
     methods: {
         ...mapActions([
+            "getStore",
             "modal",
             "getItemCategory",
             "getItems",
             "upload_image",
             "upload_flag",
-            "item_inactive",
-            "item_active"
+            "changeStatusItem",
+            "changeItemStatusPerStore"
         ]),
         reset() {
             this.errors.item_image = "";
@@ -621,7 +647,8 @@ export default {
                 dir: this.tableData.dir,
                 column: this.tableData.column,
                 category: this.tableData.category,
-                price_group: this.tableData.price_group
+                price_group: this.tableData.price_group,
+                store: this.tableData.store
             };
             this.getItems({
                 currentPage: this.currentPage,
@@ -636,25 +663,92 @@ export default {
             this.fetch();
         },
         getPrice(e, i) {
-           $("#price-" + i).text(e.target.value);
+            $("#price-" + i).text(e.target.value);
         },
-        showPerItemStatusActive(itemcode) {
-            let itemCode = {
-                itemcode: itemcode
-            };
-            this.item_inactive({ itemCode });
-            setTimeout(() => {
-                this.fetch();
-            }, 1000);
+        changeStatusPerStore(item) {
+            if (this.tableData.store === "") {
+                swal.fire(
+                    "Information",
+                    "Please select store to continue",
+                    ""
+                );
+                return
+            }
+
+            if (item.item_not_available === null) {
+                swal.fire({
+                    title: "Are you sure?",
+                    text: "you want to set to inactive this item.",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, Change it!"
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        let filter = {
+                            store: this.tableData.store,
+                            itemcode: item.itemcode,
+                            status: 1
+                        };
+                        this.changeItemStatusPerStore({ filter });
+                    }
+                });
+            } else {
+                swal.fire({
+                    title: "Are you sure?",
+                    text: "you want to set to active this item.",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, Change it!"
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        let filter = {
+                            store: this.tableData.store,
+                            itemcode: item.itemcode,
+                            status: 0
+                        };
+                        this.changeItemStatusPerStore({ filter });
+                    }
+                });
+            }
         },
-        showPerItemStatusInactive(itemcode) {
-            let itemCode = {
-                itemcode: itemcode
+        changeStatus(item) {
+            let filter = {
+                itemcode: item.itemcode,
+                status: item.status
             };
-            this.item_active({ itemCode });
-            setTimeout(() => {
-                this.fetch();
-            }, 1000);
+            if (item.status === "active") {
+                swal.fire({
+                    title: "Do you want",
+                    text: "to change the status to inactive this item?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, change it!"
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        this.changeStatusItem({ filter });
+                    }
+                });
+            } else {
+                swal.fire({
+                    title: "Do you want",
+                    text: "to change the status to active this item?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, change it!"
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        this.changeStatusItem({ filter });
+                    }
+                });
+            }
         },
         sortBy(key) {
             this.sortKey = key;
@@ -668,8 +762,12 @@ export default {
         }
     },
     mounted() {
+        Fire.$on("reload_item", () => {
+            this.fetch();
+        });
         this.fetch();
         this.getItemCategory();
+        this.getStore();
     }
 };
 </script>

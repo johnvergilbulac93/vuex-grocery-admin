@@ -1,6 +1,10 @@
 <template>
     <div class="space-y-2">
-        <Breadcrumb :routes="routes" title="uploading" v-if="$root.userType == 12"/>
+        <Breadcrumb
+            :routes="routes"
+            title="uploading"
+            v-if="$root.userType == 12"
+        />
         <div class="container text-black">
             <div class=" bg-gray-50 shadow-lg p-5 rounded">
                 <div class="mb-5 bg-gray-100 p-2">
@@ -57,27 +61,6 @@
                                         </button>
                                     </div>
                                 </transition>
-
-                                <!-- <button
-                                @click="open = !open"
-                                @blur="exitImage"
-                                class="text-blue-500 focus:outline-none "
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 hover:text-blue-600"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    />
-                                </svg>
-                            </button> -->
                                 <label
                                     class="flex flex-col items-center px-4 py-5 border bg-white uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transistion duration-500"
                                 >
@@ -201,27 +184,6 @@
                                         </button>
                                     </div>
                                 </transition>
-                                <!-- <button
-                                @click="open2 = !open2"
-                                @blur="exitImage"
-                                class="text-blue-500 focus:outline-none "
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 hover:text-blue-600"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    />
-                                </svg>
-                            </button> -->
-
                                 <label
                                     class="flex flex-col items-center px-4 py-5 border bg-white uppercase  cursor-pointer hover:text-yellow-500 hover:border-yellow-500 transistion duration-500"
                                 >
@@ -298,44 +260,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- <transition
-                enter-active-class="ease-out duration-500"
-                enter-class="opacity-0"
-                enter-to-class="opacity-100"
-                leave-active-class="ease-in duration-500"
-                leave-class="opacity-100"
-                leave-to-class="opacity-0"
-            >
-                <div
-                    class="bg-black bg-opacity-40 fixed top-16 left-0 flex justify-center items-center w-full min-h-screen p-20"
-                    v-if="open"
-                >
-                    <img
-                        :src="$root.path + 'price_update_format.png'"
-                        alt="new_item_image"
-                        class="w-3/4 h-3/4 object-contain shadow-lg"
-                    />
-                </div>
-            </transition>
-            <transition
-                enter-active-class="ease-out duration-500"
-                enter-class="opacity-0"
-                enter-to-class="opacity-100"
-                leave-active-class="ease-in duration-500"
-                leave-class="opacity-100"
-                leave-to-class="opacity-0"
-            >
-                <div
-                    class="bg-black bg-opacity-40 fixed top-16 left-0 flex justify-center items-center w-full min-h-screen p-20"
-                    v-if="open2"
-                >
-                    <img
-                        :src="$root.path + 'new_item_format.png'"
-                        alt="new_item_image"
-                        class="w-3/4 h-3/4  object-contain shadow-lg"
-                    />
-                </div>
-            </transition> -->
+            
             </div>
         </div>
     </div>
@@ -363,6 +288,10 @@ export default {
             {
                 label: "Upload Multiple Images",
                 route: "/multiple"
+            },
+            {
+                label: "Update Item Description",
+                route: "/update_item_description"
             }
         ];
         return {

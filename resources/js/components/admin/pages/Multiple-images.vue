@@ -75,6 +75,10 @@ export default {
             {
                 label: "Upload Multiple Images",
                 route: "/multiple"
+            },
+            {
+                label: "Update Item Description",
+                route: "/update_item_description"
             }
         ];
         return {

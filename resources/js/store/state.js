@@ -42,5 +42,6 @@ export default {
      StorePriceGroup:[],
      Rules: [],
      Unfounds:[],
-     Instructions: []
+     Instructions: [],
+     Liquidation: []
 }

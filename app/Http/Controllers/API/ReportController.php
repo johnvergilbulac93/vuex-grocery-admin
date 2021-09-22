@@ -383,10 +383,22 @@ class ReportController extends Controller
     public function get_unfound(Request $request){
 
         $buId = $request->store;
+        $dateFrom = Carbon::parse($request->start)->toDateString();
+        $dateTo = Carbon::parse($request->end)->toDateTimeString();
 
         $getBU = DB::table('locate_business_units')->where('bunit_code', $buId)->first();
-        $query = DB::table('gc_unfound_items')->where('bu_id', $buId)->orderBy('id','DESC')->get();
-        
+        // $query = DB::table('gc_unfound_items')->where('bu_id', $buId)->orderBy('id','DESC')->get();
+        $query = DB::table('gc_unfound_items')
+                ->join('gc_order_statuses', 'gc_order_statuses.ticket_id', 'gc_unfound_items.ticket_id')
+                ->join('tickets', 'tickets.id', 'gc_unfound_items.ticket_id')
+                ->join('order_sources', 'order_sources.id', 'tickets.source_id')
+                ->join('customer_delivery_infos', 'customer_delivery_infos.ticket_id', '=', 'gc_unfound_items.ticket_id')
+                ->select('*')
+                ->selectRaw('CONCAT(customer_delivery_infos.firstname ," " ,customer_delivery_infos.lastname) AS customer')
+                ->whereDate('gc_unfound_items.created_at', '>=', $dateFrom)
+                ->whereDate('gc_unfound_items.created_at', '<=', $dateTo)
+                ->get();
+
         $result['b_unit'] = $getBU;
         $result['data'] = $query;
 

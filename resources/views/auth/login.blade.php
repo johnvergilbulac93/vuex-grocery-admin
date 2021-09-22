@@ -19,8 +19,8 @@
 
 </head>
 
-<body class="font-poppins antialiased bg-gray-100">
-    <div id="app" class=" fixed top-0 left-0 flex justify-center items-center w-full min-h-screen">
+<body class="font-poppins antialiased ">
+    <div id="app" class=" fixed top-0 left-0 flex justify-center items-center w-full min-h-screen bg-gray-100">
         <div class="bg-white shadow-lg w-96 rounded p-5 ">
             <div class="flex flex-col  justify-center items-center space-y-5">
                 <img src="{{ asset('/img/AlturushDeliveryLogoGradient.png') }}" class="h-20">

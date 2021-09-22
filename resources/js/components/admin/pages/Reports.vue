@@ -109,24 +109,24 @@ export default {
     data() {
         let routes = [
             {
-                label: "Item Report",
+                label: "Item ",
                 route: "/reports"
             },
             {
-                label: "Liquidation Report",
+                label: "Liquidation ",
                 route: "/liquidition"
             },
             {
-                label: "Accountability Report",
+                label: "Accountability ",
                 route: "/accountability"
             },
             {
-                label: "Total Order Report - REMITTED",
+                label: "Total Order - REMITTED",
                 route: "/transaction"
             },
             {
-                label: "Special Instruction & Unfound Items Report",
-                route: "/special_instruction_unfound_item"
+                label: "Special Instruction, Comments & Suggestions",
+                route: "/special_instruction_comments_suggestions"
             }
         ];
         return {

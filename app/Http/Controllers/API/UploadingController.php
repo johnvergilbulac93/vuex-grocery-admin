@@ -6,11 +6,13 @@ namespace App\Http\Controllers\API;
 use App\Imports\ItemsImport;
 use Illuminate\Http\Request;
 use App\gc_item_log_available;
+use App\gc_product_item;
 use App\Imports\FilenameImport;
 use App\Imports\ItemCategoryImport;
 use App\Imports\PriceChangedImport;
 use App\Imports\PriceHistoryImport;
 use App\Http\Controllers\Controller;
+use App\Imports\UpdateDescription;
 use Illuminate\Support\Facades\Auth;
 
 class UploadingController extends Controller
@@ -61,6 +63,12 @@ class UploadingController extends Controller
                 ]);
             }
         }
+    }
+    public function item_description(Request $request){
+        $this->validate($request, [ 
+            'file' => 'required|mimes:csv,txt'
+        ]);
+        (new UpdateDescription)->import($request->file('file'));
     }
 
     public function uploadcategory(Request $request)

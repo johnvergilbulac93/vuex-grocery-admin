@@ -1,6 +1,6 @@
 <template>
-    <div class="w-1/2 sm:w-full bg-gray-50 shadow-lg p-5 rounded" id="style-4">
-        <ul class="text-gray-800">
+    <div class="md:w-2/5 sm:w-full bg-gray-50 shadow p-5 rounded" id="style-4">
+        <ul class="text-gray-800 font-inter">
             <li>
                 <h5
                     class="flex items-center space-x-10 uppercase font-semibold tracking-wider px-1 py-2"
@@ -19,7 +19,7 @@
                     </svg>
                     SETUP
                 </h5>
-                <ul>
+                <ul class="text-sm ">
                     <li class="li ">
                         <router-link
                             :to="{
@@ -120,7 +120,7 @@
                     </svg>
                     Item
                 </h5>
-                <ul>
+                <ul class="text-sm ">
                     <li class="li">
                         <router-link
                             :to="{
@@ -194,7 +194,7 @@
 
                     Uploading
                 </h5>
-                <ul>
+                <ul class="text-sm ">
                     <li class="li ">
                         <router-link
                             :to="{
@@ -234,6 +234,19 @@
                             >
                         </router-link>
                     </li>
+                    <li class="li">
+                        <router-link
+                            :to="{
+                                name: 'update_item_description',
+                                params: { id: $root.userType }
+                            }"
+                            class=" text-gray-800 hover:text-black"
+                        >
+                            <span class="tracking-wider"
+                                >Update Item Description</span
+                            >
+                        </router-link>
+                    </li>
                 </ul>
             </li>
             <li class="mt-8">
@@ -257,7 +270,7 @@
 
                     Reports
                 </h5>
-                <ul>
+                <ul class="text-sm">
                     <li class="li">
                         <router-link
                             :to="{
@@ -277,9 +290,7 @@
                             }"
                             class=" text-gray-800 hover:text-black"
                         >
-                            <span class="tracking-wider"
-                                >Liquidation Report</span
-                            >
+                            <span class="tracking-wider">Liquidation </span>
                         </router-link>
                     </li>
                     <li class="li">
@@ -290,9 +301,7 @@
                             }"
                             class=" text-gray-800 hover:text-black"
                         >
-                            <span class="tracking-wider"
-                                >Accountability Report</span
-                            >
+                            <span class="tracking-wider">Accountability </span>
                         </router-link>
                     </li>
                     <li class="li">
@@ -304,20 +313,21 @@
                             class=" text-gray-800 hover:text-black"
                         >
                             <span class="tracking-wider"
-                                >Total Order Report - REMITTED
+                                >Total Order - REMITTED
                             </span>
                         </router-link>
                     </li>
                     <li class="li">
                         <router-link
                             :to="{
-                                name: 'special_instruction_unfound_item',
+                                name:
+                                    'special_instruction_comments_suggestions',
                                 params: { id: $root.userType }
                             }"
                             class=" text-gray-800 hover:text-black"
                         >
                             <span class="tracking-wider"
-                                >Special Instruction & Unfound Items Report
+                                >Special Instruction, Comments & Suggestions
                             </span>
                         </router-link>
                     </li>

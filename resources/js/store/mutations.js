@@ -150,3 +150,9 @@ export const SET_INSTRUCTION = (state, payload) => {
 export const CLEAR_INSTRUCTION = (state) => {
      state.Instructions = []
 }
+export const SET_LIQUIDATION = (state, payload) => {
+     state.Liquidation = payload
+}
+export const CLEAR_LIQUIDATION = (state) => {
+     state.Liquidation = []
+}

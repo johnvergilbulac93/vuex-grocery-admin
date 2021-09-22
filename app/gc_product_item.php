@@ -21,6 +21,10 @@ class gc_product_item extends Model
            return $this->belongsTo('App\gc_item_log_available', 'itemcode', 'itemcode')
            ->where('store', Auth::user()->bunit_code);
     }
+    public function item_not_available()
+    {
+           return $this->belongsTo('App\gc_item_log_available', 'itemcode', 'itemcode');
+    }
     public function item_price()
     {
            return $this->hasMany('App\gc_product_price', 'itemcode', 'itemcode')

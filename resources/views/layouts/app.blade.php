@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="bg-gray-100">
 
 <head>
 
@@ -22,7 +22,7 @@
 
 </head>
 
-<body class="font-poppins antialiased ">
+<body class="font-inter antialiased bg-gray-100 ">
     <div id='app'>
         <nav class="fixed w-full z-10 top-0 shadow ">
             <div class=" flex items-center justify-between  bg-gray-100 p-4 shadow-lg border-gray-200  ">
@@ -32,8 +32,8 @@
                     </router-link>
                 </div>
                 <div class="flex items-center gap-10">
-                    <div>
-                       <Clock/>
+                    <div class="sm:hidden md:block">
+                        <Clock />
                     </div>
                     <div class="relative">
                         <button id="showMenu" @click="open = !open" @blur="handleBlur"
@@ -88,7 +88,7 @@
                             </div>
                             <a href="{{ route('logout') }}" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"
-                                class=" flex justify-end items-center uppercase  focus:outline-none  bg-yellow-500 w-full  px-4 py-2 text-white hover:text-white hover:bg-yellow-600 transition duration-500">
+                                class=" flex justify-end items-center uppercase  focus:outline-none  bg-gradient-to-tl to-yellow-600 from-red-500 w-full  px-4 py-2 text-white hover:text-white hover:bg-yellow-600 transition duration-500">
                                 <span class="mx-auto">Logout</span>
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST"
@@ -98,8 +98,6 @@
                         </figure>
                     </div>
                 </div>
-
-
 
                 <button class="focus:outline-none sm:block md:hidden" @click="openMenu = !openMenu" @blur="toggleMenu">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -131,11 +129,11 @@
                     </form>
                 </div>
             </div>
-            <div class="w-full bg-yellow-500 shadow-md font-rubik">
+            <div class="w-full bg-gradient-to-tl to-yellow-600 from-red-500 shadow-md ">
                 @can('isSuperAdmin')
                     <div class="container ">
                         <ul
-                            class="list-reset flex items-center sm:justify-center md:justify-start  space-x-5 text-white text-sm antialiased p-2">
+                            class="list-reset flex items-center justify-start  space-x-5 text-white text-sm antialiased p-2">
                             {{-- <router-link :to="{ name: 'dashboard', params: { id: {{ Auth::user()->usertype_id }}  } }"
                                 class=" text-white hover:bg-white hover:text-yellow-500 rounded transition duration-500 p-2 flex">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24"
@@ -154,6 +152,11 @@
                                 </svg> --}}
                                 <span>MENU</span>
                             </router-link>
+
+                            {{-- <router-link :to="{ name: 'testtable', params: { id: {{ Auth::user()->usertype_id }}  } }"
+                                class=" text-white hover:bg-white hover:text-yellow-500 rounded transition duration-500 p-2 flex">
+                                <span>TEST</span>
+                            </router-link> --}}
                         </ul>
                     </div>
                 @endcan
@@ -324,7 +327,8 @@
         </nav>
 
         <header>
-            <div class="fixed top-0 bottom-80 left-0 right-0 bg-gray-200"></div>
+            <div class="fixed top-96 bottom-0 left-0 right-0 bg-gradient-to-tl to-yellow-600 from-red-500   ">
+            </div>
         </header>
         <div class=" relative p-5 mt-28 ">
             <!-- for  router view -->
@@ -334,7 +338,7 @@
         </div>
 
         <button id="backtoTop"
-            class="hidden fixed z-30 bottom-0 right-0 mb-3 mr-3 focus:outline-none bg-red-500 bg-opacity-80 hover:bg-red-500 w-12 h-12 rounded-full shadow-xl transition duration-700 ease-in-out transform hover:scale-105 ">
+            class="hidden fixed z-30 bottom-0 right-0 mb-3 mr-3 focus:outline-none bg-green-500 hover:bg-green-600 w-12 h-12 rounded-full shadow-xl transition duration-700 ease-in-out transform hover:scale-105 ">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white mx-auto" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />

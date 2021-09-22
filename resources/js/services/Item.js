@@ -22,11 +22,11 @@ export default {
             }
         })
     },
-    item_inactive(itemcode){
-        return BaseApi.post('/item_inactive', itemcode)
+    change_status(item){
+        return BaseApi.post('/change_status', item)
     },
-    item_active(itemcode){
-        return BaseApi.post('/item_active', itemcode)
+    change_status_item_not_available(item){
+        return BaseApi.post('/change_status_item_not_available', item)
     },
     show_item_enable_per_uom(page, filterData) {
         return BaseApi.get(`/show/item_disable_per_uom?page=${page}`, {

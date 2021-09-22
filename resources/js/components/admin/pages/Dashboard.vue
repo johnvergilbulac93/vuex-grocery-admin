@@ -52,9 +52,9 @@
             >
                 <div
                     v-if="isModal"
-                    class="bg-black bg-opacity-30 fixed top-10 left-0 flex justify-center items-center shadow-xl p-20 w-full min-h-screen "
+                    class="bg-black bg-opacity-30 z-50 fixed top-0 left-0 flex justify-center items-center shadow-xl p-20 w-full min-h-screen "
                 >
-                    <div class="bg-white h-96 w-full  overflow-y-scroll ">
+                    <div class="bg-white w-full rounded ">
                         <div
                             class="border-b-2 p-1 flex justify-between items-center"
                         >

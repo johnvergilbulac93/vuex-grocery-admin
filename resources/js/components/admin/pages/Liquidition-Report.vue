@@ -77,8 +77,8 @@
                             tabindex="4"
                             @click="exportToExcel('xlsx')"
                             class="h-10 px-4 py-2 flex items-center gap-1 disabled:opacity-50  focus:outline-none text-white  bg-green-500 hover:bg-green-600 rounded"
-                            v-if="transactions.b_unit != null"
-                            :disabled="transactions.cashier_details.length"
+                            v-if="Liquidation.b_unit != null"
+                            :disabled="Liquidation.cashier_details.length"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -101,8 +101,8 @@
                             tabindex="4"
                             class="h-10 px-4 py-2 flex items-center gap-1 disabled:opacity-50  focus:outline-none text-white  bg-green-500 hover:bg-green-600 rounded"
                             @click="printBtn"
-                            v-if="transactions.b_unit != null"
-                            :disabled="transactions.cashier_details.length"
+                            v-if="Liquidation.b_unit != null"
+                            :disabled="Liquidation.cashier_details.length"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -126,12 +126,12 @@
 
                 <div class="mt-2" id="section-to-print">
                     <div class="flex justify-center items-center">
-                        <div v-if="transactions.b_unit != null">
+                        <div v-if="Liquidation.b_unit != null">
                             <center>
                                 <h6 class="text-lg ">
                                     {{
-                                        transactions.hasOwnProperty("b_unit") &&
-                                            transactions.b_unit.business_unit
+                                        Liquidation.hasOwnProperty("b_unit") &&
+                                            Liquidation.b_unit.business_unit
                                     }}
                                 </h6>
                                 <p>ALTURUSH GOODS ORDERING</p>
@@ -146,7 +146,7 @@
                     <div
                         class="mt-2"
                         id="body-content"
-                        v-for="(cashier, index) in transactions.cashier_details"
+                        v-for="(cashier, index) in Liquidation.cashier_details"
                         :key="index"
                     >
                         <table
@@ -179,13 +179,8 @@
                                 </tr>
                             </thead>
                             <tbody class="tbody">
-                                <!-- <tr class="tr">
-                                    <td
-                                        colspan="10"
-                                        class="text-center font-semibold tracking-normal"
-                                    >
-                                        NO DATA AVAILABLE
-                                    </td>
+                                <!-- <tr v-if="!cashier.length">
+                                    <td>{{ cashier.length }}</td>
                                 </tr> -->
                                 <tr
                                     v-for="(trans, index) in cashier"
@@ -297,29 +292,28 @@ export default {
     data() {
         let routes = [
             {
-                label: "Item Report",
+                label: "Item ",
                 route: "/reports"
             },
             {
-                label: "Liquidation Report",
+                label: "Liquidation ",
                 route: "/liquidition"
             },
             {
-                label: "Accountability Report",
+                label: "Accountability ",
                 route: "/accountability"
             },
             {
-                label: "Total Order Report - REMITTED",
+                label: "Total Order - REMITTED",
                 route: "/transaction"
             },
             {
-                label: "Special Instruction & Unfound Items Report",
-                route: "/special_instruction_unfound_item"
+                label: "Special Instruction, Comments & Suggestions",
+                route: "/special_instruction_comments_suggestions"
             }
         ];
         return {
             routes: routes,
-            transactions: [],
             dateNow: null,
             filter: {
                 dateFrom: null,
@@ -329,10 +323,10 @@ export default {
         };
     },
     computed: {
-        ...mapState(["errors", "Stores"])
+        ...mapState(["errors", "Stores", "Liquidation"])
     },
     methods: {
-        ...mapActions(["getStore"]),
+        ...mapActions(["getStore", "getLiquidation"]),
         ...mapMutations(["SET_ERRORS", "CLEAR_ERRORS"]),
         exportToExcel(type, fn, dl) {
             const xlsName =
@@ -351,7 +345,7 @@ export default {
                       bookSST: true,
                       type: "base64"
                   })
-                : XLSX.writeFile(wb, fn || xlsName +(type || "xlsx"));
+                : XLSX.writeFile(wb, fn || xlsName + (type || "xlsx"));
         },
         totalOrderAmount(orders) {
             let pickupCharge = 0,
@@ -472,19 +466,7 @@ export default {
             if (this.filter.dateFrom > this.filter.dateTo) {
                 swal.fire("Invalid Date!", "Please check.", "warning");
             } else {
-                Report.liquidation_report(filter)
-                    .then(res => {
-                        this.transactions = res.data;
-                        this.errors.store = "";
-                    })
-                    .catch(error => {
-                        if (error.response.status === 422) {
-                            this.SET_ERRORS(error.response.data.errors);
-                            setTimeout(() => {
-                                this.CLEAR_ERRORS();
-                            }, 5000);
-                        }
-                    });
+                this.getLiquidation({ filter });
             }
         }
     },

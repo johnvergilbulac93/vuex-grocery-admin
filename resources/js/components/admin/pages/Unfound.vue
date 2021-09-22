@@ -4,7 +4,7 @@
             <div class="flex items-center gap-2">
                 <div class="w-60">
                     <label class="block ">Store</label>
-                    <select class="form" v-model="filter.store" @change="fetch">
+                    <select class="form" v-model="filter.store">
                         <option value="">Choose Store</option>
                         <option
                             :value="store.bunit_code"
@@ -14,12 +14,28 @@
                         >
                     </select>
                 </div>
+
+                <div class="w-56">
+                    <label>Date From</label>
+                    <input type="date" class="form" v-model="filter.dateFrom" />
+                </div>
+                <div class="w-56">
+                    <label>Date To</label>
+                    <input type="date" class="form" v-model="filter.dateTo" />
+                </div>
             </div>
             <div class="flex items-center gap-1">
                 <button
-                    class="bg-green-500 text-white px-3 py-2 rounded focus:outline-none focus:bg-green-600 flex gap-1 items-center"
+                    class="bg-blue-500 text-white px-3 py-2 rounded focus:outline-none focus:bg-blue-600 flex gap-1 items-center"
+                    @click="fetch"
+                >
+                    Generate
+                </button>
+                <button
+                    class="bg-green-500 text-white px-3 py-2 rounded focus:outline-none focus:bg-green-600 flex gap-1 items-center disabled:opacity-50"
                     v-if="Unfounds.b_unit != null"
                     @click="exportToExcel('xlsx')"
+                    :disabled="!Unfounds.data.length"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -38,9 +54,10 @@
                     <span>Excel</span>
                 </button>
                 <button
-                    class="bg-green-500 text-white px-3 py-2 rounded focus:outline-none focus:bg-green-600 flex gap-1 items-center"
+                    class="bg-green-500 text-white px-3 py-2 rounded focus:outline-none focus:bg-green-600 flex gap-1 items-center disabled:opacity-50"
                     v-if="Unfounds.b_unit != null"
                     @click="printBtn"
+                    :disabled="!Unfounds.data.length"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -65,41 +82,68 @@
             <section v-if="Unfounds.b_unit != null">
                 <div class="flex justify-center items-center mb-2">
                     <center>
-                        <h6 class="text-lg ">
-                            {{
-                                Unfounds.hasOwnProperty("b_unit") &&
-                                    Unfounds.b_unit.business_unit
-                            }}
-                        </h6>
-                        <p>ALTURUSH GOODS ORDERING</p>
-                        <p>UNFOUND ITEMS REPORT</p>
+                        <img
+                            class="text-center items-center h-36"
+                            :src="$root.logo_path + '' + Unfounds.b_unit.logo"
+                        />
+                        <h2 class="text-xl ">ALTURUSH GOODS ORDERING</h2>
+                        <h2 class="text-lg">Comments & Suggestions</h2>
+                        <h2 class="text-xs">{{ filter.dateFrom | formatDateNoTime }} to {{ filter.dateTo | formatDateNoTime }}</h2>
                     </center>
                 </div>
-                <table class="min-w-full divide-y divide-gray-300" id="unfound-items">
+                <table
+                    class="min-w-full divide-y divide-gray-300"
+                    id="unfound-items"
+                >
                     <thead class="border bg-gray-100 tracking-normal">
                         <tr class="tracking-wide">
-                            <th
-                                class="p-3 border text-left text-lg bg-gray-200"
-                            >
+                            <th class="p-3 border text-left  bg-gray-200 w-44">
+                                Ticket No.
+                            </th>
+                            <th class="p-3 border text-left  bg-gray-200 w-64">
+                                Customer Name
+                            </th>
+                            <th class="p-3 border text-left  bg-gray-200 w-44">
+                                Order From
+                            </th>
+                            <th class="p-3 border text-left  bg-gray-200 w-44">
+                                Mode of Order
+                            </th>
+                            <th class="p-3 border text-left  bg-gray-200">
                                 Remarks
                             </th>
                         </tr>
                     </thead>
                     <tbody class="tbody">
                         <tr class="tr" v-if="!Unfounds.data.length">
-                            <td class="td">NO REMARKS FOUND</td>
+                            <td class="td text-center" colspan="5">
+                                NO DATA AVAILABLE
+                            </td>
                         </tr>
                         <tr
                             v-for="(unfound, i) in Unfounds.data"
                             :key="i"
                             class="tr"
                         >
+                            <td class="td">{{ unfound.ticket }}</td>
+                            <td class="td">{{ unfound.customer }}</td>
+                            <td class="td">{{ unfound.source }}</td>
+                            <td class="td">
+                                {{
+                                    unfound.mode_of_order == 1
+                                        ? "Pick-up"
+                                        : "Delivery"
+                                }}
+                            </td>
                             <td class="td">
                                 <li class="list-disc">{{ unfound.remarks }}</li>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                <small class="text-xs flex justify-end mt-2"
+                    >Run Time: {{ filter.dateNow }}</small
+                >
             </section>
         </div>
     </div>
@@ -113,7 +157,10 @@ export default {
     data() {
         return {
             filter: {
-                store: ""
+                store: "",
+                dateFrom: "",
+                dateTo: "",
+                dateNow: ""
             }
         };
     },
@@ -125,7 +172,9 @@ export default {
         ...mapMutations(["CLEAR_UNFOUNDS"]),
         fetch() {
             let filter = {
-                store: this.filter.store
+                store: this.filter.store,
+                start: this.filter.dateFrom,
+                end: this.filter.dateTo
             };
             this.getUnfound({ filter });
         },
@@ -134,19 +183,30 @@ export default {
         },
         exportToExcel(type, fn, dl) {
             const xlsName =
-                "UNFOUND-ITEMS-" +
+                "COMMENTS-AND-SUGGESTIONS-" +
                 this.Unfounds.b_unit.business_unit +
                 ".";
             const elt = document.getElementById("unfound-items");
-            const wb = XLSX.utils.table_to_book(elt, { sheet: "REMARKS" });
+            const wb = XLSX.utils.table_to_book(elt, {
+                sheet: "COMMENTS & SUGGESTIONS"
+            });
             return dl
                 ? XLSX.write(wb, {
                       bookType: type,
                       bookSST: true,
                       type: "base64"
                   })
-                : XLSX.writeFile(wb, fn || xlsName +(type || "xlsx"));
+                : XLSX.writeFile(wb, fn || xlsName + (type || "xlsx"));
         }
+    },
+    mounted() {
+        this.filter.dateFrom = moment(this.$root.serverDateTime).format(
+            "YYYY-MM-DD"
+        );
+        this.filter.dateTo = moment(this.$root.serverDateTime).format(
+            "YYYY-MM-DD"
+        );
+        this.filter.dateNow = moment(this.$root.serverDateTime).format("LLLL");
     },
     destroyed() {
         this.CLEAR_UNFOUNDS();

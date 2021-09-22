@@ -51,10 +51,4 @@ export default {
     }
 };
 </script>
-<style>
-canvas {
-    width: 700px !important;
-    height: 300px !important;
-    display: inline-block !important;
-}
-</style>
+

@@ -529,48 +529,6 @@ export const upload_image = async ({ commit }, { formData }) => {
         }, 5000);
     }
 };
-export const item_inactive = ({ commit }, { itemCode }) => {
-    swal.fire({
-        title: "Do you want",
-        text: "to change the status to inactive this item?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, change it!"
-    }).then(result => {
-        if (result.isConfirmed) {
-            Item.item_inactive(itemCode).then(() => {
-                toast.fire({
-                    icon: "success",
-                    title: "Success",
-                    text: "Successfully changed"
-                });
-            });
-        }
-    });
-};
-export const item_active = ({ commit }, { itemCode }) => {
-    swal.fire({
-        title: "Do you want",
-        text: "to change the status to inactive this item?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, change it!"
-    }).then(result => {
-        if (result.isConfirmed) {
-            Item.item_active(itemCode).then(() => {
-                toast.fire({
-                    icon: "success",
-                    title: "Success",
-                    text: "Successfully changed"
-                });
-            });
-        }
-    });
-};
 export const getItemEnable = async (
     { commit },
     { currentPage, filterData }
@@ -809,42 +767,6 @@ export const userChangePass = async ({ commit }, { user }) => {
             commit("CLEAR_ERRORS");
         }, 5000);
     }
-    //     swal.fire({
-    //         title: "Are you sure?",
-    //         text: "You won't be able to revert this!",
-    //         icon: "warning",
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#3085d6",
-    //         cancelButtonColor: "#d33",
-    //         confirmButtonText: "Yes, change it!"
-    //     }).then(result => {
-    //         if (result.isConfirmed) {
-    //             User.changePassword(user)
-    //                 .then(() => {
-    //                     Fire.$emit("clear_field");
-    //                     toast.fire({
-    //                         icon: "success",
-    //                         title: "Success",
-    //                         text: "Successfully change."
-    //                     });
-    //                     axios.post("/logout").then(() => {
-    //                         location.reload();
-    //                     });
-    //                 })
-    //                 .catch(error => {
-    //                     switch (error.response.status) {
-    //                         case 422:
-    //                             commit("SET_ERRORS", error.response.data.errors);
-    //                             setTimeout(() => {
-    //                                 commit("CLEAR_ERRORS");
-    //                             }, 5000);
-    //                             break;
-    //                         default:
-    //                             break;
-    //                     }
-    //                 });
-    //         }
-    //     });
 };
 export const userChangeUsername = async ({ commit }, { user }) => {
     try {
@@ -916,4 +838,38 @@ export const getUnfound = async ({commit}, {filter}) => {
     } catch (error) {
         console.log(error)
     }
+}
+export const changeStatusItem = async ({commit}, {filter}) => {
+    try {
+        const { status} = await Item.change_status(filter)
+        if(status === 200){
+            Fire.$emit("reload_item");
+        }
+    } catch (error) {
+        console.log(error)  
+    }
+}
+export const changeItemStatusPerStore = async ({commit}, {filter}) => {
+    try {
+        const { status} = await Item.change_status_item_not_available(filter)
+        if(status === 200){
+            Fire.$emit("reload_item");
+        }
+    } catch (error) {
+        console.log(error)  
+    }
+}
+export const getLiquidation =  async ({commit}, {filter}) => {
+    try {
+        const { status, data } = await Report.liquidation_report(filter)
+        if(status === 200){
+            commit('SET_LIQUIDATION', data )
+        }
+    } catch (error) {
+        commit("SET_ERRORS", error.response.data.errors);
+        setTimeout(() => {
+            commit("CLEAR_ERRORS");
+        }, 5000);
+    }
+    
 }

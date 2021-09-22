@@ -2,6 +2,8 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap'); */
 /* @import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap');
+
 
 @tailwind base;
 @tailwind components;
@@ -27,7 +29,7 @@
 }
 
 .form {
-    @apply w-full border-gray-300  focus:border-yellow-500 focus:ring-yellow-500 shadow-sm placeholder-gray-400 text-sm text-gray-700 ;
+    @apply w-full border-gray-300   focus:border-yellow-500 focus:ring-yellow-500 shadow-sm placeholder-gray-400 text-sm text-gray-700 ;
 }
 .form-search {
     @apply  text-sm w-full border-gray-300  focus:ring-yellow-500 focus:border-yellow-500 shadow-sm ;

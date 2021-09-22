@@ -1,5 +1,5 @@
 <template>
-    <div class="container bg-gray-50 shadow-lg p-2 font-rubik">
+    <div class="container bg-gray-50 shadow-lg p-2 font-inter sm:w-full overflow-x-auto">
         <div class="flex items-center  gap-4">
             <router-link to="/menu" class="flex items-center gap-4  text-black uppercase"
                 ><svg

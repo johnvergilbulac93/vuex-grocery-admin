@@ -26,6 +26,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/upload/category', 'API\UploadingController@uploadcategory')->name('upload-category');
     Route::post('/upload/item/filename', 'API\UploadingController@uploaditemfilename')->name('upload-item-filename');
     Route::post('/upload/multiple', 'API\UploadingController@multipleImage')->name('multiple-image');
+    Route::post('/upload/item_description', 'API\UploadingController@item_description')->name('item-description');
 });
 
 Route::middleware('auth:api')->group(function () {
@@ -36,8 +37,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('item_available_all', 'API\ItemController@item_available_all')->name('item-available-all');
     Route::delete('/store/tag_enable/{itemcode}', 'API\ItemController@tag_item_enable')->name('tag-item-disable');
     Route::post('/store/tag_disable/', 'API\ItemController@tag_item_disable')->name('tag-item-enable');
-    Route::post('/item_active', 'API\ItemController@item_Inactive')->name('item-inactive');
-    Route::post('/item_inactive', 'API\ItemController@item_Active')->name('item-active');
+    Route::post('/change_status', 'API\ItemController@change_status')->name('change-status');
+    Route::post('/change_status_item_not_available', 'API\ItemController@change_status_item_not_available')->name('change-status-item-not-available');
     Route::post('/upload/image_item', 'API\ItemController@imageitem')->name('image-item');
     Route::get('/show/item_disable_per_uom', 'API\ItemController@show_item_disable_per_uom')->name('show-item-disable-per-uom');
     Route::post('/disable_item_per_uom', 'API\ItemController@disable_item_per_uom')->name('disable-item-per-uom');
