@@ -35,6 +35,10 @@ export default {
                     resizeDelay: 0,
                     animation: {
                         animateRotate: true
+                    },
+                    title: {
+                        display: true,
+                        text: "ITEM NOT AVAILABLE"
                     }
                 }
             );
@@ -51,4 +55,3 @@ export default {
     }
 };
 </script>
-

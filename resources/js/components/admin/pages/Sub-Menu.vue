@@ -1,5 +1,5 @@
 <template>
-    <div class="md:w-2/5 sm:w-full bg-gray-50 shadow p-5 rounded" id="style-4">
+    <div class="md:w-1/4 sm:w-full bg-gray-50 shadow p-2 rounded" id="style-4">
         <ul class="text-gray-800 font-inter">
             <li>
                 <h5

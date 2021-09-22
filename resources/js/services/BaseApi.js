@@ -32,8 +32,10 @@ Http.interceptors.response.use(response => { // Called on response
     
     const  UNAUTHORIZED = 401
 
+
     if(status === UNAUTHORIZED){
         store.commit('CHECK_SESSION', true)
+        console.log('session expired')
     }
     return Promise.reject(error);
 });

@@ -21,18 +21,61 @@
                     </a>
                 </div>
             </div>
-
             <div class="border-t mt-5 w-full">
-                <div class="mb-5 bg-gray-100 p-2 w-full">
+                <div class="w-1/2 ">
+                    <div class="mt-2 w-20">
+                        <label for="">Select Year</label>
+                        <Datepicker
+                            input-class="form w-full"
+                            :initialView="'year'"
+                            :minimumView="'year'"
+                            :maximumView="'year'"
+                            format="yyyy"
+                            v-model="filter.year"
+                            @selected="dateSelected()"
+                        />
+                    </div>
+                    <!-- <div class="mt-2 w-44">
+                        <label for="">Select Month</label>
+                        <Datepicker
+                            input-class="form w-full"
+                            :initialView="'month'"
+                            :minimumView="'month'"
+                            :maximumView="'month'"
+                            format="MMMM"
+                            v-model="filter.month"
+                            @selected="dateSelected()"
+                        />
+                    </div> -->
+                </div>
+
+                <div class="w-full flex justify-center items-center">
+                    <h2 v-if="!arrayResult.length" class="text-lg">
+                        NO DATA AVAILABLE
+                    </h2>
+                    <ChartTopItem
+                        :data="TopItemData"
+                        :labels="TopItemLabels"
+                        :year="filter.year"
+                        :month="filter.month"
+                        clear-button="true"
+                        class="w-full"
+                        v-else
+                    >
+                    </ChartTopItem>
+                </div>
+            </div>
+            <div class="border-t mt-5 w-full">
+                <!-- <div class="mb-5 bg-gray-100 p-2 w-full">
                     <label for="" class="text-gray-500 text-lg font-semibold"
                         >Item not available</label
                     >
-                </div>
+                </div> -->
                 <div class="w-full">
                     <ChartData
                         refs="skills_chart"
-                        :data="data"
-                        :labels="labels"
+                        :data="ItemNotAvailableData"
+                        :labels="ItemNotAvailableLabels"
                     >
                     </ChartData>
                 </div>
@@ -85,20 +128,31 @@
 </template>
 
 <script>
+import Datepicker from "vuejs-datepicker";
 import SubMenu from "./Sub-Menu.vue";
 import InfoPrice from "./Info-Price-History.vue";
 import { mapActions, mapState } from "vuex";
 import ChartData from "./ChartData.vue";
+import ChartTopItem from "./TopItemChart.vue";
 export default {
     components: {
         InfoPrice,
         ChartData,
-        SubMenu
+        SubMenu,
+        ChartTopItem,
+        Datepicker
     },
     data() {
         return {
-            data: [],
-            labels: []
+            arrayResult: [],
+            ItemNotAvailableData: [],
+            ItemNotAvailableLabels: [],
+            TopItemData: [],
+            TopItemLabels: [],
+            filter: {
+                year: null,
+                month: null
+            }
         };
     },
     computed: {
@@ -106,7 +160,11 @@ export default {
     },
     methods: {
         ...mapActions(["modal", "getPriceChanged"]),
-
+        dateSelected() {
+            this.$nextTick(() => {
+                this.getTopItems();
+            });
+        },
         showModalPrice() {
             this.modal({
                 flag: true
@@ -124,14 +182,39 @@ export default {
 
             let result = data;
             result.forEach(bu => {
-                self.labels.push(bu.business_unit);
-                self.data.push(bu.store);
+                self.ItemNotAvailableLabels.push(bu.business_unit);
+                self.ItemNotAvailableData.push(bu.store);
             });
         },
         async getTopItems(url = "/api/top_items") {
-            const { data } = await axios.get(url);
-            console.log(data);
+            let year = moment(this.filter.year).format("YYYY-MM-DD");
+            let month = moment(this.filter.month).format("YYYY-MM-DD");
+
+            let filter = {
+                year: year,
+                month: month
+            };
+
+            const { data } = await axios.get(url, { params: filter });
+            this.arrayResult = data;
+            let result = data;
+            this.TopItemData = [];
+            this.TopItemLabels = [];
+            result.forEach(item => {
+                this.TopItemLabels.push(
+                    item.product_name + "(" + item.UOM + ")"
+                );
+                this.TopItemData.push(item.sales);
+            });
         }
+    },
+    beforeMount() {
+        this.filter.year = moment(this.$root.serverDateTime).format(
+            "YYYY-MM-DD"
+        );
+        this.filter.month = moment(this.$root.serverDateTime).format(
+            "YYYY-MM-DD"
+        );
     },
     mounted() {
         this.getPriceChanged();
