@@ -1,12 +1,12 @@
 <template>
     <div class="space-y-2">
         <Breadcrumb :routes="routes" title="Setup" />
-        <div class="container bg-gray-50 shadow-lg p-5 rounded text-gray-800 ">
+        <div class="bg-gray-50 shadow-lg p-2 rounded text-gray-800 ">
             <div class="mb-5 bg-gray-100 p-2">
                 <label class="font-semibold text-lg ">Store Time</label>
             </div>
             <div
-                class="grid lg:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 sm:grid-flow-row sm:grid-cols-1 sm:grid-rows-1 gap-2"
+                class="grid lg:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 sm:grid-flow-row sm:grid-cols-1 sm:grid-rows-1 gap-2 overflow-x-auto"
             >
                 <div class="p-2 tracking-normal">
                     <div class="flex flex-col space-y-2">
@@ -158,8 +158,10 @@
                                 </svg>
                             </button>
                         </div>
-                        <div class="text-sm">
-                            <span>Show</span>
+                        <div
+                            class="justify-end items-center sm:hidden md:flex gap-1"
+                        >
+                            <span class="sm:hidden md:block">Show</span>
                             <select
                                 class="form-sort"
                                 v-model="tableData.length"
@@ -173,7 +175,7 @@
                                     {{ records }}
                                 </option>
                             </select>
-                            <span>Entries</span>
+                            <span class="sm:hidden md:block">Entries</span>
                         </div>
                     </div>
                     <Datatable

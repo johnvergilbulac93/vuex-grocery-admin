@@ -1,19 +1,21 @@
 <template>
     <div class="space-y-2">
         <Breadcrumb :routes="routes" title="setup" />
-        <div class="container text-gray-800">
-            <div class=" bg-gray-50 shadow-lg p-5 rounded ">
-                <div class="mb-5 bg-gray-100 p-2">
+        <div class="text-gray-800 overflow-x-auto">
+            <div class=" bg-gray-50 shadow-lg p-2 rounded  overflow-x-auto">
+                <div class="mb-2 bg-gray-100 p-2 w-full">
                     <label class="font-semibold text-lg"
                         >Delivery Charges</label
                     >
                 </div>
-                <div class="grid grid-cols-6 grid-flow-col gap-4 mb-2">
-                    <div class="col-span-5 flex items-center gap-4">
-                        <div class="w-80 flex items-center gap-0.5">
-                            <div
-                                class="relative w-full flex items-center ml-1 "
-                            >
+                <div
+                    class="grid sm:grid-cols-1 lg:grid-cols-6 grid-flow-col gap-4 mb-2"
+                >
+                    <div
+                        class="col-span-5 flex sm:flex-col lg:flex-row lg:items-center gap-2 "
+                    >
+                        <div class="lg:w-64 sm:w-full flex items-center gap-0.5 ">
+                            <div class="relative w-full flex ">
                                 <input
                                     type="text"
                                     class="relative form-search"
@@ -59,72 +61,55 @@
                                 </svg>
                             </button>
                         </div>
-                        <div class="w-56">
-                            <!-- <span class="mb-10 font-semibold">Province</span> -->
-                            <div class="">
-                                <select
-                                    @change="fetch()"
-                                    class="form"
-                                    v-model="tableData.province"
+                        <div class="lg:w-56 sm:w-full">
+                            <select
+                                @change="fetch()"
+                                class="form"
+                                v-model="tableData.province"
+                            >
+                                <option value="">Choose Province</option>
+                                <option
+                                    v-for="(prov, index) in Provinces"
+                                    :key="index"
+                                    :value="prov.prov_id"
                                 >
-                                    <option value="">Choose Province</option>
-                                    <option
-                                        v-for="(prov, index) in Provinces"
-                                        :key="index"
-                                        :value="prov.prov_id"
-                                    >
-                                        {{ prov.prov_name }}
-                                    </option>
-                                </select>
-                            </div>
+                                    {{ prov.prov_name }}
+                                </option>
+                            </select>
                         </div>
-                        <div class="w-56 ">
-                            <!-- <span class="mb-10 font-semibold ">Town</span> -->
-                            <div class="">
-                                <select
-                                    @change="fetch()"
-                                    class="form"
-                                    v-model="tableData.town"
+                        <div class="lg:w-56 sm:w-full">
+                            <select
+                                @change="fetch()"
+                                class="form"
+                                v-model="tableData.town"
+                            >
+                                <option value="">Choose Town</option>
+                                <option
+                                    v-for="(town, index) in Towns"
+                                    :key="index"
+                                    :value="town.town_id"
                                 >
-                                    <option value="">Choose Town</option>
-                                    <option
-                                        v-for="(town, index) in Towns"
-                                        :key="index"
-                                        :value="town.town_id"
-                                    >
-                                        {{ town.town_name }}
-                                    </option>
-                                </select>
-                            </div>
+                                    {{ town.town_name }}
+                                </option>
+                            </select>
                         </div>
-                        <div class="w-56">
-                            <!-- <span class="mb-10 font-semibold "
-                                >Transportation</span
-                            > -->
-                            <div class="">
-                                <select
-                                    @change="fetch()"
-                                    class="form"
-                                    v-model="tableData.transportation"
+                        <div class="lg:w-56 sm:w-full">
+                            <select
+                                @change="fetch()"
+                                class="form"
+                                v-model="tableData.transportation"
+                            >
+                                <option value="">Choose Transportation</option>
+                                <option
+                                    v-for="(transpo, index) in Transportations"
+                                    :key="index"
+                                    :value="transpo.id"
                                 >
-                                    <option value=""
-                                        >Choose Transportation</option
-                                    >
-                                    <option
-                                        v-for="(transpo,
-                                        index) in Transportations"
-                                        :key="index"
-                                        :value="transpo.id"
-                                    >
-                                        {{ transpo.transpo_name }}
-                                    </option>
-                                </select>
-                            </div>
+                                    {{ transpo.transpo_name }}
+                                </option>
+                            </select>
                         </div>
-                    </div>
-                    <div class="flex justify-end items-center ">
-                        <div class="text-sm ">
-                            <span>Show</span>
+                        <!-- <div class="w-56 md:w-full">
                             <select
                                 class="form-sort"
                                 v-model="tableData.length"
@@ -138,8 +123,26 @@
                                     {{ records }}
                                 </option>
                             </select>
-                            <span>Entries</span>
-                        </div>
+                        </div> -->
+                    </div>
+                    <div
+                        class="justify-end items-center sm:hidden lg:flex gap-1 "
+                    >
+                        <span class="sm:hidden xl:block">Show</span>
+                        <select
+                            class="form-sort"
+                            v-model="tableData.length"
+                            @change="fetch()"
+                        >
+                            <option
+                                v-for="(records, index) in perPage"
+                                :key="index"
+                                :value="records"
+                            >
+                                {{ records }}
+                            </option>
+                        </select>
+                        <span class="sm:hidden xl:block">Entries</span>
                     </div>
                 </div>
 
@@ -253,21 +256,21 @@
                 >
                     <div
                         v-if="isModal"
-                        class="bg-black bg-opacity-40 fixed top-0 left-0 z-50 flex justify-center items-center w-full min-h-screen"
+                        class="bg-black bg-opacity-40 fixed top-0 left-0 z-50 p-2 flex justify-center items-center w-full min-h-screen"
                     >
                         <div
-                            class="sm:w-full lg:w-1/2  bg-white rounded sm:m-5 md:m-5"
+                            class="sm:w-full lg:w-1/2 bg-white rounded "
                         >
                             <div
-                                class="p-2 flex justify-between items-center text-lg "
+                                class="p-2 flex justify-between items-center lg:text-lg sm:text-sm "
                             >
                                 <label
-                                    class="font-semibold text-lg"
+                                    class="font-semibold "
                                     v-if="!editMode"
                                     >Setup new delivery charges</label
                                 >
                                 <label
-                                    class="font-semibold text-lg"
+                                    class="font-semibold "
                                     v-if="editMode"
                                     >Update delivery charges</label
                                 >
@@ -277,7 +280,7 @@
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6 text-gray-700 hover:text-red-500"
+                                        class="lg:h-6 lg:w-6 sm:h-5 sm:w-5 text-gray-700 hover:text-red-500"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -306,9 +309,9 @@
                                     @clear="clearError"
                                 />
                             </transition>
-                            <div class="w-full px-5 my-2 text-sm">
+                            <div class="w-full px-5 my-1 sm:text-xs xl:text-sm">
                                 <div class="flex flex-col w-1/2">
-                                    <label for="province" class="font-semibold"
+                                    <label class="font-semibold"
                                         >Province</label
                                     >
                                     <select
@@ -342,10 +345,10 @@
                                     </transition>
                                 </div>
                                 <div
-                                    class="flex flex-row space-x-4 my-2 w-full "
+                                    class="flex flex-row space-x-4 my-1 w-full "
                                 >
                                     <div class="flex flex-col w-1/2">
-                                        <label for="town" class="font-semibold"
+                                        <label  class="font-semibold"
                                             >Town</label
                                         >
                                         <select
@@ -397,7 +400,7 @@
                                         </transition>
                                     </div>
                                     <div class="flex flex-col w-1/2 ">
-                                        <label for="brgy" class="font-semibold"
+                                        <label  class="font-semibold"
                                             >Barangay
                                             <small class="text-blue-600"
                                                 >(Optional)</small
@@ -453,7 +456,7 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col w-1/2">
-                                    <label for="transpo" class="font-semibold"
+                                    <label  class="font-semibold"
                                         >Transportation</label
                                     >
                                     <select
@@ -489,7 +492,6 @@
                                 <div class="flex flex-row space-x-4 my-2">
                                     <div class="flex flex-col w-1/2">
                                         <label
-                                            for="D-Charges"
                                             class="font-semibold"
                                             >Delivery Charge</label
                                         >
@@ -556,25 +558,25 @@
                             </div>
                             <hr />
                             <div
-                                class="p-2 flex justify-end items-center space-x-1 text-sm"
+                                class="p-1 flex justify-end items-center space-x-1 text-sm"
                             >
                                 <button
                                     v-if="!editMode"
                                     @click="create"
-                                    class="px-4 py-2 bg-blue-500 text-white text-sm hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
+                                    class="px-4 sm:py-1 md:py-2 bg-blue-500 text-white text-sm hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
                                 >
                                     Save
                                 </button>
                                 <button
                                     v-if="editMode"
                                     @click="update"
-                                    class="px-4 py-2 bg-blue-500 text-white -text-sm hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
+                                    class="px-4 sm:py-1 md:py-2 bg-blue-500 text-white -text-sm hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
                                 >
                                     Update
                                 </button>
                                 <button
                                     @click="closeModal"
-                                    class="px-4 py-2 bg-red-500 text-white text-sm hover:bg-red-600 rounded transition duration-500 focus:outline-none"
+                                    class="px-4 sm:py-1 md:py-2 bg-red-500 text-white text-sm hover:bg-red-600 rounded transition duration-500 focus:outline-none"
                                 >
                                     Close
                                 </button>
@@ -590,7 +592,7 @@
                 data-toggle="tooltip"
                 data-placement="bottom"
                 title="Add"
-                class="fixed z-30 bottom-0 right-0 mb-16 mr-3 focus:outline-none bg-blue-400 hover:bg-blue-500 w-12 h-12 rounded-full shadow-xl transition duration-700 ease-in-out transform hover:scale-105 "
+                class="fixed z-30 bottom-0 right-0 sm:mb-5 lg:mb-16 mr-3 focus:outline-none bg-blue-400 hover:bg-blue-500 w-12 h-12 rounded-full shadow-xl transition duration-700 ease-in-out transform hover:scale-105 "
             >
                 <!-- <i class="text-white fas fa-plus fa-2x "></i> -->
                 <svg

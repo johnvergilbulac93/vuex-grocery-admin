@@ -12,6 +12,9 @@ export default {
         },
         chartYear() {
             return moment(this.year).format("YYYY");
+        },
+        chartMonth(){
+            return moment(this.month).format("MMMM");
         }
     },
     methods: {
@@ -21,7 +24,7 @@ export default {
                     labels: this.chartLabels,
                     datasets: [
                         {
-                            label: this.chartYear,
+                            label: this.chartYear + '-' + this.chartMonth,
                             data: this.chartData,
                             backgroundColor: "#3498db",
                             borderColor: "#9CA3AF",
@@ -62,12 +65,6 @@ export default {
                                     display: true,
                                     labelString: "Total Sale Quantity"
                                 },
-                                ticks: {
-                                    font: {
-                                        size: 6,
-                                        fontColor: 'blue'
-                                    }
-                                }
                             }
                         ],
                     }

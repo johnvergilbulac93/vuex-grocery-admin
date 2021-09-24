@@ -1,8 +1,8 @@
 <template>
     <div class="space-y-2">
         <Breadcrumb :routes="routes" title="setup" />
-        <div class="container bg-gray-50 shadow-lg p-5 rounded text-gray-800 ">
-            <div class="mb-5 bg-gray-100 p-2">
+        <div class=" bg-gray-50 shadow-lg p-2 rounded text-gray-800   overflow-x-auto">
+            <div class="mb-2 bg-gray-100 p-2 w-full">
                 <label class="font-semibold text-lg "
                     >Business Rules</label
                 >
@@ -106,15 +106,15 @@
             >
                 <div
                     v-if="isModal"
-                    class="bg-black bg-opacity-40 fixed top-0 left-0 flex z-50 justify-center items-center w-full min-h-screen"
+                    class="bg-black bg-opacity-40 fixed top-0 left-0 flex z-50 p-1 justify-center items-center w-full min-h-screen"
                 >
                     <div
-                        class="sm:w-full lg:w-1/2  bg-white rounded sm:m-5 md:m-5"
+                        class="sm:-full md:w-3/4 xl:w-1/2 bg-white rounded "
                     >
                         <div
-                            class="p-2 flex justify-between items-center text-lg "
+                            class="p-2 flex justify-between items-center  "
                         >
-                            <label class="font-semibold text-lg "
+                            <label class="font-semibold  xl:text-lg sm:text-sm "
                                 >Update Business Rules</label
                             >
                             <a @click="close" class="transition duration-500">
@@ -135,9 +135,9 @@
                             </a>
                         </div>
                         <hr />
-                        <div class="flex justify-between items-center p-2">
-                            <fieldset class="p-2">
-                                <legend class="text-sm px-2 mx-2 ">
+                        <div class="flex justify-center items-center lg:p-2 sm:p-1  xl:text-sm sm:text-xs">
+                            <fieldset class="p-1">
+                                <legend class=" px-2 mx-2 ">
                                     Minimum Order Amount
                                 </legend>
                                 <input
@@ -147,8 +147,9 @@
                                     class="form"
                                 />
                             </fieldset>
-                            <fieldset class="p-2">
-                                <legend class="text-sm px-2 mx-2 ">
+                            
+                            <fieldset class="p-1">
+                                <legend class=" px-2 mx-2 ">
                                     Pick-Up Charge
                                 </legend>
                                 <input
@@ -158,8 +159,8 @@
                                     class="form"
                                 />
                             </fieldset>
-                            <fieldset class="p-2">
-                                <legend class="text-sm px-2 mx-2 ">
+                            <fieldset class="p-1">
+                                <legend class=" px-2 mx-2 ">
                                     Maximum no. of order
                                 </legend>
                                 <input
@@ -171,10 +172,10 @@
                             </fieldset>
                         </div>
                         <div
-                            class="flex justify-between gap-2 items-center p-2"
+                            class="flex justify-between gap-2 items-center p-2 xl:text-text-sm sm:text-xs "
                         >
                             <fieldset class="p-2">
-                                <legend class="text-sm px-2 mx-2 ">
+                                <legend class=" px-2 mx-2 ">
                                     Ordering Time Cut-off
                                 </legend>
                                 <label>Start</label>
@@ -193,7 +194,7 @@
                                 />
                             </fieldset>
                             <fieldset class="p-2">
-                                <legend class="text-sm px-2 mx-2 ">
+                                <legend class="px-2 mx-2 ">
                                     Serving Time
                                 </legend>
                                 <label>Start</label>
@@ -214,17 +215,17 @@
                         </div>
                         <hr />
                         <div
-                            class="p-2 flex justify-end items-center space-x-1 text-sm"
+                            class="p-2 flex justify-end items-center space-x-1 xl:text-sm sm:text-xs"
                         >
                             <button
                                 @click="save"
-                                class="px-4 py-2 bg-blue-500 text-white text-sm hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
+                                class="px-4 py-2 bg-blue-500 text-white  hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
                             >
                                 Save
                             </button>
                             <button
                                 @click="close"
-                                class="px-4 py-2 bg-red-500 text-white text-sm hover:bg-red-600 rounded transition duration-500 focus:outline-none"
+                                class="px-4 py-2 bg-red-500 text-white  hover:bg-red-600 rounded transition duration-500 focus:outline-none"
                             >
                                 Close
                             </button>

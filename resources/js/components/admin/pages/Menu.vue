@@ -1,8 +1,8 @@
 <template>
-    <div class="flex gap-4  sm:flex-col lg:flex-row ">
+    <div class="flex gap-4 sm:flex-col lg:flex-row ">
         <SubMenu />
-        <div class="md:w-3/4 sm:w-full  bg-gray-50 shadow-lg p-5 rounded">
-            <div class="sm:w-full md:w-1/4">
+        <div class="lg:w-3/4 md:w-1/2  bg-gray-50 shadow-lg p-5 rounded">
+            <div class="sm:w-full lg:w-3/4 xl:w-1/4 ">
                 <div
                     class="bg-gray-100 h-40 flex flex-col justify-between items-center w-full rounded border shadow-lg"
                 >
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="border-t mt-5 w-full">
-                <div class="w-1/2 ">
+                <div class="w-1/2 flex items-center gap-2 ">
                     <div class="mt-2 w-20">
                         <label for="">Select Year</label>
                         <Datepicker
@@ -35,7 +35,7 @@
                             @selected="dateSelected()"
                         />
                     </div>
-                    <!-- <div class="mt-2 w-44">
+                    <div class="mt-2 w-44">
                         <label for="">Select Month</label>
                         <Datepicker
                             input-class="form w-full"
@@ -46,7 +46,7 @@
                             v-model="filter.month"
                             @selected="dateSelected()"
                         />
-                    </div> -->
+                    </div>
                 </div>
 
                 <div class="w-full flex justify-center items-center">
@@ -188,7 +188,7 @@ export default {
         },
         async getTopItems(url = "/api/top_items") {
             let year = moment(this.filter.year).format("YYYY-MM-DD");
-            let month = moment(this.filter.month).format("YYYY-MM-DD");
+            let month = moment(this.filter.month).format("YYYY-M-DD");
 
             let filter = {
                 year: year,
@@ -223,3 +223,5 @@ export default {
     }
 };
 </script>
+
+

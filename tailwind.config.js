@@ -14,20 +14,11 @@ module.exports = {
             center: true
         },
         screens: {
-            sm: "500px",
-            // => @media (min-width: 500px) { ... }
-
-            md: "756px",
-            // => @media (min-width: 768px) { ... }
-
-            lg: "1024px",
-            // => @media (min-width: 1024px) { ... }
-
-            xl: "1280px",
-            // => @media (min-width: 1280px) { ... }
-
-            "2xl": "1536px"
-            // => @media (min-width: 1536px) { ... }
+            sm: "320px",
+            md: "480px",
+            lg: "768px",
+            xl: "1050px",
+            xxl: "1680px", 
         },
         extend: {
             outline: {
@@ -35,7 +26,7 @@ module.exports = {
             },
             fontFamily: {
                 rubik: ["Rubik", "sans-serif"],
-                poppins: ["Helvetica"],
+                helve: ["Helvetica"],
                 inter: ['Inter','sans-serif'],
             }
         }

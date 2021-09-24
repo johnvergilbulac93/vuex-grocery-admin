@@ -1,8 +1,8 @@
 <template>
     <div class="space-y-2">
         <Breadcrumb :routes="routes" title="setup" />
-        <div class="container bg-gray-50 shadow-lg p-5 rounded text-gray-800">
-            <div class="mb-5 bg-gray-100 p-2">
+        <div class="bg-gray-50 shadow-lg p-2 rounded text-gray-800">
+            <div class="mb-2 bg-gray-100 p-2">
                 <label for="" class=" text-lg font-semibold">Tenant</label>
             </div>
             <div
@@ -122,7 +122,7 @@
                 </div>
                 <div class="col-span-2">
                     <div
-                        class="flex sm:flex-wrap sm:space-y-2 justify-between items-center mb-2"
+                        class="flex sm:flex-wrap justify-between items-center mb-2"
                     >
                         <div
                             class=" md:w-1/2 sm:w-full flex items-center gap-0.5"
@@ -173,10 +173,12 @@
                                 </svg>
                             </button>
                         </div>
-                        <div class="text-sm">
-                            <span>Show</span>
+                        <div
+                            class="justify-end items-center sm:hidden md:flex gap-1"
+                        >
+                            <span class="sm:hidden md:block">Show</span>
                             <select
-                                class="form-sort "
+                                class="form-sort"
                                 v-model="tableData.length"
                                 @change="fetch()"
                             >
@@ -188,7 +190,7 @@
                                     {{ records }}
                                 </option>
                             </select>
-                            <span class="text-sm ">Entries</span>
+                            <span class="sm:hidden md:block">Entries</span>
                         </div>
                     </div>
                     <Datatable

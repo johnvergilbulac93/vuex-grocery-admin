@@ -1,9 +1,9 @@
 <template>
     <div class="space-y-2">
         <Breadcrumb :routes="routes" title="uploading" v-if="$root.userType == 12" />
-        <div class="container text-black">
-            <div class=" bg-gray-50 shadow-lg p-5 rounded">
-                <div class="mb-5 bg-gray-100 p-2">
+        <div class=" text-black">
+            <div class=" bg-gray-50 shadow-lg p-2 rounded">
+                <div class="mb-2 bg-gray-100 p-2">
                     <label for="" class="font-semibold text-lg "
                         >Upload Image filename and Category</label
                     >

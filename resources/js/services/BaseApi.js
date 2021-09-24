@@ -10,10 +10,11 @@ Http.interceptors.request.use(config => { // Called on request
     NProgress.start()
     store.commit('CHECK_SESSION', false)
 
+
     return config
 }, error => {
     NProgress.done()
-
+    
     store.commit('CHECK_SESSION', false)
 
     return Promise.reject(error);
@@ -35,7 +36,6 @@ Http.interceptors.response.use(response => { // Called on response
 
     if(status === UNAUTHORIZED){
         store.commit('CHECK_SESSION', true)
-        console.log('session expired')
     }
     return Promise.reject(error);
 });

@@ -1,9 +1,9 @@
 <template>
     <div class="space-y-2">
         <Breadcrumb :routes="routes" title="setup" />
-        <div class="container text-gray-800">
-            <div class=" bg-gray-50 shadow-lg p-5 rounded">
-                <div class="mb-5 bg-gray-100 p-2">
+        <div class="text-gray-800 ">
+            <div class=" bg-gray-50 shadow-lg p-2 rounded overflow-x-auto">
+                <div class="mb-2 bg-gray-100 p-2">
                     <label class="text-lg font-semibold"
                         >Minimum Order Delivery</label
                     >
@@ -11,8 +11,8 @@
                 <div
                     class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
                 >
-                    <div class="  md:w-1/2 sm:w-full flex items-center gap-0.5">
-                        <div class="relative w-1/2 flex items-center">
+                    <div class="md:w-1/2 sm:w-full flex items-center gap-0.5">
+                        <div class="relative w-full flex items-center">
                             <input
                                 type="text"
                                 class="form-search"
@@ -58,8 +58,10 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="text-sm">
-                        <span>Show</span>
+                    <div
+                        class="justify-end items-center sm:hidden md:flex gap-1"
+                    >
+                        <span class="sm:hidden md:block">Show</span>
                         <select
                             class="form-sort"
                             v-model="tableData.length"
@@ -73,7 +75,7 @@
                                 {{ records }}
                             </option>
                         </select>
-                        <span>Entries</span>
+                        <span class="sm:hidden md:block">Entries</span>
                     </div>
                 </div>
                 <Datatable
@@ -166,18 +168,18 @@
             >
                 <div
                     v-if="isModal"
-                    class="bg-black bg-opacity-40 fixed top-0 left-0 flex z-50 justify-center items-center w-full min-h-screen"
+                    class="bg-black bg-opacity-40 fixed top-0 left-0 flex z-50 justify-center p-2 items-center w-full min-h-screen"
                 >
                     <div
-                        class="w-96  bg-white rounded sm:m-5 md:m-5 text-gray-800"
+                        class="sm:w-3/4 xl:w-1/2 bg-white rounded text-gray-800"
                     >
-                        <div class="p-2 flex justify-between items-center ">
-                            <label
-                                class="font-semibold text-lg"
-                                v-if="!editMode"
+                        <div
+                            class="p-2 flex justify-between items-center sm:text-sm lg:text-lg "
+                        >
+                            <label class="font-semibold" v-if="!editMode"
                                 >Setup new minimum order</label
                             >
-                            <label v-if="editMode" class="font-semibold text-lg"
+                            <label v-if="editMode" class="font-semibold "
                                 >Update this minimum order</label
                             >
                             <button
@@ -186,7 +188,7 @@
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-6 w-6 text-gray-500 hover:text-red-500"
+                                    class="lg:h-6 lg:w-6 sm:h-5 sm:w-5 text-gray-500 hover:text-red-500"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -330,7 +332,7 @@
                 data-toggle="tooltip"
                 data-placement="bottom"
                 title="Add"
-                class="fixed z-30 bottom-0 right-0 mb-16 mr-3 focus:outline-none bg-blue-400 hover:bg-blue-500 w-12 h-12 rounded-full shadow-xl transition duration-700 ease-in-out transform hover:scale-105 "
+                class="fixed z-30 bottom-0 right-0 sm:mb-5 lg:mb-16 mr-3 focus:outline-none bg-blue-400 hover:bg-blue-500 w-12 h-12 rounded-full shadow-xl transition duration-700 ease-in-out transform hover:scale-105 "
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

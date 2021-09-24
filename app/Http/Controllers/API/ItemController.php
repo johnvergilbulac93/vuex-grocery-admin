@@ -454,13 +454,15 @@ class ItemController extends Controller
 
         
         $year= Carbon::parse($request->year)->format('Y');
-        $month= Carbon::parse($request->month)->format('M');
+        $month= Carbon::parse($request->month)->format('m');
+        $sample= Carbon::now()->month;
 
+        // dd($month);
         return DB::table('gc_final_order')
             ->join('gc_product_items', 'gc_product_items.product_id', '=', 'gc_final_order.product_id')
             ->join('gc_product_prices', 'gc_product_prices.price_id', '=', 'gc_final_order.product_id')
             ->where('canceled_status', 0)
-            // ->whereMonth('gc_final_order.created_at', $month)
+            ->whereMonth('created_at',intval($month) )
             ->whereYear('gc_final_order.created_at', $year)
             ->select(
                 'gc_product_items.product_name',

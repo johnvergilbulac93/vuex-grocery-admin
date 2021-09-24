@@ -1,12 +1,10 @@
 <template>
     <div class="space-y-2">
         <Breadcrumb :routes="routes" title="setup" />
-        <div class="container text-black">
-            <div class=" bg-gray-50 shadow-lg p-5 rounded  ">
-                <div class="mb-5 bg-gray-100 p-2">
-                    <label for="" class="text-lg font-semibold"
-                        >Price Group</label
-                    >
+        <div class="text-black">
+            <div class=" bg-gray-50 shadow-lg p-2 rounded  ">
+                <div class="mb-2 bg-gray-100 p-2">
+                    <label class="text-lg font-semibold">Price Group</label>
                 </div>
                 <div
                     class="grid lg:grid-flow-col lg:grid-cols-3 lg:grid-rows-1 sm:grid-flow-row sm:grid-cols-1 sm:grid-rows-1 gap-2"
@@ -93,9 +91,9 @@
                             class="flex sm:flex-wrap sm:space-y-2 md:space-y-0 justify-between items-center mb-2"
                         >
                             <div
-                                class=" md:w-1/2 sm:w-full flex items-center gap-0.5"
+                                class="md:w-1/2 sm:w-full flex items-center gap-0.5"
                             >
-                                <div class="relative w-1/2 flex items-center ">
+                                <div class="relative w-full flex items-center ">
                                     <input
                                         type="text"
                                         class="form-search"
@@ -141,8 +139,10 @@
                                     </svg>
                                 </button>
                             </div>
-                            <div class="text-sm">
-                                <span>Show</span>
+                            <div
+                                class="justify-end items-center sm:hidden md:flex gap-1"
+                            >
+                                <span class="sm:hidden md:block">Show</span>
                                 <select
                                     class="form-sort"
                                     v-model="tableData.length"
@@ -156,7 +156,7 @@
                                         {{ records }}
                                     </option>
                                 </select>
-                                <span>Entries</span>
+                                <span class="sm:hidden md:block">Entries</span>
                             </div>
                         </div>
                         <Datatable

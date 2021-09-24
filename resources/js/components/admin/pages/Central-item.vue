@@ -1,10 +1,10 @@
 <template>
     <div class="space-y-2">
         <Breadcrumb :routes="routes" title="item" />
-        <div class="container text-gray-800">
-            <div class=" bg-gray-50 shadow-lg p-5 rounded overflow-x-auto">
-                <div class="mb-5 bg-gray-100 p-2">
-                    <label for="" class="text-lg font-semibold"
+        <div class=" text-gray-800">
+            <div class=" bg-gray-50 shadow-lg p-2 rounded overflow-x-auto">
+                <div class="mb-2 bg-gray-100 p-2">
+                    <label  class="text-lg font-semibold"
                         >Item Masterfile</label
                     >
                 </div>

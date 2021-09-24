@@ -1,8 +1,8 @@
 <template>
-    <section class="flex items-center gap-4 font-inter">
+    <div class="flex items-center gap-4 font-inter">
         <!-- <h1 v-text="message"></h1> -->
         <h2 v-text="currentTime" class="text-xl font-semibold "></h2>
-    </section>
+    </div>
 </template>
 
 <script>

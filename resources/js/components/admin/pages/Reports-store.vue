@@ -1,7 +1,7 @@
 <template>
-    <div class="container text-gray-800">
-        <div class="h-96 bg-gray-50 shadow-lg p-5 rounded">
-            <div class="mb-5 bg-gray-100 p-2">
+    <div class=" text-gray-800">
+        <div class="h-96 bg-gray-50 shadow-lg p-2 rounded">
+            <div class="mb-2 bg-gray-100 p-2">
                 <label for="" class="font-semibold text-lg "
                     >Item Report</label
                 >

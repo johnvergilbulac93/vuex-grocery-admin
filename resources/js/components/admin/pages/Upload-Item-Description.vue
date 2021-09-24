@@ -5,8 +5,8 @@
             title="uploading"
             v-if="$root.userType == 12"
         />
-        <div class="container bg-gray-50 shadow-lg p-5 rounded text-black">
-            <div class="mb-5 bg-gray-100 p-2">
+        <div class=" bg-gray-50 shadow-lg p-2 rounded text-black">
+            <div class="mb-2 bg-gray-100 p-2">
                 <label for="" class="font-semibold text-lg "
                     >Update Item Description</label
                 >

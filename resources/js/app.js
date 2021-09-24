@@ -39,7 +39,7 @@ Vue.use(excel)
 window.swal = swal
 const toast = swal.mixin({
     toast: true,
-    position: 'top-right',
+    position: 'top',
     showConfirmButton: false,
     timer: 3000
 });
@@ -121,7 +121,6 @@ Vue.component('Clock', require('./Usable/Clock.vue').default);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
 
 const app = new Vue({
     el: '#app',

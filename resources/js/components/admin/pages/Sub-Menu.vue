@@ -1,5 +1,5 @@
 <template>
-    <div class="md:w-1/4 sm:w-full bg-gray-50 shadow p-2 rounded" id="style-4">
+    <div class="md:w-1/2 sm:w-full lg:w-1/2 xl:w-1/4 bg-gray-50 shadow p-2 rounded" id="style-4">
         <ul class="text-gray-800 font-inter">
             <li>
                 <h5
@@ -336,7 +336,6 @@
         </ul>
     </div>
 </template>
-
 <script>
 export default {};
 </script>

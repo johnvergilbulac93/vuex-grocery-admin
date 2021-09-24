@@ -1,19 +1,17 @@
 <template>
     <div class="space-y-2">
         <Breadcrumb :routes="routes" title="setup" />
-        <div class="container text-gray-800">
-            <div class=" bg-gray-50 shadow-lg p-5 rounded overflow-x-auto">
-                <div class="mb-5 bg-gray-100 p-2">
-                    <label for="" class=" text-lg font-semibold"
-                        >Manage User</label
-                    >
+        <div class="text-gray-800">
+            <div class=" bg-gray-50 shadow-lg p-2 rounded overflow-x-auto">
+                <div class="mb-2 bg-gray-100 p-2">
+                    <label class=" text-lg font-semibold">Manage User</label>
                 </div>
 
                 <div
                     class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
                 >
                     <div class=" md:w-1/2 sm:w-full flex items-center gap-0.5 ">
-                        <div class="relative w-1/2 flex items-center ">
+                        <div class="relative w-full flex items-center ">
                             <input
                                 type="text"
                                 class="form-search "
@@ -59,8 +57,10 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="text-sm">
-                        <span>Show</span>
+                    <div
+                        class="justify-end items-center sm:hidden md:flex gap-1"
+                    >
+                        <span class="sm:hidden md:block">Show</span>
                         <select
                             class="form-sort"
                             v-model="tableData.length"
@@ -74,7 +74,7 @@
                                 {{ records }}
                             </option>
                         </select>
-                        <span>Entries</span>
+                        <span class="sm:hidden md:block">Entries</span>
                     </div>
                 </div>
                 <Datatable
@@ -85,7 +85,7 @@
                 >
                     <tbody class="tbody ">
                         <tr class="tr" v-if="!Users.length">
-                            <td colspan="6" class="td text-center">
+                            <td colspan="7" class="td text-center">
                                 NO DATA AVAILABLE
                             </td>
                         </tr>
@@ -185,13 +185,13 @@
                 >
                     <div
                         v-if="isModal"
-                        class="bg-black bg-opacity-40 fixed top-0 left-0 z-50 flex justify-center items-center w-full min-h-screen"
+                        class="bg-black bg-opacity-40 fixed top-0 left-0 z-50 flex justify-center p-2 items-center w-full min-h-screen"
                     >
-                        <div
-                            class="lg:w-1/2 md:w-3/4 md:mx-0 bg-white rounded sm:w-full sm:m-5 md:m-5 lg:m-0"
-                        >
-                            <div class="p-2 flex justify-between items-center">
-                                <label for="" class="text-lg font-semibold"
+                        <div class="bg-white rounded sm:w-full lg:w-3/4 ">
+                            <div
+                                class="p-2 flex justify-between items-center sm:text-sm lg:text-lg"
+                            >
+                                <label class=" font-semibold"
                                     >Manage User</label
                                 >
                                 <a
@@ -200,7 +200,7 @@
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        class="h-6 w-6 text-gray-700 hover:text-red-500"
+                                        class="lg:h-6 lg:w-6 sm:w-5 sm:h-5 text-gray-700 hover:text-red-500"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -219,10 +219,10 @@
                                     <legend class=" px-2 mx-2 ">
                                         Registration Form
                                     </legend>
-                                    <div
-                                        class="flex sm:flex-col lg:items-center lg:flex-row "
-                                    >
-                                        <div class="p-2 w-full relative block">
+                                    <div class="flex items-center  ">
+                                        <div
+                                            class="lg:p-2 sm:p-1 w-full relative block"
+                                        >
                                             <label
                                                 for="name"
                                                 class="font-semibold"
@@ -266,7 +266,7 @@
                                                 >
                                             </div>
                                         </div>
-                                        <div class="p-2 w-full">
+                                        <div class="lg:p-2 sm:p-1 w-full">
                                             <label
                                                 for="name"
                                                 class="block font-semibold"
@@ -296,128 +296,137 @@
                                             </transition>
                                         </div>
                                     </div>
-
-                                    <div class="p-2 w-full">
-                                        <label
-                                            for="username"
-                                            class="block font-semibold"
-                                            >Username</label
-                                        >
-                                        <input
-                                            type="text"
-                                            v-model="form.username"
-                                            class="form "
-                                        />
-                                        <transition
-                                            enter-active-class="ease-in duration-300"
-                                            enter-class="opacity-0 "
-                                            enter-to-class="opacity-100"
-                                            leave-active-class="ease-out duration-500"
-                                            leave-class="opacity-100"
-                                            leave-to-class="opacity-0"
-                                        >
-                                            <Error
-                                                :message="errors.username[0]"
-                                                v-if="errors.username"
+                                    <div class="flex items-center  ">
+                                        <div class="lg:p-2 sm:p-1 w-full">
+                                            <label
+                                                for="username"
+                                                class="block font-semibold"
+                                                >Username</label
+                                            >
+                                            <input
+                                                type="text"
+                                                v-model="form.username"
+                                                class="form "
                                             />
-                                        </transition>
+                                            <transition
+                                                enter-active-class="ease-in duration-300"
+                                                enter-class="opacity-0 "
+                                                enter-to-class="opacity-100"
+                                                leave-active-class="ease-out duration-500"
+                                                leave-class="opacity-100"
+                                                leave-to-class="opacity-0"
+                                            >
+                                                <Error
+                                                    :message="
+                                                        errors.username[0]
+                                                    "
+                                                    v-if="errors.username"
+                                                />
+                                            </transition>
+                                        </div>
+                                        <div class="lg:p-2 sm:p-1 w-full">
+                                            <label
+                                                for="usertype"
+                                                class="block font-semibold"
+                                                >User Type</label
+                                            >
+                                            <select
+                                                name=""
+                                                class="form "
+                                                v-model="form.usertype"
+                                            >
+                                                <option value=""
+                                                    >Select Type</option
+                                                >
+                                                <option
+                                                    :value="type.id"
+                                                    v-for="type in UserTypes"
+                                                    :key="type.id"
+                                                    >{{ type.usertype }}</option
+                                                >
+                                            </select>
+                                            <transition
+                                                enter-active-class="ease-in duration-300"
+                                                enter-class="opacity-0 "
+                                                enter-to-class="opacity-100"
+                                                leave-active-class="ease-out duration-500"
+                                                leave-class="opacity-100"
+                                                leave-to-class="opacity-0"
+                                            >
+                                                <Error
+                                                    :message="
+                                                        errors.usertype[0]
+                                                    "
+                                                    v-if="errors.usertype"
+                                                />
+                                            </transition>
+                                        </div>
                                     </div>
-                                    <div class="p-2 w-full">
-                                        <label
-                                            for="usertype"
-                                            class="block font-semibold"
-                                            >User Type</label
-                                        >
-                                        <select
-                                            name=""
-                                            class="form "
-                                            v-model="form.usertype"
-                                        >
-                                            <option value=""
-                                                >Select Type</option
+                                    <div class="flex items-center">
+                                        <div class="lg:p-2 sm:p-1 w-full">
+                                            <label
+                                                for="store"
+                                                class="block font-semibold"
+                                                >Store</label
                                             >
-                                            <option
-                                                :value="type.id"
-                                                v-for="type in UserTypes"
-                                                :key="type.id"
-                                                >{{ type.usertype }}</option
+                                            <select
+                                                name=""
+                                                class="form"
+                                                v-model="form.store"
                                             >
-                                        </select>
-                                        <transition
-                                            enter-active-class="ease-in duration-300"
-                                            enter-class="opacity-0 "
-                                            enter-to-class="opacity-100"
-                                            leave-active-class="ease-out duration-500"
-                                            leave-class="opacity-100"
-                                            leave-to-class="opacity-0"
-                                        >
-                                            <Error
-                                                :message="errors.usertype[0]"
-                                                v-if="errors.usertype"
+                                                <option value=""
+                                                    >Select Store</option
+                                                >
+                                                <option
+                                                    :value="store.bunit_code"
+                                                    v-for="(store, i) in Stores"
+                                                    :key="i"
+                                                    >{{
+                                                        store.business_unit
+                                                    }}</option
+                                                >
+                                            </select>
+                                            <transition
+                                                enter-active-class="ease-in duration-300"
+                                                enter-class="opacity-0 "
+                                                enter-to-class="opacity-100"
+                                                leave-active-class="ease-out duration-500"
+                                                leave-class="opacity-100"
+                                                leave-to-class="opacity-0"
+                                            >
+                                                <Error
+                                                    :message="errors.store[0]"
+                                                    v-if="errors.store"
+                                                />
+                                            </transition>
+                                        </div>
+                                        <div class="lg:p-2 sm:p-1 w-full">
+                                            <label
+                                                for="cpassword"
+                                                class="block font-semibold"
+                                                >Password</label
+                                            >
+                                            <input
+                                                type="password"
+                                                v-model="form.password"
+                                                class="form"
                                             />
-                                        </transition>
-                                    </div>
-                                    <div class="p-2 w-full">
-                                        <label
-                                            for="store"
-                                            class="block font-semibold"
-                                            >Store</label
-                                        >
-                                        <select
-                                            name=""
-                                            class="form"
-                                            v-model="form.store"
-                                        >
-                                            <option value=""
-                                                >Select Store</option
+                                            <transition
+                                                enter-active-class="ease-in duration-300"
+                                                enter-class="opacity-0 "
+                                                enter-to-class="opacity-100"
+                                                leave-active-class="ease-out duration-500"
+                                                leave-class="opacity-100"
+                                                leave-to-class="opacity-0"
                                             >
-                                            <option
-                                                :value="store.bunit_code"
-                                                v-for="(store, i) in Stores"
-                                                :key="i"
-                                                >{{
-                                                    store.business_unit
-                                                }}</option
-                                            >
-                                        </select>
-                                        <transition
-                                            enter-active-class="ease-in duration-300"
-                                            enter-class="opacity-0 "
-                                            enter-to-class="opacity-100"
-                                            leave-active-class="ease-out duration-500"
-                                            leave-class="opacity-100"
-                                            leave-to-class="opacity-0"
-                                        >
-                                            <Error
-                                                :message="errors.store[0]"
-                                                v-if="errors.store"
-                                            />
-                                        </transition>
-                                    </div>
-                                    <div class="p-2 w-full">
-                                        <label
-                                            for="cpassword"
-                                            class="block font-semibold"
-                                            >Password</label
-                                        >
-                                        <input
-                                            type="password"
-                                            v-model="form.password"
-                                            class="form"
-                                        />
-                                        <transition
-                                            enter-active-class="ease-in duration-300"
-                                            enter-class="opacity-0 "
-                                            enter-to-class="opacity-100"
-                                            leave-active-class="ease-out duration-500"
-                                            leave-class="opacity-100"
-                                            leave-to-class="opacity-0"
-                                        >
-                                            <Error
-                                                :message="errors.password[0]"
-                                                v-if="errors.password"
-                                            />
-                                        </transition>
+                                                <Error
+                                                    :message="
+                                                        errors.password[0]
+                                                    "
+                                                    v-if="errors.password"
+                                                />
+                                            </transition>
+                                        </div>
                                     </div>
                                 </fieldset>
                             </div>
@@ -456,7 +465,7 @@
                 data-toggle="tooltip"
                 data-placement="bottom"
                 title="Add"
-                class="fixed z-30 bottom-0 right-0 mb-16 mr-3 focus:outline-none bg-blue-400 hover:bg-blue-500 w-12 h-12 rounded-full shadow-xl transition duration-700 ease-in-out transform hover:scale-105 "
+                class="fixed z-30 bottom-0 right-0 sm:mb-5 lg:mb-16 mr-3 focus:outline-none bg-blue-400 hover:bg-blue-500 w-12 h-12 rounded-full shadow-xl transition duration-700 ease-in-out transform hover:scale-105 "
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -40,8 +40,6 @@ import change_username from "./components/admin/pages/Change-Username";
 import special_instruction_comments_suggestions from "./components/admin/pages/Special-Instructions-Comments-Suggestions.vue";
 import update_item_description from './components/admin/pages/Upload-Item-Description.vue'
 
-import testtable from "./components/admin/pages/testtable.vue";
-
 
 Vue.use(VueRouter);
 
@@ -422,18 +420,6 @@ let router = new VueRouter({
             path: "/special_instruction_comments_suggestions",
             name: "special_instruction_comments_suggestions",
             component: special_instruction_comments_suggestions
-            // beforeEnter: (to, from, next) => {
-            //     if (to.params.id === 12) {
-            //         next();
-            //     } else {
-            //         next('/');
-            //     }
-            // }
-        },
-        {
-            path: "/testtable",
-            name: "testtable",
-            component: testtable
             // beforeEnter: (to, from, next) => {
             //     if (to.params.id === 12) {
             //         next();
