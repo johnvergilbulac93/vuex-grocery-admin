@@ -26,7 +26,7 @@ export default {
                         {
                             label: this.chartYear + '-' + this.chartMonth,
                             data: this.chartData,
-                            backgroundColor: "#3498db",
+                            backgroundColor: "#db5334",
                             borderColor: "#9CA3AF",
                             fill: false,
                             tension: 0.1
@@ -63,7 +63,7 @@ export default {
                                 display: true,
                                 scaleLabel: {
                                     display: true,
-                                    labelString: "Total Sale Quantity"
+                                    labelString: "Quantity"
                                 },
                             }
                         ],

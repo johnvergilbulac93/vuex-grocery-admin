@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
-    public function store_item_report(Request $request)
+    public function get_item_report_store(Request $request)
     {
         $this->validate($request, [
             'type'      => 'required',
@@ -25,18 +25,6 @@ class ReportController extends Controller
         $getBU = DB::table('locate_business_units')->where('bunit_code', $buId)->first();
 
         if ($filter === 'all') {
-            //             $filename = 'item_masterfile.xlsx';
-            //             Excel::store(new ItemsExport($filter),  $filename);
-            // 
-            //             $file = Storage::get($filename);
-            //             if ($file) {
-            //                 $fileLink = 'data:application/vnd.ms-excel;base64,' . base64_encode($file);
-            //             }
-            //             return response()->json([
-            //                 'success' => true,
-            //                 'data' => $fileLink,
-            //                 'bunit' => $getBU
-            //             ], 200);
 
             $filename = $getBU->acroname . '-ALL-ITEMS-' . Carbon::now()->format('Y-m-d-hms') . '.xls';
 
@@ -50,28 +38,11 @@ class ReportController extends Controller
             $result['filename'] = $filename;
             return $result;
 
-            //             return response()->json([
-            //                 'success' => true,
-            //                 'data' => $fileLink,
-            //                 'bunit' => $getBU
-            //             ], 200);
         }
 
         if ($filter === 'available') {
 
-            //             $filename = 'available_items.xlsx';
-            //             Excel::store(new ItemsExport($filter),  $filename);
-            // 
-            //             $file = Storage::get($filename);
-            //             if ($file) {
-            //                 $fileLink = 'data:application/vnd.ms-excel;base64,' . base64_encode($file);
-            //             }
-            // 
-            //             return response()->json([
-            //                 'success' => true,
-            //                 'data' => $fileLink,
-            //                 'bunit' => $getBU
-            //             ], 200);
+
             $filename = $getBU->acroname . '-AVAILABLE-ITEMS-' . Carbon::now()->format('Y-m-d-hms') . '.xls';
 
             $query =   DB::table('gc_product_items')
@@ -88,18 +59,6 @@ class ReportController extends Controller
 
         if ($filter === 'unavailable') {
 
-            //             $filename = 'unavailable_items.xlsx';
-            //             Excel::store(new ItemsExport($filter),  $filename);
-            //             $file = Storage::get($filename);
-            //             if ($file) {
-            //                 $fileLink = 'data:application/vnd.ms-excel;base64,' . base64_encode($file);
-            //             }
-            // 
-            //             return response()->json([
-            //                 'success' => true,
-            //                 'data' => $fileLink,
-            //                 'bunit' => $getBU
-            //             ], 200);
             $filename = $getBU->acroname . '-UNAVAILABLE-ITEMS-' . Carbon::now()->format('Y-m-d-hms') . '.xls';
 
             $query =   DB::table('gc_product_items')
@@ -175,7 +134,7 @@ class ReportController extends Controller
         }
     }
 
-    public function getLiquidation(Request $request)
+    public function get_liquidation(Request $request)
     {
         $this->validate($request, [
             'store'    => 'required',
@@ -203,7 +162,7 @@ class ReportController extends Controller
         return $result;
     }
 
-    public function getAccountability(Request $request)
+    public function get_accountability(Request $request)
     {
         $this->validate($request, [
             'store'    => 'required',
@@ -238,7 +197,7 @@ class ReportController extends Controller
         return $result;
     }
 
-    public function getLiquidation_store(Request $request)
+    public function get_liquidation_store(Request $request)
     {
 
         $buId = Auth::user()->bunit_code;
@@ -264,7 +223,7 @@ class ReportController extends Controller
         return $result;
     }
 
-    public function getAccountability_store(Request $request)
+    public function get_accountability_store(Request $request)
     {
         $buId = Auth::user()->bunit_code;
         $dateFrom = Carbon::parse($request->startDate)->toDateString();
@@ -300,7 +259,7 @@ class ReportController extends Controller
         $result['data'] = $data;
         return $result;
     }
-    public function getTransactions(Request $request)
+    public function get_transactions(Request $request)
     {
         $this->validate($request, [
             'store'        => 'required',

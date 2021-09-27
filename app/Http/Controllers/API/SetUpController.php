@@ -2,181 +2,32 @@
 
 namespace App\Http\Controllers\API;
 
+use App\store;
 use App\gc_picker;
+use App\gc_tenant;
 use App\Bu_time_setup;
+use App\gc_department;
+use App\gc_price_group;
+use App\gc_delivery_charge;
 use Illuminate\Http\Request;
 use App\gc_setup_business_rule;
+use App\gc_minimum_order_delivery;
 use Illuminate\Support\Facades\DB;
 use App\gc_customer_pickup_cuttoff;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+
 use App\gc_allowed_maximum_time_picker;
-use App\gc_delivery_charge;
-use App\gc_department;
-use App\gc_minimum_order_delivery;
-use App\gc_price_group;
-use App\gc_tenant;
+use function Symfony\Component\VarDumper\Dumper\esc;
 
 class SetUpController extends Controller
 {
 
-    public function min_order_amount(Request $request)
-    {
-        $this->validate($request, [
-            'min_amount'      => 'required|numeric'
-        ]);
-
-        gc_setup_business_rule::whereId($request->id)->update([
-            'minimum_order_amount' => $request->min_amount
-        ]);
-    }
-
-    public function pickup_charge(Request $request)
-    {
-
-        $this->validate($request, [
-            'pickup_charge'      => 'required|numeric'
-        ]);
-
-        gc_setup_business_rule::whereId($request->id)->update([
-            'pickup_charge'         => $request->pickup_charge
-        ]);
-    }
-
-    public function order_time_cutoff(Request $request)
-    {
-
-        $this->validate($request, [
-            'order_time_cutoff_start'     => 'required',
-            'order_time_cutoff_end'      => 'required|after:order_time_cutoff_start',
-        ]);
-        gc_setup_business_rule::whereId($request->id)->update([
-            'ordering_cutoff_time_start'  => $request->order_time_cutoff_start,
-            'ordering_cutoff_time_end'  => $request->order_time_cutoff_end
-        ]);
-    }
-    public function max_order(Request $request)
-    {
-        $this->validate($request, [
-            'max_no_order' => 'required',
-        ]);
-
-        gc_setup_business_rule::whereId($request->id)->update([
-            'maximum_no_of_orders'    => $request->max_no_order,
-        ]);
-    }
-
-    public function serving_time(Request $request)
-    {
-
-        $this->validate($request, [
-            'time_start_cutoff' => 'required|date_format:h:i:s',
-            'time_end_cutoff' => 'required|after:time_start_cutoff',
-        ]);
-
-        gc_setup_business_rule::whereId($request->id)->update([
-            'serving_time_start'    => $request->time_start_cutoff,
-            'serving_time_end'      => $request->time_end_cutoff
-        ]);
-    }
-
-    public function customer_pickup_time(Request $request)
-    {
-        gc_setup_business_rule::whereId($request->id)->update([
-            'cutoff_pickup_time_customer' => $request->customer_pickup_time,
-        ]);
-    }
-
     public function show_rules()
     {
-        return gc_setup_business_rule::get();
-    }
-    public function view_rules()
-    {
         return gc_setup_business_rule::all();
-
     }
-    public function pickers()
-    {
-
-        return gc_picker::all();
-    }
-    public function pickercreate(Request $request)
-    {
-
-        $this->validate($request, [
-            'picker'        => 'required|unique:gc_allowed_maximum_time_pickers,picker',
-            'time_start'    => 'required|date_format:h:i',
-            'time_end'      => 'required|after:time_start',
-
-        ]);
-
-        $picker_time_data = array(
-
-            'picker'        => $request->get('picker'),
-            'time_start'    => $request->get('time_start'),
-            'time_end'      => $request->get('time_end'),
-            'setup_by'      => auth()->user()->name,
-
-        );
-
-        gc_allowed_maximum_time_picker::create($picker_time_data);
-    }
-
-    public function getpicker()
-    {
-
-        return gc_allowed_maximum_time_picker::paginate(1);
-    }
-
-    public function pickeredit(Request $request, $id)
-    {
-
-        $picker = gc_allowed_maximum_time_picker::findOrFail($id);
-
-        $this->validate($request, [
-            'picker'        => 'required|unique:gc_allowed_maximum_time_pickers,picker,' . $picker->id,
-            'time_start'    => 'required',
-            'time_end'      => 'required|after:time_start',
-        ]);
-
-        $picker_time_data = array(
-            'picker'        => $request->get('picker'),
-            'time_start'    => $request->get('time_start'),
-            'time_end'      => $request->get('time_end'),
-        );
-        $picker->update($picker_time_data);
-    }
-
-    public function deletepicker($id)
-    {
-        $picker = gc_allowed_maximum_time_picker::findOrFail($id);
-        $picker->delete();
-    }
-
-    public function gettimepickup()
-    {
-
-        return gc_customer_pickup_cuttoff::where('bunit_code', '=', Auth::user()->bunit_code)->get();
-    }
-    public function pickuptime_edit(Request $request, $id)
-    {
-
-        $pickuptimeid = gc_customer_pickup_cuttoff::findOrFail($id);
-
-        $this->validate($request, [
-            'customer_pickup_time_start'    => 'required',
-            'customer_pickup_time_end'      => 'required|after:customer_pickup_time_start',
-        ]);
-
-        $pickup_time_data = array(
-            'start'    => $request->get('customer_pickup_time_start'),
-            'end'      => $request->get('customer_pickup_time_end'),
-        );
-
-        $pickuptimeid->update($pickup_time_data);
-    }
-    public function business_time(Request $request)
+    public function show_business_time(Request $request)
     {
         $length = $request->length;
         $dir = $request->dir;
@@ -232,15 +83,16 @@ class SetUpController extends Controller
     {
         Bu_time_setup::whereId($id)->delete();
     }
-    public function add_tenant(Request $request)
+
+    public function save_tenant(Request $request)
     {
         $this->validate($request, [
             'store'        => 'required',
             'department'    => 'required',
         ]);
         $checking_data =  gc_tenant::where('bunit_code', $request->get('store'))
-                                    ->where('dept_id', $request->get('department'))
-                                    ->exists();
+            ->where('dept_id', $request->get('department'))
+            ->exists();
         if (!$checking_data) {
 
             gc_tenant::updateOrCreate([
@@ -250,7 +102,6 @@ class SetUpController extends Controller
                 'dept_id'    => $request->department,
                 'status'    => 1
             ]);
-
         } else {
             return response()->json([
                 'errors' => ['message' => ['The system detected double entry! Please try again.']],
@@ -258,7 +109,7 @@ class SetUpController extends Controller
         }
     }
 
-    public function tenants(Request $request)
+    public function show_tenant(Request $request)
     {
 
         $length = $request->length;
@@ -307,11 +158,32 @@ class SetUpController extends Controller
         $tenant = gc_tenant::where('tenant_id', '=', $id);
         $tenant->delete();
     }
-
-    public function departments()
+    public function business_time_active(Request $request)
     {
-        return gc_department::get();
+        Bu_time_setup::whereId($request->id)->update([
+            'status' => 0
+        ]);
     }
+    public function business_time_inactive(Request $request)
+    {
+        Bu_time_setup::whereId($request->id)->update([
+            'status' => 1
+        ]);
+    }
+    public function business_time_status(Request $request)
+    {
+
+        if ($request->status === 1) {
+            Bu_time_setup::whereId($request->id)->update([
+                'status'    => '0'
+            ]);
+        } else {
+            Bu_time_setup::whereId($request->id)->update([
+                'status'    => '1'
+            ]);
+        }
+    }
+
     public function create_minimum(Request $request)
     {
         $this->validate($request, [
@@ -321,8 +193,8 @@ class SetUpController extends Controller
         ]);
 
         $checking_data =  gc_minimum_order_delivery::where('bunit_code', $request->store)
-                                                    ->where('department_id',     $request->department)
-                                                    ->exists();
+            ->where('department_id',     $request->department)
+            ->exists();
 
         if (!$checking_data) {
 
@@ -331,7 +203,6 @@ class SetUpController extends Controller
                 'department_id' => $request->department,
                 'amount'        => floatval($request->amount)
             ]);
-
         } else {
             return response()->json([
                 'errors' => ['message' => ['The system detected double entry! Please try again.']],
@@ -388,6 +259,7 @@ class SetUpController extends Controller
     {
         gc_minimum_order_delivery::where('min_id', $id)->delete();
     }
+
     public function province()
     {
         return  DB::table('province')->get();
@@ -404,10 +276,21 @@ class SetUpController extends Controller
     {
         return  DB::table('gc_transportations')->get();
     }
-    public function view_by_id_charges($id)
+    public function store()
     {
-        return gc_delivery_charge::where('chrg_id', $id)->first();
+        return store::all();
     }
+    public function department()
+    {
+        return gc_department::get();
+    }
+    public function price_group()
+    {
+        return gc_price_group::all();
+    }
+
+    // public function view_by_id_charges($id)
+
     public function update_charge(Request $request)
     {
 
@@ -499,13 +382,13 @@ class SetUpController extends Controller
         if ($request->barangay) {
 
             $checking_data =  gc_delivery_charge::where('town_id', $request->town)
-                                                ->where('brgy_id',     $request->barangay)
-                                                ->where('transpo_id',  $request->transportation)
-                                                ->exists();
+                ->where('brgy_id',     $request->barangay)
+                ->where('transpo_id',  $request->transportation)
+                ->exists();
         } else {
             $checking_data =  gc_delivery_charge::where('town_id', $request->town)
-                                                ->where('transpo_id',  $request->transportation)
-                                                ->exists();
+                ->where('transpo_id',  $request->transportation)
+                ->exists();
         }
         if (!$checking_data) {
             gc_delivery_charge::create([
@@ -526,10 +409,7 @@ class SetUpController extends Controller
     {
         gc_delivery_charge::where('chrg_id', $id)->delete();
     }
-    public function price_group()
-    {
-        return gc_price_group::all();
-    }
+ 
     public function show_price_group(Request $request)
     {
         $length = $request->length;
@@ -544,6 +424,7 @@ class SetUpController extends Controller
                 'locate_business_units.price_group_code',
                 'gc_price_groups.price_group_name',
                 'gc_price_groups.id'
+
             )
             ->where('locate_business_units.active', 1)
             ->orderBy('locate_business_units.bunit_code', $dir);
@@ -583,18 +464,7 @@ class SetUpController extends Controller
             'active' => 0
         ]);
     }
-    public function business_time_active(Request $request)
-    {
-        Bu_time_setup::whereId($request->id)->update([
-            'status' => 0
-        ]);
-    }
-    public function business_time_inactive(Request $request)
-    {
-        Bu_time_setup::whereId($request->id)->update([
-            'status' => 1
-        ]);
-    }
+
     public function rule_update(Request $request)
     {
         $this->validate($request, [
@@ -606,7 +476,7 @@ class SetUpController extends Controller
             'serving_time_end'          => 'required|after:serving_time_start',
             'maximum_no_of_order'       => 'required',
         ]);
-        
+
         gc_setup_business_rule::whereId($request->id)->update([
             'minimum_order_amount'          => $request->minimum_order_amount,
             'pickup_charge'                 => $request->pickup_charge,

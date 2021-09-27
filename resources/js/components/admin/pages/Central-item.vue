@@ -670,7 +670,7 @@ export default {
                 swal.fire(
                     "Information",
                     "Please select store to continue",
-                    ""
+                    "warning"
                 );
                 return
             }

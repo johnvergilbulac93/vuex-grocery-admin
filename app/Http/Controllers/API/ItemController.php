@@ -18,24 +18,7 @@ use Illuminate\Support\Facades\Auth;
 class ItemController extends Controller
 {
 
-    public function edit_item(Request $request)
-    {
-
-
-        $this->validate($request, [
-            'itemcode' => 'required|numeric',
-            'product_name' => 'required',
-            'status' => 'required'
-        ]);
-        $update_data = array(
-            'itemcode'      => $request->get('itemcode'),
-            'product_name'  => strtoupper($request->get('product_name')),
-            'status'        => $request->get('status')
-        );
-        gc_product_item::where('product_id', '=', $request->product_id)->update($update_data);
-    }
-
-    public function getItem(Request $request)
+    public function get_item_per_store(Request $request)
     {
         $columns = ['product_id', 'itemcode', 'product_name', 'category_name', 'product_id'];
 
@@ -112,9 +95,8 @@ class ItemController extends Controller
     }
 
 
-    public function getCentralItem(Request $request)
+    public function get_item_all_store(Request $request)
     {
-
         $columns = ['itemcode', 'product_name', 'category_no', 'product_id', 'product_id', 'status', 'product_id'];
 
         $price_group = $request->price_group;
@@ -124,23 +106,6 @@ class ItemController extends Controller
         $dir = $request->dir;
         $searchValue = $request->search;
         $categoryValue = $request->category;
-
-        //         if ($store) {
-        // 
-        //             $query = gc_product_item::with(['item_price' => function (HasMany $q) use ($price_group) {
-        //                 $q->where('price_group', $price_group);
-        //             },'item_not_available' => function(BelongsTo $q) use ($store){
-        //                 $q->where('store',$store);
-        //             }])
-        //                 ->whereIn('itemcode', function ($query) use ($store) {
-        //                     $query->select('gc_item_log_availables.itemcode')->from('gc_item_log_availables')->where('gc_item_log_availables.store', $store);
-        //                 })->orderBy($columns[$column], $dir);
-        //         } else {
-        // 
-        //             $query = gc_product_item::with(['item_price' => function (HasMany $q) use ($price_group) {
-        //                 $q->where('price_group', $price_group);
-        //             }])->orderBy($columns[$column], $dir);
-        //         }
 
         $query = gc_product_item::with(['item_price' => function (HasMany $q) use ($price_group) {
             $q->where('price_group', $price_group);
@@ -165,70 +130,8 @@ class ItemController extends Controller
 
         return $finalResults;
     }
-    public function countItem()
-    {
-        return gc_product_item::count();
-    }
-    public function countPrice()
-    {
-        return gc_product_price::count();
-    }
-    public function countUOM()
-    {
-        return gc_product_uom::count();
-    }
-    public function create_item(Request $request)
-    {
 
-        $this->validate($request, [
-            'itemcode' => 'required|numeric',
-            'product_name' => 'required',
-            'status' => 'required'
-        ]);
-
-        $items_data = array(
-            'itemcode'      => $request->get('itemcode'),
-            'product_name'  =>   strtoupper($request->get('product_name')),
-            'quantity'       => $request->get('quantity'),
-            'status'        => $request->get('status'),
-
-        );
-
-        gc_product_item::create($items_data);
-
-        $itemcode = array(
-            'itemcode'  => $request->get('itemcode')
-        );
-        gc_product_uom::create($itemcode);
-    }
-    public function delete_item($id)
-    {
-        $item = gc_product_item::where('product_id', '=', $id);
-        $item->delete();
-    }
-    public function create_uom(Request $request)
-    {
-        $this->validate($request, [
-            'itemcode_uom'      => 'required|numeric',
-            'uom'               => 'required',
-            'quantity_uom'      => 'required'
-
-        ]);
-        $update_data = array(
-            'itemcode'          => $request->get('itemcode_uom'),
-            'uom'               => strtoupper($request->get('uom')),
-            'qty_per_uom'       => $request->get('quantity_uom'),
-
-        );
-        gc_product_uom::where('uom_id', '=', $request->uom_id)->update($update_data);
-    }
-    public function delete_uom($id)
-    {
-        $uom = gc_product_uom::where('uom_id', '=', $id);
-        $uom->delete();
-    }
-
-    public function item_not_available(Request $request)
+    public function item_not_available_per_store(Request $request)
     {
 
         $length = $request->input('length');
@@ -255,7 +158,7 @@ class ItemController extends Controller
 
         return  $final_result;
     }
-    public function item_available_all()
+    public function item_available_all_store()
     {
         return DB::table('gc_item_log_availables')
             ->join('gc_product_items', 'gc_product_items.itemcode', '=', 'gc_item_log_availables.itemcode')
@@ -263,7 +166,7 @@ class ItemController extends Controller
             ->select('*')
             ->get();
     }
-    public function  tag_item_disable(Request $request)
+    public function  tag_item_disabled(Request $request)
     {
         gc_item_log_available::insert([
             'itemcode'       => $request->itemcode,
@@ -272,14 +175,14 @@ class ItemController extends Controller
         ]);
     }
 
-    public function tag_item_enable($id)
+    public function tag_item_enabled($id)
     {
         gc_item_log_available::where('store', '=', Auth::user()->bunit_code)
             ->where('itemcode', '=', $id)
             ->delete();
     }
 
-    public function change_status(Request $request)
+    public function change_status_all_store(Request $request)
     {
         $status = $request->status;
         if ($status === 'active') {
@@ -294,7 +197,7 @@ class ItemController extends Controller
     }
 
 
-    public function imageitem(Request $request)
+    public function item_image(Request $request)
     {
         $this->validate($request, [
             'item_image'      => 'image',
@@ -321,7 +224,6 @@ class ItemController extends Controller
 
     public function show_item_disable_per_uom(Request $request)
     {
-
 
         $length = $request->input('length');
         $column = $request->input('column');
@@ -352,13 +254,13 @@ class ItemController extends Controller
 
         return $finalResults;
     }
-    public function disable_item_per_uom(Request $request)
+    public function disable_item_uom(Request $request)
     {
         gc_product_price::whereIn('price_id', $request->ids)->update([
             'status' => 0
         ]);
     }
-    public function enable_item_per_uom(Request $request)
+    public function enable_item_uom(Request $request)
     {
         gc_product_price::whereIn('price_id', $request->ids)->update([
             'status' => 1
@@ -397,7 +299,7 @@ class ItemController extends Controller
 
         return $finalResults;
     }
-    public function price_count_changed()
+    public function change_price_count()
     {
         return  DB::table('gc_product_items')
             ->join('gc_product_price_histories', 'gc_product_items.itemcode', '=', 'gc_product_price_histories.itemcode')
@@ -409,7 +311,7 @@ class ItemController extends Controller
             ->count();
     }
 
-    public function price_count_changed_info(Request $request)
+    public function change_price(Request $request)
     {
         $price_group = $request->input('price_group');;
         $length = $request->input('length');
@@ -439,53 +341,7 @@ class ItemController extends Controller
         return  $final_result;
     }
 
-    public function not_available_item()
-    {
-
-        return DB::table('gc_item_log_availables')
-            ->join('locate_business_units', 'locate_business_units.bunit_code', '=', 'store')
-            ->select('locate_business_units.business_unit', DB::raw('COUNT(store) as store'))
-            ->groupBy('store')
-            ->get();
-    }
-
-    public function top_items(Request $request)
-    {
-
-        
-        $year= Carbon::parse($request->year)->format('Y');
-        $month= Carbon::parse($request->month)->format('m');
-        $sample= Carbon::now()->month;
-
-        // dd($month);
-        return DB::table('gc_final_order')
-            ->join('gc_product_items', 'gc_product_items.product_id', '=', 'gc_final_order.product_id')
-            ->join('gc_product_prices', 'gc_product_prices.price_id', '=', 'gc_final_order.product_id')
-            ->where('canceled_status', 0)
-            ->whereMonth('created_at',intval($month) )
-            ->whereYear('gc_final_order.created_at', $year)
-            ->select(
-                'gc_product_items.product_name',
-                'gc_product_items.category_group',
-                'gc_product_items.category_name',
-                'gc_product_items.product_id',
-                'gc_product_prices.UOM',
-                'gc_final_order.uom_id',
-                'gc_final_order.created_at',
-                DB::raw('SUM(gc_final_order.quantity) as sales'),
-                // DB::raw("DATE_FORMAT(gc_final_order.created_at, '%m-%Y') new_date"),
-                DB::raw('YEAR(gc_final_order.created_at) year, MONTH(gc_final_order.created_at) month')
-                
-            )
-            ->groupBy('product_id')
-            ->groupBy('uom_id')
-
-            ->orderBy('sales', 'DESC')
-            ->take(10)
-            ->get();
-    }
-
-    public function count_per_category()
+    public function item_category()
     {
         return DB::table('gc_product_items')
             ->select('category_no', 'category_name', DB::raw('COUNT(category_no) as count'))
@@ -493,7 +349,7 @@ class ItemController extends Controller
             ->groupBy('category_name')
             ->get();
     }
-    public function disable_selected_item(Request $request)
+    public function disabled_selected_item(Request $request)
     {
         $itemcode = $request->ids;
         $count = 0;
@@ -514,7 +370,7 @@ class ItemController extends Controller
         // return $count;
     }
 
-    public function enable_selected_item(Request $request)
+    public function enabled_selected_item(Request $request)
     {
         $itemcode = $request->ids;
 
@@ -532,7 +388,7 @@ class ItemController extends Controller
             ->count();
     }
 
-    public function change_status_item_not_available(Request $request)
+    public function change_status_per_store(Request $request)
     {
         $store = $request->store;
         $status = $request->status;

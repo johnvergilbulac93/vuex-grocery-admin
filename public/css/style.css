@@ -50,6 +50,9 @@
         margin-top: -78px !important;
 
     }
+    /* #section-to-print3{
+        width: 100vh !important;
+    } */
 
     #allstore_detailed {
         position: absolute;
@@ -71,6 +74,7 @@
     #transaction_body {
         width: 100vh !important;
     }
+    
 
     #print_this,
     #print_this * {

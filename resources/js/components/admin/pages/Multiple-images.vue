@@ -23,7 +23,7 @@
                         }"
                         multiple
                         type="drag"
-                        action="/api/upload/multiple"
+                        action="/api/uploading/item_image"
                         style="display: inline-block; width: 150px"
                     >
                         <div

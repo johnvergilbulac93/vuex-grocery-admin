@@ -2,19 +2,16 @@ import BaseApi from './BaseApi'
 
 export default {
      saveInfo(storehour) {
-         return BaseApi.post('/business_time/save', storehour)
+         return BaseApi.post('/masterfile/business_time/save', storehour)
      },
      show(page,filterData) {
-         return BaseApi.get(`/business_time?page=${page}`, { params: filterData })
+         return BaseApi.get(`/masterfile/business_time/show?page=${page}`, { params: filterData })
      },
      delete(id) {
-         return BaseApi.delete(`/business_time/delete/${id}`) 
+         return BaseApi.delete(`/masterfile/business_time/${id}`) 
      },
-     storeActive(status){
-         return BaseApi.post('/business_time/active', status)
-     },
-     storeInactive(status){
-        return BaseApi.post('/business_time/inactive', status)
+    changeStatus(status){
+        return BaseApi.post('masterfile/business_time/status', status)
     }
  }
  

@@ -444,6 +444,7 @@ export default {
             this.form.status = "";
             this.errors.store = "";
             this.errors.department = "";
+            this.errors.message= "";
             this.editMode = false;
         },
         update() {

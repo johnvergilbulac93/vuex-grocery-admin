@@ -1,48 +1,32 @@
 import BaseApi from './BaseApi'
 
 export default {
-    Price_changed_info(page, filterData) {
-        return BaseApi.get(`/price_changed/info?page=${page}`, {
-            params: filterData
-        })
-    },
-    Item_not_available(page, filterData) {
-        return BaseApi.get(`/item_not_available?page=${page}`, {
-            params: filterData
-        })
-    },
-    Price_changed_count(){
-        return BaseApi.get('/price_changed/count')
-    },
     ViewStore(){
-        return BaseApi.get('/stores')
+        return BaseApi.get('/masterfile/store')
     },
     ViewDepartment(){
-        return BaseApi.get('/departments')
+        return BaseApi.get('/masterfile/department')
     },
     ViewProvince(){
-        return BaseApi.get('/province')
+        return BaseApi.get('/masterfile/province')
     },
     ViewBarangay(){
-        return BaseApi.get('/barangay')
+        return BaseApi.get('/masterfile/barangay')
     },
     ViewTown(){
-        return BaseApi.get('/town')
+        return BaseApi.get('/masterfile/town')
     },
     ViewTransportation(){
-        return BaseApi.get('/transportations')
+        return BaseApi.get('/masterfile/transportation')
     },
     ViewUserType(){
-        return BaseApi.get('/usertype')
+        return BaseApi.get('/user/usertype')
     },
     ViewEmployee(employee){
-        return BaseApi.get(`/employees`, {params: {employee: employee} })
-    },
-    ViewItemCategory(){
-        return BaseApi.get('/count/category')
+        return BaseApi.get(`/user/employees`, {params: {employee: employee} })
     },
     ViewPriceGroup(){
-        return BaseApi.get('/price_group')
+        return BaseApi.get('/masterfile/price_group')
     },
 
 }

@@ -14,7 +14,6 @@ import users from "./components/admin/pages/Users";
 import central_item from "./components/admin/pages/Central-item";
 import business_rule from "./components/admin/pages/Business-rule";
 import uploading from "./components/admin/pages/Uploading";
-import dashboard from "./components/admin/pages/Dashboard-super";
 import setting from "./components/admin/pages/Setting";
 import reports_store from "./components/admin/pages/Reports-store";
 import reports from "./components/admin/pages/Reports";
@@ -166,19 +165,6 @@ let router = new VueRouter({
             //         next();
             //     } else {
             //         next('/');
-            //     }
-            // }
-        },
-        {
-            path: "/dashboard",
-            name: "dashboard",
-            component: dashboard
-            // beforeEnter: (to, from, next) => {
-            //     if (store.state.checkSession == true) {
-            //         alert('Session expired, this page need to reload.')
-            //         location.reload()
-            //     } else {
-            //         next();
             //     }
             // }
         },

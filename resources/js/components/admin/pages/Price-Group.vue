@@ -185,7 +185,7 @@
                                     <td class="td text-center">
                                         <button
                                             class="p-1 focus:outline-none"
-                                            @click="remove(data.id)"
+                                            @click="remove(data.bunit_code)"
                                         >
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"

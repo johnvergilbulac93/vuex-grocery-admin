@@ -31,7 +31,7 @@ export const getPriceChangedInfo = async (
     { currentPage, filterData }
 ) => {
     try {
-        const { status, data } = await Common.Price_changed_info(
+        const { status, data } = await Item.Price_changed_info(
             currentPage,
             filterData
         );
@@ -46,7 +46,7 @@ export const getItemNotAvailable = async (
     { currentPage, filterData }
 ) => {
     try {
-        const { status, data } = await Common.Item_not_available(
+        const { status, data } = await Item.Item_not_available(
             currentPage,
             filterData
         );
@@ -81,7 +81,7 @@ export const getProvince = async ({ commit }) => {
 };
 export const getItemCategory = async ({ commit }) => {
     try {
-        const { status, data } = await Common.ViewItemCategory();
+        const { status, data } = await Item.ViewItemCategory();
         if (status === 200) {
             commit("SET_ITEM_CATEGORY", data);
         }
@@ -127,7 +127,7 @@ export const upload_flag = ({ commit }, { flag }) => {
 };
 export const getPriceChanged = async ({ commit }) => {
     try {
-        const { status, data } = await Common.Price_changed_count();
+        const { status, data } = await Item.Price_changed_count();
         if (status === 200) {
             commit("SET_PRICE_COUNT_CHANGED", data);
         }
@@ -659,94 +659,40 @@ export const deleteStorePriceGroup = async ({ commit }, { id }) => {
         }, 5000);
     }
 };
-export const activeUser = ({ commit }, { user }) => {
-    swal.fire({
-        title: "Do you want",
-        text: "to change the status to inactive this user?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, change it!"
-    }).then(result => {
-        if (result.isConfirmed) {
-            User.activeUser(user).then(() => {
-                Fire.$emit("reload_user");
-                toast.fire({
-                    icon: "success",
-                    title: "Success",
-                    text: "Successfully changed"
-                });
+export const userStatus = async({commit}, {filter}) => {
+    
+    try {
+        const {status} = await User.userStatus(filter)
+        if(status === 200){
+            Fire.$emit("reload_user");
+            toast.fire({
+                icon: "success",
+                title: "Success",
+                text: "Successfully changed."
             });
         }
-    });
-};
-export const inactiveUser = ({ commit }, { user }) => {
-    swal.fire({
-        title: "Do you want",
-        text: "to change the status to active this user?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, change it!"
-    }).then(result => {
-        if (result.isConfirmed) {
-            User.inactiveUser(user).then(() => {
-                Fire.$emit("reload_user");
-                toast.fire({
-                    icon: "success",
-                    title: "Success",
-                    text: "Successfully changed"
-                });
-            });
-        }
-    });
-};
-export const statusStoreActive = ({ commit }, { status }) => {
-    swal.fire({
-        title: "Do you want",
-        text: "to change the status to inactive.?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, change it!"
-    }).then(result => {
-        if (result.isConfirmed) {
-            StoreHour.storeActive(status).then(() => {
+    } catch (error) {
+        console.log(error)
+        
+    }
+}
+export const storeChangeStatus = async({commit},{ filter }) => {
+    
+    try {
+        const {status} = await StoreHour.changeStatus(filter)
+        if(status === 200){
                 Fire.$emit("reload_time");
                 toast.fire({
                     icon: "success",
                     title: "Success",
-                    text: "Successfully change."
+                    text: "Successfully changed."
                 });
-            });
         }
-    });
-};
-export const statusStoreInactive = ({ commit }, { status }) => {
-    swal.fire({
-        title: "Do you want",
-        text: "to change the status to active.?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, change it!"
-    }).then(result => {
-        if (result.isConfirmed) {
-            StoreHour.storeInactive(status).then(() => {
-                Fire.$emit("reload_time");
-                toast.fire({
-                    icon: "success",
-                    title: "Success",
-                    text: "Successfully change."
-                });
-            });
-        }
-    });
-};
+    } catch (error) {
+        consol.log(error)
+        
+    }
+}
 export const userChangePass = async ({ commit }, { user }) => {
     try {
         const { status } = await User.changePassword(user);

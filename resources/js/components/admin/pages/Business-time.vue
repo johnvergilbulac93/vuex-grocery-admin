@@ -204,25 +204,22 @@
                                 <td class="td text-center">
                                     {{ data.time_out | formatTime2 }}
                                 </td>
-                                <td
-                                    class="td text-center"
-                                    v-if="data.status == 1"
-                                >
-                                    <a @click="statusActive(data)">
+                                <td class="td text-center ">
+                                    <a href="#" @click="changeStatus(data)">
                                         <span
-                                            class="bg-green-400 px-2 py-1 rounded-full text-gray-50  text-xs hover:bg-green-500 hover:text-white transition duration-500"
+                                            class="text-gray-50 hover:text-white transition duration-500 font-semibold text-xs px-2 py-1 rounded-full"
+                                            :class="
+                                                data.status === 1
+                                                    ? 'bg-green-400  hover:bg-green-500'
+                                                    : 'bg-red-500  hover:bg-red-600'
+                                            "
                                         >
-                                            Active</span
-                                        >
-                                    </a>
-                                </td>
-                                <td class="text-center" v-else>
-                                    <a @click="statusInActive(data)">
-                                        <span
-                                            class="bg-red-500 px-2 py-1 rounded-full text-gray-50 font-semibold text-xs hover:bg-red-600 hover:text-white transition duration-500"
-                                        >
-                                            Inactive</span
-                                        >
+                                            {{
+                                                data.status === 1
+                                                    ? "Active"
+                                                    : "Inactive"
+                                            }}
+                                        </span>
                                     </a>
                                 </td>
                                 <td class="td text-center">
@@ -391,20 +388,27 @@ export default {
             "showStoreHour",
             "saveStoreHour",
             "deleteStoreHour",
-            "statusStoreInactive",
-            "statusStoreActive"
+            "storeChangeStatus",
         ]),
-        statusActive(data) {
-            let status = {
-                id: data.id
+        changeStatus(data) {
+            let filter = {
+                id: data.id,
+                status: data.status
             };
-            this.statusStoreActive({ status });
-        },
-        statusInActive(data) {
-            let status = {
-                id: data.id
-            };
-            this.statusStoreInactive({ status });
+            swal.fire({
+                title: 'Confirmation',
+                text: "Do you want to change the status?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, change it!"
+            }).then(result => {
+                if (result.isConfirmed) {
+                   this.storeChangeStatus({ filter });
+                }
+            });
+            
         },
         previousPage() {
             this.currentPage--;

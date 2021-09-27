@@ -175,7 +175,7 @@ export default {
                 flag: false
             });
         },
-        async getItems(url = "/api/not_available_item") {
+        async getItems(url = "/api/chart/not_available_item") {
             let self = this;
 
             const { data } = await axios.get(url);
@@ -186,7 +186,7 @@ export default {
                 self.ItemNotAvailableData.push(bu.store);
             });
         },
-        async getTopItems(url = "/api/top_items") {
+        async getTopItems(url = "/api/chart/top_items") {
             let year = moment(this.filter.year).format("YYYY-MM-DD");
             let month = moment(this.filter.month).format("YYYY-M-DD");
 

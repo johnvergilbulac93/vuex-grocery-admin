@@ -103,10 +103,10 @@
                                 {{ user.inactivity_date | formatDateNoTime }}
                             </td>
                             <td class="td text-center" v-else></td>
-                            <td class="td text-center" v-if="user.status == 1">
+                            <!-- <td class="td text-center" v-if="user.status == 1">
                                 <a @click="statusActive(user)">
                                     <span
-                                        class="bg-green-400 px-2 py-1 rounded-full text-gray-50  text-xs hover:bg-green-500 hover:text-white transition duration-500"
+                                        class="bg-green-400  hover:bg-green-500 "
                                     >
                                         Active</span
                                     >
@@ -119,6 +119,24 @@
                                     >
                                         Inactive</span
                                     >
+                                </a>
+                            </td> -->
+                            <td class="td text-center">
+                                <a href="#" @click="changeStatus(user)">
+                                    <span
+                                        class="px-2 py-1 rounded-full text-gray-50  text-xs hover:text-white transition duration-500"
+                                        :class="
+                                            user.status == 1
+                                                ? 'bg-green-400  hover:bg-green-500'
+                                                : 'bg-red-500 hover:bg-red-600'
+                                        "
+                                    >
+                                        {{
+                                            user.status == 1
+                                                ? "Active"
+                                                : "Inactive"
+                                        }}
+                                    </span>
                                 </a>
                             </td>
                             <td class="td text-center">
@@ -622,24 +640,30 @@ export default {
             "saveUser",
             "deleteUser",
             "updateUser",
-            "activeUser",
-            "inactiveUser"
+            "userStatus",
         ]),
         ...mapMutations(["CLEAR_EMPLOYEE"]),
         clearError() {
             this.errors.message = "";
         },
-        statusActive(data) {
-            let user = {
-                id: data.id
+        changeStatus(data) {
+            let filter = {
+                id: data.id,
+                status: data.status
             };
-            this.activeUser({ user });
-        },
-        statusInActive(data) {
-            let user = {
-                id: data.id
-            };
-            this.inactiveUser({ user });
+            swal.fire({
+                title: "Confirmation",
+                text: "Do you want to change the status?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, change it!"
+            }).then(result => {
+                if (result.isConfirmed) {
+                    this.userStatus({ filter });
+                }
+            });
         },
         reset() {
             this.form.name = "";

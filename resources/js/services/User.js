@@ -1,4 +1,5 @@
 import BaseApi from './BaseApi'
+import { userStatus } from './../store/actions';
 
 export default {
     saveInfo(user) {
@@ -8,18 +9,15 @@ export default {
         return BaseApi.post('/user/update', user)
     },
     show(page, filterData) {
-        return BaseApi.get(`/show/users?page=${page}`, {
+        return BaseApi.get(`/user/show?page=${page}`, {
             params: filterData
         })
     },
     delete(id) {
         return BaseApi.delete(`/user/delete/${id}`)
     },
-    activeUser(user) {
-        return BaseApi.post('/active', user)
-    },
-    inactiveUser(user) {
-        return BaseApi.post('/inactive', user)
+    userStatus(user){
+        return BaseApi.post('/user/status', user)
     },
     changePassword(user) {
         return BaseApi.post('/user/change_password', user)

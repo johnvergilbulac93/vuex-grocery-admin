@@ -2,9 +2,9 @@ import BaseApi from './BaseApi'
 
 export default {
     loadRules(){
-        return BaseApi.get('/show/rules')
+        return BaseApi.get('/masterfile/rule/show')
     },
     update(rule){
-        return BaseApi.post('/rules/update',rule)
+        return BaseApi.post('/masterfile/rule/update',rule)
     }
 }
