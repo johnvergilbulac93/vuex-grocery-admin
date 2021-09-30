@@ -8,13 +8,14 @@
                         >Liquidation Report</label
                     >
                 </div>
+
                 <div
                     class="flex sm:flex-col sm:space-y-5 md:space-y-0 md:flex-row justify-between items-center"
                 >
                     <div
                         class=" w-3/4 flex sm:flex-col lg:flex-row sm:space-x-0 sm:space-y-5 lg:space-x-5 lg:space-y-0 space-x-5"
                     >
-                        <div class="block sm:w-full md:w-56">
+                        <div class="block w-1/4 sm:w-full md:w-1/2">
                             <label for="" class="font-semibold">Store</label>
                             <select
                                 class="form"
@@ -44,7 +45,7 @@
                                 />
                             </transition>
                         </div>
-                        <div class="block sm:w-full md:w-56 ">
+                        <div class="block w-1/4 sm:w-full md:w-1/2">
                             <label for="" class="font-semibold"
                                 >Date from</label
                             >
@@ -55,7 +56,7 @@
                                 v-model="filter.dateFrom"
                             />
                         </div>
-                        <div class="block sm:w-full md:w-56">
+                        <div class="block w-1/4 sm:w-full md:w-1/2">
                             <label for="" class="font-semibold">Date to</label>
                             <input
                                 type="date"
@@ -78,7 +79,7 @@
                             @click="exportToExcel('xlsx')"
                             class="h-10 px-4 py-2 flex items-center gap-1 disabled:opacity-50  focus:outline-none text-white  bg-green-500 hover:bg-green-600 rounded"
                             v-if="Liquidation.b_unit != null"
-                            :disabled="Liquidation.cashier_details.length"
+                            :disabled="!Liquidation.cashier_details.length"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +103,7 @@
                             class="h-10 px-4 py-2 flex items-center gap-1 disabled:opacity-50  focus:outline-none text-white  bg-green-500 hover:bg-green-600 rounded"
                             @click="printBtn"
                             v-if="Liquidation.b_unit != null"
-                            :disabled="Liquidation.cashier_details.length"
+                            :disabled="!Liquidation.cashier_details.length"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -122,36 +123,32 @@
                         </button>
                     </div>
                 </div>
+
                 <hr class="mt-2" />
 
-                <div class="mt-2" id="section-to-print">
-                    <div class="flex justify-center items-center">
-                        <div v-if="Liquidation.b_unit != null">
-                            <center>
-                                <h6 class="text-lg ">
-                                    {{
-                                        Liquidation.hasOwnProperty("b_unit") &&
-                                            Liquidation.b_unit.business_unit
-                                    }}
-                                </h6>
-                                <p>ALTURUSH GOODS ORDERING</p>
-                                <p>LIQUIDATION REPORT</p>
-                                <p class="text-center  ">
-                                    {{ filter.dateFrom | formatDateNoTime }} To
-                                    {{ filter.dateTo | formatDateNoTime }}
-                                </p>
-                            </center>
-                        </div>
-                    </div>
-                    <div
-                        class="mt-2"
-                        id="body-content"
-                        v-for="(cashier, index) in Liquidation.cashier_details"
-                        :key="index"
-                    >
+                <div
+                    class="mt-2"
+                    id="print_this"
+                    v-if="Liquidation.b_unit != null"
+                >
+                    <center>
+                        <h2 class="text-lg ">
+                            {{
+                                Liquidation.hasOwnProperty("b_unit") &&
+                                    Liquidation.b_unit.business_unit
+                            }}
+                        </h2>
+                        <p>ALTURUSH GOODS ORDERING</p>
+                        <p>LIQUIDATION REPORT</p>
+                        <p class="text-center  ">
+                            {{ filter.dateFrom | formatDateNoTime }} To
+                            {{ filter.dateTo | formatDateNoTime }}
+                        </p>
+                    </center>
+
+                    <div class="mt-5">
                         <table
-                            id="table-body-content"
-                            ref="exportable_table"
+                            id="exportable_table"
                             class="min-w-full divide-y divide-gray-300"
                         >
                             <thead class="border bg-gray-100  tracking-normal">
@@ -164,11 +161,15 @@
                                     <th class="p-2 border text-left">
                                         Customer
                                     </th>
-                                    <th class="p-2 border">Transaction #</th>
+                                    <th class="p-2 border">
+                                        Transaction #
+                                    </th>
                                     <th class="p-2 border text-right">
                                         Gross Amt.
                                     </th>
-                                    <th class="p-2 border text-right">Disc.</th>
+                                    <th class="p-2 border text-right">
+                                        Disc.
+                                    </th>
                                     <th class="p-2 border text-right">
                                         Less Disc.
                                     </th>
@@ -179,11 +180,12 @@
                                 </tr>
                             </thead>
                             <tbody class="tbody">
-                                <!-- <tr v-if="!cashier.length">
-                                    <td>{{ cashier.length }}</td>
-                                </tr> -->
+                                <tr class="tr" v-if="!Liquidation.cashier_details.length">
+                                    <td class="td text-center" colspan="10">NO DATA AVAILABLE</td>
+                                </tr>
                                 <tr
-                                    v-for="(trans, index) in cashier"
+                                    v-for="(trans,
+                                    index) in Liquidation.cashier_details"
                                     :key="index"
                                     class="tr"
                                 >
@@ -229,7 +231,7 @@
                                         }}
                                     </td>
                                 </tr>
-                                <tr class="font-weight-bold tr">
+                                <tr class="font-weight-bold tr" v-if="Liquidation.cashier_details.length">
                                     <th
                                         colspan="4"
                                         class="text-center p-2 border"
@@ -237,37 +239,22 @@
                                         GRAND TOTAL:
                                     </th>
                                     <th class="p-2 border">
-                                        {{ cashier.length }}
+                                        {{ Liquidation.cashier_details.length }}
                                     </th>
                                     <th class="text-right p-2 border">
-                                        {{
-                                            totalOrderAmount(cashier)
-                                                .orderAmount | toCurrency
-                                        }}
+                                        {{ totalOrderAmount.orderAmount | toCurrency }}
                                     </th>
                                     <th class="text-right p-2 border">
-                                        {{
-                                            totalOrderAmount(cashier).discount
-                                                | toCurrency
-                                        }}
+                                        {{ totalOrderAmount.discount| toCurrency }}
                                     </th>
                                     <th class="text-right p-2 border">
-                                        {{
-                                            totalOrderAmount(cashier)
-                                                .lessDiscount | toCurrency
-                                        }}
+                                        {{ totalOrderAmount.lessDiscount | toCurrency }}
                                     </th>
                                     <th class="text-right p-2 border">
-                                        {{
-                                            totalOrderAmount(cashier)
-                                                .pickupCharge | toCurrency
-                                        }}
+                                        {{ totalOrderAmount.pickupCharge | toCurrency }}
                                     </th>
                                     <th class="text-right p-2 border">
-                                        {{
-                                            totalOrderAmount(cashier)
-                                                .grandTotal | toCurrency
-                                        }}
+                                        {{ totalOrderAmount.grandTotal | toCurrency }}
                                     </th>
                                 </tr>
                             </tbody>
@@ -283,8 +270,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from "vuex";
-import Report from "../../../services/Report";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 import Breadcrumb from "./../../../Usable/Breadcrumb";
 export default {
     components: { Breadcrumb },
@@ -323,11 +309,12 @@ export default {
         };
     },
     computed: {
-        ...mapState(["errors", "Stores", "Liquidation"])
+        ...mapState(["errors", "Stores", "Liquidation"]),
+        ...mapGetters(['totalOrderAmount'])
     },
     methods: {
         ...mapActions(["getStore", "getLiquidation"]),
-        ...mapMutations(["SET_ERRORS", "CLEAR_ERRORS"]),
+        ...mapMutations(["SET_ERRORS", "CLEAR_ERRORS","CLEAR_LIQUIDATION"]),
         exportToExcel(type, fn, dl) {
             const xlsName =
                 "LIQUIDATION-" +
@@ -337,7 +324,7 @@ export default {
                 "-to-" +
                 this.filter.dateTo +
                 ".";
-            const elt = document.getElementById("table-body-content");
+            const elt = document.getElementById("exportable_table");
             const wb = XLSX.utils.table_to_book(elt, { sheet: "LIQUIDATION" });
             return dl
                 ? XLSX.write(wb, {
@@ -346,47 +333,6 @@ export default {
                       type: "base64"
                   })
                 : XLSX.writeFile(wb, fn || xlsName + (type || "xlsx"));
-        },
-        totalOrderAmount(orders) {
-            let pickupCharge = 0,
-                orderAmount = 0,
-                discount = 0,
-                lessDiscount = 0,
-                grandTotal = 0;
-
-            orders.forEach(order => {
-                pickupCharge += parseFloat(
-                    order.customer_bill[0].picking_charge
-                );
-                if (
-                    order.hasOwnProperty("final_orders") &&
-                    order.final_orders
-                ) {
-                    order.final_orders
-                        .filter(order => order.canceled_status === 0)
-                        .forEach(order => {
-                            orderAmount += parseFloat(order.total_price);
-                        });
-                }
-                if (
-                    order.hasOwnProperty("discount_amount") &&
-                    order.discount_amount
-                ) {
-                    order.discount_amount.forEach(order => {
-                        discount += parseFloat(order.discount);
-                    });
-                }
-            });
-
-            lessDiscount = orderAmount - discount;
-            grandTotal = orderAmount - discount + pickupCharge;
-            return {
-                grandTotal,
-                orderAmount,
-                discount,
-                pickupCharge,
-                lessDiscount
-            };
         },
         totalAmount(orders) {
             let total = 0,
@@ -479,6 +425,9 @@ export default {
             "YYYY-MM-DD"
         );
         this.dateNow = moment(this.$root.serverDateTime).format("LLLL");
+    },
+    destroyed(){
+        this.CLEAR_LIQUIDATION()
     }
 };
 </script>

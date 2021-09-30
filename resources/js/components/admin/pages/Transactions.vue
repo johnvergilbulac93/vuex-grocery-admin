@@ -3,6 +3,7 @@
         <Breadcrumb :routes="routes" title="Reports" />
         <div class=" text-gray-800">
             <div class="bg-gray-50 shadow-lg p-2 rounded ">
+                
                 <div class="mb-2 bg-gray-100 p-2">
                     <label for="" class="font-semibold text-lg "
                         >Total Order Report - REMITTED</label
@@ -133,8 +134,8 @@
                             tabindex="4"
                             class="h-10 px-4 py-2 flex disabled:opacity-50  focus:outline-none text-white  bg-green-500 hover:bg-green-600 rounded"
                             @click="exportToExcel('xlsx')"
-                            v-if="ArrDataStore.b_unit != null"
-                            :disabled="orderSummary.gTotalTransaction == 0"
+                            v-if="Transactions.b_unit != null"
+                            :disabled="!Transactions.data.length"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -157,8 +158,8 @@
                             tabindex="4"
                             class="h-10 px-4 py-2 flex disabled:opacity-50  focus:outline-none text-white  bg-green-500 hover:bg-green-600 rounded"
                             @click="printBtn"
-                            v-if="ArrDataStore.b_unit != null"
-                            :disabled="orderSummary.gTotalTransaction == 0"
+                            v-if="Transactions.b_unit != null"
+                            :disabled="!Transactions.data.length"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -178,817 +179,27 @@
                         </button>
                     </div>
                 </div>
+
                 <hr class="mt-2" />
 
-                <div class="mt-2" id="section-to-print3">
-                    <div class="container" v-if="filter.type === 'DETAILED'">
-                        <div
-                            class="container"
-                            v-if="ArrDataStore.b_unit != null"
-                        >
-                            <div
-                                class="flex flex-col "
-                                v-if="filter.store != 'all'"
-                            >
-                                <div class="container" id="transaction_header">
-                                    <center>
-                                        <h6 class="text-lg">
-                                            {{
-                                                ArrDataStore.hasOwnProperty(
-                                                    "b_unit"
-                                                ) &&
-                                                    ArrDataStore.b_unit
-                                                        .business_unit
-                                            }}
-                                        </h6>
-                                        <p>
-                                            ALTURUSH GOODS ORDERING
-                                        </p>
-                                        <p>
-                                            TOTAL ORDERS REPORT(<span
-                                                class="text-red-500"
-                                                >{{ filter.type }}</span
-                                            >)
-                                        </p>
-                                        <p class="text-center">
-                                            {{
-                                                filter.dateFrom
-                                                    | formatDateNoTime
-                                            }}
-                                            To
-                                            {{
-                                                filter.dateTo | formatDateNoTime
-                                            }}
-                                        </p>
-                                    </center>
-                                </div>
-                                <div class="container mt-5 " id="transactions">
-                                    <table
-                                        class="min-w-full divide-y divide-gray-300 mb-10"
-                                        v-for="(byMonth,
-                                        i) in get_results_by_month"
-                                        :key="i"
-                                        id="transaction_body"
-                                    >
-                                        <thead
-                                            class="border bg-gray-100  tracking-normal"
-                                        >
-                                            <tr class="tr ">
-                                                <th
-                                                    class="p-2 border text-center"
-                                                >
-                                                    Date
-                                                </th>
-                                                <th
-                                                    class="p-2 border text-left"
-                                                >
-                                                    Customer
-                                                </th>
-                                                <th
-                                                    class="p-2 border text-center"
-                                                >
-                                                    Transaction #
-                                                </th>
-                                                <th
-                                                    class="p-2 border text-right"
-                                                >
-                                                    Gross Amount
-                                                </th>
-                                                <th
-                                                    class="p-2 border text-right"
-                                                >
-                                                    Pick-up Charge
-                                                </th>
-                                                <th
-                                                    class="p-2 border text-right"
-                                                >
-                                                    Total Amount
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="tbody">
-                                            <tr
-                                                v-if="!byMonth.length"
-                                                class="tr"
-                                            >
-                                                <td colspan="6" class="td">
-                                                    NO DATA AVAILABLE
-                                                </td>
-                                            </tr>
-                                            <tr
-                                                v-for="(trans,
-                                                innerIndex) in byMonth"
-                                                :key="innerIndex"
-                                                class="tr"
-                                            >
-                                                <td class="td text-center">
-                                                    {{
-                                                        trans.order_pickup
-                                                            | formatDateNoTime
-                                                    }}
-                                                </td>
-                                                <td class="td">
-                                                    {{ trans.customer }}
-                                                </td>
-                                                <td class="td text-center">
-                                                    {{ trans.receipt }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        orderedAmount(trans)
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        parseFloat(
-                                                            trans
-                                                                .customer_bill[0]
-                                                                .picking_charge
-                                                        ) | toCurrency
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        parseFloat(
-                                                            totalAmount(trans)
-                                                        ) | toCurrency
-                                                    }}
-                                                </td>
-                                            </tr>
-                                            <tr
-                                                v-if="
-                                                    ArrDataStore.hasOwnProperty(
-                                                        'data'
-                                                    ) &&
-                                                        ArrDataStore.data.length
-                                                "
-                                                class="tr"
-                                            >
-                                                <td
-                                                    colspan="2"
-                                                    class="td font-semibold"
-                                                >
-                                                    Sub Total
-                                                </td>
-                                                <td
-                                                    class="td text-center font-semibold"
-                                                >
-                                                    {{ byMonth.length }}
-                                                </td>
-                                                <td
-                                                    class="td text-right font-semibold"
-                                                >
-                                                    {{
-                                                        totalOrderAmount(
-                                                            byMonth
-                                                        ).orderAmount
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                                <td
-                                                    class="td text-right font-semibold"
-                                                >
-                                                    {{
-                                                        totalOrderAmount(
-                                                            byMonth
-                                                        ).pickupCharge
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                                <td
-                                                    class="td text-right font-semibold"
-                                                >
-                                                    {{
-                                                        totalOrderAmount(
-                                                            byMonth
-                                                        ).grandTotal
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div id="transaction_footer">
-                                        <table
-                                            id="transaction_body"
-                                            class="min-w-full divide-y divide-gray-300 "
-                                            v-if="
-                                                orderSummary.gTotalTransaction !=
-                                                    0
-                                            "
-                                        >
-                                            <thead
-                                                class="border  bg-gray-100  tracking-wide font-poppins"
-                                            >
-                                                <tr class="tr">
-                                                    <th
-                                                        colspan="2"
-                                                        class="p-2"
-                                                    ></th>
-                                                    <th class="p-2">
-                                                        Transaction #
-                                                    </th>
-                                                    <th class="p-2">
-                                                        Gross Amount
-                                                    </th>
-                                                    <th class="p-2">
-                                                        Picking Charge
-                                                    </th>
-                                                    <th class="p-2">
-                                                        Total Amount
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="tbody">
-                                                <tr class="tr">
-                                                    <td
-                                                        colspan="2"
-                                                        class="td font-semibold "
-                                                    >
-                                                        Grand Total
-                                                    </td>
-                                                    <td
-                                                        class="td  text-center font-semibold"
-                                                    >
-                                                        {{
-                                                            orderSummary.gTotalTransaction
-                                                        }}
-                                                    </td>
-                                                    <td
-                                                        class="td text-center font-semibold"
-                                                    >
-                                                        {{
-                                                            orderSummary.orderAmount
-                                                                | toCurrency
-                                                        }}
-                                                    </td>
-                                                    <td
-                                                        class="td text-center font-semibold"
-                                                    >
-                                                        {{
-                                                            orderSummary.pickupCharge
-                                                                | toCurrency
-                                                        }}
-                                                    </td>
-                                                    <td
-                                                        class="td text-center font-semibold"
-                                                    >
-                                                        {{
-                                                            orderSummary.grandTotal
-                                                                | toCurrency
-                                                        }}
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <small
-                                            class="text-xs flex justify-end mt-2"
-                                            v-if="ArrDataStore.data.length"
-                                            >Run Time: {{ dateNow }}</small
-                                        >
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                class="flex flex-col "
-                                v-else
-                                id="allstore_detailed"
-                            >
-                                <div class="container" id="transaction_header">
-                                    <center>
-                                        <h6 class="text-lg">
-                                            ALL STORES
-                                        </h6>
-                                        <p>
-                                            ALTURUSH GOODS ORDERING
-                                        </p>
-                                        <p>
-                                            TOTAL ORDERS REPORT(<span
-                                                class="text-red-500"
-                                                >{{ filter.type }}</span
-                                            >)
-                                        </p>
-                                        <p class="text-center ">
-                                            {{
-                                                filter.dateFrom
-                                                    | formatDateNoTime
-                                            }}
-                                            To
-                                            {{
-                                                filter.dateTo | formatDateNoTime
-                                            }}
-                                        </p>
-                                    </center>
-                                </div>
-                                <div class="container mt-5" id="transactions">
-                                    <table
-                                        class="min-w-full divide-y divide-gray-300 mb-10"
-                                        v-for="(store,
-                                        i) in get_results_by_store"
-                                        :key="i"
-                                        id="transaction_body"
-                                    >
-                                        <thead
-                                            class="border  bg-gray-100  tracking-wide font-poppins"
-                                        >
-                                            <tr class="tr">
-                                                <th
-                                                    colspan="6"
-                                                    class=" p-2 border"
-                                                >
-                                                    <span
-                                                        class="font-semibold flex justify-start"
-                                                        >{{
-                                                            store[0]
-                                                                .business_unit
-                                                        }}</span
-                                                    >
-                                                </th>
-                                            </tr>
-                                            <tr class="td">
-                                                <th
-                                                    class="p-2 text-center border"
-                                                >
-                                                    Date
-                                                </th>
-                                                <th
-                                                    class="p-2 text-left border"
-                                                >
-                                                    Customer
-                                                </th>
-                                                <th
-                                                    class="p-2 text-center border"
-                                                >
-                                                    Transaction #.
-                                                </th>
-                                                <th
-                                                    class="p-2 text-right border"
-                                                >
-                                                    Gross Amount
-                                                </th>
-                                                <th
-                                                    class="p-2 text-right border"
-                                                >
-                                                    Picking Charge
-                                                </th>
-                                                <th
-                                                    class="p-2 text-right border"
-                                                >
-                                                    Total Amount
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="tbody">
-                                            <tr v-if="!store.length" class="tr">
-                                                <td colspan="6" class="td">
-                                                    NO DATA AVAILABLE
-                                                </td>
-                                            </tr>
-                                            <tr
-                                                v-for="(trans,
-                                                innerIndex) in store"
-                                                :key="innerIndex"
-                                                class="tr"
-                                            >
-                                                <td class="td text-center">
-                                                    {{
-                                                        trans.order_pickup
-                                                            | formatDateNoTime
-                                                    }}
-                                                </td>
-                                                <td class="td text-left">
-                                                    {{ trans.customer }}
-                                                </td>
-                                                <td class="td text-center">
-                                                    {{ trans.receipt }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        orderedAmount(trans)
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        parseFloat(
-                                                            trans
-                                                                .customer_bill[0]
-                                                                .delivery_charge
-                                                        ) | toCurrency
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        parseFloat(
-                                                            totalAmount(trans)
-                                                        ) | toCurrency
-                                                    }}
-                                                </td>
-                                            </tr>
-                                            <tr class="tr font-semibold">
-                                                <td colspan="2" class="td ">
-                                                    Sub Total
-                                                </td>
-                                                <td class="td text-center">
-                                                    {{ store.length }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        totalOrderAmount(store)
-                                                            .orderAmount
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        totalOrderAmount(store)
-                                                            .pickupCharge
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        totalOrderAmount(store)
-                                                            .grandTotal
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div id="transaction_footer">
-                                        <table
-                                            class="min-w-full divide-y divide-gray-300"
-                                            v-if="
-                                                orderSummary.gTotalTransaction !=
-                                                    0
-                                            "
-                                        >
-                                            <thead
-                                                class="border  bg-gray-100 tracking-normal"
-                                            >
-                                                <tr class="tr">
-                                                    <th
-                                                        colspan="2"
-                                                        class="p-2 border"
-                                                    ></th>
-                                                    <th class="p-2 border">
-                                                        Transaction #
-                                                    </th>
-                                                    <th
-                                                        class="p-2 border text-right"
-                                                    >
-                                                        Gross Amount
-                                                    </th>
-                                                    <th
-                                                        class="p-2 border text-right"
-                                                    >
-                                                        Picking Charge
-                                                    </th>
-                                                    <th
-                                                        class="p-2 border text-right"
-                                                    >
-                                                        Total Amount
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="tbody">
-                                                <tr class="tr">
-                                                    <td
-                                                        colspan="2"
-                                                        class="td font-semibold"
-                                                    >
-                                                        GRAND TOTAL
-                                                    </td>
-                                                    <td
-                                                        class="td font-semibold text-center"
-                                                    >
-                                                        {{
-                                                            orderSummary.gTotalTransaction
-                                                        }}
-                                                    </td>
-                                                    <td
-                                                        class="td font-semibold text-right"
-                                                    >
-                                                        {{
-                                                            orderSummary.orderAmount
-                                                                | toCurrency
-                                                        }}
-                                                    </td>
-                                                    <td
-                                                        class="td font-semibold text-right"
-                                                    >
-                                                        {{
-                                                            orderSummary.pickupCharge
-                                                                | toCurrency
-                                                        }}
-                                                    </td>
-                                                    <td
-                                                        class="td font-semibold text-right"
-                                                    >
-                                                        {{
-                                                            orderSummary.grandTotal
-                                                                | toCurrency
-                                                        }}
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <small
-                                            class="text-xs flex justify-end mt-2"
-                                            v-if="ArrDataStore.data.length"
-                                            >Run Time: {{ dateNow }}</small
-                                        >
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-else>
-                        <div v-if="ArrDataStore.b_unit != null">
-                            <div
-                                class="flex flex-col "
-                                v-if="filter.store === 'all'"
-                                id="transaction_body"
-                            >
-                                <div class="container">
-                                    <center>
-                                        <h6 class="text-lg">
-                                            ALL STORES
-                                        </h6>
-                                        <p>
-                                            ALTURUSH GOODS ORDERING
-                                        </p>
-                                        <p>
-                                            TOTAL ORDERS REPORT(<span
-                                                class="text-red-500"
-                                                >{{ filter.type }}</span
-                                            >)
-                                        </p>
-                                        <p class="text-center ">
-                                            {{
-                                                filter.dateFrom
-                                                    | formatDateNoTime
-                                            }}
-                                            To
-                                            {{
-                                                filter.dateTo | formatDateNoTime
-                                            }}
-                                        </p>
-                                    </center>
-                                </div>
-                                <div>
-                                    <table
-                                        class="min-w-full divide-y divide-gray-300  mt-5"
-                                        id="transactions"
-                                    >
-                                        <thead
-                                            class="border bg-gray-100 tracking-normal"
-                                        >
-                                            <tr class="tr">
-                                                <th
-                                                    class="p-2 border text-left"
-                                                >
-                                                    STORE NAME
-                                                </th>
-                                                <th class="p-2 border">
-                                                    Total Orders
-                                                </th>
+                <div class="mt-2" id="print_this" v-if="Transactions.b_unit != null">
+                    <h2
+                        v-if="!Transactions.data.length"
+                        class="flex justify-center items-center text-lg"
+                    >
+                        NO DATA AVAILABLE
+                    </h2>
 
-                                                <th
-                                                    class="p-2 border text-right"
-                                                >
-                                                    Gross Amount
-                                                </th>
-                                                <th
-                                                    class="p-2 border text-right"
-                                                >
-                                                    Picking Charge
-                                                </th>
-                                                <th
-                                                    class="p-2 border text-right"
-                                                >
-                                                    Total
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="tbody">
-                                            <tr
-                                                v-for="(store,
-                                                i) in get_results_by_store"
-                                                :key="i"
-                                                class="tr"
-                                            >
-                                                <td class="td">
-                                                    {{ store[0].business_unit }}
-                                                </td>
-                                                <td class="td text-center">
-                                                    {{ store.length }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        totalOrderAmount(store)
-                                                            .orderAmount
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        totalOrderAmount(store)
-                                                            .pickupCharge
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        totalOrderAmount(store)
-                                                            .grandTotal
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                            </tr>
-                                            <tr class="tr font-semibold">
-                                                <td class="td">
-                                                    GRAND TOTAL
-                                                </td>
-                                                <td class="td text-center">
-                                                    {{
-                                                        orderSummary.gTotalTransaction
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        orderSummary.orderAmount
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        orderSummary.pickupCharge
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        orderSummary.grandTotal
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <small
-                                        class="text-xs flex justify-end mt-2"
-                                        v-if="ArrDataStore.data.length"
-                                        >Run Time: {{ dateNow }}</small
-                                    >
-                                </div>
-                            </div>
-                            <div class="container" v-else>
-                                <div id="transaction_body">
-                                    <center>
-                                        <h6 class="text-lg">
-                                            {{
-                                                ArrDataStore.hasOwnProperty(
-                                                    "b_unit"
-                                                ) &&
-                                                    ArrDataStore.b_unit
-                                                        .business_unit
-                                            }}
-                                        </h6>
-                                        <p>
-                                            ALTURUSH GOODS ORDERING
-                                        </p>
-                                        <p>
-                                            TOTAL ORDERS REPORT(<span
-                                                class="text-red-500"
-                                                >{{ filter.type }}</span
-                                            >)
-                                        </p>
-                                        <p class="text-center ">
-                                            {{
-                                                filter.dateFrom
-                                                    | formatDateNoTime
-                                            }}
-                                            To
-                                            {{
-                                                filter.dateTo | formatDateNoTime
-                                            }}
-                                        </p>
-                                    </center>
-                                </div>
-                                <div id="transaction_body">
-                                    <table
-                                        class="min-w-full divide-y divide-gray-300 mt-5"
-                                        id="transactions"
-                                    >
-                                        <thead
-                                            class="border bg-gray-100  tracking-normal"
-                                        >
-                                            <tr class="tr">
-                                                <th
-                                                    class="p-2 border text-left"
-                                                >
-                                                    Date
-                                                </th>
-                                                <th class="p-2 border ">
-                                                    Total Order
-                                                </th>
-                                                <th
-                                                    class="p-2 border text-right"
-                                                >
-                                                    Gross Amount
-                                                </th>
-                                                <th
-                                                    class="p-2 border text-right"
-                                                >
-                                                    Picking Charge
-                                                </th>
-                                                <th
-                                                    class="p-2 border text-right"
-                                                >
-                                                    Total
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="tbody">
-                                            <tr
-                                                v-for="(store,
-                                                i) in get_results_by_month"
-                                                :key="i"
-                                                class="tr"
-                                            >
-                                                <td class="td ">
-                                                    {{
-                                                        store[0].order_pickup
-                                                            | formatDateMonthOnly
-                                                    }}
-                                                </td>
-                                                <td class="td text-center">
-                                                    {{ store.length }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        totalOrderAmount(store)
-                                                            .orderAmount
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        totalOrderAmount(store)
-                                                            .pickupCharge
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        totalOrderAmount(store)
-                                                            .grandTotal
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                            </tr>
-                                            <tr class="tr font-semibold">
-                                                <td class="td">
-                                                    GRAND TOTAL
-                                                </td>
-                                                <td class="td text-center">
-                                                    {{
-                                                        orderSummary.gTotalTransaction
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        orderSummary.orderAmount
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        orderSummary.pickupCharge
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                                <td class="td text-right">
-                                                    {{
-                                                        orderSummary.grandTotal
-                                                            | toCurrency
-                                                    }}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <small
-                                        class="text-xs flex justify-end mt-2"
-                                        v-if="ArrDataStore.data.length"
-                                        >Run Time: {{ dateNow }}</small
-                                    >
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <DetailedTransactions
+                        v-if="filter.type === 'DETAILED'"
+                        :filter="filter"
+                        :transaction="Transactions"
+                    />
+                    <SummaryTransactions
+                        v-if="filter.type === 'SUMMARY'"
+                        :filter="filter"
+                        :transaction="Transactions"
+                    />
                 </div>
             </div>
         </div>
@@ -996,12 +207,12 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from "vuex";
-import Report from "../../../services/Report";
-
+import DetailedTransactions from "./DetailedTransactionReport.vue";
+import SummaryTransactions from "./SummaryTransactionReport.vue";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 export default {
     name: "Transactions",
-    created() {},
+    components: { DetailedTransactions, SummaryTransactions },
     data() {
         let routes = [
             {
@@ -1029,10 +240,10 @@ export default {
             routes: routes,
             ArrDataStore: [],
             stores: [],
-            dateNow: null,
             loading: false,
             filter: {
                 dateFrom: null,
+                dateNow: null,
                 dateTo: null,
                 store: "",
                 type: ""
@@ -1040,63 +251,12 @@ export default {
         };
     },
     computed: {
-        ...mapState(["errors", "Stores"]),
-        get_results_by_store() {
-            return _.groupBy(this.ArrDataStore.data, "acroname");
-        },
-        get_results_by_month() {
-            const ArrResultsByMonth = this.ArrDataStore.data;
-            const newData = _.groupBy(ArrResultsByMonth, function(d) {
-                return moment(d.order_pickup).month();
-            });
-            return newData;
-        },
-        orderSummary() {
-            let grandTotal = 0,
-                pickupCharge = 0,
-                orderAmount = 0,
-                discount = 0,
-                lessDiscount = 0,
-                gTotalTransaction = this.ArrDataStore.data.length;
-
-            this.ArrDataStore.data.forEach(transaction => {
-                pickupCharge += parseFloat(
-                    transaction.customer_bill[0].picking_charge
-                );
-                if (
-                    transaction.hasOwnProperty("final_orders") &&
-                    transaction.final_orders
-                ) {
-                    transaction.final_orders
-                        .filter(order => order.canceled_status === 0)
-                        .forEach(order => {
-                            orderAmount += parseFloat(order.total_price);
-                        });
-                }
-                if (
-                    transaction.hasOwnProperty("discount_amount") &&
-                    transaction.discount_amount
-                ) {
-                    transaction.discount_amount.forEach(order => {
-                        discount += parseFloat(order.discount);
-                    });
-                }
-            });
-            lessDiscount = orderAmount - discount;
-            grandTotal = orderAmount - discount + pickupCharge;
-            return {
-                grandTotal,
-                orderAmount,
-                discount,
-                pickupCharge,
-                lessDiscount,
-                gTotalTransaction
-            };
-        }
+        ...mapState(["errors", "Stores", "Transactions"]),
+        ...mapGetters(["orderSummary"])
     },
     methods: {
-        ...mapActions(["getStore"]),
-        ...mapMutations(["SET_ERRORS", "CLEAR_ERRORS"]),
+        ...mapActions(["getStore", "getTransaction"]),
+        ...mapMutations(["SET_ERRORS", "CLEAR_ERRORS", "CLEAR_TRANSACTIONS"]),
         exportToExcel(type, fn, dl) {
             let xlsName = "";
 
@@ -1111,7 +271,7 @@ export default {
             } else {
                 xlsName =
                     "TRANSACTIONS-" +
-                    this.ArrDataStore.b_unit.business_unit +
+                    this.Transactions.b_unit.business_unit +
                     "-from-" +
                     this.filter.dateFrom +
                     "-to-" +
@@ -1120,7 +280,9 @@ export default {
             }
 
             const elt = document.getElementById("transactions");
-            const wb = XLSX.utils.table_to_book(elt, { sheet: this.filter.type });
+            const wb = XLSX.utils.table_to_book(elt, {
+                sheet: this.filter.type
+            });
             return dl
                 ? XLSX.write(wb, {
                       bookType: type,
@@ -1130,93 +292,13 @@ export default {
                 : XLSX.writeFile(wb, fn || xlsName + (type || "xlsx"));
         },
         clearData() {
-            this.ArrDataStore = [];
+            this.CLEAR_TRANSACTIONS();
         },
         printBtn() {
-            if (this.ArrDataStore.data == null) {
+            if (this.Transactions.data == null) {
                 swal.fire("Invalid Date!", "Please check.", "warning");
             } else {
                 window.print();
-            }
-        },
-        orderedAmount(orders) {
-            let orderedAmount = 0;
-
-            const uncancelledORders = orders.final_orders.filter(
-                order => order.canceled_status === 0
-            );
-
-            uncancelledORders.forEach(
-                order => (orderedAmount += parseFloat(order.total_price))
-            );
-
-            return orderedAmount;
-        },
-        totalOrderAmount(orders) {
-            let pickupCharge = 0,
-                orderAmount = 0,
-                discount = 0,
-                lessDiscount = 0,
-                grandTotal = 0;
-            orders.forEach(order => {
-                // console.log(order);
-                pickupCharge += parseFloat(
-                    order.customer_bill[0].picking_charge
-                );
-                if (
-                    order.hasOwnProperty("final_orders") &&
-                    order.final_orders
-                ) {
-                    order.final_orders
-                        .filter(order => order.canceled_status === 0)
-                        .forEach(order => {
-                            orderAmount += parseFloat(order.total_price);
-                        });
-                }
-                if (
-                    order.hasOwnProperty("discount_amount") &&
-                    order.discount_amount
-                ) {
-                    order.discount_amount.forEach(order => {
-                        discount += parseFloat(order.discount);
-                    });
-                }
-            });
-
-            lessDiscount = orderAmount - discount;
-            grandTotal = orderAmount - discount + pickupCharge;
-            return {
-                grandTotal,
-                orderAmount,
-                discount,
-                pickupCharge,
-                lessDiscount
-            };
-        },
-        totalAmount(orders) {
-            let total = 0,
-                orderedAmount = 0,
-                discountAmount = 0,
-                pickingCharge = 0;
-            if (orders.final_orders != null) {
-                const uncancelledORders = orders.final_orders.filter(
-                    order => order.canceled_status === 0
-                );
-
-                uncancelledORders.forEach(
-                    order => (orderedAmount += parseFloat(order.total_price))
-                );
-
-                orders?.discount_amount?.forEach(
-                    order => (discountAmount += parseFloat(order.discount))
-                );
-
-                orders?.customer_bill?.forEach(
-                    order => (pickingCharge += parseFloat(order.picking_charge))
-                );
-
-                total = orderedAmount - discountAmount + pickingCharge;
-                return parseFloat(total).toFixed(2);
             }
         },
         generate() {
@@ -1228,21 +310,9 @@ export default {
             };
             if (this.filter.dateFrom > this.filter.dateTo) {
                 swal.fire("Invalid Date!", "Please check.", "warning");
+                return;
             } else {
-                Report.total_orders_report(filter)
-                    .then(res => {
-                        this.ArrDataStore = res.data;
-                        this.errors.store = "";
-                        this.errors.type = "";
-                    })
-                    .catch(error => {
-                        if (error.response.status === 422) {
-                            this.SET_ERRORS(error.response.data.errors);
-                            setTimeout(() => {
-                                this.CLEAR_ERRORS();
-                            }, 5000);
-                        }
-                    });
+                this.getTransaction({ filter });
             }
         }
     },
@@ -1254,7 +324,10 @@ export default {
         this.filter.dateTo = moment(this.$root.serverDateTime).format(
             "YYYY-MM-DD"
         );
-        this.dateNow = moment(this.$root.serverDateTime).format("LLLL");
+        this.filter.dateNow = moment(this.$root.serverDateTime).format("LLLL");
+    },
+    destroyed(){
+        this.CLEAR_TRANSACTIONS()
     }
 };
 </script>

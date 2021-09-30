@@ -4,6 +4,7 @@
 // Variables
 // @import 'variables';
 
+
 // Bootstrap
 // @import '~bootstrap/dist/css/bootstrap.css';
 // @import '~bootstrap/scss/bootstrap';
@@ -20,7 +21,7 @@
 .sorting_both {
     background-image: url("/images/sort_both.png");
     background-repeat: no-repeat;
-    background-position: 100%;
+    background-position: 100%; 
 }
 
 .sorting_up {
@@ -70,3 +71,97 @@
 ::-webkit-scrollbar-thumb:hover {
     background-color: #9CA3AF;
 }
+
+@media print {
+    body {
+        visibility: hidden;
+    }
+    table td {
+        border-collapse: collapse !important;
+    }
+
+    table {
+        border: 1px solid #ccc !important;
+
+    }
+
+    #section-to-print,
+    #section-to-print * {
+        visibility: visible;
+        margin: 0 !important;
+    }
+
+    #section-to-print {
+        position: absolute;
+        left: 0 !important;
+        top: 0 !important;
+        margin-top: -40px !important;
+
+    }
+
+    #section-to-print2,
+    #section-to-print2 * {
+        visibility: visible;
+    }
+
+    #section-to-print2 {
+        position: absolute;
+        left: 0 !important;
+        top: 0 !important;
+        right: 0 !important;
+        margin-top: -78px !important;
+    }
+
+    #section-to-print3,
+    #section-to-print3 * {
+        visibility: visible;
+    }
+
+    #section-to-print3 {
+        position: absolute;
+        left: 0 !important;
+        top: 0 !important;
+        margin-top: -78px !important;
+
+    }
+    /* #section-to-print3{
+        width: 100vh !important;
+    } */
+
+    #allstore_detailed {
+        position: absolute;
+        left: 0 !important;
+        top: 0 !important;
+        margin: 0 auto;
+    }
+
+    #transaction_header {
+        margin-left: 270px !important;
+        width: 100% !important;
+    }
+
+    #transaction_footer {
+        width: 100vh !important;
+
+    }
+
+
+    #print_this,
+    #print_this * {
+        visibility: visible;
+        /* margin: 0 !important; */
+        width: 100vh !important;
+    } 
+
+     #print_this {
+        position: absolute;
+        left: 0 !important;
+        top: 0 !important;
+        margin-top: -80px !important;
+
+    }
+
+}
+
+
+

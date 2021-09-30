@@ -48,8 +48,12 @@ window.toast = toast
 window.Fire = new Vue()
 
 window.moment = require('moment')
+
 Vue.use(ViewUI);
-//filters
+
+
+
+//Filters section
 Vue.filter('textformat', function (data) {
     return data.charAt(0).toUpperCase() + data.slice(1)
 });
@@ -79,32 +83,21 @@ Vue.filter('toCurrency2', function (value) {
     })
     return formatter.format(value)
 })
+//End of Filters Section
 
 
+// About User info
 let serverDateTime = document.head.querySelector('meta[name="server-datetime"]').content
 let userType = document.head.querySelector('meta[name="user-type"]').content
 let id = document.head.querySelector('meta[name="id"]').content
- 
 
 window.serverDateTime = serverDateTime
 window.userType = userType
 window.id = id
-
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-// Vue.component('page404', require('./components/admin/pages/404_page.vue').default);
-// Vue.component('Top', require('./components/admin/pages/Top.vue').default);
+//End About User info
 
 
+//Global Declaration Component
 Vue.component('Profile', require('./components/admin/pages/Profile-Upload.vue').default);
 Vue.component('Pagination', require('./Usable/Pagination.vue').default);
 Vue.component('Datatable', require('./Usable/Datatable.vue').default);
@@ -112,8 +105,7 @@ Vue.component('Breadcrumb', require('./Usable/Breadcrumb.vue').default);
 Vue.component('Error', require('./Usable/Error.vue').default);
 Vue.component('ErrorMessage', require('./Usable/ErrorMessage.vue').default);
 Vue.component('Clock', require('./Usable/Clock.vue').default);
-
-
+//End Global Declaration Component
 
 
 /**

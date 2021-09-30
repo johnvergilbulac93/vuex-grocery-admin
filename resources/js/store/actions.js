@@ -817,5 +817,30 @@ export const getLiquidation =  async ({commit}, {filter}) => {
             commit("CLEAR_ERRORS");
         }, 5000);
     }
-    
+}
+export const getTransaction = async ({commit}, {filter}) => {
+    try {
+        const{ status, data} = await Report.total_orders_report(filter)
+        if(status === 200){
+            commit('SET_TRANSACTIONS', data)
+        }
+    } catch (error) {
+        commit("SET_ERRORS", error.response.data.errors);
+        setTimeout(() => {
+            commit("CLEAR_ERRORS");
+        }, 5000);
+    }
+}
+export const getAccountability = async ({commit}, {filter}) => {
+    try {
+        const { status, data} = await Report.accountability_report(filter)
+        if(status === 200){
+            commit("SET_ACCOUNTABILITY", data)
+        }
+    } catch (error) {
+        commit("SET_ERRORS", error.response.data.errors);
+        setTimeout(() => {
+            commit("CLEAR_ERRORS");
+        }, 5000);
+    }
 }

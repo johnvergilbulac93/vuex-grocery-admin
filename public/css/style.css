@@ -71,19 +71,15 @@
 
     }
 
-    #transaction_body {
-        width: 100vh !important;
-    }
-    
 
     #print_this,
     #print_this * {
         visibility: visible;
-        margin: 0 !important;
-        /* width: 100vh !important; */
-    }
+        /* margin: 0 !important; */
+        width: 100vh !important;
+    } 
 
-    #print_this {
+     #print_this {
         position: absolute;
         left: 0 !important;
         top: 0 !important;

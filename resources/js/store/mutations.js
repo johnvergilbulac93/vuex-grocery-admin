@@ -156,3 +156,15 @@ export const SET_LIQUIDATION = (state, payload) => {
 export const CLEAR_LIQUIDATION = (state) => {
      state.Liquidation = []
 }
+export const SET_TRANSACTIONS = (state, payload) => {
+     state.Transactions = payload
+}
+export const CLEAR_TRANSACTIONS = (state) => {
+     state.Transactions = []
+}
+export const SET_ACCOUNTABILITY = (state, payload) => {
+     state.Accountability = payload
+}
+export const CLEAR_ACCOUNTABILITY = (state) => {
+     state.Accountability = []
+}

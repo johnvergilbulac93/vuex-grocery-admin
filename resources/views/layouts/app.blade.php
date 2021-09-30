@@ -16,13 +16,12 @@
     {{-- <link rel="icon" type="image/x-icon" href="https://www.alturush.com/alturush_logo/AlturushDeliveryLogoGradient.png"> --}}
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
-
 </head>
 
 <body class="font-inter antialiased bg-gray-100 ">
     <div id='app'>
+
+        {{-- NavBar --}}
         <nav class="fixed w-full z-20 top-0 shadow ">
             <div class=" flex items-center justify-between  bg-gray-100 p-4 shadow-lg border-gray-200  ">
                 <div class="flex items-center flex-shrink-0 text-white  ">
@@ -32,15 +31,17 @@
                 </div>
                 <div class="flex items-center gap-10">
                     <div class="sm:hidden lg:block">
+                        {{-- Clock Component --}}
                         <Clock />
+                        {{-- End Clock Component --}}
+
                     </div>
                     <div class="relative sm:hidden lg:block">
+
+                        {{-- Toggle to Popup User Setting --}}
                         <button id="showMenu" @click="open = !open" @blur="handleBlur"
                             class="max-w-xs flex items-center rounded-full text-white focus:outline-none focus:shadow-solid p-2 md:border hover:bg-gray-200 transition duration-500"
                             id="user-menu" aria-label="User menu" aria-haspopup="true">
-                            {{-- <span class="text-gray-500  text-center font-semibold px-3  tracking-wide">Welcome, <span
-                                            class="uppercase">{{ Auth::user()->username }}</span>
-                                    </span> --}}
                             <div class="flex items-center text-black">
                                 <span class="text-center  px-3  tracking-wide">Welcome!
                                 </span>
@@ -50,9 +51,10 @@
                                         d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
-
                         </button>
+                        {{-- End Toggle to Popup User Setting --}}
 
+                        {{-- Popup User Setting --}}
                         <figure v-if="open" id='menu'
                             class="absolute z-30 right-0 top-16 w-80 bg-white rounded-lg overflow-hidden tracking-wide ">
                             <div class="grid grid-cols-3 gap-3 p-5 ">
@@ -93,9 +95,13 @@
                                 @csrf
                             </form>
                         </figure>
+                        {{-- End Popup User Setting --}}
+
                     </div>
+
                 </div>
 
+                {{-- Toggle Menu --}}
                 <button class="focus:outline-none sm:block lg:hidden" @click="openMenu = !openMenu" @blur="toggleMenu">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         v-if="!openMenu" stroke="currentColor" class="transition duration-500">
@@ -108,6 +114,8 @@
                             d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
+                {{-- End Toggle Menu --}}
+
 
             </div>
 
@@ -173,10 +181,11 @@
                 </div>
             </transition>
             {{-- //end of mobile sizes menu --}}
+
+            {{-- Per User Role Menu Button --}}
             <div class="w-full bg-gradient-to-tl to-yellow-600 from-red-500 shadow-md ">
                 @can('isSuperAdmin')
                     <ul class="list-reset flex items-center justify-start  space-x-5 text-white text-sm antialiased p-2">
-
                         <router-link :to="{ name: 'menu', params: { id: {{ Auth::user()->usertype_id }}  } }"
                             class=" text-white hover:bg-white hover:text-yellow-500 rounded transition duration-500 p-2 flex">
                             <span class="sm:hidden lg:block">MENU</span>
@@ -337,19 +346,25 @@
                     </ul>
                 @endcan
             </div>
+            {{-- End Per User Role Menu Button --}}
+
         </nav>
+        {{-- End NavBar --}}
 
         <section>
             <div class="fixed top-96 bottom-0 left-0 right-0 bg-gradient-to-tl to-yellow-600 from-red-500   ">
             </div>
         </section>
+        
+        {{-- Where Vue Components Display --}}
         <div class=" relative p-2 xl:mt-32 sm:mt-28">
             <!-- for  router view -->
             <router-view></router-view>
-            <!-- set progressbar -->
-            {{-- <vue-progress-bar></vue-progress-bar> --}}
         </div>
+        {{-- End Where Vue Components Display --}}
 
+
+        {{-- Button for back to top --}}
         <button id="backtoTop"
             class="hidden fixed z-30 bottom-0 right-0 mb-3 mr-3 focus:outline-none bg-green-500 hover:bg-green-600 w-12 h-12 rounded-full shadow-xl transition duration-700 ease-in-out transform hover:scale-105 ">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white mx-auto" fill="none" viewBox="0 0 24 24"
@@ -357,8 +372,12 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
             </svg>
         </button>
+        {{-- End Button for back to top --}}
 
+        {{-- Profile Component --}}
         <Profile v-if="upload_profile" />
+        {{-- End Profile Component --}}
+
     </div>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/custom.js') }}" defer></script>

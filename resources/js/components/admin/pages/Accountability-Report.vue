@@ -77,8 +77,8 @@
                             tabindex="4"
                             class="h-10 px-4 py-2 flex disabled:opacity-50  focus:outline-none text-white  bg-green-500 hover:bg-green-600 rounded"
                             @click="exportToExcel('xlsx')"
-                            v-if="transactions.b_unit != null"
-                            :disabled="!transactions.data.length"
+                            v-if="Accountability.b_unit != null"
+                            :disabled="!Accountability.data.length"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -100,8 +100,8 @@
                             tabindex="4"
                             class="h-10 px-4 py-2 flex disabled:opacity-50  focus:outline-none text-white  bg-green-500 hover:bg-green-600 rounded"
                             @click="printBtn"
-                            v-if="transactions.b_unit != null"
-                            :disabled="!transactions.data.length"
+                            v-if="Accountability.b_unit != null"
+                            :disabled="!Accountability.data.length"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -122,24 +122,23 @@
                     </div>
                 </div>
                 <hr class="mt-2" />
-                <div id="section-to-print2" class="mt-2">
-                    <div v-if="transactions.b_unit != null">
-                        <div class="flex justify-center items-center">
-                            <center>
-                                <h6 class="text-lg">
-                                    {{
-                                        transactions.hasOwnProperty("b_unit") &&
-                                            transactions.b_unit.business_unit
-                                    }}
-                                </h6>
-                                <p>ALTURUSH GOODS ORDERING</p>
-                                <p>ACCOUNTABILITY REPORT</p>
-                                <p class="text-center">
-                                    {{ filter.dateFrom | formatDateNoTime }} To
-                                    {{ filter.dateTo | formatDateNoTime }}
-                                </p>
-                            </center>
-                        </div>
+
+                <div id="print_this" class="mt-2">
+                    <div v-if="Accountability.b_unit != null">
+                        <center>
+                            <h2 class="text-lg">
+                                {{
+                                    Accountability.hasOwnProperty("b_unit") &&
+                                        Accountability.b_unit.business_unit
+                                }}
+                            </h2>
+                            <p>ALTURUSH GOODS ORDERING</p>
+                            <p>ACCOUNTABILITY REPORT</p>
+                            <p class="text-center">
+                                {{ filter.dateFrom | formatDateNoTime }} To
+                                {{ filter.dateTo | formatDateNoTime }}
+                            </p>
+                        </center>
                         <table
                             class="min-w-full divide-y divide-gray-300 mt-5"
                             id="accountability_table"
@@ -159,13 +158,13 @@
                                 </tr>
                             </thead>
                             <tbody class="tbody text-center">
-                                <tr v-if="!transactions.data.length">
+                                <tr v-if="!Accountability.data.length">
                                     <td colspan="4" class="text-center td">
                                         NO DATA AVAILABLE
                                     </td>
                                 </tr>
                                 <tr
-                                    v-for="(trans, i) in transactions.data"
+                                    v-for="(trans, i) in Accountability.data"
                                     :key="i"
                                     class="tr"
                                 >
@@ -187,8 +186,8 @@
                                 </tr>
                                 <tr
                                     v-if="
-                                        transactions.hasOwnProperty('data') &&
-                                            transactions.data.length
+                                        Accountability.hasOwnProperty('data') &&
+                                            Accountability.data.length
                                     "
                                     class="tr"
                                 >
@@ -201,8 +200,8 @@
                                 <tr
                                     class="tr"
                                     v-if="
-                                        transactions.hasOwnProperty('data') &&
-                                            transactions.data.length
+                                        Accountability.hasOwnProperty('data') &&
+                                            Accountability.data.length
                                     "
                                 >
                                     <td class="td" colspan="3">
@@ -210,9 +209,7 @@
                                             >SUB TOTAL :</span
                                         >
                                     </td>
-                                    <td
-                                        class="font-semibold td text-right"
-                                    >
+                                    <td class="font-semibold td text-right">
                                         {{
                                             orderSummary.lessDiscount
                                                 | toCurrency
@@ -222,16 +219,14 @@
                                 <tr
                                     class="tr"
                                     v-if="
-                                        transactions.hasOwnProperty('data') &&
-                                            transactions.data.length
+                                        Accountability.hasOwnProperty('data') &&
+                                            Accountability.data.length
                                     "
                                 >
                                     <td class=" td font-semibold " colspan="3">
                                         TOTAL PICKING CHARGE :
                                     </td>
-                                    <td
-                                        class="td font-semibold text-right"
-                                    >
+                                    <td class="td font-semibold text-right">
                                         {{
                                             orderSummary.pickupCharge
                                                 | toCurrency
@@ -240,16 +235,14 @@
                                 </tr>
                                 <tr
                                     v-if="
-                                        transactions.hasOwnProperty('data') &&
-                                            transactions.data.length
+                                        Accountability.hasOwnProperty('data') &&
+                                            Accountability.data.length
                                     "
                                 >
                                     <td class="td font-semibold" colspan="3">
                                         GRAND TOTAL :
                                     </td>
-                                    <td
-                                        class="font-semibold td text-right"
-                                    >
+                                    <td class="font-semibold td text-right">
                                         {{
                                             orderSummary.grandTotal | toCurrency
                                         }}
@@ -257,6 +250,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <small class="text-xs flex justify-end mt-2"
+                            >Run Time: {{ dateNow }}</small
+                        >
                     </div>
                 </div>
             </div>
@@ -266,8 +262,6 @@
 
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
-import Report from "../../../services/Report";
-
 export default {
     name: "Accountability",
     data() {
@@ -295,8 +289,6 @@ export default {
         ];
         return {
             routes: routes,
-            transactions: [],
-            stores: [],
             logo: null,
             dateNow: null,
             filter: {
@@ -307,7 +299,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(["errors", "Stores"]),
+        ...mapState(["errors", "Stores", "Accountability"]),
         orderSummary() {
             let grandTotal = 0,
                 pickupCharge = 0,
@@ -315,7 +307,7 @@ export default {
                 discount = 0,
                 lessDiscount = 0;
 
-            this.transactions.data.forEach(transaction => {
+            this.Accountability.data.forEach(transaction => {
                 pickupCharge += parseFloat(
                     transaction.customer_bill[0].picking_charge
                 );
@@ -350,19 +342,21 @@ export default {
         }
     },
     methods: {
-        ...mapActions(["getStore"]),
-        ...mapMutations(["SET_ERRORS", "CLEAR_ERRORS"]),
+        ...mapActions(["getStore", "getAccountability"]),
+        ...mapMutations(["SET_ERRORS", "CLEAR_ERRORS", "CLEAR_ACCOUNTABILITY"]),
         exportToExcel(type, fn, dl) {
             const xlsName =
                 "ACCOUNTABILITY-" +
-                this.transactions.b_unit.business_unit +
+                this.Accountability.b_unit.business_unit +
                 "-from-" +
                 this.filter.dateFrom +
                 "-to-" +
                 this.filter.dateTo +
                 ".";
             const elt = document.getElementById("accountability_table");
-            const wb = XLSX.utils.table_to_book(elt, { sheet: "ACCOUNTABILITY" });
+            const wb = XLSX.utils.table_to_book(elt, {
+                sheet: "ACCOUNTABILITY"
+            });
             return dl
                 ? XLSX.write(wb, {
                       bookType: type,
@@ -448,19 +442,7 @@ export default {
             if (this.filter.dateFrom > this.filter.dateTo) {
                 swal.fire("Invalid Date!", "Please check.", "warning");
             } else {
-                Report.accountability_report(filter)
-                    .then(res => {
-                        this.transactions = res.data;
-                        this.errors.store = "";
-                    })
-                    .catch(error => {
-                        if (error.response.status === 422) {
-                            this.SET_ERRORS(error.response.data.errors);
-                            setTimeout(() => {
-                                this.CLEAR_ERRORS();
-                            }, 5000);
-                        }
-                    });
+                this.getAccountability({ filter });
             }
         }
     },
@@ -473,6 +455,9 @@ export default {
             "YYYY-MM-DD"
         );
         this.dateNow = moment(this.$root.serverDateTime).format("LLLL");
+    },
+    destroyed() {
+        this.CLEAR_ACCOUNTABILITY();
     }
 };
 </script>

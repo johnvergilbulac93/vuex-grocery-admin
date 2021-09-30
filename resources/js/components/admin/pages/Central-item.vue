@@ -131,7 +131,7 @@
                 >
                     <tbody class="tbody ">
                         <tr class="tr" v-if="!Items.length">
-                            <td colspan="7" class="td text-center">
+                            <td colspan="8" class="td text-center">
                                 NO DATA AVAILABLE
                             </td>
                         </tr>

@@ -154,8 +154,8 @@ class ReportController extends Controller
             ->whereDate('gc_order_statuses.order_pickup', '>=', $dateFrom)
             ->whereDate('gc_order_statuses.order_pickup', '<=', $dateTo)
             ->orderBy('gc_order_statuses.order_pickup')
-            ->get()
-            ->groupBy('bunit_code');
+            ->get();
+            // ->groupBy('bunit_code');
 
         $result['b_unit'] = $getBU;
         $result['cashier_details'] = $cashier;
@@ -318,7 +318,7 @@ class ReportController extends Controller
 
         if ($buId === 'all') {
 
-            $result['b_unit'] = 'all';
+            $result['b_unit'] = 'ALL STORE';
             $result['data'] = $data;
             return $result;
         } else {

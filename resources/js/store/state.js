@@ -43,5 +43,8 @@ export default {
      Rules: [],
      Unfounds:[],
      Instructions: [],
-     Liquidation: []
+     Liquidation: [],
+     Transactions: [],
+     Accountability: []
+
 }
