@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-2">
-        <Breadcrumb :routes="routes" title="setup" />
+        <Breadcrumb :routes="SetupMenu" title="setup" />
         <div class="text-black">
             <div class=" bg-gray-50 shadow-lg p-2 rounded  ">
                 <div class="mb-2 bg-gray-100 p-2">
@@ -244,36 +244,6 @@ export default {
     name: "Price-Group",
     data() {
         let sortOrders = {};
-        let routes = [
-            {
-                label: "Business Rules",
-                route: "/business_rules"
-            },
-            {
-                label: "Store time",
-                route: "/bu_time"
-            },
-            {
-                label: "Tenant",
-                route: "/tenant"
-            },
-            {
-                label: "Delivery Charges",
-                route: "/delivery_charges"
-            },
-            {
-                label: "Minimum Order Delivery",
-                route: "/minimum_delivery"
-            },
-            {
-                label: "Manage User",
-                route: "/users"
-            },
-            {
-                label: "Price Group",
-                route: "/price_group"
-            }
-        ];
         let columns = [
             { width: "20%", label: "Store", name: "store", class: "text-left" },
             {
@@ -297,7 +267,6 @@ export default {
             store: "",
             price_group: "",
             columns: columns,
-            routes: routes,
             sortKey: "deadline",
             sortOrders: sortOrders,
             tableData: {
@@ -316,7 +285,8 @@ export default {
             "PriceGroup",
             "perPage",
             "pagination",
-            "StorePriceGroup"
+            "StorePriceGroup",
+            "SetupMenu"
         ])
     },
     methods: {

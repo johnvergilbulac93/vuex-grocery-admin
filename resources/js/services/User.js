@@ -1,5 +1,4 @@
 import BaseApi from './BaseApi'
-import { userStatus } from './../store/actions';
 
 export default {
     saveInfo(user) {

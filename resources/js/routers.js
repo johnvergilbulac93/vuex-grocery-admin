@@ -6,8 +6,6 @@ import store from "./store";
 
 import landing_page from "./components/admin/pages/Landing-page";
 import item from "./components/admin/pages/Item-masterfile";
-import picker_time from "./components/admin/pages/Picker_time";
-import pickup from "./components/admin/pages/Pickup_cutoff";
 import disabled_item_batch from "./components/admin/pages/Item-disabled-batch";
 import home from "./components/admin/pages/Dashboard";
 import users from "./components/admin/pages/Users";
@@ -87,11 +85,6 @@ let router = new VueRouter({
             component: business_rule
         },
         {
-            path: "/picker_time",
-            name: "picker_time",
-            component: picker_time
-        },
-        {
             path: "/users",
             name: "users",
             component: users
@@ -100,11 +93,6 @@ let router = new VueRouter({
             path: "/central_item",
             name: "central_item",
             component: central_item
-        },
-        {
-            path: "/pickup",
-            name: "pickup",
-            component: pickup
         },
         {
             path: "/disabled_item_batch",

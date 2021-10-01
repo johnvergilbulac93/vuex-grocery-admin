@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-2">
-        <Breadcrumb :routes="routes" title="Uploading" />
+        <Breadcrumb :routes="UploadingMenu" title="Uploading" />
         <div class=" text-black">
             <div class=" bg-gray-50 shadow-lg p-2 rounded">
                 <div class="mb-2 bg-gray-100 p-2">
@@ -61,33 +61,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     data() {
-        let routes = [
-            {
-                label: "Upload New Item and Price Update",
-                route: "/uploading"
-            },
-            {
-                label: "Upload Image filename and Category",
-                route: "/setting"
-            },
-            {
-                label: "Upload Multiple Images",
-                route: "/multiple"
-            },
-            {
-                label: "Update Item Description",
-                route: "/update_item_description"
-            }
-        ];
         return {
-            routes: routes,
             token: "",
             uploadList: [],
             imgName: "",
             visible: false
         };
+    },
+    computed:{
+        ...mapState(['UploadingMenu'])
     },
     methods: {
         handleRemove(file) {

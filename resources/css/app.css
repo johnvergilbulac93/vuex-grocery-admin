@@ -13,7 +13,7 @@
     @apply text-gray-800;
 }
 .td {
-    @apply p-2  text-sm  text-black border;
+    @apply p-2  text-xs  text-black border;
 }
 .tr {
     @apply hover:bg-gray-100 text-black hover:shadow-md;

@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-2">
-        <Breadcrumb :routes="routes" title="Reports" />
+        <Breadcrumb :routes="ReportMenu" title="Reports" />
         <div class=" text-gray-800">
             <div class=" bg-gray-50 shadow-lg p-2 rounded">
                 <div class="mb-2 bg-gray-100 p-2">
@@ -265,30 +265,7 @@ import { mapActions, mapMutations, mapState } from "vuex";
 export default {
     name: "Accountability",
     data() {
-        let routes = [
-            {
-                label: "Item ",
-                route: "/reports"
-            },
-            {
-                label: "Liquidation ",
-                route: "/liquidition"
-            },
-            {
-                label: "Accountability ",
-                route: "/accountability"
-            },
-            {
-                label: "Total Order - REMITTED",
-                route: "/transaction"
-            },
-            {
-                label: "Special Instruction, Comments & Suggestions",
-                route: "/special_instruction_comments_suggestions"
-            }
-        ];
         return {
-            routes: routes,
             logo: null,
             dateNow: null,
             filter: {
@@ -299,7 +276,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(["errors", "Stores", "Accountability"]),
+        ...mapState(["errors", "Stores", "Accountability","ReportMenu"]),
         orderSummary() {
             let grandTotal = 0,
                 pickupCharge = 0,

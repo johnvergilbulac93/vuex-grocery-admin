@@ -1,10 +1,10 @@
 <template>
     <div class="space-y-2">
-        <Breadcrumb :routes="routes" title="item" />
+        <Breadcrumb :routes="ItemMenu" title="item" />
         <div class=" text-gray-800">
             <div class=" bg-gray-50 shadow-lg p-2 rounded overflow-x-auto">
                 <div class="mb-2 bg-gray-100 p-2">
-                    <label  class="text-lg font-semibold"
+                    <label for="" class="text-lg font-semibold"
                         >Item Masterfile</label
                     >
                 </div>
@@ -131,7 +131,7 @@
                 >
                     <tbody class="tbody ">
                         <tr class="tr" v-if="!Items.length">
-                            <td colspan="8" class="td text-center">
+                            <td colspan="7" class="td text-center">
                                 NO DATA AVAILABLE
                             </td>
                         </tr>
@@ -189,11 +189,9 @@
                                 </a>
                             </td>
                             <td class="td text-center">
- 
-
                                 <button
                                     @click="changeStatusPerStore(item)"
-                                    class=" px-2 py-1 rounded-full text-gray-50 focus:outline-none  text-xs  hover:text-white transition duration-500"
+                                    class=" px-2 py-1 bg-red-500 rounded-full text-gray-50 focus:outline-none  text-xs  hover:text-white transition duration-500"
                                     :class="
                                         item.item_not_available === null
                                             ? 'bg-green-400 hover:bg-green-500'
@@ -275,19 +273,37 @@
                         class="bg-black bg-opacity-40 fixed top-0 left-0 z-50 flex justify-center items-center w-full min-h-screen"
                         @click="closeDialog"
                     >
-                        <div class="relative ">
-                            <img
-                                :src="$root.url + form.previewImage"
-                                v-if="form.previewImage"
-                                alt="item-image"
-                                class="h-96 w-full object-contain"
-                            />
+                        <transition
+                            enter-active-class="ease-out duration-500"
+                            enter-class="opacity-0"
+                            enter-to-class="opacity-100"
+                            leave-active-class="ease-in duration-300"
+                            leave-class="opacity-100"
+                            leave-to-class="opacity-0"
+                        >
+                            <div v-if="!loadingImage" class="transition duration-300 transform hover:scale-150">
+                                <img
+                                    :src="imgsrc"
+                                    v-if="imgsrc"
+                                    alt="item-image"
+                                    class="h-96 w-full object-contain "
+                                />
 
-                            <img
-                                :src="$root.url + 'noimage.png'"
-                                v-else
-                                alt="item-image"
-                                class="h-96 w-full object-contain"
+                                <img
+                                    :src="$root.url + 'noimage.png'"
+                                    v-if="!imgsrc"
+                                    alt="item-image"
+                                    class="h-96 w-full object-contain"
+                                />
+                                <div class="flex justify-center"></div>
+                            </div>
+                        </transition>
+                        <div v-if="loadingImage">
+                            <span class="text-white mb-2">Loading..</span>
+                            <FulfillingSquareSpinner
+                                :animation-duration="4000"
+                                :size="60"
+                                color="#F9FAFB"
                             />
                         </div>
                     </div>
@@ -440,25 +456,12 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-
+import { FulfillingSquareSpinner } from "epic-spinners";
 export default {
     name: "Central-Item",
+    components: { FulfillingSquareSpinner },
     data() {
         let sortOrders = {};
-        let routes = [
-            {
-                label: "Item Masterfile",
-                route: "/central_item"
-            },
-            {
-                label: "Disable Item Unit of Measure(UOM)",
-                route: "/disable_uom"
-            },
-            {
-                label: "Enable Item Unit of Measure(UOM)",
-                route: "/enable_uom"
-            }
-        ];
         let columns = [
             {
                 width: "10%",
@@ -516,12 +519,13 @@ export default {
             viewImage: false,
             uploadImage: false,
             columns: columns,
-            routes: routes,
             sortKey: "itemcode",
             sortOrders: sortOrders,
             file: "",
             filename: "",
             itemcode: "",
+            imgsrc: "",
+            loadingImage: false,
             tableData: {
                 draw: 0,
                 length: 10,
@@ -553,7 +557,8 @@ export default {
             "pagination",
             "ItemCategory",
             "Items",
-            "isUpload"
+            "isUpload",
+            "ItemMenu"
         ])
     },
     methods: {
@@ -634,7 +639,16 @@ export default {
         },
         showImage(item) {
             this.viewImage = true;
-            this.form.previewImage = item.image;
+            if (item.image) {
+                let myImage = new Image();
+                myImage.src = this.$root.url + item.image;
+                myImage.onload = () => {
+                    this.imgsrc = myImage.src;
+                    this.loadingImage = false;
+                };
+                this.imgsrc = "";
+                this.loadingImage = true;
+            }
         },
         nextPage() {
             this.currentPage++;
@@ -670,9 +684,9 @@ export default {
                 swal.fire(
                     "Information",
                     "Please select store to continue",
-                    "warning"
+                    "info"
                 );
-                return
+                return;
             }
 
             if (item.item_not_available === null) {

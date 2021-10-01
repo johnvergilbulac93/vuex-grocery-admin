@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-2">
-        <Breadcrumb :routes="routes" title="item" />
+        <Breadcrumb :routes="ItemMenu" title="item" />
         <div class=" text-gray-800">
             <div class="bg-gray-50 shadow-lg p-2 rounded overflow-x-auto">
                 <div class="mb-2 bg-gray-100 p-2">
@@ -193,20 +193,6 @@ export default {
 
     data() {
         let sortOrders = {};
-        let routes = [
-            {
-                label: "Item Masterfile",
-                route: "/central_item"
-            },
-            {
-                label: "Disable Item Unit of Measure(UOM)",
-                route: "/disable_uom"
-            },
-            {
-                label: "Enable Item Unit of Measure(UOM)",
-                route: "/enable_uom"
-            }
-        ];
         let columns = [
             {
                 width: "25%",
@@ -243,7 +229,6 @@ export default {
             sortOrders[column.name] = -1;
         });
         return {
-            routes: routes,
             columns: columns,
             sortKey: "code",
             sortOrders: sortOrders,
@@ -264,7 +249,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(["perPage", "pagination", "ItemCategory", "Items"])
+        ...mapState(["perPage", "pagination", "ItemCategory", "Items","ItemMenu"])
     },
     methods: {
         ...mapActions([

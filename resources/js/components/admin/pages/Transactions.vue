@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-2">
-        <Breadcrumb :routes="routes" title="Reports" />
+        <Breadcrumb :routes="ReportMenu" title="Reports" />
         <div class=" text-gray-800">
             <div class="bg-gray-50 shadow-lg p-2 rounded ">
                 
@@ -214,30 +214,7 @@ export default {
     name: "Transactions",
     components: { DetailedTransactions, SummaryTransactions },
     data() {
-        let routes = [
-            {
-                label: "Item ",
-                route: "/reports"
-            },
-            {
-                label: "Liquidation ",
-                route: "/liquidition"
-            },
-            {
-                label: "Accountability ",
-                route: "/accountability"
-            },
-            {
-                label: "Total Order - REMITTED",
-                route: "/transaction"
-            },
-            {
-                label: "Special Instruction, Comments & Suggestions",
-                route: "/special_instruction_comments_suggestions"
-            }
-        ];
         return {
-            routes: routes,
             ArrDataStore: [],
             stores: [],
             loading: false,
@@ -251,7 +228,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(["errors", "Stores", "Transactions"]),
+        ...mapState(["errors", "Stores", "Transactions","ReportMenu"]),
         ...mapGetters(["orderSummary"])
     },
     methods: {

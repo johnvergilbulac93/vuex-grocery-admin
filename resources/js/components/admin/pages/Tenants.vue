@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-2">
-        <Breadcrumb :routes="routes" title="setup" />
+        <Breadcrumb :routes="SetupMenu" title="setup" />
         <div class="bg-gray-50 shadow-lg p-2 rounded text-gray-800">
             <div class="mb-2 bg-gray-100 p-2">
                 <label for="" class=" text-lg font-semibold">Tenant</label>
@@ -325,43 +325,12 @@ export default {
                 class: "text-center"
             }
         ];
-        let routes = [
-            {
-                label: "Business Rules",
-                route: "/business_rules"
-            },
-            {
-                label: "Store time",
-                route: "/bu_time"
-            },
-            {
-                label: "Tenant",
-                route: "/tenant"
-            },
-            {
-                label: "Delivery Charges",
-                route: "/delivery_charges"
-            },
-            {
-                label: "Minimum Order Delivery",
-                route: "/minimum_delivery"
-            },
-            {
-                label: "Manage User",
-                route: "/users"
-            },
-            {
-                label: "Price Group",
-                route: "/price_group"
-            }
-        ];
         columns.forEach(column => {
             sortOrders[column.name] = -1;
         });
         return {
             editMode: false,
             columns: columns,
-            routes: routes,
             sortKey: "deadline",
             sortOrders: sortOrders,
             form: {
@@ -386,7 +355,8 @@ export default {
             "pagination",
             "perPage",
             "Tenants",
-            "errors"
+            "errors",
+            "SetupMenu"
         ])
     },
     methods: {

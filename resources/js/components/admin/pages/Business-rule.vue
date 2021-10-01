@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-2">
-        <Breadcrumb :routes="routes" title="setup" />
+        <Breadcrumb :routes="SetupMenu" title="setup" />
         <div class=" bg-gray-50 shadow-lg p-2 rounded text-gray-800   overflow-x-auto">
             <div class="mb-2 bg-gray-100 p-2 w-full">
                 <label class="font-semibold text-lg "
@@ -247,38 +247,7 @@ export default {
         Datatable
     },
     data() {
-        let routes = [
-            {
-                label: "Business Rules",
-                route: "/business_rules"
-            },
-            {
-                label: "Store time",
-                route: "/bu_time"
-            },
-            {
-                label: "Tenant",
-                route: "/tenant"
-            },
-            {
-                label: "Delivery Charges",
-                route: "/delivery_charges"
-            },
-            {
-                label: "Minimum Order Delivery",
-                route: "/minimum_delivery"
-            },
-            {
-                label: "Manage User",
-                route: "/users"
-            },
-            {
-                label: "Price Group",
-                route: "/price_group"
-            }
-        ];
         return {
-            routes: routes,
             form: {
                 id: "",
                 minimum_order_amount: "",
@@ -292,7 +261,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(["errors", "isModal",'Rules'])
+        ...mapState(["errors", "isModal",'Rules','SetupMenu'])
     },
     methods: {
         ...mapActions(["modal", "saveRule",'getRules']),

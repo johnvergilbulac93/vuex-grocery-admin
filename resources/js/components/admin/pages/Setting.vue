@@ -1,6 +1,10 @@
 <template>
     <div class="space-y-2">
-        <Breadcrumb :routes="routes" title="uploading" v-if="$root.userType == 12" />
+        <Breadcrumb
+            :routes="UploadingMenu"
+            title="uploading"
+            v-if="$root.userType == 12"
+        />
         <div class=" text-black">
             <div class=" bg-gray-50 shadow-lg p-2 rounded">
                 <div class="mb-2 bg-gray-100 p-2">
@@ -39,19 +43,28 @@
                                 leave-to-class="opacity-0"
                             >
                                 <div
-                                    class="mb-1 bg-red-500 bg-opacity-75 px-2 py-1 flex justify-between items-center  hover:bg-red-600 transition duration-500"
+                                    class="mb-1 rounded bg-red-500 bg-opacity-75 px-2 py-1 flex justify-between items-center  hover:bg-red-600 transition duration-500"
                                     v-if="errors.file_category"
                                 >
                                     <small class="text-white text-sm ">
                                         {{ errors.file_category[0] }}
                                     </small>
                                     <button
-                                        class="focus:outline-none"
+                                        class="focus:outline-none text-white"
                                         @click="clearErrorMessage"
                                     >
-                                        <i
-                                            class="fas fa-times text-gray-50 hover:text-white"
-                                        ></i>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
                                     </button>
                                 </div>
                             </transition>
@@ -149,19 +162,28 @@
                                 leave-to-class="opacity-0"
                             >
                                 <div
-                                    class="mb-1 bg-red-500 bg-opacity-75 px-2 py-1 flex justify-between items-center  hover:bg-red-600 transition duration-500"
+                                    class="mb-1 rounded bg-red-500 bg-opacity-75 px-2 py-1 flex justify-between items-center  hover:bg-red-600 transition duration-500"
                                     v-if="errors.image_filename"
                                 >
                                     <small class="text-white text-sm ">
                                         {{ errors.image_filename[0] }}
                                     </small>
                                     <button
-                                        class="focus:outline-none"
+                                        class="focus:outline-none text-white"
                                         @click="clearErrorMessage"
                                     >
-                                        <i
-                                            class="fas fa-times text-gray-50 hover:text-white"
-                                        ></i>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-5 w-5"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fill-rule="evenodd"
+                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"
+                                            />
+                                        </svg>
                                     </button>
                                 </div>
                             </transition>
@@ -243,26 +265,7 @@ import { LoopingRhombusesSpinner } from "epic-spinners";
 export default {
     components: { LoopingRhombusesSpinner },
     data() {
-        let routes = [
-            {
-                label: "Upload New Item and Price Update",
-                route: "/uploading"
-            },
-            {
-                label: "Upload Image filename and Category",
-                route: "/setting"
-            },
-            {
-                label: "Upload Multiple Images",
-                route: "/multiple"
-            },
-            {
-                label: "Update Item Description",
-                route: "/update_item_description"
-            }
-        ];
         return {
-            routes: routes,
             loading: false,
             loading2: false,
             fileCategory: "",
@@ -272,10 +275,10 @@ export default {
         };
     },
     computed: {
-        ...mapState(["errors"])
+        ...mapState(["errors", "UploadingMenu"])
     },
     methods: {
-        ...mapMutations(["SET_ERRORS"]),
+        ...mapMutations(["SET_ERRORS", "CLEAR_ERRORS"]),
 
         clearErrorMessage() {
             this.errors.file_category = "";
@@ -299,6 +302,9 @@ export default {
                     this.loading2 = false;
                     if (error.response.status === 422) {
                         this.SET_ERRORS(error.response.data.errors);
+                        setTimeout(() => {
+                            this.CLEAR_ERRORS();
+                        }, 5000);
                     }
                 });
         },
@@ -324,6 +330,9 @@ export default {
                     this.loading = false;
                     if (error.response.status === 422) {
                         this.SET_ERRORS(error.response.data.errors);
+                        setTimeout(() => {
+                            this.CLEAR_ERRORS();
+                        }, 5000);
                     }
                 });
         },

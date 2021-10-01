@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-2">
-        <Breadcrumb :routes="routes" title="setup" />
+        <Breadcrumb :routes="SetupMenu" title="setup" />
         <div class="text-gray-800">
             <div class=" bg-gray-50 shadow-lg p-2 rounded overflow-x-auto">
                 <div class="mb-2 bg-gray-100 p-2">
@@ -511,36 +511,6 @@ import _ from "lodash";
 export default {
     data() {
         let sortOrders = {};
-        let routes = [
-            {
-                label: "Business Rules",
-                route: "/business_rules"
-            },
-            {
-                label: "Store time",
-                route: "/bu_time"
-            },
-            {
-                label: "Tenant",
-                route: "/tenant"
-            },
-            {
-                label: "Delivery Charges",
-                route: "/delivery_charges"
-            },
-            {
-                label: "Minimum Order Delivery",
-                route: "/minimum_delivery"
-            },
-            {
-                label: "Manage User",
-                route: "/users"
-            },
-            {
-                label: "Price Group",
-                route: "/price_group"
-            }
-        ];
         let columns = [
             {
                 width: "25%",
@@ -591,7 +561,6 @@ export default {
         return {
             // start pagination
             columns: columns,
-            routes: routes,
             sortKey: "itemcode",
             sortOrders: sortOrders,
             tableData: {
@@ -627,7 +596,8 @@ export default {
             "Users",
             "Employees",
             "Stores",
-            "isSuccess"
+            "isSuccess",
+            "SetupMenu"
         ])
     },
     methods: {

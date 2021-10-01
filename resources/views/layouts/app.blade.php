@@ -366,7 +366,7 @@
 
         {{-- Button for back to top --}}
         <button id="backtoTop"
-            class="hidden fixed z-30 bottom-0 right-0 mb-3 mr-3 focus:outline-none bg-green-500 hover:bg-green-600 w-12 h-12 rounded-full shadow-xl transition duration-700 ease-in-out transform hover:scale-105 ">
+            class="hidden fixed z-30 bottom-0 right-0 mb-3 mr-3 focus:outline-none bg-gradient-to-tl to-yellow-600 from-red-500 w-12 h-12 rounded-full shadow-xl transition duration-700 ease-in-out transform hover:scale-105 ">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white mx-auto" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />

@@ -1,30 +1,32 @@
 <template>
-    <div class="bg-gray-50 shadow-lg p-2 font-inter sm:w-full overflow-x-auto sm:hidden lg:block">
+    <div
+        class="bg-gray-50 shadow-lg p-2 font-inter sm:w-full overflow-x-auto sm:hidden lg:block"
+    >
         <div class="flex items-center  gap-4">
-            <router-link to="/menu" class="flex items-center gap-4  text-black uppercase"
+            <router-link
+                to="/menu"
+                class="flex items-center gap-1  text-black uppercase"
                 ><svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
                 >
                     <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
-                    /></svg
-            > <span>{{ title }} </span></router-link>
+                        d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
+                    />
+                </svg>
+                <span>Home</span></router-link
+            >
             <span class="text-black"> >> </span>
             <router-link
-                :to="route.route"
-                v-for="(route, i) in routes"
+                :to="menu.route"
+                v-for="(menu, i) in routes"
                 :key="i"
-                class="text-black  "
-                v-bind:class="{ 'text-blue-500': $route.path === route.route }"
+                class="text-black uppercase "
+                v-bind:class="{ 'border-b-2 border-yellow-500': $route.path === menu.route }"
             >
-                {{ route.label }} 
+                {{ menu.label }}
             </router-link>
         </div>
     </div>
