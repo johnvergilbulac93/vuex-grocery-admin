@@ -25,7 +25,7 @@ export default {
         return BaseApi.get('/item/category')
     },
     Item_not_available(page, filterData) {
-        return BaseApi.get(`/item/per_store/show?page=${page}`, {
+        return BaseApi.get(`/item/per_store/item_not_available/show?page=${page}`, {
             params: filterData
         })
     },
@@ -52,7 +52,7 @@ export default {
         return BaseApi.post('/item/enable_uom', itemcode)
     },
     store_item_masterfile(page, filterData) {
-        return BaseApi.get(`/item/per_store/item_not_available_per_store/show?page=${page}`, {
+        return BaseApi.get(`/item/per_store/show?page=${page}`, {
             params: filterData
         })
     },

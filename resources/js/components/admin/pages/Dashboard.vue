@@ -38,9 +38,9 @@
             </div>
         </div>
         <hr class=" my-5">
-        <div>
+        <!-- <div>
             asdada
-        </div>
+        </div> -->
 
         <transition
             enter-active-class="ease-out duration-700"
@@ -285,7 +285,7 @@ export default {
             return array.findIndex(i => i[key] == value);
         },
         getPriceChanges() {
-            axios.get("api/count/price_changes").then(res => {
+            axios.get("api/item/per_store/price_changes/show").then(res => {
                 this.priceCount = res.data;
             });
         },

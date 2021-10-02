@@ -79,25 +79,26 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/enable_uom',                              'API\ItemController@enable_item_uom')->name('enable-item-uom');
         Route::get('/change_price/count',                       'API\ItemController@change_price_count')->name('change-price-count');
         Route::get('/change_price/show',                        'API\ItemController@change_price')->name('change-price');
+
         //End Product/Item All Store Routes
 
 
         //Product/Item Per Store Routes
         Route::prefix('per_store')->group(function () {
             Route::get('/show',                                 'API\ItemController@get_item_per_store')->name('get-item-per-store');
-            Route::get('/item_not_available_per_store/show',    'API\ItemController@item_not_available_per_store')->name('item-not-available-per-store');
+            Route::get('/item_not_available/show',    'API\ItemController@item_not_available_per_store')->name('item-not-available-per-store');
             Route::post('/item_enabled',                        'API\ItemController@enabled_selected_item')->name('enabled-selected-item');
             Route::post('/item_disabled',                       'API\ItemController@disabled_selected_item')->name('disabled-selected-item');
             Route::delete('/item_tag_enabled/{itemcode}',       'API\ItemController@tag_item_enabled')->name('tag-item-disabled');
             Route::post('/item_tag_disabled',                   'API\ItemController@tag_item_disabled')->name('tag-item-enabled');
             Route::post('/change_status',                       'API\ItemController@change_status_per_store')->name('change-status-per-store');
+            Route::get('/price_changes/show',                   'API\ItemController@count_price_changes')->name('count-price-changes');
         });
         //End Product/Item Per Store Routes
     });
 
     //Masterfile Setup Routes
     Route::prefix('masterfile')->group(function () {
-
 
         //Province,Town,Barangay,Transportation,Store,PriceGroup,Departments Routes
         Route::get('/province',                                 'API\SetUpController@province')->name('province');

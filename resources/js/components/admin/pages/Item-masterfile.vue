@@ -6,26 +6,42 @@
                     >Item Masterfile</label
                 >
             </div>
-            <div
-                class="flex sm:flex-wrap sm:space-y-2 md:space-y-0 justify-between items-center mb-2"
-            >
-                <div class="  md:w-1/3 sm:w-full flex items-center gap-0.5">
-                    <div class="relative w-64  flex items-center ">
-                        <input
-                            type="text"
-                            class="form-search "
-                            placeholder="Search...."
-                            v-model="tableData.search"
-                            @keyup.enter="search"
-                        />
-                        <button
-                            @click="clear"
-                            v-if="tableData.search.length"
-                            class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded  flex items-center justify-center focus:outline-none "
-                        >
+            <div class="flex items-center">
+                <div class="flex gap-2 items-center w-full">
+                    <div class="w-auto flex items-center gap-0.5 ">
+                        <div class="relative w-64  flex items-center ">
+                            <input
+                                type="text"
+                                class="form-search "
+                                placeholder="Search...."
+                                v-model="tableData.search"
+                                @keyup.enter="search"
+                            />
+                            <button
+                                @click="clear"
+                                v-if="tableData.search.length"
+                                class="absolute right-0 z-10 py-1 pr-2 w-8 h-full leading-snug bg-transparent rounded  flex items-center justify-center focus:outline-none "
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5  hover:text-red-500"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                        <button @click="search" class="button-search">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5  hover:text-red-500"
+                                class="h-5 w-5 "
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -34,56 +50,40 @@
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                                 />
                             </svg>
                         </button>
                     </div>
-                    <button @click="search" class="button-search">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 "
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
+                    <div class="w-72">
+                        <select
+                            class="form"
+                            v-model="tableData.category"
+                            @change="fetch()"
                         >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            />
-                        </svg>
-                    </button>
-                </div>
-                <div class="w-72">
-                    <select
-                        class="form"
-                        v-model="tableData.category"
-                        @change="fetch()"
-                    >
-                        <option value="">Choose Category</option>
-                        <option
-                            v-for="(category, index) in ItemCategory"
-                            :key="index"
-                            :value="category.category_name"
+                            <option value="">Choose Category</option>
+                            <option
+                                v-for="(category, index) in ItemCategory"
+                                :key="index"
+                                :value="category.category_name"
+                            >
+                                {{ category.category_name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="w-48">
+                        <select
+                            class="form "
+                            v-model="tableData.type"
+                            @change="fetch()"
                         >
-                            {{ category.category_name }}
-                        </option>
-                    </select>
+                            <option value="">Item Availability</option>
+                            <option value="1">Available Item</option>
+                            <option value="2">Unavailable Item</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="w-48">
-                    <select
-                        class="form "
-                        v-model="tableData.type"
-                        @change="fetch()"
-                    >
-                        <option value="">Item Availability</option>
-                        <option value="1">Available Item</option>
-                        <option value="2">Unavailable Item</option>
-                    </select>
-                </div>
-                <div class="text-sm">
+                <div class="flex gap-1 justify-end text-sm items-center w-40 ">
                     <span>Show</span>
                     <select
                         class="form-sort  "
@@ -101,6 +101,7 @@
                     <span>Entries</span>
                 </div>
             </div>
+
             <div class="flex space-x-2">
                 <div class="mb-1">
                     <button
