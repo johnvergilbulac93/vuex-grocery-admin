@@ -9,11 +9,11 @@
             <button
                 :disabled="!pagination.prevPageUrl"
                 @click="$emit('prev')"
-                class="footer-btn flex items-center"
+                class="footer-btn flex justify-between items-center"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6"
+                    class="h-8 w-8"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -23,15 +23,16 @@
                         stroke-linejoin="round"
                         stroke-width="2"
                         d="M15 19l-7-7 7-7"
-                    /></svg
-                >Prev
+                    />
+                </svg>
+                <span>Prev</span>
             </button>
             <button
                 :disabled="!pagination.nextPageUrl"
                 @click="$emit('next')"
-                class="footer-btn flex items-center"
+                class="footer-btn flex justify-between items-center"
             >
-                Next
+                <span>Next</span>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="h-6 w-6"

@@ -113,13 +113,15 @@ Route::middleware('auth:api')->group(function () {
         //Business Rule Routes
         Route::get('/rule/show',                                'API\SetUpController@show_rules')->name('show-rules');
         Route::post('/rule/update',                             'API\SetUpController@rule_update')->name('rule-update');
+        Route::get('/rule/show/{id}',                           'API\SetUpController@rule_show_by_id')->name('rule-show-by-id');
         //End Business Rule Routes
 
         //Business Time Routes
         Route::get('/business_time/show',                       'API\SetUpController@show_business_time')->name('show-business-time');
         Route::post('/business_time/save',                      'API\SetUpController@save_business_time')->name('save-business-time');
-        Route::delete('/business_time/{id}',                    'API\SetUpController@delete_business_time')->name('delete-business-time');
+        Route::delete('/business_time/delete/{id}',             'API\SetUpController@delete_business_time')->name('delete-business-time');
         Route::post('/business_time/status',                    'API\SetUpController@business_time_status')->name('business-time-active');
+        Route::get('/business_time/show/{id}',                  'API\SetUpController@show_business_time_by_id')->name('show-business-time-by-id');
         //End Business Time Routes
 
         //Tenant Routes

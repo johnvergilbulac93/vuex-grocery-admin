@@ -16,7 +16,7 @@ export default {
     methods: {
         updateCurrentTime() {
             this.currentTime = moment().format("LLLL");
-        }
+        },
     },
     created() {
         this.currentTime = moment().format("LLLL");

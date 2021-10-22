@@ -14,7 +14,9 @@
                     <div
                         class="col-span-5 flex sm:flex-col lg:flex-row lg:items-center gap-2 "
                     >
-                        <div class="lg:w-64 sm:w-full flex items-center gap-0.5 ">
+                        <div
+                            class="lg:w-64 sm:w-full flex items-center gap-0.5 "
+                        >
                             <div class="relative w-full flex ">
                                 <input
                                     type="text"
@@ -258,248 +260,228 @@
                         v-if="isModal"
                         class="bg-black bg-opacity-40 fixed top-0 left-0 z-50 p-2 flex justify-center items-center w-full min-h-screen"
                     >
-                        <div
-                            class="sm:w-full lg:w-1/2 bg-white rounded "
-                        >
-                            <div
-                                class="p-2 flex justify-between items-center lg:text-lg sm:text-sm "
-                            >
-                                <label
-                                    class="font-semibold "
-                                    v-if="!editMode"
-                                    >Setup new delivery charges</label
-                                >
-                                <label
-                                    class="font-semibold "
-                                    v-if="editMode"
-                                    >Update delivery charges</label
-                                >
-                                <a
-                                    @click="closeModal"
-                                    class="transition duration-500"
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        class="lg:h-6 lg:w-6 sm:h-5 sm:w-5 text-gray-700 hover:text-red-500"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M6 18L18 6M6 6l12 12"
-                                        />
-                                    </svg>
-                                </a>
-                            </div>
-                            <hr />
-                            <transition
-                                enter-active-class="ease-in duration-500"
-                                enter-class="opacity-0 "
-                                enter-to-class="opacity-100"
-                                leave-active-class="ease-out duration-500"
-                                leave-class="opacity-100"
-                                leave-to-class="opacity-0"
-                            >
-                                <ErrorMessage
-                                    :message="errors.message[0]"
-                                    v-if="errors.message"
-                                    @clear="clearError"
-                                />
-                            </transition>
-                            <div class="w-full px-5 my-1 sm:text-xs xl:text-sm">
-                                <div class="flex flex-col w-1/2">
-                                    <label class="font-semibold"
-                                        >Province</label
-                                    >
-                                    <select
-                                        @change="filteredTown"
-                                        class="form"
-                                        v-model="form.province"
-                                    >
-                                        <option value=""
-                                            >Select Province</option
-                                        >
-                                        <option
-                                            :value="prov.prov_id"
-                                            v-for="(prov, index) in Provinces"
-                                            :key="index"
-                                        >
-                                            {{ prov.prov_name }}
-                                        </option>
-                                    </select>
-                                    <transition
-                                        enter-active-class="ease-in duration-300"
-                                        enter-class="opacity-0 "
-                                        enter-to-class="opacity-100"
-                                        leave-active-class="ease-out duration-500"
-                                        leave-class="opacity-100"
-                                        leave-to-class="opacity-0"
-                                    >
-                                        <Error
-                                            :message="errors.province[0]"
-                                            v-if="errors.province"
-                                        />
-                                    </transition>
-                                </div>
+
+                            <div class="sm:w-full lg:w-1/2 bg-white rounded ">
                                 <div
-                                    class="flex flex-row space-x-4 my-1 w-full "
+                                    class="p-2 flex justify-between items-center lg:text-lg sm:text-sm "
+                                >
+                                    <label
+                                        class="font-semibold "
+                                        v-if="!editMode"
+                                        >Setup new delivery charges</label
+                                    >
+                                    <label
+                                        class="font-semibold "
+                                        v-if="editMode"
+                                        >Update delivery charges</label
+                                    >
+                                    <a
+                                        @click="closeModal"
+                                        class="transition duration-500"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="lg:h-6 lg:w-6 sm:h-5 sm:w-5 text-gray-700 hover:text-red-500"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M6 18L18 6M6 6l12 12"
+                                            />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <hr />
+                                <transition
+                                    enter-active-class="ease-in duration-500"
+                                    enter-class="opacity-0 "
+                                    enter-to-class="opacity-100"
+                                    leave-active-class="ease-out duration-500"
+                                    leave-class="opacity-100"
+                                    leave-to-class="opacity-0"
+                                >
+                                    <ErrorMessage
+                                        :message="errors.message[0]"
+                                        v-if="errors.message"
+                                        @clear="clearError"
+                                    />
+                                </transition>
+                                <div
+                                    class="w-full px-5 my-1 sm:text-xs xl:text-sm"
                                 >
                                     <div class="flex flex-col w-1/2">
-                                        <label  class="font-semibold"
-                                            >Town</label
+                                        <label class="font-semibold"
+                                            >Province</label
                                         >
                                         <select
-                                            v-if="editMode"
-                                            class=" form"
-                                            v-model="form.town"
-                                        >
-                                            <option value=""
-                                                >Select Town</option
-                                            >
-                                            <option
-                                                :value="town.town_id"
-                                                v-for="(town, index) in Towns"
-                                                :key="index"
-                                            >
-                                                {{ town.town_name }}
-                                            </option>
-                                        </select>
-                                        <select
-                                            v-else
-                                            @change="filteredBrgy"
-                                            class=" form"
-                                            v-model="form.town"
-                                        >
-                                            <option value=""
-                                                >Select Town</option
-                                            >
-                                            <option
-                                                :value="town.town_id"
-                                                v-for="(town,
-                                                index) in filterTowns"
-                                                :key="index"
-                                            >
-                                                {{ town.town_name }}
-                                            </option>
-                                        </select>
-                                        <transition
-                                            enter-active-class="ease-in duration-300"
-                                            enter-class="opacity-0 "
-                                            enter-to-class="opacity-100"
-                                            leave-active-class="ease-out duration-500"
-                                            leave-class="opacity-100"
-                                            leave-to-class="opacity-0"
-                                        >
-                                            <Error
-                                                :message="errors.town[0]"
-                                                v-if="errors.town"
-                                            />
-                                        </transition>
-                                    </div>
-                                    <div class="flex flex-col w-1/2 ">
-                                        <label  class="font-semibold"
-                                            >Barangay
-                                            <small class="text-blue-600"
-                                                >(Optional)</small
-                                            >
-                                        </label>
-                                        <select
-                                            v-if="editMode"
-                                            class=" form"
-                                            v-model="form.barangay"
-                                        >
-                                            <option value=""
-                                                >Select Barangay</option
-                                            >
-                                            <option
-                                                :value="brgy.brgy_id"
-                                                v-for="(brgy,
-                                                index) in Barangays"
-                                                :key="index"
-                                            >
-                                                {{ brgy.brgy_name }}
-                                            </option>
-                                        </select>
-                                        <select
-                                            v-else
-                                            class=" form"
-                                            v-model="form.barangay"
-                                        >
-                                            <option value=""
-                                                >Select Barangay</option
-                                            >
-                                            <option
-                                                :value="brgy.brgy_id"
-                                                v-for="(brgy,
-                                                index) in filterBarangays"
-                                                :key="index"
-                                            >
-                                                {{ brgy.brgy_name }}
-                                            </option>
-                                        </select>
-                                        <transition
-                                            enter-active-class="ease-in duration-300"
-                                            enter-class="opacity-0 "
-                                            enter-to-class="opacity-100"
-                                            leave-active-class="ease-out duration-500"
-                                            leave-class="opacity-100"
-                                            leave-to-class="opacity-0"
-                                        >
-                                            <Error
-                                                :message="errors.barangay[0]"
-                                                v-if="errors.barangay"
-                                            />
-                                        </transition>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col w-1/2">
-                                    <label  class="font-semibold"
-                                        >Transportation</label
-                                    >
-                                    <select
-                                        class=" form"
-                                        v-model="form.transportation"
-                                    >
-                                        <option value=""
-                                            >Select Transportation</option
-                                        >
-                                        <option
-                                            :value="transpo.id"
-                                            v-for="(transpo,
-                                            index) in Transportations"
-                                            :key="index"
-                                        >
-                                            {{ transpo.transpo_name }}
-                                        </option>
-                                    </select>
-                                    <transition
-                                        enter-active-class="ease-in duration-300"
-                                        enter-class="opacity-0 "
-                                        enter-to-class="opacity-100"
-                                        leave-active-class="ease-out duration-500"
-                                        leave-class="opacity-100"
-                                        leave-to-class="opacity-0"
-                                    >
-                                        <Error
-                                            :message="errors.transportation[0]"
-                                            v-if="errors.transportation"
-                                        />
-                                    </transition>
-                                </div>
-                                <div class="flex flex-row space-x-4 my-2">
-                                    <div class="flex flex-col w-1/2">
-                                        <label
-                                            class="font-semibold"
-                                            >Delivery Charge</label
-                                        >
-                                        <input
-                                            v-model="form.charge_amount"
-                                            type="number"
+                                            @change="filteredTown"
                                             class="form"
-                                        />
+                                            v-model="form.province"
+                                        >
+                                            <option value=""
+                                                >Select Province</option
+                                            >
+                                            <option
+                                                :value="prov.prov_id"
+                                                v-for="(prov,
+                                                index) in Provinces"
+                                                :key="index"
+                                            >
+                                                {{ prov.prov_name }}
+                                            </option>
+                                        </select>
+                                        <transition
+                                            enter-active-class="ease-in duration-300"
+                                            enter-class="opacity-0 "
+                                            enter-to-class="opacity-100"
+                                            leave-active-class="ease-out duration-500"
+                                            leave-class="opacity-100"
+                                            leave-to-class="opacity-0"
+                                        >
+                                            <Error
+                                                :message="errors.province[0]"
+                                                v-if="errors.province"
+                                            />
+                                        </transition>
+                                    </div>
+                                    <div
+                                        class="flex flex-row space-x-4 my-1 w-full "
+                                    >
+                                        <div class="flex flex-col w-1/2">
+                                            <label class="font-semibold"
+                                                >Town</label
+                                            >
+                                            <select
+                                                v-if="editMode"
+                                                class=" form"
+                                                v-model="form.town"
+                                            >
+                                                <option value=""
+                                                    >Select Town</option
+                                                >
+                                                <option
+                                                    :value="town.town_id"
+                                                    v-for="(town,
+                                                    index) in Towns"
+                                                    :key="index"
+                                                >
+                                                    {{ town.town_name }}
+                                                </option>
+                                            </select>
+                                            <select
+                                                v-else
+                                                @change="filteredBrgy"
+                                                class=" form"
+                                                v-model="form.town"
+                                            >
+                                                <option value=""
+                                                    >Select Town</option
+                                                >
+                                                <option
+                                                    :value="town.town_id"
+                                                    v-for="(town,
+                                                    index) in filterTowns"
+                                                    :key="index"
+                                                >
+                                                    {{ town.town_name }}
+                                                </option>
+                                            </select>
+                                            <transition
+                                                enter-active-class="ease-in duration-300"
+                                                enter-class="opacity-0 "
+                                                enter-to-class="opacity-100"
+                                                leave-active-class="ease-out duration-500"
+                                                leave-class="opacity-100"
+                                                leave-to-class="opacity-0"
+                                            >
+                                                <Error
+                                                    :message="errors.town[0]"
+                                                    v-if="errors.town"
+                                                />
+                                            </transition>
+                                        </div>
+                                        <div class="flex flex-col w-1/2 ">
+                                            <label class="font-semibold"
+                                                >Barangay
+                                                <small class="text-blue-600"
+                                                    >(Optional)</small
+                                                >
+                                            </label>
+                                            <select
+                                                v-if="editMode"
+                                                class=" form"
+                                                v-model="form.barangay"
+                                            >
+                                                <option value=""
+                                                    >Select Barangay</option
+                                                >
+                                                <option
+                                                    :value="brgy.brgy_id"
+                                                    v-for="(brgy,
+                                                    index) in Barangays"
+                                                    :key="index"
+                                                >
+                                                    {{ brgy.brgy_name }}
+                                                </option>
+                                            </select>
+                                            <select
+                                                v-else
+                                                class=" form"
+                                                v-model="form.barangay"
+                                            >
+                                                <option value=""
+                                                    >Select Barangay</option
+                                                >
+                                                <option
+                                                    :value="brgy.brgy_id"
+                                                    v-for="(brgy,
+                                                    index) in filterBarangays"
+                                                    :key="index"
+                                                >
+                                                    {{ brgy.brgy_name }}
+                                                </option>
+                                            </select>
+                                            <transition
+                                                enter-active-class="ease-in duration-300"
+                                                enter-class="opacity-0 "
+                                                enter-to-class="opacity-100"
+                                                leave-active-class="ease-out duration-500"
+                                                leave-class="opacity-100"
+                                                leave-to-class="opacity-0"
+                                            >
+                                                <Error
+                                                    :message="
+                                                        errors.barangay[0]
+                                                    "
+                                                    v-if="errors.barangay"
+                                                />
+                                            </transition>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col w-1/2">
+                                        <label class="font-semibold"
+                                            >Transportation</label
+                                        >
+                                        <select
+                                            class=" form"
+                                            v-model="form.transportation"
+                                        >
+                                            <option value=""
+                                                >Select Transportation</option
+                                            >
+                                            <option
+                                                :value="transpo.id"
+                                                v-for="(transpo,
+                                                index) in Transportations"
+                                                :key="index"
+                                            >
+                                                {{ transpo.transpo_name }}
+                                            </option>
+                                        </select>
                                         <transition
                                             enter-active-class="ease-in duration-300"
                                             enter-class="opacity-0 "
@@ -510,78 +492,108 @@
                                         >
                                             <Error
                                                 :message="
-                                                    errors.charge_amount[0]
+                                                    errors.transportation[0]
                                                 "
-                                                v-if="errors.charge_amount"
+                                                v-if="errors.transportation"
                                             />
                                         </transition>
                                     </div>
-                                    <div class="flex flex-col w-1/2 ">
-                                        <label for="brgy" class="font-semibold"
-                                            >Rider Share</label
-                                        >
+                                    <div class="flex flex-row space-x-4 my-2">
+                                        <div class="flex flex-col w-1/2">
+                                            <label class="font-semibold"
+                                                >Delivery Charge</label
+                                            >
+                                            <input
+                                                v-model="form.charge_amount"
+                                                type="number"
+                                                class="form"
+                                            />
+                                            <transition
+                                                enter-active-class="ease-in duration-300"
+                                                enter-class="opacity-0 "
+                                                enter-to-class="opacity-100"
+                                                leave-active-class="ease-out duration-500"
+                                                leave-class="opacity-100"
+                                                leave-to-class="opacity-0"
+                                            >
+                                                <Error
+                                                    :message="
+                                                        errors.charge_amount[0]
+                                                    "
+                                                    v-if="errors.charge_amount"
+                                                />
+                                            </transition>
+                                        </div>
+                                        <div class="flex flex-col w-1/2 ">
+                                            <label
+                                                for="brgy"
+                                                class="font-semibold"
+                                                >Rider Share</label
+                                            >
+                                            <input
+                                                v-model="form.rider_share"
+                                                type="number"
+                                                class="form"
+                                            />
+                                            <transition
+                                                enter-active-class="ease-in duration-300"
+                                                enter-class="opacity-0 "
+                                                enter-to-class="opacity-100"
+                                                leave-active-class="ease-out duration-500"
+                                                leave-class="opacity-100"
+                                                leave-to-class="opacity-0"
+                                            >
+                                                <Error
+                                                    :message="
+                                                        errors.rider_share[0]
+                                                    "
+                                                    v-if="errors.rider_share"
+                                                />
+                                            </transition>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
                                         <input
-                                            v-model="form.rider_share"
-                                            type="number"
-                                            class="form"
+                                            id="status"
+                                            v-model="form.status"
+                                            type="checkbox"
+                                            :checked="[form.status == 1]"
+                                            tabindex="3"
+                                            class="form-checkbox"
                                         />
-                                        <transition
-                                            enter-active-class="ease-in duration-300"
-                                            enter-class="opacity-0 "
-                                            enter-to-class="opacity-100"
-                                            leave-active-class="ease-out duration-500"
-                                            leave-class="opacity-100"
-                                            leave-to-class="opacity-0"
+                                        <label
+                                            for="status"
+                                            class="  cursor-pointer font-semibold"
+                                            >Status</label
                                         >
-                                            <Error
-                                                :message="errors.rider_share[0]"
-                                                v-if="errors.rider_share"
-                                            />
-                                        </transition>
                                     </div>
                                 </div>
-                                <div class="flex items-center space-x-2">
-                                    <input
-                                        id="status"
-                                        v-model="form.status"
-                                        type="checkbox"
-                                        :checked="[form.status == 1]"
-                                        tabindex="3"
-                                        class="form-checkbox"
-                                    />
-                                    <label
-                                        for="status"
-                                        class="  cursor-pointer font-semibold"
-                                        >Status</label
+                                <hr />
+                                <div
+                                    class="p-1 flex justify-end items-center space-x-1 text-sm"
+                                >
+                                    <button
+                                        v-if="!editMode"
+                                        @click="create"
+                                        class="px-4 sm:py-1 md:py-2 bg-blue-500 text-white text-sm hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
                                     >
+                                        Save
+                                    </button>
+                                    <button
+                                        v-if="editMode"
+                                        @click="update"
+                                        class="px-4 sm:py-1 md:py-2 bg-blue-500 text-white -text-sm hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
+                                    >
+                                        Update
+                                    </button>
+                                    <button
+                                        @click="closeModal"
+                                        class="px-4 sm:py-1 md:py-2 bg-red-500 text-white text-sm hover:bg-red-600 rounded transition duration-500 focus:outline-none"
+                                    >
+                                        Close
+                                    </button>
                                 </div>
                             </div>
-                            <hr />
-                            <div
-                                class="p-1 flex justify-end items-center space-x-1 text-sm"
-                            >
-                                <button
-                                    v-if="!editMode"
-                                    @click="create"
-                                    class="px-4 sm:py-1 md:py-2 bg-blue-500 text-white text-sm hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
-                                >
-                                    Save
-                                </button>
-                                <button
-                                    v-if="editMode"
-                                    @click="update"
-                                    class="px-4 sm:py-1 md:py-2 bg-blue-500 text-white -text-sm hover:bg-blue-600 rounded transition duration-500 focus:outline-none"
-                                >
-                                    Update
-                                </button>
-                                <button
-                                    @click="closeModal"
-                                    class="px-4 sm:py-1 md:py-2 bg-red-500 text-white text-sm hover:bg-red-600 rounded transition duration-500 focus:outline-none"
-                                >
-                                    Close
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </transition>
             </div>

@@ -102,7 +102,7 @@
                 </div>
             </div>
 
-            <div class="flex space-x-2">
+            <div class="flex space-x-2 mt-1">
                 <div class="mb-1">
                     <button
                         class="flex items-center bg-red-500 px-2 py-1 focus:outline-none text-white  hover:bg-red-600 transition duration-500 rounded"

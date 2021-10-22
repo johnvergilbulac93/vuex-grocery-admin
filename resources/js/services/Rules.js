@@ -6,5 +6,8 @@ export default {
     },
     update(rule){
         return BaseApi.post('/masterfile/rule/update',rule)
+    },
+    getRuleByID(id){
+        return BaseApi.get('/masterfile/rule/show/' + id)
     }
 }

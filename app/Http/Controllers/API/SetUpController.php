@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\store;
-use App\gc_picker;
 use App\gc_tenant;
 use App\Bu_time_setup;
 use App\gc_department;
@@ -13,12 +12,7 @@ use Illuminate\Http\Request;
 use App\gc_setup_business_rule;
 use App\gc_minimum_order_delivery;
 use Illuminate\Support\Facades\DB;
-use App\gc_customer_pickup_cuttoff;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-
-use App\gc_allowed_maximum_time_picker;
-use function Symfony\Component\VarDumper\Dumper\esc;
 
 class SetUpController extends Controller
 {
@@ -55,6 +49,21 @@ class SetUpController extends Controller
         $finalResults = $query->paginate($length);
 
         return $finalResults;
+    }
+    public function show_business_time_by_id($id){
+      return DB::table('bu_time_setups')
+        ->join('locate_business_units', 'bu_time_setups.bunit_code', '=', 'locate_business_units.bunit_code')
+        ->select(
+            'bu_time_setups.id',
+            'locate_business_units.bunit_code',
+            'locate_business_units.business_unit',
+            'locate_business_units.acroname',
+            'bu_time_setups.time_in',
+            'bu_time_setups.time_out',
+            'bu_time_setups.status',
+        )
+        ->where('bu_time_setups.id',$id)
+        ->get();
     }
     public function save_business_time(Request $request)
     {
@@ -96,11 +105,11 @@ class SetUpController extends Controller
         if (!$checking_data) {
 
             gc_tenant::updateOrCreate([
-                'tenant_id'            => $request->id
+                'tenant_id'     => $request->id
             ], [
                 'bunit_code'    => $request->store,
-                'dept_id'    => $request->department,
-                'status'    => 1
+                'dept_id'       => $request->department,
+                'status'        => 1
             ]);
         } else {
             return response()->json([
@@ -208,7 +217,7 @@ class SetUpController extends Controller
                 'errors' => ['message' => ['The system detected double entry! Please try again.']],
             ], 409);
         }
-    }
+    } 
     public function show_min_order(Request $request)
     {
 
@@ -486,5 +495,8 @@ class SetUpController extends Controller
             'serving_time_end'              => $request->serving_time_end,
             'maximum_no_of_orders'          => $request->maximum_no_of_order,
         ]);
+    }
+    public function rule_show_by_id($id){
+       return gc_setup_business_rule::whereId($id)->first();
     }
 }

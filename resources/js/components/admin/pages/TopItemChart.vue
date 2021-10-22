@@ -2,7 +2,7 @@
 import { Line } from "vue-chartjs";
 export default {
     extends: Line,
-    props: ["data", "labels", "year", "month"],
+    props: ["data", "labels", "year", "month", "flag"],
     computed: {
         chartData() {
             return this.data;
@@ -10,21 +10,22 @@ export default {
         chartLabels() {
             return this.labels;
         },
-        chartYear() {
-            return moment(this.year).format("YYYY");
-        },
-        chartMonth(){
-            return moment(this.month).format("MMMM");
+        newLabel(){
+            if(this.flag){
+                return  moment(this.year).format("YYYY");
+            }else{
+                return  moment(this.year).format("YYYY") + ' - ' + moment(this.month).format("MMMM");
+            }
         }
     },
-    methods: {
+    methods: {  
         loadChart() {
             this.renderChart(
                 {
                     labels: this.chartLabels,
                     datasets: [
                         {
-                            label: this.chartYear + '-' + this.chartMonth,
+                            label: this.newLabel,
                             data: this.chartData,
                             backgroundColor: "#db5334",
                             borderColor: "#9CA3AF",

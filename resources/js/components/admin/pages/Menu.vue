@@ -23,7 +23,7 @@
             </div>
             <div class="border-t mt-5 w-full">
                 <div class="w-1/2 flex items-center gap-2 ">
-                    <div class="mt-2 w-20">
+                    <div class="mt-2 w-20 ">
                         <label for="">Select Year</label>
                         <Datepicker
                             input-class="form w-full"
@@ -32,20 +32,32 @@
                             :maximumView="'year'"
                             format="yyyy"
                             v-model="filter.year"
-                            @selected="dateSelected()"
+                            @selected="selected()"
                         />
                     </div>
                     <div class="mt-2 w-44">
                         <label for="">Select Month</label>
                         <Datepicker
                             input-class="form w-full"
+                            :disabled="filter.flag ? true : false"
                             :initialView="'month'"
                             :minimumView="'month'"
                             :maximumView="'month'"
                             format="MMMM"
                             v-model="filter.month"
-                            @selected="dateSelected()"
+                            @selected="selected()"
                         />
+                    </div>
+                    <div class="mt-2">
+                        <div class="mt-4">
+                            <input
+                                type="checkbox"
+                                v-model="filter.flag"
+                                @change="selected()"
+                                class="w-5 h-5 text-yellow-500 focus:ring-yellow-500 border-gray-300 cursor-pointer "
+                            />
+                            <label for="">Year Only</label>
+                        </div>
                     </div>
                 </div>
 
@@ -58,6 +70,7 @@
                         :labels="TopItemLabels"
                         :year="filter.year"
                         :month="filter.month"
+                        :flag="filter.flag"
                         clear-button="true"
                         class="w-full"
                         v-else
@@ -151,7 +164,8 @@ export default {
             TopItemLabels: [],
             filter: {
                 year: null,
-                month: null
+                month: null,
+                flag: false
             }
         };
     },
@@ -160,7 +174,7 @@ export default {
     },
     methods: {
         ...mapActions(["modal", "getPriceChanged"]),
-        dateSelected() {
+        selected() {
             this.$nextTick(() => {
                 this.getTopItems();
             });
@@ -192,7 +206,8 @@ export default {
 
             let filter = {
                 year: year,
-                month: month
+                month: month,
+                flag: this.filter.flag
             };
 
             const { data } = await axios.get(url, { params: filter });
@@ -223,5 +238,3 @@ export default {
     }
 };
 </script>
-
-

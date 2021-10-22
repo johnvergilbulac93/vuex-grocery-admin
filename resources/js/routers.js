@@ -11,6 +11,7 @@ import home from "./components/admin/pages/Dashboard";
 import users from "./components/admin/pages/Users";
 import central_item from "./components/admin/pages/Central-item";
 import business_rule from "./components/admin/pages/Business-rule";
+import Mbusiness_rule from "./components/admin/pages/Mbusiness-rule";
 import uploading from "./components/admin/pages/Uploading";
 import setting from "./components/admin/pages/Setting";
 import reports_store from "./components/admin/pages/Reports-store";
@@ -20,6 +21,7 @@ import accountability from "./components/admin/pages/Accountability-Report";
 import exporting from "./components/admin/pages/ExportFiles";
 import liquidition from "./components/admin/pages/Liquidition-Report";
 import bu_time from "./components/admin/pages/Business-time";
+import Mbu_time from "./components/admin/pages/Mbusiness-time";
 import tenant from "./components/admin/pages/Tenants";
 import count from "./components/admin/pages/Available-item-store";
 import disable_uom from "./components/admin/pages/Item-disable-per-uom";
@@ -34,8 +36,7 @@ import price_group from "./components/admin/pages/Price-Group";
 import change_password from "./components/admin/pages/Change-Password";
 import change_username from "./components/admin/pages/Change-Username";
 import special_instruction_comments_suggestions from "./components/admin/pages/Special-Instructions-Comments-Suggestions.vue";
-import update_item_description from './components/admin/pages/Upload-Item-Description.vue'
-
+import update_item_description from "./components/admin/pages/Upload-Item-Description.vue";
 
 Vue.use(VueRouter);
 
@@ -83,6 +84,11 @@ let router = new VueRouter({
             path: "/business_rules",
             name: "business_rule",
             component: business_rule
+        },
+        {
+            path: "/business_rules/:id",
+            name: "Mbusiness_rule",
+            component: Mbusiness_rule,
         },
         {
             path: "/users",
@@ -138,6 +144,11 @@ let router = new VueRouter({
             path: "/bu_time",
             name: "bu_time",
             component: bu_time
+        },
+        {
+            path: "/bu_time/:id",
+            name: "Mbu_time",
+            component: Mbu_time,
         },
         {
             path: "/tenant",
@@ -204,8 +215,6 @@ let router = new VueRouter({
             name: "update_item_description",
             component: update_item_description
         }
-
-        
     ]
 });
 router.beforeEach((to, from, next) => {
