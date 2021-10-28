@@ -2,18 +2,18 @@
 
 namespace App\Imports;
 
-use App\gc_product_uom;
 use App\gc_product_price;
-use Illuminate\Support\Arr;
-use App\gc_product_price_history;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Maatwebsite\Excel\Validators\Failure;
 
 
-class PriceChangedImport implements ToCollection
+class PriceChangedImport implements ToCollection, SkipsOnFailure
 {
-    use Importable;
+    use Importable, SkipsFailures;
 
     public function collection(Collection $rows)
     {
@@ -34,7 +34,6 @@ class PriceChangedImport implements ToCollection
                         'price'             =>  floatval(str_replace(',', '', $row[5])),
                         'price_with_vat'    =>  floatval(str_replace(',', '', $row[5])),
                     ]);
-
             } else {
 
                 gc_product_price::insert([
@@ -45,8 +44,11 @@ class PriceChangedImport implements ToCollection
                     'status'            =>  1,
                     'price_group'       =>  $row[6],
                 ]);
-
             }
         }
+    }
+    public function onFailure(Failure ...$failure)
+    {
+        return 'some fields is empty';
     }
 }

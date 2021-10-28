@@ -20,6 +20,7 @@
 
 </head>
 
+
 <body class="font-inter antialiased bg-gray-100     ">
     <div id='app'>
 
@@ -39,7 +40,7 @@
 
                     </div>
                     <div id="idDropdown" class="relative sm:hidden lg:block">
-                        {{-- Toggle to Popup User Setting --}} 
+                        {{-- Toggle to Popup User Setting --}}
                         <button id="showMenu" @click="open = !open" @blur="handleBlur"
                             class="max-w-xs flex items-center rounded-full text-white focus:outline-none focus:shadow-solid p-2 md:border hover:bg-gray-200 transition duration-500">
                             <div class="flex items-center text-black">

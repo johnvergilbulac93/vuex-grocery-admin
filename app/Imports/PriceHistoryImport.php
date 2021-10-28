@@ -5,20 +5,20 @@ namespace App\Imports;
 use App\gc_product_price;
 use App\gc_product_price_history;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Validators\Failure;
 
-class PriceHistoryImport implements ToCollection
+class PriceHistoryImport implements ToCollection, SkipsOnFailure
 {
 
-    use Importable;
+    use Importable, SkipsFailures;
 
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
-
             $data_check =  gc_product_price_history::where('itemcode', '=', intval($row[0]))
                 ->where('UOM', '=', $row[2])
                 ->where('price_group', '=', $row[6])
@@ -55,5 +55,9 @@ class PriceHistoryImport implements ToCollection
                 }
             }
         }
+    }
+    public function onFailure(Failure ...$failure)
+    {
+        return 'some fields is empty';
     }
 }

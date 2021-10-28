@@ -37,7 +37,7 @@ import change_password from "./components/admin/pages/Change-Password";
 import change_username from "./components/admin/pages/Change-Username";
 import special_instruction_comments_suggestions from "./components/admin/pages/Special-Instructions-Comments-Suggestions.vue";
 import update_item_description from "./components/admin/pages/Upload-Item-Description.vue";
-
+import PageNotFound from "./Usable/Page-not-found.vue";
 Vue.use(VueRouter);
 
 let router = new VueRouter({
@@ -88,7 +88,7 @@ let router = new VueRouter({
         {
             path: "/business_rules/:id",
             name: "Mbusiness_rule",
-            component: Mbusiness_rule,
+            component: Mbusiness_rule
         },
         {
             path: "/users",
@@ -148,7 +148,7 @@ let router = new VueRouter({
         {
             path: "/bu_time/:id",
             name: "Mbu_time",
-            component: Mbu_time,
+            component: Mbu_time
         },
         {
             path: "/tenant",
@@ -214,7 +214,8 @@ let router = new VueRouter({
             path: "/update_item_description",
             name: "update_item_description",
             component: update_item_description
-        }
+        },
+        { path: "*", component: PageNotFound }
     ]
 });
 router.beforeEach((to, from, next) => {

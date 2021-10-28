@@ -7,7 +7,7 @@
                     <label class=" text-lg font-semibold">Manage User</label>
                 </div>
 
-                 <div
+                <div
                     class="flex sm:flex-wrap sm:space-y-2 justify-between items-center pb-2"
                 >
                     <div class=" md:w-1/2 sm:w-full flex items-center gap-0.5 ">
@@ -610,7 +610,7 @@ export default {
             "saveUser",
             "deleteUser",
             "updateUser",
-            "userStatus",
+            "userStatus"
         ]),
         ...mapMutations(["CLEAR_EMPLOYEE"]),
         clearError() {

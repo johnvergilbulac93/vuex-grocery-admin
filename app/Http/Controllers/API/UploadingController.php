@@ -13,6 +13,7 @@ use App\Imports\PriceChangedImport;
 use App\Imports\PriceHistoryImport;
 use App\Http\Controllers\Controller;
 use App\Imports\UpdateDescription;
+use Dotenv\Result\Success;
 use Illuminate\Support\Facades\Auth;
 
 class UploadingController extends Controller
@@ -23,9 +24,9 @@ class UploadingController extends Controller
         $this->validate($request, [
             'file_item' => 'required|mimes:csv,txt'
         ]);
-            (new ItemsImport)->import($request->file('file_item'));
+        (new ItemsImport)->import($request->file('file_item'));
 
-       
+        return 'success';
     }
     public function uploadprice(Request $request)
     {
@@ -34,6 +35,8 @@ class UploadingController extends Controller
         ]);
         (new PriceHistoryImport)->import($request->file('file_price'));
         (new PriceChangedImport)->import($request->file('file_price'));
+
+        return 'success';
     }
 
     public function uploadItemDisable(Request $request)
@@ -44,17 +47,16 @@ class UploadingController extends Controller
         $file = file($request->file('file_item')->getRealPath());
         $remove_header = array_slice($file, 1);
         $data =  array_map('str_getcsv', $remove_header);
-        
+
         foreach ($data as $row) {
 
             $check = gc_item_log_available::where('itemcode', '=', intval($row[0]))->where('store', '=', Auth::user()->bunit_code)->exists();
 
             if ($check) {
 
-               gc_item_log_available::where('itemcode', '=', intval($row[0]))
-                                    ->where('store', '=', Auth::user()->bunit_code)
-                                    ->delete();
-
+                gc_item_log_available::where('itemcode', '=', intval($row[0]))
+                    ->where('store', '=', Auth::user()->bunit_code)
+                    ->delete();
             } else {
                 gc_item_log_available::insert([
                     'itemcode'      => intval($row[0]),
@@ -63,12 +65,17 @@ class UploadingController extends Controller
                 ]);
             }
         }
+
+        return 'success';
     }
-    public function item_description(Request $request){
-        $this->validate($request, [ 
+    public function item_description(Request $request)
+    {
+        $this->validate($request, [
             'file' => 'required|mimes:csv,txt'
         ]);
         (new UpdateDescription)->import($request->file('file'));
+
+        return 'success';
     }
 
     public function uploadcategory(Request $request)
@@ -76,7 +83,10 @@ class UploadingController extends Controller
         $this->validate($request, [
             'file_category' => 'required|mimes:csv,txt'
         ]);
+
         (new ItemCategoryImport)->import($request->file('file_category'));
+
+        return 'success';
     }
 
     public function uploaditemfilename(Request $request)
@@ -85,6 +95,8 @@ class UploadingController extends Controller
             'image_filename' => 'required|mimes:csv,txt'
         ]);
         (new FilenameImport)->import($request->file('image_filename'));
+
+        return 'success';
     }
     public function multipleImage(Request $request)
     {
@@ -97,7 +109,7 @@ class UploadingController extends Controller
             @unlink($path . $imageName);
         }
         $request->file->move($path, $imageName);
-        $url = "/ITEM-IMAGES/".$imageName;
+        $url = "/ITEM-IMAGES/" . $imageName;
         return $url;
     }
 }

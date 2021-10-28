@@ -331,11 +331,11 @@ export default {
                     this.filenameNewItem = "";
                     this.fileNewItem = "";
                     this.loading = false;
-                    toast.fire({
-                        icon: "success",
-                        title: "Success",
-                        text: "Uploaded successfully"
-                    });
+                    swal.fire(
+                        "Hoooray!",
+                        "Uploaded successfully.",
+                        "success"
+                    );
                 })
                 .catch(error => {
                     this.loading = false;
@@ -366,11 +366,11 @@ export default {
                     this.filenamePriceUpdate = "";
                     this.filePriceUpdate = "";
                     this.loading2 = false;
-                    toast.fire({
-                        icon: "success",
-                        title: "Success",
-                        text: "Uploaded successfully"
-                    });
+                    swal.fire(
+                        "Hoooray!",
+                        "Uploaded successfully.",
+                        "success"
+                    );
                 })
                 .catch(error => {
                     this.loading2 = false;
