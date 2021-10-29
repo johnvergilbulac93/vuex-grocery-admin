@@ -159,19 +159,19 @@
             </div>
 
             <transition
-                enter-active-class="ease-out duration-500"
-                enter-class="opacity-0"
+                enter-active-class=" ease-in-out transition duration-500"
+                enter-class="transform -translate-y-11 opacity-0 "
                 enter-to-class="opacity-100"
-                leave-active-class="ease-in duration-300"
-                leave-class="opacity-100"
-                leave-to-class="opacity-0"
+                leave-active-class="ease-in-out transition duration-500"
+                leave-class=" opacity-100"
+                leave-to-class="transform -translate-y-11 opacity-0"
             >
                 <div
                     v-if="isModal"
-                    class="bg-black bg-opacity-40 fixed top-0 left-0 flex z-50 justify-center p-2 items-center w-full min-h-screen"
+                    class="fixed top-0 left-0 flex z-50 justify-center p-2 items-center w-full min-h-screen"
                 >
                     <div
-                        class="sm:w-3/4 xl:w-1/2 bg-white rounded text-gray-800"
+                        class="sm:w-3/4 xl:w-1/2 bg-white border border-gray-400 rounded text-gray-800 shadow-lg"
                     >
                         <div
                             class="p-2 flex justify-between items-center sm:text-sm lg:text-lg "

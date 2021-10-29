@@ -23,7 +23,6 @@
 
 <body class="font-inter antialiased bg-gray-100     ">
     <div id='app'>
-
         {{-- NavBar --}}
         <nav class="fixed w-full z-20 top-0 shadow ">
             <div class=" flex items-center justify-between  bg-gray-100 p-4 shadow-lg border-gray-200  ">
@@ -128,6 +127,7 @@
                 enter-class="transform -translate-x-60 opacity-0 " enter-to-class="opacity-100"
                 leave-active-class="ease-in-out transition duration-500" leave-class=" opacity-100"
                 leave-to-class="transform -translate-x-60 opacity-0">
+                
                 <div v-if="openMenu"
                     class="min-h-screen sm:w-3/4 md:w-1/2 top-0 bg-gradient-to-tl to-yellow-600 from-red-500 fixed z-10 p-2 ">
                     <div class="flex justify-center items-center">
@@ -355,8 +355,8 @@
             <router-view></router-view>
 
         </div>
-        {{-- End Where Vue Components Display --}}
 
+        {{-- End Where Vue Components Display --}}
 
         {{-- Button for back to top --}}
         <button id="backtoTop"

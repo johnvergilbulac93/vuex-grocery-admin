@@ -194,18 +194,18 @@
                     @next="nextPage(pagination.nextPageUrl)"
                 />
                 <transition
-                    enter-active-class="ease-out duration-500"
-                    enter-class="opacity-0"
+                    enter-active-class=" ease-in-out transition duration-500"
+                    enter-class="transform -translate-y-11 opacity-0 "
                     enter-to-class="opacity-100"
-                    leave-active-class="ease-in duration-300"
-                    leave-class="opacity-100"
-                    leave-to-class="opacity-0"
+                    leave-active-class="ease-in-out transition duration-500"
+                    leave-class=" opacity-100"
+                    leave-to-class="transform -translate-y-11 opacity-0"
                 >
                     <div
                         v-if="isModal"
-                        class="bg-black bg-opacity-40 fixed top-0 left-0 z-50 flex justify-center p-2 items-center w-full min-h-screen"
+                        class="fixed top-0 left-0 z-50 flex justify-center p-2 items-center w-full min-h-screen"
                     >
-                        <div class="bg-white rounded sm:w-full lg:w-3/4 ">
+                        <div class="bg-white border border-gray-400 rounded sm:w-full lg:w-3/4 shadow-lg ">
                             <div
                                 class="p-2 flex justify-between items-center sm:text-sm lg:text-lg"
                             >

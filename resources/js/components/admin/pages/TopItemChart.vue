@@ -27,10 +27,10 @@ export default {
                         {
                             label: this.newLabel,
                             data: this.chartData,
-                            backgroundColor: "#db5334",
-                            borderColor: "#9CA3AF",
+                            backgroundColor: "#3B82F6",
+                            borderColor: "#3B82F6",
                             fill: false,
-                            tension: 0.1
+                            tension: 0.2
                         }
                     ]
                 },

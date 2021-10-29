@@ -3,8 +3,8 @@
         <div class="h-96 overflow-y-scroll mt-2 p-2">
             <div class="grid grid-cols-6 grid-flow-col gap-4 mb-2">
                 <div class="col-span-5 flex items-center justify-between">
-                    <div class="w-80 flex items-center gap-0.5">
-                        <div class="relative w-full flex items-center ml-1 ">
+                    <div class="w-3/4  flex items-center gap-0.5">
+                        <div class="relative w-1/2  flex items-center ">
                             <input
                                 type="text"
                                 class="relative form-search"
@@ -49,13 +49,17 @@
                                 />
                             </svg>
                         </button>
-                    </div>
-                    <div class="w-60 flex items-center">
-                        <select class="form" v-model="tableData.price_group" @change="fetch">
-                            <option value="">Choose Price Group</option>
-                            <option value="TAGB">TAGBILARAN</option>
-                            <option value="TALB">TALIBON</option>
-                        </select>
+                        <div class="w-60 flex items-center ml-5">
+                            <select
+                                class="form"
+                                v-model="tableData.price_group"
+                                @change="fetch"
+                            >
+                                <option value="">Choose Price Group</option>
+                                <option value="TAGB">TAGBILARAN</option>
+                                <option value="TALB">TALIBON</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="flex justify-end items-center ">

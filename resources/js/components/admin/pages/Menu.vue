@@ -95,19 +95,19 @@
             </div>
 
             <transition
-                enter-active-class="ease-out duration-700"
-                enter-class="opacity-0"
+                enter-active-class=" ease-in-out transition duration-500"
+                enter-class="transform -translate-y-11 opacity-0 "
                 enter-to-class="opacity-100"
-                leave-active-class="ease-in duration-300"
-                leave-class="opacity-100"
-                leave-to-class="opacity-0"
+                leave-active-class="ease-in-out transition duration-500"
+                leave-class=" opacity-100"
+                leave-to-class="transform -translate-y-11 opacity-0"
             >
                 <div
                     v-if="isModal"
-                    class="bg-black bg-opacity-30 fixed top-0 left-0 z-50 flex justify-center items-center shadow-xl p-20 w-full min-h-screen"
+                    class=" fixed top-0 left-0 z-50 flex justify-center items-center shadow-xl p-20 w-full min-h-screen"
                 >
                     <div
-                        class="bg-white md:w-full sm:max-w-full rounded text-gray-800"
+                        class="bg-white md:w-full sm:max-w-full border border-gray-400 rounded text-gray-800 shadow-lg"
                     >
                         <div
                             class="border-b-2 p-3 flex justify-between items-center"

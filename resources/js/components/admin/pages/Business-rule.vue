@@ -225,7 +225,9 @@
                                     :to="'/business_rules/' + rule.id"
                                     class="bg-green-500 p-2 flex justify-center focus:text-white text-white focus:outline-none focus:bg-green-600"
                                 >
-                                   <span class="flex justify-center">Edit</span> 
+                                    <span class="flex justify-center"
+                                        >Edit</span
+                                    >
                                 </router-link>
                             </td>
                         </tr>
@@ -234,18 +236,18 @@
             </div>
 
             <transition
-                enter-active-class="ease-out duration-500"
-                enter-class="opacity-0"
+                enter-active-class=" ease-in-out transition duration-500"
+                enter-class="transform -translate-y-11 opacity-0 "
                 enter-to-class="opacity-100"
-                leave-active-class="ease-in duration-300"
-                leave-class="opacity-100"
-                leave-to-class="opacity-0"
+                leave-active-class="ease-in-out transition duration-500"
+                leave-class=" opacity-100"
+                leave-to-class="transform -translate-y-11 opacity-0"
             >
                 <div
                     v-if="isModal"
-                    class="bg-black bg-opacity-40 fixed top-0 left-0 flex z-50 p-1 justify-center items-center w-full min-h-screen"
+                    class=" fixed top-0 left-0 flex z-50 p-1 justify-center items-center w-full min-h-screen"
                 >
-                    <div class="sm:-full md:w-3/4 xl:w-1/2 bg-white rounded ">
+                    <div class="sm:-full md:w-3/4 xl:w-1/2 bg-white  border border-gray-400 rounded shadow-lg ">
                         <div class="p-2 flex justify-between items-center  ">
                             <label class="font-semibold  xl:text-lg sm:text-sm "
                                 >Update Business Rules</label
@@ -372,7 +374,7 @@
     </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex"; 
+import { mapState, mapActions } from "vuex";
 import Breadcrumb from "./../../../Usable/Breadcrumb";
 import Datatable from "./../../../Usable/Datatable";
 

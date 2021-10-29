@@ -21,7 +21,7 @@
 .sorting_both {
     background-image: url("/images/sort_both.png");
     background-repeat: no-repeat;
-    background-position: 100%; 
+    background-position: 100%;
 }
 
 .sorting_up {
@@ -46,7 +46,7 @@
     .peg {
         box-shadow: 0 0 10px #FF7600, 0 0 5px #FF7600 !important;
     }
-    
+
     .spinner-icon {
         border-top-color: #FF7600 !important;
         border-left-color: #FF7600 !important;
@@ -76,6 +76,7 @@
     body {
         visibility: hidden;
     }
+
     table td {
         border-collapse: collapse !important;
     }
@@ -124,6 +125,7 @@
         margin-top: -78px !important;
 
     }
+
     /* #section-to-print3{
         width: 100vh !important;
     } */
@@ -151,9 +153,9 @@
         visibility: visible;
         /* margin: 0 !important; */
         width: 100vh !important;
-    } 
+    }
 
-     #print_this {
+    #print_this {
         position: absolute;
         left: 0 !important;
         top: 0 !important;
@@ -163,26 +165,26 @@
 
 }
 
-.dropdown{
+.dropdown {
     position: relative;
 }
-.dropdown-menu{
+
+.dropdown-menu {
     position: absolute;
     right: 0;
     top: calc(100% + .25rem);
     background-color: white;
     border-radius: 0.25rem;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0, .1);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
     width: 20rem;
     opacity: 0;
     pointer-events: none;
     transform: translateY(-10px);
     transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
 }
-.dropdown.active > #showMenu + .dropdown-menu{
+
+.dropdown.active>#showMenu+.dropdown-menu {
     opacity: 1;
     transform: translateY(0);
-    pointer-events:  auto;
+    pointer-events: auto;
 }
-
-

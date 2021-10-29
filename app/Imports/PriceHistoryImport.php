@@ -33,8 +33,8 @@ class PriceHistoryImport implements ToCollection, SkipsOnFailure
                 ->first();
 
             if ($data_check_price) {
+                
                 if ($data_check) {
-
                     gc_product_price_history::where('itemcode', intval($row[0]))
                         ->where('UOM', $row[2])
                         ->where('price_group', '=', $row[6])
