@@ -11,15 +11,14 @@
     <title>Alturush | Grocery-Admin</title>
     <link rel="icon" type="image/x-icon" href="https://www.alturush.com/alturush_logo/AlturushDeliveryLogoGradient.png">
 
-
     <link rel="stylesheet" href="{{ asset('custom/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
 </head>
 
 <body class="font-inter antialiased ">
-    <div id="app" class=" fixed top-0 left-0 flex justify-center items-center w-full min-h-screen bg-white ">
-        <div class="bg-white  w-96 rounded p-5 border">
+    <div id="app" class=" fixed top-0 left-0 flex justify-center items-center w-full min-h-screen border lg:shadow-lg  ">
+        <div class="bg-white  w-96 rounded p-5 lg:shadow-lg">
             <div class="flex flex-col  justify-center items-center space-y-5">
                 <img src="{{ asset('/img/AlturushDeliveryLogoGradient.png') }}" class="h-20">
                 <span class=" text-lg uppercase tracking-wider">GROCERY ADMINISTRATOR</span>
@@ -54,13 +53,13 @@
                                         d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                 </svg>
                             </span>
-                            <input v-if="!showPassword" type="password" name="password" v-model="password"
+                            {{-- <input v-if="!showPassword" type="password" name="password" v-model="password"
                                 class="relative py-3 px-3 pl-10 w-full  border focus:border-yellow-500 focus:ring-yellow-500 border-gray-300 rounded-lg bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:shadow-outline transition duration-500"
-                                placeholder="Password" />
-                            <input v-if="showPassword" type="text" name="password" v-model="password"
-                                class="relative py-3 px-3 pl-10 w-full  border focus:border-yellow-500 focus:ring-yellow-500 border-gray-300 rounded-lg bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:shadow-outline transition duration-500"
-                                placeholder="Password" />
+                                placeholder="Password" /> --}}
 
+                            <input :type="showPassword ? 'text' : 'password' " name="password" v-model="password"
+                                class="relative py-3 px-3 pl-10 w-full  border focus:border-yellow-500 focus:ring-yellow-500 border-gray-300 rounded-lg bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:shadow-outline transition duration-500"
+                                placeholder="Password" />
                         </div>
                         <div class="flex items-center justify-end w-full space-x-1 mt-1 ">
                             <input type="checkbox" name="" @click="toggleShow" id="show_password"
