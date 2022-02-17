@@ -14,6 +14,7 @@ import store from "./store/index";
 import swal from "sweetalert2";
 import moment from "moment";
 import excel from "vue-excel-export";
+import axios from "axios";
 
 import ViewUI from "view-design";
 import "view-design/dist/styles/iview.css";
@@ -29,6 +30,7 @@ import "nprogress/nprogress.css";
 // })
 
 Vue.use(excel);
+
 
 // Vue.use(DataTable);
 
@@ -161,6 +163,9 @@ const app = new Vue({
         },
         toggleShow() {
             this.showPassword = !this.showPassword;
+        },
+        contactUs(){
+            this.$router.push({ name: 'contact_us'});
         }
     }
 });

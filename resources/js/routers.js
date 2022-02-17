@@ -215,7 +215,13 @@ let router = new VueRouter({
             name: "update_item_description",
             component: update_item_description
         },
-        { path: "*", component: PageNotFound }
+        {
+            path: "/contact_us",
+            name: "contact_us",
+            component: () => import("./components/admin/pages/Contact-Us.vue")
+        },
+        { path: "*", component: PageNotFound },
+
     ]
 });
 router.beforeEach((to, from, next) => {

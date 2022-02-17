@@ -38,7 +38,7 @@
                         <input type="text" name="username"
                             class="relative py-3 px-3 pl-10 w-full  border focus:border-yellow-500 focus:ring-yellow-500 border-gray-300 rounded-lg bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:shadow-outline transition duration-500"
                             placeholder="Username" value="{{ old('username') }}" required autocomplete="username"
-                            autofocus />
+                            tabindex="2" autofocus />
                     </div>
                     @error('username')
                         <small class="text-red-500 text-xs">{{ $message }}</small>
@@ -57,25 +57,23 @@
                                 class="relative py-3 px-3 pl-10 w-full  border focus:border-yellow-500 focus:ring-yellow-500 border-gray-300 rounded-lg bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:shadow-outline transition duration-500"
                                 placeholder="Password" /> --}}
 
-                            <input :type="showPassword ? 'text' : 'password' " name="password" v-model="password"
+                            <input :type="showPassword ? 'text' : 'password' " name="password" tabindex="3" required
                                 class="relative py-3 px-3 pl-10 w-full  border focus:border-yellow-500 focus:ring-yellow-500 border-gray-300 rounded-lg bg-white text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:shadow-outline transition duration-500"
                                 placeholder="Password" />
                         </div>
+                        @error('password')
+                            <small class="text-red-500 text-xs">{{ $message }}</small>
+                        @enderror
                         <div class="flex items-center justify-end w-full space-x-1 mt-1 ">
-                            <input type="checkbox" name="" @click="toggleShow" id="show_password"
+                            <input type="checkbox" name="" @click="toggleShow" id="show_password" tabindex="4"
                                 class="form-checkbox">
                             <label for="show_password" class="cursor-pointer">Show Password</label>
                         </div>
                     </div>
-
-                    @error('password')
-                        <small class="text-red-500 text-xs">{{ $message }}</small>
-                    @enderror
-
                     <div class="w-full">
                         <button type="submit"
                             class="bg-yellow-500 py-2 px-3 rounded w-full text-lg tracking-wider text-white transition duration-500 hover:bg-yellow-600 focus:outline-none"
-                            tabindex="3">
+                            tabindex="5">
                             {{ __('Sign in') }}
                         </button>
                     </div>
@@ -84,6 +82,6 @@
         </div>
     </div>
     <script src="{{ asset('js/app.js') }}" defer></script>
-</body> 
+</body>
 
 </html>

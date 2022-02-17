@@ -152,7 +152,6 @@
     #print_this * {
         visibility: visible;
         /* margin: 0 !important; */
-        width: 100vh !important;
     }
 
     #print_this {
@@ -160,7 +159,7 @@
         left: 0 !important;
         top: 0 !important;
         margin-top: -80px !important;
-
+        width: 100vh !important;
     }
 
 }

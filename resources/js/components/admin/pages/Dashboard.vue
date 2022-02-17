@@ -1,43 +1,80 @@
 <template>
-    <div class="bg-gray-50 shadow-lg p-5 rounded text-gray-800">
-        <div class="grid grid-flow-col grid-cols-4 grid-rows-1 gap-4">
+    <div class="bg-gray-50 shadow-lg  rounded text-gray-800 p-2">
+        <div class="flex items-center gap-10">
             <div
-                class="bg-gray-100 h-40 flex flex-col justify-between items-center sm:w-full rounded border shadow-lg"
-            >
-                <div class="mt-3">
-                    <span>Item not available</span>
-                    <h3 class="text-6xl  text-center ">
-                        {{ TotalItemNotAvailable }}
-                    </h3>
-                </div>
-                <a
-                    @click="viewItem"
-                    class="bg-blue-500 text-center py-2 text-white w-full hover:text-white hover:bg-blue-600 transition duration-500    "
-                >
-                    <span class="">More info</span>
-                    <i class="fas fa-arrow-circle-right"></i>
-                </a>
-            </div>
-
-            <div
+                class=" rounded border shadow-lg w-1/4 "
                 v-if="$root.userType == 15"
-                class="bg-gray-100 h-40 flex flex-col justify-between items-center w-full rounded border shadow-lg"
             >
-                <div class="mt-3">
-                    <span>Price Changes</span>
+                <div
+                    class="flex flex-col justify-between items-center"
+                >
+                    <span class="mt-2">Price Changes</span>
                     <h3 class="text-6xl  text-center ">
                         {{ priceCount }}
                     </h3>
+                        <small class="p-2 ">
+                            <span class="text-blue-600">NOTE:</span>
+                            <p>
+                                To approve price change requests, from
+                                Dashboard, please click "Click here to view
+                                details" under Price Changes.
+                            </p>
+                        </small>
+                        <a
+                            @click="toChangePrice"
+                            class="bg-blue-500 text-center py-2 text-white w-full hover:text-white hover:bg-blue-600 transition duration-500    "
+                        >
+                            <span class="">Click here to view details</span>
+                        </a>
                 </div>
-                <a
-                    @click="toChangePrice"
-                    class="bg-blue-500 text-center py-2 text-white w-full hover:text-white hover:bg-blue-600 transition duration-500    "
-                >
-                    <span class="">Click here to view details</span>
-                </a>
             </div>
+
+            <div class=" rounded border shadow-lg w-1/4">
+                <div
+                    class="flex flex-col justify-between items-center space-y-5"
+                >
+                    <span class="mt-2">Item not available</span>
+                    <h3 class="text-6xl  text-center ">
+                        {{ TotalItemNotAvailable }}
+                    </h3>
+                    <a
+                        @click="viewItem"
+                        class="bg-blue-500 text-center py-2 text-white w-full hover:text-white hover:bg-blue-600 transition duration-500    "
+                    >
+                        <span class="">More info</span>
+                        <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- <div class=" rounded border shadow-lg bg-gray-100">
+                <div
+                    v-if="$root.userType == 15"
+                    class=" flex flex-col justify-between items-center w-full"
+                >
+                    <div class="mt-3">
+                        <span>Price Changes</span>
+                        <h3 class="text-6xl  text-center ">
+                            {{ priceCount }}
+                        </h3>
+                    </div>
+                    <small class="p-2 ">
+                        <span class="text-blue-600">NOTE:</span>
+                        <p>
+                            To approve price change requests, from Dashboard,
+                            please click "Click here to view details" under
+                            Price Changes.
+                        </p>
+                    </small>
+                    <a
+                        @click="toChangePrice"
+                        class="bg-blue-500 text-center py-2 text-white w-full hover:text-white hover:bg-blue-600 transition duration-500    "
+                    >
+                        <span class="">Click here to view details</span>
+                    </a>
+                </div>
+            </div> -->
         </div>
-        <hr class=" my-5">
         <!-- <div>
             asdada
         </div> -->
